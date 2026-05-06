@@ -1,6 +1,10 @@
 #include "driftless/control/trajectory/trajectory_follower/PIDTrajectoryFollower.hpp"
+#include "driftless/control/trajectory/trajectory_follower/PIDTrajectoryFollowerBuilder.hpp"
 
 namespace driftless::control::trajectory::trajectory_follower {
+
+// define Builder as the path to the nested builder class to make life easier
+
 void PIDTrajectoryFollower::taskLoop(void* params) {
   PIDTrajectoryFollower* follower = static_cast<PIDTrajectoryFollower*>(params);
 
@@ -92,6 +96,17 @@ void PIDTrajectoryFollower::updateVelocity(
   setDriveMotionVector(out_x, out_y, angular_velocity);
 }
 
+PIDTrajectoryFollower::PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder)
+    : m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_clock(std::move(builder.m_clock)),
+      m_x_pid(builder.m_x_pid),
+      m_y_pid(builder.m_y_pid),
+      m_theta_pid(builder.m_theta_pid),
+      m_target_tolerance(builder.m_target_tolerance),
+      m_target_velocity(builder.m_target_velocity) {}
+
 void PIDTrajectoryFollower::init() {
   m_x_pid.reset();
   m_y_pid.reset();
@@ -148,44 +163,4 @@ void PIDTrajectoryFollower::followTrajectory(
 }
 
 bool PIDTrajectoryFollower::targetReached() { return m_target_reached; }
-
-void PIDTrajectoryFollower::setDelayer(
-    const std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDTrajectoryFollower::setMutex(
-    std::unique_ptr<driftless::rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDTrajectoryFollower::setTask(
-    std::unique_ptr<driftless::rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDTrajectoryFollower::setClock(
-    const std::unique_ptr<driftless::rtos::IClock>& clock) {
-  m_clock = clock->clone();
-}
-
-void PIDTrajectoryFollower::setXPID(driftless::control::PID& x_pid) {
-  m_x_pid = x_pid;
-}
-
-void PIDTrajectoryFollower::setYPID(driftless::control::PID& y_pid) {
-  m_y_pid = y_pid;
-}
-
-void PIDTrajectoryFollower::setThetaPID(driftless::control::PID& theta_pid) {
-  m_theta_pid = theta_pid;
-}
-
-void PIDTrajectoryFollower::setTargetTolerance(double target_tolerance) {
-  m_target_tolerance = target_tolerance;
-}
-
-void PIDTrajectoryFollower::setTargetVelocity(double target_velocity) {
-  m_target_velocity = target_velocity;
-}
 }  // namespace driftless::control::trajectory::trajectory_follower

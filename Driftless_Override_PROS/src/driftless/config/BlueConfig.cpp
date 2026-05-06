@@ -40,15 +40,15 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
   std::unique_ptr<control::trajectory::trajectory_follower::ITrajectoryFollower>
       trajectory_follower{
           trajectory_follower_builder.withClock(clock)
-              ->withDelayer(delayer)
-              ->withTask(trajectory_follower_task)
-              ->withMutex(trajectory_follower_mutex)
-              ->withXPID(trajectory_follower_x_pid)
-              ->withYPID(trajectory_follower_y_pid)
-              ->withThetaPID(trajectory_follower_theta_PID)
-              ->withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
-              ->withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
-              ->build()};
+              .withDelayer(delayer)
+              .withTask(trajectory_follower_task)
+              .withMutex(trajectory_follower_mutex)
+              .withXPID(trajectory_follower_x_pid)
+              .withYPID(trajectory_follower_y_pid)
+              .withThetaPID(trajectory_follower_theta_PID)
+              .withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
+              .withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
+              .build()};
 
   std::unique_ptr<control::AControl> trajectory_follower_control{
       std::make_unique<

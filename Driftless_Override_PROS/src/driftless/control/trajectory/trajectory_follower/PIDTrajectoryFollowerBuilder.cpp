@@ -1,74 +1,66 @@
 #include "driftless/control/trajectory/trajectory_follower/PIDTrajectoryFollowerBuilder.hpp"
 
 namespace driftless::control::trajectory::trajectory_follower {
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withDelayer(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withDelayer(
     const std::unique_ptr<rtos::IDelayer>& delayer) {
   m_delayer = delayer->clone();
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withMutex(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withMutex(
     std::unique_ptr<rtos::IMutex>& mutex) {
   m_mutex = std::move(mutex);
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withTask(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTask(
     std::unique_ptr<rtos::ITask>& task) {
   m_task = std::move(task);
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withClock(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withClock(
     const std::unique_ptr<rtos::IClock>& clock) {
   m_clock = clock->clone();
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withXPID(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withXPID(
     PID& x_pid) {
   m_x_pid = x_pid;
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withYPID(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withYPID(
     PID& y_pid) {
   m_y_pid = y_pid;
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withThetaPID(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withThetaPID(
     PID& theta_pid) {
   m_theta_pid = theta_pid;
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withTargetTolerance(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTargetTolerance(
     double target_tolerance) {
   m_target_tolerance = target_tolerance;
-  return this;
+  return *this;
 }
 
-PIDTrajectoryFollowerBuilder* PIDTrajectoryFollowerBuilder::withTargetVelocity(
+PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTargetVelocity(
     double target_velocity) {
   m_target_velocity = target_velocity;
-  return this;
+  return *this;
 }
 
 std::unique_ptr<PIDTrajectoryFollower> PIDTrajectoryFollowerBuilder::build() {
-  std::unique_ptr<PIDTrajectoryFollower> trajectory_follower{
-      std::make_unique<PIDTrajectoryFollower>()};
-
-  trajectory_follower->setDelayer(m_delayer);
-  trajectory_follower->setMutex(m_mutex);
-  trajectory_follower->setTask(m_task);
-  trajectory_follower->setClock(m_clock);
-  trajectory_follower->setXPID(m_x_pid);
-  trajectory_follower->setYPID(m_y_pid);
-  trajectory_follower->setThetaPID(m_theta_pid);
-  trajectory_follower->setTargetTolerance(m_target_tolerance);
-  trajectory_follower->setTargetVelocity(m_target_velocity);
-
-  return trajectory_follower;
+  if(!m_delayer || !m_mutex || !m_task || !m_clock) {
+    throw std::runtime_error(
+        "One or more RTOS components not set in PIDTrajectoryFollowerBuilder");
+  }
+  
+  return std::make_unique<PIDTrajectoryFollower>(std::move(*this));
 }
 }  // namespace driftless::control::trajectory::trajectory_follower

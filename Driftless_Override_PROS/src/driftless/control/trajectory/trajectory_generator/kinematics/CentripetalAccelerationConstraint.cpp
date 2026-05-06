@@ -1,6 +1,10 @@
 #include "driftless/control/trajectory/trajectory_generator/kinematics/CentripetalAccelerationConstraint.hpp"
 
 namespace driftless::control::trajectory::trajectory_generator::kinematics {
+CentripetalAccelerationConstraint::CentripetalAccelerationConstraint(
+    double max_centripetal_acceleration)
+    : m_max_centripetal_acceleration{max_centripetal_acceleration} {}
+
 double CentripetalAccelerationConstraint::getMaxVelocity(
     std::unique_ptr<IPath>& path, TrajectoryPoint last_point, double delta_d,
     double t) {

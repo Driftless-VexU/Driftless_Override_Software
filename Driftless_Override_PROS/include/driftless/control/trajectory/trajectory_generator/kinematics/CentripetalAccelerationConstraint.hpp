@@ -31,6 +31,11 @@ class CentripetalAccelerationConstraint : public IKinematicConstraint {
   double m_max_centripetal_acceleration;
 
  public:
+  /// @brief Constructs a new CentripetalAccelerationConstraint object
+  /// @param max_centripetal_acceleration __double__ The max centripetal
+  /// acceleration, in in/s^2, for the trajectory
+  CentripetalAccelerationConstraint(double max_centripetal_acceleration);
+
   /// @brief Gets the max velocity at a given point along the path
   /// @param path __std::unique_ptr<IPath>&__ The path being used for the
   /// trajectory

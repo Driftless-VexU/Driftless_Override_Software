@@ -116,46 +116,6 @@ class AAuton {
 
   void stopMotion();
 
-  void intakeFront(double voltage = 12.0);
-
-  void outtakeFront(double voltage = 12.0);
-
-  void intakeBack();
-
-  void intakeBackToHood();
-
-  void intakeStop();
-
-  void deployBackIntakeArms();
-
-  void retractBackIntakeArms();
-
-  void startColorSort(alliance::EAlliance alliance);
-
-  void pauseColorSort();
-
-  void hoodRaise();
-
-  void hoodBumpUp();
-
-  void hoodLower();
-
-  void hoodOpenDoor();
-
-  void hoodCloseDoor();
-
-  void hoodSetVoltage(double voltage);
-
-  void deployRake();
-
-  void retractRake();
-
-  void deployDescore();
-
-  void middleDescore();
-
-  void retractDescore();
-
  public:
   /// @brief Constructs a new AAuton object
   /// @param name __std::string__ The name of the auton

@@ -7,8 +7,8 @@
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemCommand.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
-#include "driftless/robot/subsystems/tank_drive_train/Velocity.hpp"
 #include "driftless/robot/subsystems/odometry/Position.hpp"
+#include "driftless/robot/subsystems/tank_drive_train/Velocity.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/rtos/IMutex.hpp"
 #include "driftless/rtos/ITask.hpp"
@@ -25,6 +25,8 @@ namespace control {
 /// @brief Namespace for the path follower control
 /// @author Matthew Backman
 namespace path {
+
+class PIDPathFollowerBuilder;
 
 /// @brief Class representing a pure pursuit path follower using PID
 /// @author Matthew Backman
@@ -83,7 +85,8 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
   void taskUpdate();
 
   /// @brief Sets the velocity of the drive train
-  /// @param velocity robot::subsystems::tank_drive_train::Velocity__ The new velocity
+  /// @param velocity robot::subsystems::tank_drive_train::Velocity__ The new
+  /// velocity
   void setDriveVelocity(
       driftless::robot::subsystems::tank_drive_train::Velocity velocity);
 
@@ -123,6 +126,11 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
                       Point follow_point);
 
  public:
+  /// @brief Constructs a new PIDPathFollower
+  /// @param builder __PIDPathFollowerBuilder&&__ The builder containing the
+  /// parameters for the path follower
+  PIDPathFollower(PIDPathFollowerBuilder&& builder);
+
   /// @brief Initializes the path follower
   void init() override;
 
@@ -152,38 +160,6 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
   /// @brief Determines if the target has been reached
   /// @return __bool__ True if within the target range, false otherwise
   bool targetReached() override;
-
-  /// @brief Sets the delayer used by the path follower
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer used
-  void setDelayer(const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex used by the path follower
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex used
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task used by the path follower
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task used
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the linear PID controller used by the path follower
-  /// @param linear_pid __PID__ The linear PID controller used
-  void setLinearPID(driftless::control::PID linear_pid);
-
-  /// @brief Sets the rotational PID controller used by the path follower
-  /// @param rotational_pid __PID__ The rotational PID controller used
-  void setRotationalPID(driftless::control::PID rotational_pid);
-
-  /// @brief Sets the follow distance used by the path follower
-  /// @param follow_distance __double__ The follow distance used
-  void setFollowDistance(double follow_distance);
-
-  /// @brief Sets the target tolerance used by the path follower
-  /// @param target_tolerance __double__ The target tolerance used
-  void setTargetTolerance(double target_tolerance);
-
-  /// @brief Sets the target velocity used by the path follower
-  /// @param target_velocity __double__ The target velocity used
-  void setTargetVelocity(double target_velocity);
 };
 }  // namespace path
 }  // namespace control

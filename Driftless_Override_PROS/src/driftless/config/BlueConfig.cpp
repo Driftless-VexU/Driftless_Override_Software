@@ -111,13 +111,13 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
 
   std::unique_ptr<control::motion::IDriveStraight> drive_straight{
       drive_straight_builder.withDelayer(delayer)
-          ->withMutex(drive_straight_mutex)
-          ->withTask(drive_straight_task)
-          ->withLinearPID(drive_straight_linear_pid)
-          ->withRotationalPID(drive_straight_angular_pid)
-          ->withTargetTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
-          ->withTargetVelocity(1.0)
-          ->build()};
+          .withMutex(drive_straight_mutex)
+          .withTask(drive_straight_task)
+          .withLinearPID(drive_straight_linear_pid)
+          .withRotationalPID(drive_straight_angular_pid)
+          .withTargetTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
+          .withTargetVelocity(1.0)
+          .build()};
 
   std::unique_ptr<control::motion::ITurn> turn{
       turn_builder.withDelayer(delayer)

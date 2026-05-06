@@ -3,59 +3,55 @@
 namespace driftless {
 namespace control {
 namespace motion {
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withDelayer(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withDelayer(
     const std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
   m_delayer = delayer->clone();
-  return this;
+  return *this;
 }
 
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withMutex(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withMutex(
     std::unique_ptr<driftless::rtos::IMutex>& mutex) {
   m_mutex = std::move(mutex);
-  return this;
+  return *this;
 }
 
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withTask(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTask(
     std::unique_ptr<driftless::rtos::ITask>& task) {
   m_task = std::move(task);
-  return this;
+  return *this;
 }
 
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withLinearPID(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withLinearPID(
     PID linear_pid) {
   m_linear_pid = linear_pid;
-  return this;
+  return *this;
 }
 
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withRotationalPID(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withRotationalPID(
     PID rotational_pid) {
   m_rotational_pid = rotational_pid;
-  return this;
+  return *this;
 }
 
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withTargetTolerance(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTargetTolerance(
     double target_tolerance) {
   m_target_tolerance = target_tolerance;
-  return this;
+  return *this;
 }
 
-PIDDriveStraightBuilder* PIDDriveStraightBuilder::withTargetVelocity(
+PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTargetVelocity(
     double target_velocity) {
   m_target_velocity = target_velocity;
-  return this;
+  return *this;
 }
 
 std::unique_ptr<PIDDriveStraight> PIDDriveStraightBuilder::build() {
-  std::unique_ptr<PIDDriveStraight> pid_drive_straight{std::make_unique<PIDDriveStraight>()};
-  pid_drive_straight->setDelayer(m_delayer);
-  pid_drive_straight->setMutex(m_mutex);
-  pid_drive_straight->setTask(m_task);
-  pid_drive_straight->setLinearPID(m_linear_pid);
-  pid_drive_straight->setRotationalPID(m_rotational_pid);
-  pid_drive_straight->setTargetTolerance(m_target_tolerance);
-  pid_drive_straight->setTargetVelocity(m_target_velocity);
-
-  return pid_drive_straight;
+  if(!m_delayer || !m_mutex || !m_task) {
+    throw std::runtime_error(
+        "One or more RTOS components not set for PIDDriveStraightBuilder");
+  }
+  
+  return std::make_unique<PIDDriveStraight>(std::move(*this));
 }
 }  // namespace motion
 }  // namespace control

@@ -1,6 +1,13 @@
 #include "driftless/control/trajectory/trajectory_generator/modifiers/HolonomicSpinModifier.hpp"
 
 namespace driftless::control::trajectory::trajectory_generator::modifiers {
+HolonomicSpinModifier::HolonomicSpinModifier(double max_acceleration,
+                                             double starting_heading,
+                                             std::vector<SpinContext>& spins)
+    : m_max_acceleration{max_acceleration},
+      m_starting_heading{starting_heading},
+      m_spins{spins} {}
+      
 void HolonomicSpinModifier::applyModifier(
     std::vector<TrajectoryPoint>& trajectory) {
   int spin_index{};

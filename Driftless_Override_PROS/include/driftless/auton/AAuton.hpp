@@ -16,7 +16,6 @@
 #include "driftless/control/trajectory/trajectory_generator/kinematics/CentripetalAccelerationConstraintBuilder.hpp"
 #include "driftless/control/trajectory/trajectory_generator/kinematics/LinearAccelerationConstraintBuilder.hpp"
 #include "driftless/control/trajectory/trajectory_generator/kinematics/MaxVelocityConstraintBuilder.hpp"
-#include "driftless/control/trajectory/trajectory_generator/modifiers/HolonomicSpinModifierBuilder.hpp"
 #include "driftless/processes/EProcess.hpp"
 #include "driftless/processes/EProcessCommand.hpp"
 #include "driftless/processes/EProcessState.hpp"

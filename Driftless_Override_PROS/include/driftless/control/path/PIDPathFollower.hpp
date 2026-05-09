@@ -31,6 +31,8 @@ class PIDPathFollowerBuilder;
 /// @brief Class representing a pure pursuit path follower using PID
 /// @author Matthew Backman
 class PIDPathFollower : public driftless::control::path::IPathFollower {
+  friend class PIDPathFollowerBuilder;
+
  private:
   // delay in ms between each task loop
   static constexpr uint8_t TASK_DELAY{10};
@@ -81,6 +83,11 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
   // whether the robot is at the target or not
   bool target_reached{true};
 
+  /// @brief Constructs a new PIDPathFollower
+  /// @param builder __PIDPathFollowerBuilder&&__ The builder containing the
+  /// parameters for the path follower
+  PIDPathFollower(PIDPathFollowerBuilder&& builder);
+
   /// @brief Updates the path follower algorithm
   void taskUpdate();
 
@@ -126,10 +133,13 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
                       Point follow_point);
 
  public:
-  /// @brief Constructs a new PIDPathFollower
-  /// @param builder __PIDPathFollowerBuilder&&__ The builder containing the
-  /// parameters for the path follower
-  PIDPathFollower(PIDPathFollowerBuilder&& builder);
+  /// @brief Copy constructor for PIDPathFollower
+  /// @param other __PIDPathFollower const&__ The PIDPathFollower being copied
+  PIDPathFollower(const PIDPathFollower& other) = default;
+
+  /// @brief Move constructor for PIDPathFollower
+  /// @param other __PIDPathFollower&&__ The PIDPathFollower being moved
+  PIDPathFollower(PIDPathFollower&& other) = default;
 
   /// @brief Initializes the path follower
   void init() override;

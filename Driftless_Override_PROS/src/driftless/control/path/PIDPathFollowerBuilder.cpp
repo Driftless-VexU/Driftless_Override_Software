@@ -51,13 +51,13 @@ PIDPathFollowerBuilder& PIDPathFollowerBuilder::withTargetVelocity(
   return *this;
 }
 
-std::unique_ptr<PIDPathFollower> PIDPathFollowerBuilder::build() {
+PIDPathFollower PIDPathFollowerBuilder::build() {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");
   }
   
-  return std::make_unique<PIDPathFollower>(std::move(*this));
+  return {std::move(*this)};
 }
 }  // namespace path
 }  // namespace control

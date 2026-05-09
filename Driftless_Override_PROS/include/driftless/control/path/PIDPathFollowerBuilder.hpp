@@ -91,9 +91,9 @@ class PIDPathFollowerBuilder {
   PIDPathFollowerBuilder& withTargetVelocity(double target_velocity);
 
   /// @brief Builds a new PID path follower
-  /// @return __std::unique_ptr<PIDPathFollower>__ Pointer to the new PID path
+  /// @return __PIDPathFollower__ Pointer to the new PID path
   /// follower
-  std::unique_ptr<PIDPathFollower> build();
+  PIDPathFollower build();
 };
 }  // namespace path
 }  // namespace control

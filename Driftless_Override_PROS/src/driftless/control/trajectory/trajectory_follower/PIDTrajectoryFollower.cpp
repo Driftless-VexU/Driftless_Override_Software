@@ -13,6 +13,17 @@ void PIDTrajectoryFollower::taskLoop(void* params) {
   }
 }
 
+PIDTrajectoryFollower::PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder)
+    : m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_clock(std::move(builder.m_clock)),
+      m_x_pid(builder.m_x_pid),
+      m_y_pid(builder.m_y_pid),
+      m_theta_pid(builder.m_theta_pid),
+      m_target_tolerance(builder.m_target_tolerance),
+      m_target_velocity(builder.m_target_velocity) {}
+
 void PIDTrajectoryFollower::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
@@ -95,17 +106,6 @@ void PIDTrajectoryFollower::updateVelocity(
 
   setDriveMotionVector(out_x, out_y, angular_velocity);
 }
-
-PIDTrajectoryFollower::PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder)
-    : m_delayer(std::move(builder.m_delayer)),
-      m_mutex(std::move(builder.m_mutex)),
-      m_task(std::move(builder.m_task)),
-      m_clock(std::move(builder.m_clock)),
-      m_x_pid(builder.m_x_pid),
-      m_y_pid(builder.m_y_pid),
-      m_theta_pid(builder.m_theta_pid),
-      m_target_tolerance(builder.m_target_tolerance),
-      m_target_velocity(builder.m_target_velocity) {}
 
 void PIDTrajectoryFollower::init() {
   m_x_pid.reset();

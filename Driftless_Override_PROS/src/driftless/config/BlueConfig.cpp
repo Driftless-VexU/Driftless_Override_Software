@@ -38,7 +38,7 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
       trajectory_follower_builder{};
 
   std::unique_ptr<control::trajectory::trajectory_follower::ITrajectoryFollower>
-      trajectory_follower{
+      trajectory_follower{std::make_unique<control::trajectory::trajectory_follower::PIDTrajectoryFollower>(std::move(
           trajectory_follower_builder.withClock(clock)
               .withDelayer(delayer)
               .withTask(trajectory_follower_task)
@@ -48,7 +48,7 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
               .withThetaPID(trajectory_follower_theta_PID)
               .withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
               .withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
-              .build()};
+              .build()))};
 
   std::unique_ptr<control::AControl> trajectory_follower_control{
       std::make_unique<

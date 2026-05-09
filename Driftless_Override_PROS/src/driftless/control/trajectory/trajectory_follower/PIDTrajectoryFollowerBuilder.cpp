@@ -55,12 +55,12 @@ PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTargetVelocity(
   return *this;
 }
 
-std::unique_ptr<PIDTrajectoryFollower> PIDTrajectoryFollowerBuilder::build() {
+PIDTrajectoryFollower PIDTrajectoryFollowerBuilder::build() {
   if(!m_delayer || !m_mutex || !m_task || !m_clock) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDTrajectoryFollowerBuilder");
   }
   
-  return std::make_unique<PIDTrajectoryFollower>(std::move(*this));
+  return {std::move(*this)};
 }
 }  // namespace driftless::control::trajectory::trajectory_follower

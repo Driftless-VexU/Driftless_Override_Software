@@ -30,6 +30,7 @@ class PIDTrajectoryFollowerBuilder;
 
 /// @brief Control algorithm to follow a generated trajectory using PID
 class PIDTrajectoryFollower : public ITrajectoryFollower {
+  friend class PIDTrajectoryFollowerBuilder;
 
  private:
   static constexpr uint8_t TASK_DELAY{10};
@@ -68,6 +69,12 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
 
   bool m_target_reached{true};
 
+  /// @brief Constructs a new PIDTrajectoryFollower object with the provided
+  /// builder
+  /// @param builder __PIDTrajectoryFollowerBuilder&&__ The builder containing
+  /// the parameters for the trajectory follower
+  PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder);
+
   /// @brief Updates the trajectory follower
   void taskUpdate();
 
@@ -96,11 +103,15 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
       const TrajectoryPoint& target_point);
 
  public:
-  /// @brief Constructs a new PIDTrajectoryFollower object with the provided
-  /// builder
-  /// @param builder __PIDTrajectoryFollowerBuilder&&__ The builder containing
-  /// the parameters for the trajectory follower
-  PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder);
+  /// @brief Copies another PIDTrajectoryFollower
+  /// @param other __const PIDTrajectoryFollower&__ The trajectory follower
+  /// being copied
+  PIDTrajectoryFollower(const PIDTrajectoryFollower& other) = default;
+
+  /// @brief Moves another PIDTrajectoryFollower
+  /// @param other __PIDTrajectoryFollower&&__ The trajectory follower being
+  /// moved
+  PIDTrajectoryFollower(PIDTrajectoryFollower&& other) = default;
 
   /// @brief Initializes the trajectory follower
   void init() override;

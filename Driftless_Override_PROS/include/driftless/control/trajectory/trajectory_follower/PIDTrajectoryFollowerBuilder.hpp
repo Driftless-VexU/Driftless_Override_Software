@@ -92,7 +92,7 @@ class PIDTrajectoryFollowerBuilder {
   /// @brief Builds a PIDTrajectoryFollower object
   /// @return __std::unique_ptr<PIDTrajectoryFollower>__ The new
   /// PIDTrajectoryFollower
-  std::unique_ptr<PIDTrajectoryFollower> build();
+  PIDTrajectoryFollower build();
 };
 }  // namespace trajectory_follower
 }  // namespace trajectory

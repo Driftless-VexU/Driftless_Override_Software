@@ -93,6 +93,7 @@ class PIDPathFollowerBuilder {
   /// @brief Builds a new PID path follower
   /// @return __PIDPathFollower__ Pointer to the new PID path
   /// follower
+  [[nodiscard]]
   PIDPathFollower build();
 };
 }  // namespace path

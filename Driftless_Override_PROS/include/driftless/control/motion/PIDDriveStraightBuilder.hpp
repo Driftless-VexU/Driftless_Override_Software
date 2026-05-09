@@ -87,6 +87,7 @@ class PIDDriveStraightBuilder {
   /// @brief Builds a new PIDDriveStraight object
   /// @return __PIDDriveStraight__ The new PIDDriveStraight object
   /// object
+  [[nodiscard]]
   PIDDriveStraight build();
 };
 }  // namespace motion

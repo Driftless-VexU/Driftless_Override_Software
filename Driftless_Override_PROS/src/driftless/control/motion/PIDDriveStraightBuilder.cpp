@@ -45,13 +45,13 @@ PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTargetVelocity(
   return *this;
 }
 
-std::unique_ptr<PIDDriveStraight> PIDDriveStraightBuilder::build() {
+PIDDriveStraight PIDDriveStraightBuilder::build() {
   if(!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for PIDDriveStraightBuilder");
   }
   
-  return std::make_unique<PIDDriveStraight>(std::move(*this));
+  return {std::move(*this)};
 }
 }  // namespace motion
 }  // namespace control

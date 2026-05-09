@@ -85,9 +85,9 @@ class PIDDriveStraightBuilder {
   PIDDriveStraightBuilder& withTargetVelocity(double target_velocity);
 
   /// @brief Builds a new PIDDriveStraight object
-  /// @return __std::unique_ptr<PIDDriveStraight>__ The new PIDDriveStraight
+  /// @return __PIDDriveStraight__ The new PIDDriveStraight object
   /// object
-  std::unique_ptr<PIDDriveStraight> build();
+  PIDDriveStraight build();
 };
 }  // namespace motion
 }  // namespace control

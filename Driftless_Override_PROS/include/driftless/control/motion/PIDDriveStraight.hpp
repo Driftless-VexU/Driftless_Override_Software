@@ -34,6 +34,8 @@ class PIDDriveStraightBuilder;
 /// @brief Class representing a drive straight algorithm using PID controllers
 /// @author Matthew Backman
 class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
+  friend class PIDDriveStraightBuilder;
+
  private:
   // delay on the task loop
   static constexpr uint8_t TASK_DELAY{10};
@@ -83,6 +85,11 @@ class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
   // whether the control has been paused
   bool paused{};
 
+  /// @brief Constructs a new PIDDriveStraight
+  /// @param builder __PIDDriveStraightBuilder&&__ The builder containing the
+  /// parameters for the control
+  PIDDriveStraight(PIDDriveStraightBuilder&& builder);
+
   /// @brief Sets the velocity of the drivetrain
   /// @param left __double__ The left wheel velocity
   /// @param right __double__ The right wheel velocity
@@ -105,10 +112,13 @@ class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
   void taskUpdate();
 
  public:
-  /// @brief Constructs a new PIDDriveStraight
-  /// @param builder __PIDDriveStraightBuilder&&__ The builder containing the
-  /// parameters for the control
-  PIDDriveStraight(PIDDriveStraightBuilder&& builder);
+  /// @brief Copy constructor for PIDDriveStraight
+  /// @param other __PIDDriveStraight const&__ The PIDDriveStraight being copied
+  PIDDriveStraight(const PIDDriveStraight& other) = default;
+
+  /// @brief Move constructor for PIDDriveStraight
+  /// @param other __PIDDriveStraight&&__ The PIDDriveStraight being moved
+  PIDDriveStraight(PIDDriveStraight&& other) = default;
 
   /// @brief Initializes the control
   void init() override;

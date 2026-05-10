@@ -56,8 +56,18 @@ PIDPathFollower PIDPathFollowerBuilder::build() {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");
   }
-  
+
   return {std::move(*this)};
+}
+
+std::unique_ptr<PIDPathFollower> PIDPathFollowerBuilder::buildUnique() {
+  if (!m_delayer || !m_mutex || !m_task) {
+    throw std::runtime_error(
+        "One or more RTOS components not set in PIDPathFollowerBuilder");
+  }
+
+  return std::unique_ptr<PIDPathFollower>{
+      new PIDPathFollower{std::move(*this)}};
 }
 }  // namespace path
 }  // namespace control

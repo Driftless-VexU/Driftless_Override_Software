@@ -95,6 +95,12 @@ class PIDPathFollowerBuilder {
   /// follower
   [[nodiscard]]
   PIDPathFollower build();
+
+  /// @brief Builds a new PID path follower and returns a unique pointer to it
+  /// @return __std::unique_ptr<PIDPathFollower>__ A unique pointer to the new
+  /// PID path follower
+  [[nodiscard]] 
+  std::unique_ptr<PIDPathFollower> buildUnique();
 };
 }  // namespace path
 }  // namespace control

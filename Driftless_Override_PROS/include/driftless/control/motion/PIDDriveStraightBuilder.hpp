@@ -20,7 +20,7 @@ namespace motion {
 /// @brief Builder for the PIDDriveStraight class
 /// @author Matthew Backman
 class PIDDriveStraightBuilder {
-    friend class PIDDriveStraight;
+  friend class PIDDriveStraight;
 
  private:
   // the delayer used for the control
@@ -89,6 +89,13 @@ class PIDDriveStraightBuilder {
   /// object
   [[nodiscard]]
   PIDDriveStraight build();
+
+  /// @brief Builds a new PIDDriveStraight object and returns a unique pointer
+  /// to it
+  /// @return __std::unique_ptr<PIDDriveStraight>__ A unique pointer to the new
+  /// PIDDriveStraight object
+  [[nodiscard]]
+  std::unique_ptr<PIDDriveStraight> buildUnique();
 };
 }  // namespace motion
 }  // namespace control

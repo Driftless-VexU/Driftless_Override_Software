@@ -21,7 +21,8 @@ namespace trajectory_follower {
 
 /// @brief Builder class for PIDTrajectoryFollower objects
 class PIDTrajectoryFollowerBuilder {
-    friend class PIDTrajectoryFollower;
+  friend class PIDTrajectoryFollower;
+
  private:
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
@@ -90,10 +91,17 @@ class PIDTrajectoryFollowerBuilder {
   PIDTrajectoryFollowerBuilder& withTargetVelocity(double target_velocity);
 
   /// @brief Builds a PIDTrajectoryFollower object
-  /// @return __std::unique_ptr<PIDTrajectoryFollower>__ The new
+  /// @return __PIDTrajectoryFollower__ The new
   /// PIDTrajectoryFollower
   [[nodiscard]]
   PIDTrajectoryFollower build();
+
+  /// @brief Builds a new PIDTrajectoryFollower object and returns a unique
+  /// pointer to it
+  /// @return __std::unique_ptr<PIDTrajectoryFollower>__ A unique pointer to the
+  /// new PIDTrajectoryFollower
+  [[nodiscard]]
+  std::unique_ptr<PIDTrajectoryFollower> buildUnique();
 };
 }  // namespace trajectory_follower
 }  // namespace trajectory

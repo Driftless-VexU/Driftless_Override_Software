@@ -46,12 +46,22 @@ PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTargetVelocity(
 }
 
 PIDDriveStraight PIDDriveStraightBuilder::build() {
-  if(!m_delayer || !m_mutex || !m_task) {
+  if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for PIDDriveStraightBuilder");
   }
-  
+
   return {std::move(*this)};
+}
+
+std::unique_ptr<PIDDriveStraight> PIDDriveStraightBuilder::buildUnique() {
+  if (!m_delayer || !m_mutex || !m_task) {
+    throw std::runtime_error(
+        "One or more RTOS components not set for PIDDriveStraightBuilder");
+  }
+
+  return std::unique_ptr<PIDDriveStraight>{
+      new PIDDriveStraight{std::move(*this)}};
 }
 }  // namespace motion
 }  // namespace control

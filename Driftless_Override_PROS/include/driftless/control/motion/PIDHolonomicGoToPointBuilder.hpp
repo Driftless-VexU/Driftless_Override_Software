@@ -73,12 +73,14 @@ class PIDHolonomicGoToPointBuilder {
 
   /// @brief Builds a PIDHolonomicGoToPoint object
   /// @return __PIDHolonomicGoToPoint__ The built object
+  [[nodiscard]]
   PIDHolonomicGoToPoint build();
 
   /// @brief Builds a PIDHolonomicGoToPoint object and returns a unique pointer
   /// to it
   /// @return __std::unique_ptr<PIDHolonomicGoToPoint>__ A unique pointer to the
   /// built object
+  [[nodiscard]]
   std::unique_ptr<PIDHolonomicGoToPoint> buildUnique();
 };
 }  // namespace motion

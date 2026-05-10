@@ -1,6 +1,6 @@
 #include "driftless/control/motion/PIDHolonomicGoToPose.hpp"
+#include "driftless/control/motion/PIDHolonomicGoToPoseBuilder.hpp"
 
-#include "pros/screen.hpp"
 namespace driftless::control::motion {
 void PIDHolonomicGoToPose::taskLoop(void* params) {
   PIDHolonomicGoToPose* go_to_point{static_cast<PIDHolonomicGoToPose*>(params)};
@@ -9,6 +9,17 @@ void PIDHolonomicGoToPose::taskLoop(void* params) {
     go_to_point->taskUpdate();
   }
 }
+
+PIDHolonomicGoToPose::PIDHolonomicGoToPose(PIDHolonomicGoToPoseBuilder&& builder)
+    : m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_x_pid(builder.m_x_pid),
+      m_y_pid(builder.m_y_pid),
+      m_rotational_pid(builder.m_rotational_pid),
+      m_distance_tolerance(builder.m_distance_tolerance),
+      m_velocity_tolerance(builder.m_velocity_tolerance),
+      m_angular_tolerance(builder.m_angular_tolerance) {}
 
 void PIDHolonomicGoToPose::setDriveMotionVector(double x_velocity,
                                                 double y_velocity,

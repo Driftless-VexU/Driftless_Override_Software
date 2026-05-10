@@ -140,15 +140,15 @@ std::shared_ptr<control::ControlSystem> OrangeConfig::buildControlSystem() {
 
   std::unique_ptr<control::motion::IGoToPose> go_to_pose{
       go_to_pose_builder.withDelayer(delayer)
-          ->withMutex(go_to_pose_mutex)
-          ->withTask(go_to_pose_task)
-          ->withXPID(go_to_pose_x_pid)
-          ->withYPID(go_to_pose_y_pid)
-          ->withRotationalPID(go_to_pose_rotational_pid)
-          ->withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
-          ->withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
-          ->withAngularTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
-          ->build()};
+          .withMutex(go_to_pose_mutex)
+          .withTask(go_to_pose_task)
+          .withXPID(go_to_pose_x_pid)
+          .withYPID(go_to_pose_y_pid)
+          .withRotationalPID(go_to_pose_rotational_pid)
+          .withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
+          .withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
+          .withAngularTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
+          .buildUnique()};
 
   // make the controller
   std::unique_ptr<control::AControl> motion_control{

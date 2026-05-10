@@ -30,9 +30,13 @@ namespace control {
 /// @author Matthew Backman
 namespace motion {
 
+class PIDHolonomicGoToPoseBuilder;
+
 /// @brief Class representing a go to point algorithm using PID
 /// @author Matthew Backman
 class PIDHolonomicGoToPose : public IGoToPose {
+  friend class PIDHolonomicGoToPoseBuilder;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -77,6 +81,11 @@ class PIDHolonomicGoToPose : public IGoToPose {
 
   bool m_paused{true};
 
+  /// @brief Constructs a new PIDHolonomicGoToPose from a builder
+  /// @param builder __PIDHolonomicGoToPoseBuilder&&__ The builder to construct
+  /// from
+  PIDHolonomicGoToPose(PIDHolonomicGoToPoseBuilder&& builder);
+
   /// @brief Sets the drive motion vector of the robot
   /// @param x_velocity __double__ The velocity in the x direction
   /// @param y_velocity __double__ The velocity in the y direction
@@ -100,6 +109,16 @@ class PIDHolonomicGoToPose : public IGoToPose {
   void taskUpdate();
 
  public:
+  /// @brief Copies another PIDHolonomicGoToPose
+  /// @param other __const PIDHolonomicGoToPose&__ The PIDHolonomicGoToPose
+  /// being copied
+  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = default;
+
+  /// @brief Moves another PIDHolonomicGoToPose
+  /// @param other __PIDHolonomicGoToPose&&__ The PIDHolonomicGoToPose being
+  /// moved
+  PIDHolonomicGoToPose(PIDHolonomicGoToPose&& other) = default;
+
   /// @brief Initializes the control
   void init() override;
 

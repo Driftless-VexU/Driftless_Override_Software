@@ -18,6 +18,8 @@ namespace motion {
 /// @brief Builder class for PIDHolonomicTurn objects
 /// @author Matthew Backman
 class PIDHolonomicTurnBuilder {
+  friend class PIDHolonomicTurn;
+
  private:
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
@@ -34,39 +36,47 @@ class PIDHolonomicTurnBuilder {
  public:
   /// @brief Adds a delayer to the builder
   /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to add
-  /// @return __PIDHolonomicTurnBuilder*__ Reference to the current builder
-  PIDHolonomicTurnBuilder* withDelayer(
+  /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
+  PIDHolonomicTurnBuilder& withDelayer(
       const std::unique_ptr<rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to add
-  /// @return __PIDHolonomicTurnBuilder*__ Reference to the current builder
-  PIDHolonomicTurnBuilder* withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
+  PIDHolonomicTurnBuilder& withMutex(std::unique_ptr<rtos::IMutex>& mutex);
 
   /// @brief Adds a task to the builder
   /// @param task __std::unique_ptr<rtos::ITask>&__ The task to add
-  /// @return __PIDHolonomicTurnBuilder*__ Reference to the current builder
-  PIDHolonomicTurnBuilder* withTask(std::unique_ptr<rtos::ITask>& task);
+  /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
+  PIDHolonomicTurnBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
 
   /// @brief Adds a rotational PID to the builder
   /// @param rotational_pid __PID__ The rotational PID to add
-  /// @return __PIDHolonomicTurnBuilder*__ Reference to the current builder
-  PIDHolonomicTurnBuilder* withRotationalPID(PID rotational_pid);
+  /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
+  PIDHolonomicTurnBuilder& withRotationalPID(PID rotational_pid);
 
   /// @brief Adds a target tolerance to the builder
   /// @param target_tolerance __double__ The target tolerance to add
-  /// @return __PIDHolonomicTurnBuilder*__ Reference to the current builder
-  PIDHolonomicTurnBuilder* withTargetTolerance(double target_tolerance);
+  /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
+  PIDHolonomicTurnBuilder& withTargetTolerance(double target_tolerance);
 
   /// @brief Adds a target velocity to the builder
   /// @param target_velocity __double__ The target velocity to add
-  /// @return __PIDHolonomicTurnBuilder*__ Reference to the current builder
-  PIDHolonomicTurnBuilder* withTargetVelocity(double target_velocity);
+  /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
+  PIDHolonomicTurnBuilder& withTargetVelocity(double target_velocity);
 
   /// @brief Builds a new PIDHolonomicTurn object
-  /// @return __std::unique_ptr<PIDHolonomicTurn>&__ The newly created
+  /// @return __PIDHolonomicTurn__ The newly created
   /// PIDHolonomicTurn
-  std::unique_ptr<PIDHolonomicTurn> build();
+  [[nodiscard]]
+  PIDHolonomicTurn build();
+
+  /// @brief Builds a new PIDHolonomicTurn object and returns a unique pointer
+  /// to it
+  /// @return __std::unique_ptr<PIDHolonomicTurn>__ A unique pointer to the
+  /// newly created PIDHolonomicTurn
+  [[nodiscard]]
+  std::unique_ptr<PIDHolonomicTurn> buildUnique();
 };
 }  // namespace motion
 }  // namespace control

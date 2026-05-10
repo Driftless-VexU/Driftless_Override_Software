@@ -121,12 +121,12 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
 
   std::unique_ptr<control::motion::ITurn> turn{
       turn_builder.withDelayer(delayer)
-          ->withMutex(turn_mutex)
-          ->withTask(turn_task)
-          ->withRotationalPID(turn_pid)
-          ->withTargetTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
-          ->withTargetVelocity(0.1)
-          ->build()};
+          .withMutex(turn_mutex)
+          .withTask(turn_task)
+          .withRotationalPID(turn_pid)
+          .withTargetTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
+          .withTargetVelocity(0.1)
+          .buildUnique()};
 
   std::unique_ptr<control::motion::IGoToPoint> go_to_point{
       go_to_point_builder.withDelayer(delayer)

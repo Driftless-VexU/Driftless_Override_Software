@@ -27,9 +27,14 @@ namespace control {
 /// @author Matthew Backman
 namespace motion {
 
+class PIDHolonomicTurnBuilder;
+
 /// @brief Class representing a turn algorithm using a PID controller
 /// @author Matthew Backman
 class PIDHolonomicTurn : public ITurn {
+  friend class PIDHolonomicTurnBuilder;
+
+ private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
 
@@ -79,6 +84,11 @@ class PIDHolonomicTurn : public ITurn {
   // whether the control is paused
   bool m_paused{true};
 
+  /// @brief Constructs a new PIDHolonomicTurn object using a builder
+  /// @param builder __PIDHolonomicTurnBuilder&&__ The builder to construct the
+  /// object with
+  PIDHolonomicTurn(PIDHolonomicTurnBuilder&& builder);
+
   /// @brief Sets the velocity for the drive train
   /// @param velocity __double__ The velocity to turn at
   void setDriveTurnVelocity(double velocity);
@@ -105,6 +115,14 @@ class PIDHolonomicTurn : public ITurn {
   void taskUpdate();
 
  public:
+  /// @brief Copies another PIDHolonomicTurn object
+  /// @param other __const PIDHolonomicTurn&__ The PIDHolonomicTurn to copy
+  PIDHolonomicTurn(const PIDHolonomicTurn& other) = default;
+
+  /// @brief Moves another PIDHolonomicTurn object
+  /// @param other __PIDHolonomicTurn&&__ The PIDHolonomicTurn to move
+  PIDHolonomicTurn(PIDHolonomicTurn&& other) = default;
+
   /// @brief Initializes the PIDHolonomicTurn
   void init() override;
 

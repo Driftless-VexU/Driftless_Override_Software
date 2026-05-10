@@ -30,9 +30,13 @@ namespace control {
 /// @author Matthew Backman
 namespace motion {
 
+class PIDHolonomicGoToPointBuilder;
+
 /// @brief Class representing a go to point algorithm using PID
 /// @author Matthew Backman
 class PIDHolonomicGoToPoint : public IGoToPoint {
+  friend class PIDHolonomicGoToPointBuilder;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -65,6 +69,11 @@ class PIDHolonomicGoToPoint : public IGoToPoint {
 
   bool m_paused{true};
 
+  /// @brief Constructs a new PIDHolonomicGoToPoint from a builder
+  /// @param builder __PIDHolonomicGoToPointBuilder&&__ The builder to construct
+  /// from
+  PIDHolonomicGoToPoint(PIDHolonomicGoToPointBuilder&& builder);
+
   /// @brief Sets the drive motion vector of the robot
   /// @param x_velocity __double__ The velocity in the x direction
   /// @param y_velocity __double__ The velocity in the y direction
@@ -89,6 +98,16 @@ class PIDHolonomicGoToPoint : public IGoToPoint {
   void taskUpdate();
 
  public:
+  /// @brief Copies another PIDHolonomicGoToPoint
+  /// @param other __const PIDHolonomicGoToPoint&__ The PIDHolonomicGoToPoint
+  /// being copied
+  PIDHolonomicGoToPoint(const PIDHolonomicGoToPoint& other) = default;
+
+  /// @brief Moves a PIDHolonomicGoToPoint
+  /// @param other __PIDHolonomicGoToPoint&&__ The PIDHolonomicGoToPoint being
+  /// moved
+  PIDHolonomicGoToPoint(PIDHolonomicGoToPoint&& other) = default;
+  
   /// @brief Initializes the control
   void init() override;
 
@@ -116,38 +135,6 @@ class PIDHolonomicGoToPoint : public IGoToPoint {
   /// @brief Checks if the target point has been reached
   /// @return True if the target point has been reached, false otherwise
   bool targetReached() override;
-
-  /// @brief Sets the delayer for the control
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
-  void setDelayer(std::unique_ptr<rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex for the control
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to use
-  void setMutex(std::unique_ptr<rtos::IMutex>& mutex);
-
-  /// @brief Sets the task for the control
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to use
-  void setTask(std::unique_ptr<rtos::ITask>& task);
-
-  /// @brief Sets the x PID controller
-  /// @param x_pid The x PID controller to use
-  void setXPID(PID x_pid);
-
-  /// @brief Sets the y PID controller
-  /// @param y_pid The y PID controller to use
-  void setYPID(PID y_pid);
-
-  /// @brief Sets the rotational PID controller
-  /// @param rotational_pid The rotational PID controller to use
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the distance tolerance for reaching the target
-  /// @param distance_tolerance __double__ The distance tolerance
-  void setDistanceTolerance(double distance_tolerance);
-
-  /// @brief Sets the velocity tolerance for reaching the target
-  /// @param velocity_tolerance __double__ The velocity tolerance
-  void setVelocityTolerance(double velocity_tolerance);
 };
 }  // namespace motion
 }  // namespace control

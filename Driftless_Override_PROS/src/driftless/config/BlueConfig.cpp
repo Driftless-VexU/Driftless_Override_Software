@@ -130,13 +130,13 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
 
   std::unique_ptr<control::motion::IGoToPoint> go_to_point{
       go_to_point_builder.withDelayer(delayer)
-          ->withMutex(go_to_point_mutex)
-          ->withTask(go_to_point_task)
-          ->withXPID(go_to_point_x_pid)
-          ->withYPID(go_to_point_y_pid)
-          ->withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
-          ->withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
-          ->build()};
+          .withMutex(go_to_point_mutex)
+          .withTask(go_to_point_task)
+          .withXPID(go_to_point_x_pid)
+          .withYPID(go_to_point_y_pid)
+          .withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
+          .withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
+          .buildUnique()};
 
   std::unique_ptr<control::motion::IGoToPose> go_to_pose{
       go_to_pose_builder.withDelayer(delayer)

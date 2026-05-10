@@ -38,8 +38,7 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
       trajectory_follower_builder{};
 
   std::unique_ptr<control::trajectory::trajectory_follower::ITrajectoryFollower>
-      trajectory_follower{std::make_unique<
-          control::trajectory::trajectory_follower::PIDTrajectoryFollower>(
+      trajectory_follower{
           trajectory_follower_builder.withClock(clock)
               .withDelayer(delayer)
               .withTask(trajectory_follower_task)
@@ -49,7 +48,7 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
               .withThetaPID(trajectory_follower_theta_PID)
               .withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
               .withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
-              .build())};
+              .buildUnique()};
 
   std::unique_ptr<control::AControl> trajectory_follower_control{
       std::make_unique<
@@ -111,15 +110,14 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
   control::motion::PIDHolonomicGoToPoseBuilder go_to_pose_builder{};
 
   std::unique_ptr<control::motion::IDriveStraight> drive_straight{
-      std::make_unique<control::motion::PIDDriveStraight>(
-          drive_straight_builder.withDelayer(delayer)
-              .withMutex(drive_straight_mutex)
-              .withTask(drive_straight_task)
-              .withLinearPID(drive_straight_linear_pid)
-              .withRotationalPID(drive_straight_angular_pid)
-              .withTargetTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
-              .withTargetVelocity(1.0)
-              .build())};
+      drive_straight_builder.withDelayer(delayer)
+          .withMutex(drive_straight_mutex)
+          .withTask(drive_straight_task)
+          .withLinearPID(drive_straight_linear_pid)
+          .withRotationalPID(drive_straight_angular_pid)
+          .withTargetTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
+          .withTargetVelocity(1.0)
+          .buildUnique()};
 
   std::unique_ptr<control::motion::ITurn> turn{
       turn_builder.withDelayer(delayer)

@@ -9,8 +9,8 @@
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemCommand.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
-#include "driftless/robot/subsystems/tank_drive_train/Velocity.hpp"
 #include "driftless/robot/subsystems/odometry/Position.hpp"
+#include "driftless/robot/subsystems/tank_drive_train/Velocity.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/rtos/IMutex.hpp"
 #include "driftless/rtos/ITask.hpp"
@@ -28,9 +28,13 @@ namespace control {
 /// @author Matthew Backman
 namespace motion {
 
+class PIDTurnBuilder;
+
 /// @brief Class representing a turn algorithm using a PID controller
 /// @author Matthew Backman
 class PIDTurn : public ITurn {
+  friend class PIDTurnBuilder;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -81,9 +85,13 @@ class PIDTurn : public ITurn {
   // whether the control is paused
   bool paused{};
 
+  /// @brief Constructs a new PIDTurn object using a builder
+  /// @param builder __PIDTurnBuilder&&__ The builder to construct the PIDTurn with
+  explicit PIDTurn(PIDTurnBuilder&& builder);
+
   /// @brief Sets the velocity of the drive train
-  /// @param velocity __robot::subsystems::tank_drive_train::Velocity__ The desired
-  /// drive velocity
+  /// @param velocity __robot::subsystems::tank_drive_train::Velocity__ The
+  /// desired drive velocity
   void setDriveVelocity(
       driftless::robot::subsystems::tank_drive_train::Velocity velocity);
 
@@ -106,8 +114,8 @@ class PIDTurn : public ITurn {
   /// @brief Calculates the velocity to pass to the drive train
   /// @param current_angle __double__ The robot's current heading
   /// @param target_angle __double__ The desired angle
-  /// @return __robot::subsystems::tank_drive_train::Velocity__ The velocity for the
-  /// drive train
+  /// @return __robot::subsystems::tank_drive_train::Velocity__ The velocity for
+  /// the drive train
   robot::subsystems::tank_drive_train::Velocity calculateDriveVelocity(
       double current_angle, double target_angle);
 
@@ -115,6 +123,14 @@ class PIDTurn : public ITurn {
   void taskUpdate();
 
  public:
+ /// @brief Copies another PIDTurn object
+ /// @param other __const PIDTurn&__ The PIDTurn being copied
+ PIDTurn(const PIDTurn& other) = default;
+
+ /// @brief Moves another PIDTurn object
+ /// @param other __PIDTurn&&__ The PIDTurn being moved
+ PIDTurn(PIDTurn&& other) = default;
+
   /// @brief Initializes the PIDTurn
   void init() override;
 
@@ -152,30 +168,6 @@ class PIDTurn : public ITurn {
   /// @brief Determines if the target angle has been reached
   /// @return __bool__ True if within the target range, else false
   bool targetReached() override;
-
-  /// @brief Sets the delayer used
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer
-  void setDelayer(const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex used
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task used
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the rotational PID controller used
-  /// @param rotational_pid __PID__ The rotational PID controller
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the target tolerance
-  /// @param target_tolerance __double__ The target tolerance
-  void setTargetTolerance(double target_tolerance);
-
-  /// @brief Sets the target velocity
-  /// @param target_velocity __double__ The target velocity
-  void setTargetVelocity(double target_velocity);
 };
 }  // namespace motion
 }  // namespace control

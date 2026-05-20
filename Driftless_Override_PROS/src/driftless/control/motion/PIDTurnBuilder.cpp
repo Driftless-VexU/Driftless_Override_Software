@@ -3,49 +3,55 @@
 namespace driftless {
 namespace control {
 namespace motion {
-PIDTurnBuilder* PIDTurnBuilder::withDelayer(
+PIDTurnBuilder& PIDTurnBuilder::withDelayer(
     const std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
   m_delayer = delayer->clone();
-  return this;
+  return *this;
 }
 
-PIDTurnBuilder* PIDTurnBuilder::withMutex(
+PIDTurnBuilder& PIDTurnBuilder::withMutex(
     std::unique_ptr<driftless::rtos::IMutex>& mutex) {
   m_mutex = std::move(mutex);
-  return this;
+  return *this;
 }
 
-PIDTurnBuilder* PIDTurnBuilder::withTask(
+PIDTurnBuilder& PIDTurnBuilder::withTask(
     std::unique_ptr<driftless::rtos::ITask>& task) {
   m_task = std::move(task);
-  return this;
+  return *this;
 }
 
-PIDTurnBuilder* PIDTurnBuilder::withRotationalPID(PID rotational_pid) {
+PIDTurnBuilder& PIDTurnBuilder::withRotationalPID(PID rotational_pid) {
   m_rotational_pid = rotational_pid;
-  return this;
+  return *this;
 }
 
-PIDTurnBuilder* PIDTurnBuilder::withTargetTolerance(double target_tolerance) {
+PIDTurnBuilder& PIDTurnBuilder::withTargetTolerance(double target_tolerance) {
   m_target_tolerance = target_tolerance;
-  return this;
+  return *this;
 }
 
-PIDTurnBuilder* PIDTurnBuilder::withTargetVelocity(double target_velocity) {
+PIDTurnBuilder& PIDTurnBuilder::withTargetVelocity(double target_velocity) {
   m_target_velocity = target_velocity;
-  return this;
+  return *this;
 }
 
-std::unique_ptr<PIDTurn> PIDTurnBuilder::build() {
-  std::unique_ptr<PIDTurn> pid_turn{std::make_unique<PIDTurn>()};
-  pid_turn->setDelayer(m_delayer);
-  pid_turn->setMutex(m_mutex);
-  pid_turn->setTask(m_task);
-  pid_turn->setRotationalPID(m_rotational_pid);
-  pid_turn->setTargetTolerance(m_target_tolerance);
-  pid_turn->setTargetVelocity(m_target_velocity);
+PIDTurn PIDTurnBuilder::build() {
+  if (!m_delayer || !m_mutex || !m_task) {
+    throw std::runtime_error(
+        "One or more RTOS components not set in PIDPathFollowerBuilder");
+  }
 
-  return pid_turn;
+  return PIDTurn{std::move(*this)};
+}
+
+std::unique_ptr<PIDTurn> PIDTurnBuilder::buildUnique() {
+  if (!m_delayer || !m_mutex || !m_task) {
+    throw std::runtime_error(
+        "One or more RTOS components not set in PIDPathFollowerBuilder");
+  }
+
+  return std::unique_ptr<PIDTurn>{new PIDTurn{std::move(*this)}};
 }
 }  // namespace motion
 }  // namespace control

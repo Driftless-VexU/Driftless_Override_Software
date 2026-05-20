@@ -17,6 +17,8 @@ namespace motion {
 
 /// @brief Builder for the PIDTurn class
 class PIDTurnBuilder {
+  friend class PIDTurn;
+
  private:
   // the delayer used to build the control
   std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
@@ -40,38 +42,44 @@ class PIDTurnBuilder {
   /// @brief Adds a delayer to the builder
   /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer
   /// added
-  /// @return __PIDTurnBuilder*__ Pointer to the current builder
-  PIDTurnBuilder* withDelayer(
+  /// @return __PIDTurnBuilder&__ Pointer to the current builder
+  PIDTurnBuilder& withDelayer(
       const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex added
-  /// @return __PIDTurnBuilder*__ Pointer to the current builder
-  PIDTurnBuilder* withMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
+  /// @return __PIDTurnBuilder&__ Pointer to the current builder
+  PIDTurnBuilder& withMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
 
   /// @brief Adds a task to the builder
   /// @param task __std::unique_ptr<rtos::ITask>&__ The task added
-  /// @return __PIDTurnBuilder*__ Pointer to the current builder
-  PIDTurnBuilder* withTask(std::unique_ptr<driftless::rtos::ITask>& task);
+  /// @return __PIDTurnBuilder&__ Pointer to the current builder
+  PIDTurnBuilder& withTask(std::unique_ptr<driftless::rtos::ITask>& task);
 
   /// @brief Adds a rotational PID controller to the builder
   /// @param rotational_pid __PID__ The rotational PID controller added
-  /// @return __PIDTurnBuilder*__ Pointer to the current builder
-  PIDTurnBuilder* withRotationalPID(PID rotational_pid);
+  /// @return __PIDTurnBuilder&__ Pointer to the current builder
+  PIDTurnBuilder& withRotationalPID(PID rotational_pid);
 
   /// @brief Adds a target tolerance to the builder
   /// @param target_tolerance __double__ The target tolerance added
-  /// @return __PIDTurnBuilder*__ Pointer to the current builder
-  PIDTurnBuilder* withTargetTolerance(double target_tolerance);
+  /// @return __PIDTurnBuilder&__ Pointer to the current builder
+  PIDTurnBuilder& withTargetTolerance(double target_tolerance);
 
   /// @brief Adds a target velocity to the builder
   /// @param target_velocity __double__ The target velocity added
-  /// @return __PIDTurnBuilder*__ Pointer to the current builder
-  PIDTurnBuilder* withTargetVelocity(double target_velocity);
+  /// @return __PIDTurnBuilder&__ Pointer to the current builder
+  PIDTurnBuilder& withTargetVelocity(double target_velocity);
 
   /// @brief Builds a new PIDTurn object
-  /// @return __std::unique_ptr<PIDTurn>__ The new PIDTurn object
-  std::unique_ptr<PIDTurn> build();
+  /// @return __PIDTurn__ The new PIDTurn object
+  [[nodiscard]]
+  PIDTurn build();
+
+  /// @brief Builds a new PIDTurn object and returns a unique pointer to it
+  /// @return __std::unique_ptr<PIDTurn>__ A unique pointer to the new PIDTurn object
+  [[nodiscard]]
+  std::unique_ptr<PIDTurn> buildUnique();
 };
 }  // namespace motion
 }  // namespace control

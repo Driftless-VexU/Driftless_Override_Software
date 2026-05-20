@@ -1,4 +1,5 @@
 #include "driftless/control/motion/PIDTurn.hpp"
+#include "driftless/control/motion/PIDTurnBuilder.hpp"
 
 namespace driftless {
 namespace control {
@@ -10,6 +11,13 @@ void PIDTurn::taskLoop(void* params) {
     pid_turn->taskUpdate();
   }
 }
+
+PIDTurn::PIDTurn(PIDTurnBuilder&& builder) : m_delayer{std::move(builder.m_delayer)},
+                                              m_mutex{std::move(builder.m_mutex)},
+                                              m_task{std::move(builder.m_task)},
+                                              m_rotational_pid{builder.m_rotational_pid},
+                                              m_target_tolerance{builder.m_target_tolerance},
+                                              m_target_velocity{builder.m_target_velocity} {}
 
 void PIDTurn::setDriveVelocity(
     driftless::robot::subsystems::tank_drive_train::Velocity velocity) {
@@ -196,31 +204,6 @@ void PIDTurn::turnToPoint(const std::shared_ptr<driftless::robot::Robot>& robot,
 }
 
 bool PIDTurn::targetReached() { return target_reached; }
-
-void PIDTurn::setDelayer(
-    const std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDTurn::setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDTurn::setTask(std::unique_ptr<driftless::rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDTurn::setRotationalPID(PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
-}
-
-void PIDTurn::setTargetTolerance(double target_tolerance) {
-  m_target_tolerance = target_tolerance;
-}
-
-void PIDTurn::setTargetVelocity(double target_velocity) {
-  m_target_velocity = target_velocity;
-}
 }  // namespace motion
 }  // namespace control
 }  // namespace driftless

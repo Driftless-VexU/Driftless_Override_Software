@@ -240,49 +240,42 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
       std::make_unique<pros_adapters::ProsV5Motor>(
           pros_drive_back_right_bottom_motor)};
 
-  // create the drive module builders
-  robot::subsystems::holonomic_drive_train::holonomic_drive_module::
-      XDriveModuleBuilder drive_front_left_module_builder;
-  robot::subsystems::holonomic_drive_train::holonomic_drive_module::
-      XDriveModuleBuilder drive_front_right_module_builder;
-  robot::subsystems::holonomic_drive_train::holonomic_drive_module::
-      XDriveModuleBuilder drive_back_left_module_builder;
-  robot::subsystems::holonomic_drive_train::holonomic_drive_module::
-      XDriveModuleBuilder drive_back_right_module_builder;
-
   // build the drive modules
   std::unique_ptr<robot::subsystems::holonomic_drive_train::
                       holonomic_drive_module::IHolonomicDriveModule>
       drive_front_left_module{
-          drive_front_left_module_builder.withMotor(drive_front_left_top_motor)
-              ->withMotor(drive_front_left_bottom_motor)
-              ->withAngleOffset(DRIVE_FRONT_LEFT_ANGLE_OFFSET)
-              ->build()};
+          std::make_unique<robot::subsystems::holonomic_drive_train::
+                               holonomic_drive_module::XDriveModule>(
+              hal::MotorGroup{std::move(drive_front_left_top_motor),
+                              std::move(drive_front_left_bottom_motor)},
+              DRIVE_FRONT_LEFT_ANGLE_OFFSET)};
 
   std::unique_ptr<robot::subsystems::holonomic_drive_train::
                       holonomic_drive_module::IHolonomicDriveModule>
       drive_front_right_module{
-          drive_front_right_module_builder
-              .withMotor(drive_front_right_top_motor)
-              ->withMotor(drive_front_right_bottom_motor)
-              ->withAngleOffset(DRIVE_FRONT_RIGHT_ANGLE_OFFSET)
-              ->build()};
+          std::make_unique<robot::subsystems::holonomic_drive_train::
+                               holonomic_drive_module::XDriveModule>(
+              hal::MotorGroup{std::move(drive_front_right_top_motor),
+                              std::move(drive_front_right_bottom_motor)},
+              DRIVE_FRONT_RIGHT_ANGLE_OFFSET)};
 
   std::unique_ptr<robot::subsystems::holonomic_drive_train::
                       holonomic_drive_module::IHolonomicDriveModule>
       drive_back_left_module{
-          drive_back_left_module_builder.withMotor(drive_back_left_top_motor)
-              ->withMotor(drive_back_left_bottom_motor)
-              ->withAngleOffset(DRIVE_BACK_LEFT_ANGLE_OFFSET)
-              ->build()};
+          std::make_unique<robot::subsystems::holonomic_drive_train::
+                               holonomic_drive_module::XDriveModule>(
+              hal::MotorGroup{std::move(drive_back_left_top_motor),
+                              std::move(drive_back_left_bottom_motor)},
+              DRIVE_BACK_LEFT_ANGLE_OFFSET)};
 
   std::unique_ptr<robot::subsystems::holonomic_drive_train::
                       holonomic_drive_module::IHolonomicDriveModule>
       drive_back_right_module{
-          drive_back_right_module_builder.withMotor(drive_back_right_top_motor)
-              ->withMotor(drive_back_right_bottom_motor)
-              ->withAngleOffset(DRIVE_BACK_RIGHT_ANGLE_OFFSET)
-              ->build()};
+          std::make_unique<robot::subsystems::holonomic_drive_train::
+                               holonomic_drive_module::XDriveModule>(
+              hal::MotorGroup{std::move(drive_back_right_top_motor),
+                              std::move(drive_back_right_bottom_motor)},
+              DRIVE_BACK_RIGHT_ANGLE_OFFSET)};
 
   // build the drive train
   robot::subsystems::holonomic_drive_train::ModularHolonomicDriveBuilder

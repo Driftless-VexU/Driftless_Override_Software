@@ -37,6 +37,13 @@ class XDriveModule : public IHolonomicDriveModule {
   double m_angle_offset{};
 
  public:
+  /// @brief Constructs a new X-drive module with the given motors and angular
+  /// offset
+  /// @param motors __hal::MotorGroup&__ The motors to be used by the module
+  /// @param angle_offset __double__ The angular offset of the module, in
+  /// radians, from 0 (positive X)
+  explicit XDriveModule(hal::MotorGroup&& motors, double angle_offset = 0.0);
+
   /// @brief Initializes the X-drive module
   void init() override;
 
@@ -59,14 +66,6 @@ class XDriveModule : public IHolonomicDriveModule {
   /// @brief Sets the voltage of the motors within the module
   /// @param voltage __double__ The voltage to set the motors to
   void setRawVoltage(double voltage) override;
-
-  /// @brief Sets the motors of the X-drive module
-  /// @param motors __MotorGroup__ The motors to be used by the module
-  void setMotors(hal::MotorGroup& motors);
-
-  /// @brief Sets the angle offset of the X-drive module
-  /// @param angleOffset __double__ The angle offset to be set
-  void setAngleOffset(double angle_offset);
 
   /// @brief Gets the speed of the module in rad/s
   /// @return __double__ The speed of the module in rad/s

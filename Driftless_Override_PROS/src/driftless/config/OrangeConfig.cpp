@@ -283,15 +283,15 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   std::unique_ptr<robot::subsystems::holonomic_drive_train::IHolonomicDrive>
       drive_train{drive_train_builder.withModule(drive_front_left_module)
-                      ->withModule(drive_front_right_module)
-                      ->withModule(drive_back_left_module)
-                      ->withModule(drive_back_right_module)
-                      ->withDelayer(drive_delayer)
-                      ->withTask(drive_task)
-                      ->withMutex(drive_mutex)
-                      ->withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
-                      ->withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
-                      ->build()};
+                      .withModule(drive_front_right_module)
+                      .withModule(drive_back_left_module)
+                      .withModule(drive_back_right_module)
+                      .withDelayer(drive_delayer)
+                      .withTask(drive_task)
+                      .withMutex(drive_mutex)
+                      .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
+                      .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
+                      .buildUnique()};
 
   // create the subsystem
   std::unique_ptr<robot::subsystems::ASubsystem> drive_train_subsystem{

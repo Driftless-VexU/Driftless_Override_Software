@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "driftless/robot/subsystems/ASubsystem.hpp"
-#include "driftless/robot/subsystems/odometry/DistancePositionResetter.hpp"
 #include "driftless/robot/subsystems/odometry/InertialPositionTracker.hpp"
 
 /// @brief The namespace for driftless library code

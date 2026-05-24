@@ -3,7 +3,6 @@
 
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/hal/PistonGroup.hpp"
-#include "driftless/hal/PistonGroup.hpp"
 #include "driftless/robot/subsystems/tank_drive_train/ITankDriveTrain.hpp"
 
 /// @brief The namespace for driftless library code
@@ -22,9 +21,13 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace tank_drive_train {
 
+class DirectDriveBuilder;
+
 /// @brief Class representing the direct drive system
 /// @author Matthew Backman
 class DirectDrive : public ITankDriveTrain {
+  friend class DirectDriveBuilder;
+
  private:
   hal::MotorGroup m_left_motors{};
 
@@ -38,7 +41,20 @@ class DirectDrive : public ITankDriveTrain {
 
   double m_drive_radius{};
 
+  /// @brief Constructs a direct drive object from a builder
+  /// @param builder __DirectDriveBuilder&&__ The builder being used to
+  /// construct the drive
+  explicit DirectDrive(DirectDriveBuilder&& builder);
+
  public:
+  /// @brief Deleted copy constructor
+  /// @param other __DirectDrive&__ The direct drive being copied
+  DirectDrive(const DirectDrive& other) = delete;
+
+  /// @brief Move constructor
+  /// @param other __DirectDrive&&__ The direct drive being moved
+  DirectDrive(DirectDrive&& other) = default;
+
   /// @brief Initializes the direct drive
   void init() override;
 
@@ -54,33 +70,6 @@ class DirectDrive : public ITankDriveTrain {
   /// @param right_voltage __double__ The voltage passed to the right motors
   void setVoltage(double left_voltage, double right_voltage) override;
 
-  /// @brief Sets the left motors used by the drive train
-  /// @param left_motors __hal::MotorGroup&__ The motors in the left of the
-  /// drive train
-  void setLeftMotors(hal::MotorGroup& left_motors);
-
-  /// @brief Sets the right motors used by the drive train
-  /// @param right_motors __hal::MotorGroup&__ The motors in the right of the
-  /// drive train
-  void setRightMotors(hal::MotorGroup& right_motors);
-
-  /// @brief Sets the conversion from velocity to voltage
-  /// @param velocity_to_voltage __double__ The ratio between velocity and
-  /// voltage
-  void setVelocityToVoltage(double velocity_to_voltage);
-
-  /// @brief Sets the gear ratio of the drive motors
-  /// @param gear_ratio __double__ The gear ratio
-  void setGearRatio(double gear_ratio);
-
-  /// @brief Sets the radius of the wheels
-  /// @param wheel_radius __double__ The wheel's radius, in inches
-  void setWheelRadius(double wheel_radius);
-
-  /// @brief Sets the radius of the drive train
-  /// @param drive_radius __double__ The radius of the drive train, in inches
-  void setDriveRadius(double drive_radius);
-
   /// @brief Gets the velocity of the drive train
   /// @return __Velocity__ The velocity of the drive train
   Velocity getVelocity() override;
@@ -89,7 +78,7 @@ class DirectDrive : public ITankDriveTrain {
   /// @return __double__ The radius of the drive train
   double getDriveRadius() const override;
 };
-}  // namespace drivetrain
+}  // namespace tank_drive_train
 }  // namespace subsystems
 }  // namespace robot
 }  // namespace driftless

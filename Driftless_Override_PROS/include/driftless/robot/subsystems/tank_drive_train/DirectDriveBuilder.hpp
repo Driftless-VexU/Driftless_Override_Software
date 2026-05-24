@@ -27,6 +27,8 @@ namespace tank_drive_train {
 /// @brief Builder class for creating DirectDrive objects
 /// @author Matthew Backman
 class DirectDriveBuilder {
+  friend class DirectDrive;
+  
  private:
   hal::MotorGroup m_left_motors{};
 
@@ -43,35 +45,41 @@ class DirectDriveBuilder {
  public:
   /// @brief Adds a left motor to the builder
   /// @param motor __std::unique_ptr<io::IMotor>&__ The motor being added
-  /// @return __DirectDriveBuilder*__ Pointer to the current builder
-  DirectDriveBuilder* withLeftMotor(std::unique_ptr<io::IMotor>& motor);
+  /// @return __DirectDriveBuilder&__ Pointer to the current builder
+  DirectDriveBuilder& withLeftMotor(std::unique_ptr<io::IMotor>& motor);
 
   /// @brief Adds a right motor to the builder
   /// @param motor __std::unique_ptr<io::IMotor>&__ The motor being added
-  /// @return __DirectDriveBuilder*__ Pointer to the current builder
-  DirectDriveBuilder* withRightMotor(std::unique_ptr<io::IMotor>& motor);
+  /// @return __DirectDriveBuilder&__ Pointer to the current builder
+  DirectDriveBuilder& withRightMotor(std::unique_ptr<io::IMotor>& motor);
 
   /// @brief Adds a velocity to voltage conversion to the builder
   /// @param velocity_to_voltage _double_ The conversion factor being added
-  /// @return __DirectDriveBuilder*__ Pointer to the current builder
-  DirectDriveBuilder* withVelocityToVoltage(double velocity_to_voltage);
+  /// @return __DirectDriveBuilder&__ Pointer to the current builder
+  DirectDriveBuilder& withVelocityToVoltage(double velocity_to_voltage);
 
   /// @brief Adds a wheel radius to the builder
   /// @param wheel_radius __double__ The wheel radius
-  /// @return __DirectDriveBuilder*__ Pointer to the current builder
-  DirectDriveBuilder* withWheelRadius(double wheel_radius);
+  /// @return __DirectDriveBuilder&__ Pointer to the current builder
+  DirectDriveBuilder& withWheelRadius(double wheel_radius);
 
   /// @brief Adds a drive radius to the builder
   /// @param drive_radius __double__ The drive radius
-  /// @return __DirectDriveBuilder*__ Pointer to the current builder
-  DirectDriveBuilder* withDriveRadius(double drive_radius);
+  /// @return __DirectDriveBuilder&__ Pointer to the current builder
+  DirectDriveBuilder& withDriveRadius(double drive_radius);
 
   /// @brief Builds a new DirectDrive object
-  /// @return __std::unique_ptr<IDrivetrain>__ Pointer to a new DirectDrive
-  /// object
-  std::unique_ptr<ITankDriveTrain> build();
+  /// @return __DirectDrive__ The new DirectDrive object
+  [[nodiscard]]
+  DirectDrive build();
+
+  /// @brief Builds a new unique pointer to a DirectDrive object
+   /// @return __std::unique_ptr<DirectDrive>__ A unique pointer to the new
+   /// DirectDrive object
+  [[nodiscard]]
+  std::unique_ptr<DirectDrive> buildUnique();
 };
-}  // namespace drivetrain
+}  // namespace tank_drive_train
 }  // namespace subsystems
 }  // namespace robot
 }  // namespace driftless

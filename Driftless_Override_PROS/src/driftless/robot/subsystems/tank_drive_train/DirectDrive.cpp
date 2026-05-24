@@ -22,28 +22,6 @@ void DirectDrive::setVoltage(double left_voltage, double right_voltage) {
   m_right_motors.setVoltage(right_voltage);
 }
 
-void DirectDrive::setLeftMotors(hal::MotorGroup& left_motors) {
-  m_left_motors = left_motors;
-}
-
-void DirectDrive::setRightMotors(hal::MotorGroup& right_motors) {
-  m_right_motors = right_motors;
-}
-
-void DirectDrive::setVelocityToVoltage(double velocity_to_voltage) {
-  m_velocity_to_voltage = velocity_to_voltage;
-}
-
-void DirectDrive::setGearRatio(double gear_ratio) { m_gear_ratio = gear_ratio; }
-
-void DirectDrive::setWheelRadius(double wheel_radius) {
-  m_wheel_radius = wheel_radius;
-}
-
-void DirectDrive::setDriveRadius(double drive_radius) {
-  m_drive_radius = drive_radius;
-}
-
 Velocity DirectDrive::getVelocity() {
   Velocity velocity{
       m_left_motors.getAngularVelocity() * m_wheel_radius / m_gear_ratio,

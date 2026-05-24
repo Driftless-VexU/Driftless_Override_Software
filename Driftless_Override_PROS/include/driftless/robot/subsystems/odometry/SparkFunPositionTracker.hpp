@@ -30,9 +30,13 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace odometry {
 
+class SparkFunPositionTrackerBuilder;
+
 /// @brief Class representing a position tracker using the SparkFun Odometry
 /// sensor
 class SparkFunPositionTracker : public IPositionTracker {
+  friend class SparkFunPositionTrackerBuilder;
+
  private:
   static constexpr uint8_t TASK_DELAY{10};
 
@@ -60,6 +64,8 @@ class SparkFunPositionTracker : public IPositionTracker {
 
   uint32_t latest_time{};
 
+  explicit SparkFunPositionTracker(SparkFunPositionTrackerBuilder&& builder);
+
   /// @brief Runs all updates related to the position tracker
   void taskUpdate();
 
@@ -74,6 +80,14 @@ class SparkFunPositionTracker : public IPositionTracker {
   void sendLocalOffset();
 
  public:
+  /// @brief deleted copy constructor
+  /// @param other Object to copy
+  SparkFunPositionTracker(const SparkFunPositionTracker& other) = delete;
+
+  /// @brief Move constructor
+  /// @param other __SparkFunPositionTracker&&__ The position tracker to move
+  SparkFunPositionTracker(SparkFunPositionTracker&& other) = default;
+
   /// @brief Initializes the position tracker
   void init() override;
 
@@ -99,37 +113,6 @@ class SparkFunPositionTracker : public IPositionTracker {
   /// @brief Sets the heading of the position tracker
   /// @param theta __double__ The new heading
   void setTheta(double theta) override;
-
-  /// @brief Sets the clock
-  /// @param clock __std::unique_ptr<rtos::IClock>&__ The clock to
-  /// set
-  void setClock(std::unique_ptr<rtos::IClock>& clock);
-
-  /// @brief Sets the delayer
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer
-  /// to set
-  void setDelayer(std::unique_ptr<rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to
-  /// set
-  void setMutex(std::unique_ptr<rtos::IMutex>& mutex);
-
-  /// @brief Sets the task
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to set
-  void setTask(std::unique_ptr<rtos::ITask>& task);
-  
-  /// @brief Sets the local X offset of the sensor
-  /// @param local_x_offset __double__ The local x offset
-  void setLocalXOffset(double local_x_offset);
-
-  /// @brief Sets the local Y offset of the sensor
-  /// @param local_y_offset __double__ The local y offset
-  void setLocalYOffset(double local_y_offset);
-
-  /// @brief Sets the local heading offset of the sensor
-  /// @param local_theta_offset __double__ The local heading offset
-  void setLocalThetaOffset(double local_theta_offset);
 };
 }  // namespace odometry
 }  // namespace subsystems

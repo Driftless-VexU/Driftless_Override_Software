@@ -77,7 +77,7 @@ std::unique_ptr<InertialPositionTracker>
 InertialPositionTrackerBuilder::buildUnique() {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
-        "One or more RTOS components not set for ModularHolonomicDriveBuilder");
+        "One or more RTOS components not set for InertialPositionTrackerBuilder");
   }
 
   return std::unique_ptr<InertialPositionTracker>{

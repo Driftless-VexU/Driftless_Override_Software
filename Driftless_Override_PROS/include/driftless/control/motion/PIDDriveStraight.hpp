@@ -88,7 +88,7 @@ class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
   /// @brief Constructs a new PIDDriveStraight
   /// @param builder __PIDDriveStraightBuilder&&__ The builder containing the
   /// parameters for the control
-  PIDDriveStraight(PIDDriveStraightBuilder&& builder);
+  explicit PIDDriveStraight(PIDDriveStraightBuilder&& builder);
 
   /// @brief Sets the velocity of the drivetrain
   /// @param left __double__ The left wheel velocity

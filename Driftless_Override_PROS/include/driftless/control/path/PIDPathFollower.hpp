@@ -86,7 +86,7 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
   /// @brief Constructs a new PIDPathFollower
   /// @param builder __PIDPathFollowerBuilder&&__ The builder containing the
   /// parameters for the path follower
-  PIDPathFollower(PIDPathFollowerBuilder&& builder);
+  explicit PIDPathFollower(PIDPathFollowerBuilder&& builder);
 
   /// @brief Updates the path follower algorithm
   void taskUpdate();
@@ -135,7 +135,7 @@ class PIDPathFollower : public driftless::control::path::IPathFollower {
  public:
   /// @brief Copy constructor for PIDPathFollower
   /// @param other __PIDPathFollower const&__ The PIDPathFollower being copied
-  PIDPathFollower(const PIDPathFollower& other) = default;
+  PIDPathFollower(const PIDPathFollower& other) = delete;
 
   /// @brief Move constructor for PIDPathFollower
   /// @param other __PIDPathFollower&&__ The PIDPathFollower being moved

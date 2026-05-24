@@ -43,7 +43,7 @@ PIDHolonomicTurn PIDHolonomicTurnBuilder::build() {
         "One or more RTOS components not set in PIDPathFollowerBuilder");
   }
 
-  return {std::move(*this)};
+  return PIDHolonomicTurn{std::move(*this)};
 }
 
 std::unique_ptr<PIDHolonomicTurn> PIDHolonomicTurnBuilder::buildUnique() {

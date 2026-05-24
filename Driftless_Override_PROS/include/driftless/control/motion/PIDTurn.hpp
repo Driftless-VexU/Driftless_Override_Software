@@ -125,7 +125,7 @@ class PIDTurn : public ITurn {
  public:
  /// @brief Copies another PIDTurn object
  /// @param other __const PIDTurn&__ The PIDTurn being copied
- PIDTurn(const PIDTurn& other) = default;
+ PIDTurn(const PIDTurn& other) = delete;
 
  /// @brief Moves another PIDTurn object
  /// @param other __PIDTurn&&__ The PIDTurn being moved

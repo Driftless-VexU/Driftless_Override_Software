@@ -61,7 +61,7 @@ PIDHolonomicGoToPose PIDHolonomicGoToPoseBuilder::build() {
         "One or more RTOS components not set in PIDPathFollowerBuilder");
   }
 
-  return {std::move(*this)};
+  return PIDHolonomicGoToPose{std::move(*this)};
 }
 
 std::unique_ptr<PIDHolonomicGoToPose>

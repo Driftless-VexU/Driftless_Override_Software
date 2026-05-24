@@ -87,7 +87,7 @@ class PIDHolonomicTurn : public ITurn {
   /// @brief Constructs a new PIDHolonomicTurn object using a builder
   /// @param builder __PIDHolonomicTurnBuilder&&__ The builder to construct the
   /// object with
-  PIDHolonomicTurn(PIDHolonomicTurnBuilder&& builder);
+  explicit PIDHolonomicTurn(PIDHolonomicTurnBuilder&& builder);
 
   /// @brief Sets the velocity for the drive train
   /// @param velocity __double__ The velocity to turn at
@@ -117,7 +117,7 @@ class PIDHolonomicTurn : public ITurn {
  public:
   /// @brief Copies another PIDHolonomicTurn object
   /// @param other __const PIDHolonomicTurn&__ The PIDHolonomicTurn to copy
-  PIDHolonomicTurn(const PIDHolonomicTurn& other) = default;
+  PIDHolonomicTurn(const PIDHolonomicTurn& other) = delete;
 
   /// @brief Moves another PIDHolonomicTurn object
   /// @param other __PIDHolonomicTurn&&__ The PIDHolonomicTurn to move

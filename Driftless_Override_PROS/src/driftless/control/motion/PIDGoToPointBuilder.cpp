@@ -50,7 +50,7 @@ PIDGoToPoint PIDGoToPointBuilder::build() {
         "One or more RTOS components not set in PIDPathFollowerBuilder");
   }
 
-  return {std::move(*this)};
+  return PIDGoToPoint{std::move(*this)};
 }
 
 std::unique_ptr<PIDGoToPoint> PIDGoToPointBuilder::buildUnique() {

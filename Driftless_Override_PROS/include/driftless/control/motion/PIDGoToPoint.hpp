@@ -80,7 +80,7 @@ class PIDGoToPoint : public IGoToPoint {
 
   /// @brief Constructs a new PIDGoToPoint from a builder
   /// @param builder __PIDGoToPointBuilder&&__ The builder to construct from
-  PIDGoToPoint(PIDGoToPointBuilder&& builder);
+  explicit PIDGoToPoint(PIDGoToPointBuilder&& builder);
 
   /// @brief Sets the velocity of the drive train
   /// @param left __double__ The desired left drive velocity

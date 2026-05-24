@@ -51,7 +51,7 @@ PIDDriveStraight PIDDriveStraightBuilder::build() {
         "One or more RTOS components not set for PIDDriveStraightBuilder");
   }
 
-  return {std::move(*this)};
+  return PIDDriveStraight{std::move(*this)};
 }
 
 std::unique_ptr<PIDDriveStraight> PIDDriveStraightBuilder::buildUnique() {

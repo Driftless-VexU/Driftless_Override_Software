@@ -61,7 +61,7 @@ PIDTrajectoryFollower PIDTrajectoryFollowerBuilder::build() {
         "One or more RTOS components not set in PIDTrajectoryFollowerBuilder");
   }
 
-  return {std::move(*this)};
+  return PIDTrajectoryFollower{std::move(*this)};
 }
 
 std::unique_ptr<PIDTrajectoryFollower>

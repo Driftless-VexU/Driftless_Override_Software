@@ -73,7 +73,7 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
   /// builder
   /// @param builder __PIDTrajectoryFollowerBuilder&&__ The builder containing
   /// the parameters for the trajectory follower
-  PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder);
+   explicit PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder);
 
   /// @brief Updates the trajectory follower
   void taskUpdate();
@@ -106,7 +106,7 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
   /// @brief Copies another PIDTrajectoryFollower
   /// @param other __const PIDTrajectoryFollower&__ The trajectory follower
   /// being copied
-  PIDTrajectoryFollower(const PIDTrajectoryFollower& other) = default;
+  PIDTrajectoryFollower(const PIDTrajectoryFollower& other) = delete;
 
   /// @brief Moves another PIDTrajectoryFollower
   /// @param other __PIDTrajectoryFollower&&__ The trajectory follower being

@@ -84,7 +84,7 @@ class PIDHolonomicGoToPose : public IGoToPose {
   /// @brief Constructs a new PIDHolonomicGoToPose from a builder
   /// @param builder __PIDHolonomicGoToPoseBuilder&&__ The builder to construct
   /// from
-  PIDHolonomicGoToPose(PIDHolonomicGoToPoseBuilder&& builder);
+  explicit PIDHolonomicGoToPose(PIDHolonomicGoToPoseBuilder&& builder);
 
   /// @brief Sets the drive motion vector of the robot
   /// @param x_velocity __double__ The velocity in the x direction
@@ -112,7 +112,7 @@ class PIDHolonomicGoToPose : public IGoToPose {
   /// @brief Copies another PIDHolonomicGoToPose
   /// @param other __const PIDHolonomicGoToPose&__ The PIDHolonomicGoToPose
   /// being copied
-  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = default;
+  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = delete;
 
   /// @brief Moves another PIDHolonomicGoToPose
   /// @param other __PIDHolonomicGoToPose&&__ The PIDHolonomicGoToPose being

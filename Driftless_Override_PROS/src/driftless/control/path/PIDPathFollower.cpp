@@ -242,16 +242,6 @@ void PIDPathFollower::updateVelocity(
   setDriveVelocity(velocity);
 }
 
-PIDPathFollower::PIDPathFollower(PIDPathFollowerBuilder&& builder)
-    : m_delayer(std::move(builder.m_delayer)),
-      m_mutex(std::move(builder.m_mutex)),
-      m_task(std::move(builder.m_task)),
-      m_linear_pid(builder.m_linear_pid),
-      m_rotational_pid(builder.m_rotational_pid),
-      m_follow_distance(builder.m_follow_distance),
-      m_target_tolerance(builder.m_target_tolerance),
-      m_target_velocity(builder.m_target_velocity) {}
-
 void PIDPathFollower::init() {
   m_linear_pid.reset();
   m_rotational_pid.reset();

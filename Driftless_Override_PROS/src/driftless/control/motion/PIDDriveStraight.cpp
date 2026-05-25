@@ -12,6 +12,15 @@ void PIDDriveStraight::taskLoop(void* params) {
   }
 }
 
+PIDDriveStraight::PIDDriveStraight(PIDDriveStraightBuilder&& builder) :
+    m_delayer{std::move(builder.m_delayer)},
+    m_mutex{std::move(builder.m_mutex)},
+    m_task{std::move(builder.m_task)},
+    m_linear_pid{std::move(builder.m_linear_pid)},
+    m_rotational_pid{std::move(builder.m_rotational_pid)},
+    m_target_tolerance{builder.m_target_tolerance},
+    m_target_velocity{builder.m_target_velocity} {}
+
 void PIDDriveStraight::setDriveVelocity(double left, double right) {
   if (m_robot) {
     m_robot->sendCommand(
@@ -94,15 +103,6 @@ void PIDDriveStraight::taskUpdate() {
     m_delayer->delay(TASK_DELAY);
   }
 }
-
-PIDDriveStraight::PIDDriveStraight(PIDDriveStraightBuilder&& builder) :
-    m_delayer{std::move(builder.m_delayer)},
-    m_mutex{std::move(builder.m_mutex)},
-    m_task{std::move(builder.m_task)},
-    m_linear_pid{builder.m_linear_pid},
-    m_rotational_pid{builder.m_rotational_pid},
-    m_target_tolerance{builder.m_target_tolerance},
-    m_target_velocity{builder.m_target_velocity} {}
 
 void PIDDriveStraight::init() {
   m_linear_pid.reset();

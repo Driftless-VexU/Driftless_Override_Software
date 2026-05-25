@@ -46,29 +46,29 @@ class PIDHolonomicGoToPoseBuilder {
       std::unique_ptr<rtos::IDelayer>& delayer);
 
   /// @brief Sets the mutex for the control
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to use
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to use
   /// @return __PIDHolonomicGoToPoseBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPoseBuilder& withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  PIDHolonomicGoToPoseBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Sets the task for the control
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to use
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to use
   /// @return __PIDHolonomicGoToPoseBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPoseBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
+  PIDHolonomicGoToPoseBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Sets the x PID for the control
-  /// @param pid __PID&__ The x PID to use
+  /// @param pid __PID__ The x PID to use
   /// @return __PIDHolonomicGoToPoseBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPoseBuilder& withXPID(const PID& pid);
+  PIDHolonomicGoToPoseBuilder& withXPID(PID pid);
 
   /// @brief Sets the y PID for the control
-  /// @param pid __PID&__ The y PID to use
+  /// @param pid __PID__ The y PID to use
   /// @return __PIDHolonomicGoToPoseBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPoseBuilder& withYPID(const PID& pid);
+  PIDHolonomicGoToPoseBuilder& withYPID(PID pid);
 
   /// @brief Sets the rotational PID for the control
-  /// @param pid __PID&__ The rotational PID to use
+  /// @param pid __PID__ The rotational PID to use
   /// @return __PIDHolonomicGoToPoseBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPoseBuilder& withRotationalPID(const PID& pid);
+  PIDHolonomicGoToPoseBuilder& withRotationalPID(PID pid);
 
   /// @brief Sets the distance tolerance for the control
   /// @param tolerance __double__ The distance tolerance to use

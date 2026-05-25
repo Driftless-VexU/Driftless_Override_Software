@@ -58,47 +58,47 @@ class InertialPositionTrackerBuilder {
 
  public:
   /// @brief Adds a clock to the builder
-  /// @param clock __std::unique_ptr<driftless::rtos::IClock>&__ The clock to
+  /// @param clock __std::unique_ptr<driftless::rtos::IClock>__ The clock to
   /// add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withClock(
-      std::unique_ptr<driftless::rtos::IClock>& clock);
+      std::unique_ptr<driftless::rtos::IClock> clock);
 
   /// @brief Adds a delayer to the builder
-  /// @param delayer __std::unique_ptr<driftless::rtos::IDelayer>&__ The delayer
+  /// @param delayer __std::unique_ptr<driftless::rtos::IDelayer>__ The delayer
   /// to add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withDelayer(
-      std::unique_ptr<driftless::rtos::IDelayer>& delayer);
+      std::unique_ptr<driftless::rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>&__ The mutex to
+  /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>__ The mutex to
   /// add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withMutex(
-      std::unique_ptr<driftless::rtos::IMutex>& mutex);
+      std::unique_ptr<driftless::rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<driftless::rtos::ITask>&__ The task to add
+  /// @param task __std::unique_ptr<driftless::rtos::ITask>__ The task to add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withTask(
-      std::unique_ptr<driftless::rtos::ITask>& task);
+      std::unique_ptr<driftless::rtos::ITask> task);
 
   /// @brief Adds an inertial sensor to the builder
   /// @param inertial_sensor
-  /// __std::unique_ptr<driftless::io::IInertialSensor>&__ The inertial sensor
+  /// __std::unique_ptr<driftless::io::IInertialSensor>__ The inertial sensor
   /// to add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withInertialSensor(
-      std::unique_ptr<driftless::io::IInertialSensor>& inertial_sensor);
+      std::unique_ptr<driftless::io::IInertialSensor> inertial_sensor);
 
   /// @brief Adds a linear distance tracker to the builder
   /// @param linear_distance_tracker
-  /// __std::unique_ptr<driftless::io::IDistanceTracker>&__ The linear distance
+  /// __std::unique_ptr<driftless::io::IDistanceTracker>__ The linear distance
   /// tracker to add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withLinearDistanceTracker(
-      std::unique_ptr<driftless::io::IDistanceTracker>&
+      std::unique_ptr<driftless::io::IDistanceTracker>
           linear_distance_tracker);
 
   /// @brief Adds a linear distance tracker offset to the builder
@@ -109,11 +109,11 @@ class InertialPositionTrackerBuilder {
 
   /// @brief Adds a strafe distance tracker to the builder
   /// @param strafe_distance_tracker
-  /// __std::unique_ptr<driftless::io::IDistanceTracker>&__ The strafe distance
+  /// __std::unique_ptr<driftless::io::IDistanceTracker>__ The strafe distance
   /// tracker to add
   /// @return __InertialPositionTrackerBuilder&__ The builder instance
   InertialPositionTrackerBuilder& withStrafeDistanceTracker(
-      std::unique_ptr<driftless::io::IDistanceTracker>&
+      std::unique_ptr<driftless::io::IDistanceTracker>
           strafe_distance_tracker);
 
   /// @brief Adds a strafe distance tracker offset to the builder

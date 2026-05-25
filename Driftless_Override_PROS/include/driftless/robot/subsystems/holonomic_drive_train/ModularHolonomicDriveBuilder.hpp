@@ -45,27 +45,27 @@ class ModularHolonomicDriveBuilder {
  public:
   /// @brief Adds a module to the drive train
   /// @param module
-  /// __std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule>&__ The
+  /// __std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule>__ The
   /// module to add
   /// @return __ModularHolonomicDriveBuilder&__ A pointer to this builder
   ModularHolonomicDriveBuilder& withModule(
-      std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule>& module);
+      std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule> module);
 
   /// @brief Adds a task to the drive train
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to be used
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to be used
   /// @return __ModularHolonomicDriveBuilder&__ A pointer to this builder
-  ModularHolonomicDriveBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
+  ModularHolonomicDriveBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Adds a delayer to the drive train
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to be used
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to be used
   /// @return __ModularHolonomicDriveBuilder&__ A pointer to this builder
   ModularHolonomicDriveBuilder& withDelayer(
-      std::unique_ptr<rtos::IDelayer>& delayer);
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the drive train
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to be used
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to be used
   /// @return __ModularHolonomicDriveBuilder&__ A pointer to this builder
-  ModularHolonomicDriveBuilder& withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  ModularHolonomicDriveBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Adds a maximum linear velocity to the drive train
   /// @param max_linear_velocity __double__ The maximum linear velocity to be

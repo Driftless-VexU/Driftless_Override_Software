@@ -10,13 +10,13 @@ PIDTurnBuilder& PIDTurnBuilder::withDelayer(
 }
 
 PIDTurnBuilder& PIDTurnBuilder::withMutex(
-    std::unique_ptr<driftless::rtos::IMutex>& mutex) {
+    std::unique_ptr<driftless::rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 PIDTurnBuilder& PIDTurnBuilder::withTask(
-    std::unique_ptr<driftless::rtos::ITask>& task) {
+    std::unique_ptr<driftless::rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }

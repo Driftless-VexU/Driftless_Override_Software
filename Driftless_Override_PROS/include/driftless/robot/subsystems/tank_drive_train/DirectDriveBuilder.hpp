@@ -44,17 +44,17 @@ class DirectDriveBuilder {
 
  public:
   /// @brief Adds a left motor to the builder
-  /// @param motor __std::unique_ptr<io::IMotor>&__ The motor being added
+  /// @param motor __std::unique_ptr<io::IMotor>__ The motor being added
   /// @return __DirectDriveBuilder&__ Pointer to the current builder
-  DirectDriveBuilder& withLeftMotor(std::unique_ptr<io::IMotor>& motor);
+  DirectDriveBuilder& withLeftMotor(std::unique_ptr<io::IMotor> motor);
 
   /// @brief Adds a right motor to the builder
-  /// @param motor __std::unique_ptr<io::IMotor>&__ The motor being added
+  /// @param motor __std::unique_ptr<io::IMotor>__ The motor being added
   /// @return __DirectDriveBuilder&__ Pointer to the current builder
-  DirectDriveBuilder& withRightMotor(std::unique_ptr<io::IMotor>& motor);
+  DirectDriveBuilder& withRightMotor(std::unique_ptr<io::IMotor> motor);
 
   /// @brief Adds a velocity to voltage conversion to the builder
-  /// @param velocity_to_voltage _double_ The conversion factor being added
+  /// @param velocity_to_voltage __double__ The conversion factor being added
   /// @return __DirectDriveBuilder&__ Pointer to the current builder
   DirectDriveBuilder& withVelocityToVoltage(double velocity_to_voltage);
 

@@ -18,9 +18,9 @@ PIDTrajectoryFollower::PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& buil
       m_mutex(std::move(builder.m_mutex)),
       m_task(std::move(builder.m_task)),
       m_clock(std::move(builder.m_clock)),
-      m_x_pid(builder.m_x_pid),
-      m_y_pid(builder.m_y_pid),
-      m_theta_pid(builder.m_theta_pid),
+      m_x_pid(std::move(builder.m_x_pid)),
+      m_y_pid(std::move(builder.m_y_pid)),
+      m_theta_pid(std::move(builder.m_theta_pid)),
       m_target_tolerance(builder.m_target_tolerance),
       m_target_velocity(builder.m_target_velocity) {}
 

@@ -47,14 +47,14 @@ class PIDTurnBuilder {
       const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex added
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex added
   /// @return __PIDTurnBuilder&__ Pointer to the current builder
-  PIDTurnBuilder& withMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
+  PIDTurnBuilder& withMutex(std::unique_ptr<driftless::rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task added
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task added
   /// @return __PIDTurnBuilder&__ Pointer to the current builder
-  PIDTurnBuilder& withTask(std::unique_ptr<driftless::rtos::ITask>& task);
+  PIDTurnBuilder& withTask(std::unique_ptr<driftless::rtos::ITask> task);
 
   /// @brief Adds a rotational PID controller to the builder
   /// @param rotational_pid __PID__ The rotational PID controller added

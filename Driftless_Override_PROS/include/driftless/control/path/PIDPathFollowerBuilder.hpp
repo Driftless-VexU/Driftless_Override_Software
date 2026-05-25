@@ -53,16 +53,16 @@ class PIDPathFollowerBuilder {
       std::unique_ptr<driftless::rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to add
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
   /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
   PIDPathFollowerBuilder& withMutex(
-      std::unique_ptr<driftless::rtos::IMutex>& mutex);
+      std::unique_ptr<driftless::rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to add
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
   /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
   PIDPathFollowerBuilder& withTask(
-      std::unique_ptr<driftless::rtos::ITask>& task);
+      std::unique_ptr<driftless::rtos::ITask> task);
 
   /// @brief Adds a linear PID controller to the builder
   /// @param linear_pid __PID__ The linear PID controller to add

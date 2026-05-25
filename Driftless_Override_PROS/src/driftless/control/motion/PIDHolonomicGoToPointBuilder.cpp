@@ -8,26 +8,24 @@ PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withDelayer(
 }
 
 PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex>& mutex) {
+    std::unique_ptr<rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withTask(
-    std::unique_ptr<rtos::ITask>& task) {
+    std::unique_ptr<rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }
 
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withXPID(
-    const PID& pid) {
-  m_x_pid = pid;
+PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withXPID(PID pid) {
+  m_x_pid = std::move(pid);
   return *this;
 }
 
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withYPID(
-    const PID& pid) {
-  m_y_pid = pid;
+PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withYPID(PID pid) {
+  m_y_pid = std::move(pid);
   return *this;
 }
 

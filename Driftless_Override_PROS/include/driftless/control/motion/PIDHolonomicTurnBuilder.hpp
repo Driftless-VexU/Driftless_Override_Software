@@ -41,14 +41,14 @@ class PIDHolonomicTurnBuilder {
       const std::unique_ptr<rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to add
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
   /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
-  PIDHolonomicTurnBuilder& withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  PIDHolonomicTurnBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to add
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
   /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
-  PIDHolonomicTurnBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
+  PIDHolonomicTurnBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Adds a rotational PID to the builder
   /// @param rotational_pid __PID__ The rotational PID to add

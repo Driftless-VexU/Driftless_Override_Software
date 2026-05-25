@@ -2,25 +2,25 @@
 
 namespace driftless::robot::subsystems::holonomic_drive_train {
 ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withModule(
-    std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule>& module) {
+    std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule> module) {
   m_modules.push_back(std::move(module));
   return *this;
 }
 
 ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withTask(
-    std::unique_ptr<rtos::ITask>& task) {
+    std::unique_ptr<rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }
 
 ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
+    std::unique_ptr<rtos::IDelayer> delayer) {
   m_delayer = std::move(delayer);
   return *this;
 }
 
 ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex>& mutex) {
+    std::unique_ptr<rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }

@@ -8,20 +8,20 @@ PIDHolonomicTurnBuilder& PIDHolonomicTurnBuilder::withDelayer(
 }
 
 PIDHolonomicTurnBuilder& PIDHolonomicTurnBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex>& mutex) {
+    std::unique_ptr<rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 PIDHolonomicTurnBuilder& PIDHolonomicTurnBuilder::withTask(
-    std::unique_ptr<rtos::ITask>& task) {
+    std::unique_ptr<rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }
 
 PIDHolonomicTurnBuilder& PIDHolonomicTurnBuilder::withRotationalPID(
     PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
+  m_rotational_pid = std::move(rotational_pid);
   return *this;
 }
 

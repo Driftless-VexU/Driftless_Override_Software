@@ -42,24 +42,24 @@ class PIDHolonomicGoToPointBuilder {
       std::unique_ptr<rtos::IDelayer>& delayer);
 
   /// @brief Sets the mutex for the control
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to use
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to use
   /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder& withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  PIDHolonomicGoToPointBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Sets the task for the control
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to use
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to use
   /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
+  PIDHolonomicGoToPointBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Sets the x PID for the control
-  /// @param pid __PID&__ The x PID to use
+  /// @param pid __PID__ The x PID to use
   /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder& withXPID(const PID& pid);
+  PIDHolonomicGoToPointBuilder& withXPID(PID pid);
 
   /// @brief Sets the y PID for the control
-  /// @param pid __PID&__ The y PID to use
+  /// @param pid __PID__ The y PID to use
   /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder& withYPID(const PID& pid);
+  PIDHolonomicGoToPointBuilder& withYPID(PID pid);
 
   /// @brief Sets the distance tolerance for the control
   /// @param tolerance __double__ The distance tolerance to use

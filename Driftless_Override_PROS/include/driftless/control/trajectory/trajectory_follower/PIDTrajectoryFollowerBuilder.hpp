@@ -50,14 +50,14 @@ class PIDTrajectoryFollowerBuilder {
       const std::unique_ptr<rtos::IDelayer>& delayer);
 
   /// @brief Sets the mutex used by the trajectory follower
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex used
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex used
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
-  PIDTrajectoryFollowerBuilder& withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  PIDTrajectoryFollowerBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Sets the task used by the trajectory follower
   /// @param task __std::unique_ptr<rtos::ITask>&__ The task used
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
-  PIDTrajectoryFollowerBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
+  PIDTrajectoryFollowerBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Sets the clock used by the trajectory follower
   /// @param clock __const std::unique_ptr<rtos::IClock>&__ The clock used
@@ -66,19 +66,19 @@ class PIDTrajectoryFollowerBuilder {
       const std::unique_ptr<rtos::IClock>& clock);
 
   /// @brief Sets the x-axis PID controller used by the trajectory follower
-  /// @param x_pid __PID&__ The PID controller to use
+  /// @param x_pid __PID__ The PID controller to use
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
-  PIDTrajectoryFollowerBuilder& withXPID(PID& x_pid);
+  PIDTrajectoryFollowerBuilder& withXPID(PID x_pid);
 
   /// @brief Sets the y-axis PID controller used by the trajectory follower
-  /// @param y_pid __PID&__ The PID controller to use
+  /// @param y_pid __PID__ The PID controller to use
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
-  PIDTrajectoryFollowerBuilder& withYPID(PID& y_pid);
+  PIDTrajectoryFollowerBuilder& withYPID(PID y_pid);
 
   /// @brief Sets the angular PID controller used by the trajectory follower
-  /// @param theta_pid __PID&__ The PID controller to use
+  /// @param theta_pid __PID__ The PID controller to use
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
-  PIDTrajectoryFollowerBuilder& withThetaPID(PID& theta_pid);
+  PIDTrajectoryFollowerBuilder& withThetaPID(PID theta_pid);
 
   /// @brief Sets the target distance tolerance used by the trajectory follower
   /// @param target_tolerance __double__ The target distance tolerance

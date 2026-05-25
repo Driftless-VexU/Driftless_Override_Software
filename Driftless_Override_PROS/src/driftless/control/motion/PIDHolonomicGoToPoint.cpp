@@ -15,8 +15,8 @@ PIDHolonomicGoToPoint::PIDHolonomicGoToPoint(PIDHolonomicGoToPointBuilder&& buil
     : m_delayer(std::move(builder.m_delayer)),
       m_mutex(std::move(builder.m_mutex)),
       m_task(std::move(builder.m_task)),
-      m_x_pid(builder.m_x_pid),
-      m_y_pid(builder.m_y_pid),
+      m_x_pid(std::move(builder.m_x_pid)),
+      m_y_pid(std::move(builder.m_y_pid)),
       m_distance_tolerance(builder.m_distance_tolerance),
       m_velocity_tolerance(builder.m_velocity_tolerance) {}
 

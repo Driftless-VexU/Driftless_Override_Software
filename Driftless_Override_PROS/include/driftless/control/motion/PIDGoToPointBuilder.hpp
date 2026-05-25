@@ -51,15 +51,15 @@ class PIDGoToPointBuilder {
       const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>&__ The mutex added
+  /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>__ The mutex added
   /// @return __PIDGoToPointBuilder&__ Pointer to the current builder
   PIDGoToPointBuilder& withMutex(
-      std::unique_ptr<driftless::rtos::IMutex>& mutex);
+      std::unique_ptr<driftless::rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<driftless::rtos::ITask>&__ The task added
+  /// @param task __std::unique_ptr<driftless::rtos::ITask>__ The task added
   /// @return __PIDGoToPointBuilder&__ Pointer to the current builder
-  PIDGoToPointBuilder& withTask(std::unique_ptr<driftless::rtos::ITask>& task);
+  PIDGoToPointBuilder& withTask(std::unique_ptr<driftless::rtos::ITask> task);
 
   /// @brief Adds a linear PID controller to the builder
   /// @param linear_pid __PID__ The linear PID controller added

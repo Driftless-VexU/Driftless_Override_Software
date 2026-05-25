@@ -8,13 +8,13 @@ PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withDelayer(
 }
 
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex>& mutex) {
+    std::unique_ptr<rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTask(
-    std::unique_ptr<rtos::ITask>& task) {
+    std::unique_ptr<rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }
@@ -26,20 +26,20 @@ PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withClock(
 }
 
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withXPID(
-    PID& x_pid) {
-  m_x_pid = x_pid;
+    PID x_pid) {
+  m_x_pid = std::move(x_pid);
   return *this;
 }
 
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withYPID(
-    PID& y_pid) {
-  m_y_pid = y_pid;
+    PID y_pid) {
+  m_y_pid = std::move(y_pid);
   return *this;
 }
 
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withThetaPID(
-    PID& theta_pid) {
-  m_theta_pid = theta_pid;
+    PID theta_pid) {
+  m_theta_pid = std::move(theta_pid);
   return *this;
 }
 

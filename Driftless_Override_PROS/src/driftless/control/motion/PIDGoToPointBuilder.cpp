@@ -10,25 +10,25 @@ PIDGoToPointBuilder& PIDGoToPointBuilder::withDelayer(
 }
 
 PIDGoToPointBuilder& PIDGoToPointBuilder::withMutex(
-    std::unique_ptr<driftless::rtos::IMutex>& mutex) {
+    std::unique_ptr<driftless::rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 PIDGoToPointBuilder& PIDGoToPointBuilder::withTask(
-    std::unique_ptr<driftless::rtos::ITask>& task) {
+    std::unique_ptr<driftless::rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }
 
 PIDGoToPointBuilder& PIDGoToPointBuilder::withLinearPID(PID linear_pid) {
-  m_linear_pid = linear_pid;
+  m_linear_pid = std::move(linear_pid);
   return *this;
 }
 
 PIDGoToPointBuilder& PIDGoToPointBuilder::withRotationalPID(
     PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
+  m_rotational_pid = std::move(rotational_pid);
   return *this;
 }
 

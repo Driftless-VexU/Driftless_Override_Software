@@ -2,25 +2,25 @@
 
 namespace driftless::robot::subsystems::odometry {
 SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withClock(
-    std::unique_ptr<rtos::IClock>& clock) {
+    std::unique_ptr<rtos::IClock> clock) {
   m_clock = std::move(clock);
   return *this;
 }
 
 SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
+    std::unique_ptr<rtos::IDelayer> delayer) {
   m_delayer = std::move(delayer);
   return *this;
 }
 
 SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex>& mutex) {
+    std::unique_ptr<rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withTask(
-    std::unique_ptr<rtos::ITask>& task) {
+    std::unique_ptr<rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }

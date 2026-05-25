@@ -39,27 +39,27 @@ class SparkFunPositionTrackerBuilder {
 
  public:
   /// @brief Adds a clock to the builder
-  /// @param clock __std::unique_ptr<rtos::IClock>&__ The clock to add
+  /// @param clock __std::unique_ptr<rtos::IClock>__ The clock to add
   /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
   SparkFunPositionTrackerBuilder& withClock(
-      std::unique_ptr<rtos::IClock>& clock);
+      std::unique_ptr<rtos::IClock> clock);
 
   /// @brief Adds a delayer to the builder
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to add
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
   /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
   SparkFunPositionTrackerBuilder& withDelayer(
-      std::unique_ptr<rtos::IDelayer>& delayer);
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to add
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
   /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
   SparkFunPositionTrackerBuilder& withMutex(
-      std::unique_ptr<rtos::IMutex>& mutex);
+      std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to add
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
   /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder& withTask(std::unique_ptr<rtos::ITask>& task);
+  SparkFunPositionTrackerBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Adds a local x offset to the builder
   /// @param local_x_offset __double__ The local x offset to add

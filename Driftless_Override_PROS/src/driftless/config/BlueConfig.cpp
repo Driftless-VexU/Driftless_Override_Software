@@ -41,11 +41,11 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
       trajectory_follower{
           trajectory_follower_builder.withClock(clock)
               .withDelayer(delayer)
-              .withTask(trajectory_follower_task)
-              .withMutex(trajectory_follower_mutex)
-              .withXPID(trajectory_follower_x_pid)
-              .withYPID(trajectory_follower_y_pid)
-              .withThetaPID(trajectory_follower_theta_PID)
+              .withTask(std::move(trajectory_follower_task))
+              .withMutex(std::move(trajectory_follower_mutex))
+              .withXPID(std::move(trajectory_follower_x_pid))
+              .withYPID(std::move(trajectory_follower_y_pid))
+              .withThetaPID(std::move(trajectory_follower_theta_PID))
               .withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
               .withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
               .buildUnique()};
@@ -111,40 +111,40 @@ std::shared_ptr<control::ControlSystem> BlueConfig::buildControlSystem() {
 
   std::unique_ptr<control::motion::IDriveStraight> drive_straight{
       drive_straight_builder.withDelayer(delayer)
-          .withMutex(drive_straight_mutex)
-          .withTask(drive_straight_task)
-          .withLinearPID(drive_straight_linear_pid)
-          .withRotationalPID(drive_straight_angular_pid)
+          .withMutex(std::move(drive_straight_mutex))
+          .withTask(std::move(drive_straight_task))
+          .withLinearPID(std::move(drive_straight_linear_pid))
+          .withRotationalPID(std::move(drive_straight_angular_pid))
           .withTargetTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
           .withTargetVelocity(1.0)
           .buildUnique()};
 
   std::unique_ptr<control::motion::ITurn> turn{
       turn_builder.withDelayer(delayer)
-          .withMutex(turn_mutex)
-          .withTask(turn_task)
-          .withRotationalPID(turn_pid)
+          .withMutex(std::move(turn_mutex))
+          .withTask(std::move(turn_task))
+          .withRotationalPID(std::move(turn_pid))
           .withTargetTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
           .withTargetVelocity(0.1)
           .buildUnique()};
 
   std::unique_ptr<control::motion::IGoToPoint> go_to_point{
       go_to_point_builder.withDelayer(delayer)
-          .withMutex(go_to_point_mutex)
-          .withTask(go_to_point_task)
-          .withXPID(go_to_point_x_pid)
-          .withYPID(go_to_point_y_pid)
+          .withMutex(std::move(go_to_point_mutex))
+          .withTask(std::move(go_to_point_task))
+          .withXPID(std::move(go_to_point_x_pid))
+          .withYPID(std::move(go_to_point_y_pid))
           .withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
           .withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
           .buildUnique()};
 
   std::unique_ptr<control::motion::IGoToPose> go_to_pose{
       go_to_pose_builder.withDelayer(delayer)
-          .withMutex(go_to_pose_mutex)
-          .withTask(go_to_pose_task)
-          .withXPID(go_to_pose_x_pid)
-          .withYPID(go_to_pose_y_pid)
-          .withRotationalPID(go_to_pose_rotational_pid)
+          .withMutex(std::move(go_to_pose_mutex))
+          .withTask(std::move(go_to_pose_task))
+          .withXPID(std::move(go_to_pose_x_pid))
+          .withYPID(std::move(go_to_pose_y_pid))
+          .withRotationalPID(std::move(go_to_pose_rotational_pid))
           .withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
           .withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
           .withAngularTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
@@ -282,16 +282,17 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
       drive_train_builder;
 
   std::unique_ptr<robot::subsystems::holonomic_drive_train::IHolonomicDrive>
-      drive_train{drive_train_builder.withModule(drive_front_left_module)
-                      .withModule(drive_front_right_module)
-                      .withModule(drive_back_left_module)
-                      .withModule(drive_back_right_module)
-                      .withDelayer(drive_delayer)
-                      .withTask(drive_task)
-                      .withMutex(drive_mutex)
-                      .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
-                      .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
-                      .buildUnique()};
+      drive_train{
+          drive_train_builder.withModule(std::move(drive_front_left_module))
+              .withModule(std::move(drive_front_right_module))
+              .withModule(std::move(drive_back_left_module))
+              .withModule(std::move(drive_back_right_module))
+              .withDelayer(std::move(drive_delayer))
+              .withTask(std::move(drive_task))
+              .withMutex(std::move(drive_mutex))
+              .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
+              .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
+              .buildUnique()};
 
   // create the subsystem
   std::unique_ptr<robot::subsystems::ASubsystem> drive_train_subsystem{

@@ -8,32 +8,30 @@ PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withDelayer(
 }
 
 PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex>& mutex) {
+    std::unique_ptr<rtos::IMutex> mutex) {
   m_mutex = std::move(mutex);
   return *this;
 }
 
 PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withTask(
-    std::unique_ptr<rtos::ITask>& task) {
+    std::unique_ptr<rtos::ITask> task) {
   m_task = std::move(task);
   return *this;
 }
 
 PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withXPID(
-    const PID& pid) {
-  m_x_pid = pid;
+    PID pid) {
+  m_x_pid = std::move(pid);
   return *this;
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withYPID(
-    const PID& pid) {
-  m_y_pid = pid;
+PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withYPID(PID pid) {
+  m_y_pid = std::move(pid);
   return *this;
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withRotationalPID(
-    const PID& pid) {
-  m_rotational_pid = pid;
+PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withRotationalPID(PID pid) {
+  m_rotational_pid = std::move(pid);
   return *this;
 }
 

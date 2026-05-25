@@ -10,8 +10,8 @@
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemCommand.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
-#include "driftless/robot/subsystems/tank_drive_train/Velocity.hpp"
 #include "driftless/robot/subsystems/odometry/Position.hpp"
+#include "driftless/robot/subsystems/tank_drive_train/Velocity.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/rtos/IMutex.hpp"
 #include "driftless/rtos/ITask.hpp"
@@ -29,9 +29,13 @@ namespace control {
 /// @author Matthew Backman
 namespace motion {
 
+class PIDDriveStraightBuilder;
+
 /// @brief Class representing a drive straight algorithm using PID controllers
 /// @author Matthew Backman
 class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
+  friend class PIDDriveStraightBuilder;
+
  private:
   // delay on the task loop
   static constexpr uint8_t TASK_DELAY{10};
@@ -81,6 +85,11 @@ class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
   // whether the control has been paused
   bool paused{};
 
+  /// @brief Constructs a new PIDDriveStraight
+  /// @param builder __PIDDriveStraightBuilder&&__ The builder containing the
+  /// parameters for the control
+  explicit PIDDriveStraight(PIDDriveStraightBuilder&& builder);
+
   /// @brief Sets the velocity of the drivetrain
   /// @param left __double__ The left wheel velocity
   /// @param right __double__ The right wheel velocity
@@ -103,6 +112,14 @@ class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
   void taskUpdate();
 
  public:
+  /// @brief Copy constructor for PIDDriveStraight
+  /// @param other __PIDDriveStraight const&__ The PIDDriveStraight being copied
+  PIDDriveStraight(const PIDDriveStraight& other) = default;
+
+  /// @brief Move constructor for PIDDriveStraight
+  /// @param other __PIDDriveStraight&&__ The PIDDriveStraight being moved
+  PIDDriveStraight(PIDDriveStraight&& other) = default;
+
   /// @brief Initializes the control
   void init() override;
 
@@ -131,35 +148,6 @@ class PIDDriveStraight : public driftless::control::motion::IDriveStraight {
   /// @brief Returns if the robot has reached the target
   /// @return __bool__ True if the target is reached, else false
   bool targetReached() override;
-
-  /// @brief Sets the delayer
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The
-  /// delayer
-  void setDelayer(const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the linear PID controller
-  /// @param linear_pid __PID__ The linear PID controller
-  void setLinearPID(PID linear_pid);
-
-  /// @brief Sets the rotational PID controller
-  /// @param rotational_pid __PID__ The rotational PID controller
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the target tolerance
-  /// @param target_tolerance __double__ The target tolerance
-  void setTargetTolerance(double target_tolerance);
-
-  /// @brief Sets the target velocity
-  /// @param target_velocity __double__ The target velocity
-  void setTargetVelocity(double target_velocity);
 };
 }  // namespace motion
 }  // namespace control

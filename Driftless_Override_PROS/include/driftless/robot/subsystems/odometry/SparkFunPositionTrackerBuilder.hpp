@@ -22,6 +22,8 @@ namespace odometry {
 /// @brief Builder class for the SparkFun position tracker
 /// @author Matthew Backman
 class SparkFunPositionTrackerBuilder {
+  friend class SparkFunPositionTracker;
+
  private:
   std::unique_ptr<rtos::IClock> m_clock{};
 
@@ -34,46 +36,58 @@ class SparkFunPositionTrackerBuilder {
   double m_local_x_offset{};
   double m_local_y_offset{};
   double m_local_theta_offset{};
- 
+
  public:
   /// @brief Adds a clock to the builder
-  /// @param clock __std::unique_ptr<rtos::IClock>&__ The clock to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withClock(std::unique_ptr<rtos::IClock>& clock);
+  /// @param clock __std::unique_ptr<rtos::IClock>__ The clock to add
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withClock(
+      std::unique_ptr<rtos::IClock> clock);
 
   /// @brief Adds a delayer to the builder
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withDelayer(std::unique_ptr<rtos::IDelayer>& delayer);
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withDelayer(
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withMutex(
+      std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withTask(std::unique_ptr<rtos::ITask>& task);
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Adds a local x offset to the builder
   /// @param local_x_offset __double__ The local x offset to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withLocalXOffset(double local_x_offset);
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withLocalXOffset(double local_x_offset);
 
   /// @brief Adds a local y offset to the builder
   /// @param local_y_offset __double__ The local y offset to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withLocalYOffset(double local_y_offset);
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withLocalYOffset(double local_y_offset);
 
   /// @brief Adds a local theta offset to the builder
   /// @param local_theta_offset __double__ The local theta offset to add
-  /// @return __SparkFunPositionTrackerBuilder*__ Pointer to the current builder
-  SparkFunPositionTrackerBuilder* withLocalThetaOffset(double local_theta_offset);
+  /// @return __SparkFunPositionTrackerBuilder&__ Pointer to the current builder
+  SparkFunPositionTrackerBuilder& withLocalThetaOffset(
+      double local_theta_offset);
 
   /// @brief Builds a new SparkFun position tracker
-  /// @return __std::unique_ptr<IPositionTracker>__ A pointer to the new SparkFun position tracker
-  std::unique_ptr<IPositionTracker> build();
+  /// @return __SparkFunPositionTracker__ The new SparkFun position tracker
+  [[nodiscard]]
+  SparkFunPositionTracker build();
+
+  /// @brief Builds a new SparkFun position tracker and returns a unique pointer
+  /// to it
+  /// @return __std::unique_ptr<SparkFunPositionTracker>__ A unique pointer to
+  /// the new SparkFun position tracker
+  [[nodiscard]]
+  std::unique_ptr<SparkFunPositionTracker> buildUnique();
 };
 }  // namespace odometry
 }  // namespace subsystems

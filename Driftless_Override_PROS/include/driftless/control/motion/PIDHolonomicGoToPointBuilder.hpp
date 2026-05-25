@@ -17,6 +17,8 @@ namespace motion {
 
 /// @brief Builder class for PIDHolonomicGoToPoint objects
 class PIDHolonomicGoToPointBuilder {
+  friend class PIDHolonomicGoToPoint;
+
  private:
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
@@ -35,43 +37,51 @@ class PIDHolonomicGoToPointBuilder {
  public:
   /// @brief Sets the delayer for the control
   /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withDelayer(
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withDelayer(
       std::unique_ptr<rtos::IDelayer>& delayer);
 
   /// @brief Sets the mutex for the control
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withMutex(std::unique_ptr<rtos::IMutex>& mutex);
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to use
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Sets the task for the control
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withTask(std::unique_ptr<rtos::ITask>& task);
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to use
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Sets the x PID for the control
-  /// @param pid __PID&__ The x PID to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withXPID(const PID& pid);
+  /// @param pid __PID__ The x PID to use
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withXPID(PID pid);
 
   /// @brief Sets the y PID for the control
-  /// @param pid __PID&__ The y PID to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withYPID(const PID& pid);
+  /// @param pid __PID__ The y PID to use
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withYPID(PID pid);
 
   /// @brief Sets the distance tolerance for the control
   /// @param tolerance __double__ The distance tolerance to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withDistanceTolerance(double tolerance);
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withDistanceTolerance(double tolerance);
 
   /// @brief Sets the velocity tolerance for the control
   /// @param tolerance __double__ The velocity tolerance to use
-  /// @return __PIDHolonomicGoToPointBuilder*__ Pointer to the builder
-  PIDHolonomicGoToPointBuilder* withVelocityTolerance(double tolerance);
+  /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
+  PIDHolonomicGoToPointBuilder& withVelocityTolerance(double tolerance);
 
   /// @brief Builds a PIDHolonomicGoToPoint object
-  /// @return __std::unique_ptr<PIDHolonomicGoToPoint>__ The built object
-  std::unique_ptr<PIDHolonomicGoToPoint> build();
+  /// @return __PIDHolonomicGoToPoint__ The built object
+  [[nodiscard]]
+  PIDHolonomicGoToPoint build();
+
+  /// @brief Builds a PIDHolonomicGoToPoint object and returns a unique pointer
+  /// to it
+  /// @return __std::unique_ptr<PIDHolonomicGoToPoint>__ A unique pointer to the
+  /// built object
+  [[nodiscard]]
+  std::unique_ptr<PIDHolonomicGoToPoint> buildUnique();
 };
 }  // namespace motion
 }  // namespace control

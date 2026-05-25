@@ -1,6 +1,6 @@
 #include "driftless/control/motion/PIDHolonomicGoToPoint.hpp"
+#include "driftless/control/motion/PIDHolonomicGoToPointBuilder.hpp"
 
-#include "pros/screen.hpp"
 namespace driftless::control::motion {
 void PIDHolonomicGoToPoint::taskLoop(void* params) {
   PIDHolonomicGoToPoint* go_to_point{
@@ -10,6 +10,15 @@ void PIDHolonomicGoToPoint::taskLoop(void* params) {
     go_to_point->taskUpdate();
   }
 }
+
+PIDHolonomicGoToPoint::PIDHolonomicGoToPoint(PIDHolonomicGoToPointBuilder&& builder)
+    : m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_x_pid(std::move(builder.m_x_pid)),
+      m_y_pid(std::move(builder.m_y_pid)),
+      m_distance_tolerance(builder.m_distance_tolerance),
+      m_velocity_tolerance(builder.m_velocity_tolerance) {}
 
 void PIDHolonomicGoToPoint::setDriveMotionVector(double x_velocity,
                                                  double y_velocity,
@@ -151,29 +160,4 @@ void PIDHolonomicGoToPoint::setVelocity(double velocity) {
 }
 
 bool PIDHolonomicGoToPoint::targetReached() { return m_target_reached; }
-
-void PIDHolonomicGoToPoint::setDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDHolonomicGoToPoint::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDHolonomicGoToPoint::setTask(std::unique_ptr<rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDHolonomicGoToPoint::setXPID(PID x_pid) { m_x_pid = x_pid; }
-
-void PIDHolonomicGoToPoint::setYPID(PID y_pid) { m_y_pid = y_pid; }
-
-void PIDHolonomicGoToPoint::setDistanceTolerance(double distance_tolerance) {
-  m_distance_tolerance = distance_tolerance;
-}
-
-void PIDHolonomicGoToPoint::setVelocityTolerance(double velocity_tolerance) {
-  m_velocity_tolerance = velocity_tolerance;
-}
 }  // namespace driftless::control::motion

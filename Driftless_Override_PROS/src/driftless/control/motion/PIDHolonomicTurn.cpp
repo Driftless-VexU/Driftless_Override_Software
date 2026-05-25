@@ -1,5 +1,7 @@
 #include "driftless/control/motion/PIDHolonomicTurn.hpp"
 
+#include "driftless/control/motion/PIDHolonomicTurnBuilder.hpp"
+
 namespace driftless::control::motion {
 void PIDHolonomicTurn::taskLoop(void* params) {
   PIDHolonomicTurn* pid_turn{static_cast<PIDHolonomicTurn*>(params)};
@@ -8,6 +10,14 @@ void PIDHolonomicTurn::taskLoop(void* params) {
     pid_turn->taskUpdate();
   }
 }
+
+PIDHolonomicTurn::PIDHolonomicTurn(PIDHolonomicTurnBuilder&& builder)
+    : m_delayer{std::move(builder.m_delayer)},
+      m_mutex{std::move(builder.m_mutex)},
+      m_task{std::move(builder.m_task)},
+      m_rotational_pid{std::move(builder.m_rotational_pid)},
+      m_target_tolerance{builder.m_target_tolerance},
+      m_target_velocity{builder.m_target_velocity} {}
 
 void PIDHolonomicTurn::setDriveTurnVelocity(double velocity) {
   m_robot->sendCommand(robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,

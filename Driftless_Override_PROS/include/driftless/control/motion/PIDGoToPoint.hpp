@@ -28,9 +28,13 @@ namespace control {
 /// @author Matthew Backman
 namespace motion {
 
+class PIDGoToPointBuilder;
+
 /// @brief Class representing a go to point algorithm using PID
 /// @author Matthew Backman
 class PIDGoToPoint : public IGoToPoint {
+  friend class PIDGoToPointBuilder;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -74,6 +78,10 @@ class PIDGoToPoint : public IGoToPoint {
   // whether the control is paused
   bool paused{};
 
+  /// @brief Constructs a new PIDGoToPoint from a builder
+  /// @param builder __PIDGoToPointBuilder&&__ The builder to construct from
+  explicit PIDGoToPoint(PIDGoToPointBuilder&& builder);
+
   /// @brief Sets the velocity of the drive train
   /// @param left __double__ The desired left drive velocity
   /// @param right __double__ The desired right drive velocity
@@ -97,6 +105,14 @@ class PIDGoToPoint : public IGoToPoint {
   void taskUpdate();
 
  public:
+  /// @brief Copy constructor for PIDGoToPoint
+  /// @param other __PIDGoToPoint const&__ The PIDGoToPoint being copied
+  PIDGoToPoint(const PIDGoToPoint& other) = default;
+
+  /// @brief Move constructor for PIDGoToPoint
+  /// @param other __PIDGoToPoint&&__ The PIDGoToPoint being moved
+  PIDGoToPoint(PIDGoToPoint&& other) = default;
+
   /// @brief Initializes the control
   void init() override;
 
@@ -110,7 +126,8 @@ class PIDGoToPoint : public IGoToPoint {
   void resume() override;
 
   /// @brief Tells the robot to go to a given point
-  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being controlled
+  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
+  /// controlled
   /// @param velocity __double__ The max velocity to move at
   /// @param point __Point__ The point on the field to go to
   void goToPoint(const std::shared_ptr<driftless::robot::Robot>& robot,
@@ -123,34 +140,6 @@ class PIDGoToPoint : public IGoToPoint {
   /// @brief Determines if the robot has reached the target
   /// @return __bool__ True if within the target range, else false
   bool targetReached() override;
-
-  /// @brief Sets the delayer used
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer
-  void setDelayer(std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex used
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task used
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the linear PID controller used
-  /// @param linear_pid __PID__ The linear PID controller
-  void setLinearPID(PID linear_pid);
-
-  /// @brief Sets the rotational PID controller used
-  /// @param rotational_pid __PID__ The rotational PID controller
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the target tolerance
-  /// @param target_tolerance __double__ The target tolerance
-  void setTargetTolerance(double target_tolerance);
-
-  /// @brief Sets the target velocity
-  /// @param target_velocity __double__ The target velocity
-  void setTargetVelocity(double targetVelocity);
 };
 }  // namespace motion
 }  // namespace control

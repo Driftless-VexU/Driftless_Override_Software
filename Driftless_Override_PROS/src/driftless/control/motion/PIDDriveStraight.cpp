@@ -1,6 +1,6 @@
 #include "driftless/control/motion/PIDDriveStraight.hpp"
+#include "driftless/control/motion/PIDDriveStraightBuilder.hpp"
 
-#include "pros/screen.hpp"
 namespace driftless {
 namespace control {
 namespace motion {
@@ -11,6 +11,15 @@ void PIDDriveStraight::taskLoop(void* params) {
     pid_drive_straight->taskUpdate();
   }
 }
+
+PIDDriveStraight::PIDDriveStraight(PIDDriveStraightBuilder&& builder) :
+    m_delayer{std::move(builder.m_delayer)},
+    m_mutex{std::move(builder.m_mutex)},
+    m_task{std::move(builder.m_task)},
+    m_linear_pid{std::move(builder.m_linear_pid)},
+    m_rotational_pid{std::move(builder.m_rotational_pid)},
+    m_target_tolerance{builder.m_target_tolerance},
+    m_target_velocity{builder.m_target_velocity} {}
 
 void PIDDriveStraight::setDriveVelocity(double left, double right) {
   if (m_robot) {
@@ -164,36 +173,6 @@ void PIDDriveStraight::setVelocity(double velocity) {
 }
 
 bool PIDDriveStraight::targetReached() { return target_reached; }
-
-void PIDDriveStraight::setDelayer(
-    const std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDDriveStraight::setMutex(
-    std::unique_ptr<driftless::rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDDriveStraight::setTask(std::unique_ptr<driftless::rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDDriveStraight::setLinearPID(PID linear_pid) {
-  m_linear_pid = linear_pid;
-}
-
-void PIDDriveStraight::setRotationalPID(PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
-}
-
-void PIDDriveStraight::setTargetTolerance(double target_tolerance) {
-  m_target_tolerance = target_tolerance;
-}
-
-void PIDDriveStraight::setTargetVelocity(double target_velocity) {
-  m_target_velocity = target_velocity;
-}
 }  // namespace motion
 }  // namespace control
 }  // namespace driftless

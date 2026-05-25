@@ -43,6 +43,12 @@ class HolonomicSpinModifier : public ITrajectoryModifier {
   std::vector<SpinContext> m_spins{};
 
  public:
+ /// @brief Constructs a new HolonomicSpinModifier object
+ /// @param max_acceleration __double__ The max angular acceleration for spinning
+ /// @param starting_heading __double__ The heading the robot starts the trajectory at, bound between [-pi, pi]
+ /// @param spins __std::vector<SpinContext>&__ The spins to apply to the trajectory
+ HolonomicSpinModifier(double max_acceleration, double starting_heading, std::vector<SpinContext>& spins);
+
   /// @brief Applies the modifier to the provided trajectory
   /// @param trajectory __std::vector<TrajectoryPoint>&__ The trajectory to
   /// modify

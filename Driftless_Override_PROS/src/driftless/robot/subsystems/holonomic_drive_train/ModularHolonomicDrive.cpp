@@ -1,4 +1,5 @@
 #include "driftless/robot/subsystems/holonomic_drive_train/ModularHolonomicDrive.hpp"
+#include "driftless/robot/subsystems/holonomic_drive_train/ModularHolonomicDriveBuilder.hpp"
 
 namespace driftless::robot::subsystems::holonomic_drive_train {
 void ModularHolonomicDrive::taskLoop(void* params) {
@@ -8,6 +9,14 @@ void ModularHolonomicDrive::taskLoop(void* params) {
     drive->taskUpdate();
   }
 }
+
+ModularHolonomicDrive::ModularHolonomicDrive(ModularHolonomicDriveBuilder&& builder)
+    : m_modules(std::move(builder.m_modules)),
+      m_task(std::move(builder.m_task)),
+      m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_max_linear_velocity(builder.m_max_linear_velocity),
+      m_max_angular_velocity(builder.m_max_angular_velocity) {}
 
 void ModularHolonomicDrive::taskUpdate() {
   if (m_mutex) {
@@ -204,32 +213,5 @@ double ModularHolonomicDrive::getWheelSpeed(int wheel) {
   }
 
   return 0.0;
-}
-
-void ModularHolonomicDrive::setModules(
-    std::vector<std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule>>&
-        modules) {
-  m_modules = std::move(modules);
-}
-
-void ModularHolonomicDrive::setTask(std::unique_ptr<rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void ModularHolonomicDrive::setDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = std::move(delayer);
-}
-
-void ModularHolonomicDrive::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void ModularHolonomicDrive::setMaxLinearVelocity(double max_linear_velocity) {
-  m_max_linear_velocity = max_linear_velocity;
-}
-
-void ModularHolonomicDrive::setMaxAngularVelocity(double max_angular_velocity) {
-  m_max_angular_velocity = max_angular_velocity;
 }
 }  // namespace driftless::robot::subsystems::holonomic_drive_train

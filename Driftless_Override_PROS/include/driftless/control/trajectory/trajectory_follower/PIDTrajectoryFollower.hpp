@@ -26,8 +26,12 @@ namespace trajectory {
 /// @author Matthew Backman
 namespace trajectory_follower {
 
+class PIDTrajectoryFollowerBuilder;
+
 /// @brief Control algorithm to follow a generated trajectory using PID
 class PIDTrajectoryFollower : public ITrajectoryFollower {
+  friend class PIDTrajectoryFollowerBuilder;
+
  private:
   static constexpr uint8_t TASK_DELAY{10};
 
@@ -65,6 +69,12 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
 
   bool m_target_reached{true};
 
+  /// @brief Constructs a new PIDTrajectoryFollower object with the provided
+  /// builder
+  /// @param builder __PIDTrajectoryFollowerBuilder&&__ The builder containing
+  /// the parameters for the trajectory follower
+   explicit PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder);
+
   /// @brief Updates the trajectory follower
   void taskUpdate();
 
@@ -93,6 +103,16 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
       const TrajectoryPoint& target_point);
 
  public:
+  /// @brief Copies another PIDTrajectoryFollower
+  /// @param other __const PIDTrajectoryFollower&__ The trajectory follower
+  /// being copied
+  PIDTrajectoryFollower(const PIDTrajectoryFollower& other) = delete;
+
+  /// @brief Moves another PIDTrajectoryFollower
+  /// @param other __PIDTrajectoryFollower&&__ The trajectory follower being
+  /// moved
+  PIDTrajectoryFollower(PIDTrajectoryFollower&& other) = default;
+
   /// @brief Initializes the trajectory follower
   void init() override;
 
@@ -117,42 +137,6 @@ class PIDTrajectoryFollower : public ITrajectoryFollower {
   /// @brief Determines if the target has been reached
   /// @return __bool__ True if the target has been reached, false otherwise
   bool targetReached() override;
-
-  /// @brief Sets the delayer used by the trajectory follower
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer used
-  void setDelayer(const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex used by the trajectory follower
-  /// @param mutex __const std::unique_ptr<rtos::IMutex>&__ The mutex used
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task used by the trajectory follower
-  /// @param task __const std::unique_ptr<rtos::ITask>&__ The task used
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the clock used by the trajectory follower
-  /// @param clock __const std::unique_ptr<rtos::IClock>&__ The clock used
-  void setClock(const std::unique_ptr<driftless::rtos::IClock>& clock);
-
-  /// @brief Sets the x PID controller
-  /// @param x_pid __control::PID&__ The x PID controller
-  void setXPID(driftless::control::PID& x_pid);
-
-  /// @brief Sets the y PID controller
-  /// @param y_pid __control::PID&__ The y PID controller
-  void setYPID(driftless::control::PID& y_pid);
-
-  /// @brief Sets the theta PID controller
-  /// @param theta_pid __control::PID&__ The theta PID controller
-  void setThetaPID(driftless::control::PID& theta_pid);
-
-  /// @brief Sets the target tolerance
-  /// @param target_tolerance __double__ The target distance tolerance
-  void setTargetTolerance(double target_tolerance);
-
-  /// @brief Sets the target velocity
-  /// @param target_velocity __double__ The target velocity tolerance
-  void setTargetVelocity(double target_velocity);
 };
 }  // namespace trajectory_follower
 }  // namespace trajectory

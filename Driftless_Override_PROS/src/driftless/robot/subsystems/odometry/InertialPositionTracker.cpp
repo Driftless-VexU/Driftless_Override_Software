@@ -1,4 +1,5 @@
 #include "driftless/robot/subsystems/odometry/InertialPositionTracker.hpp"
+#include "driftless/robot/subsystems/odometry/InertialPositionTrackerBuilder.hpp"
 
 #include "pros/screen.hpp"
 namespace driftless {
@@ -13,6 +14,20 @@ void InertialPositionTracker::taskLoop(void* params) {
     position_tracker->taskUpdate();
   }
 }
+
+InertialPositionTracker::InertialPositionTracker(
+    InertialPositionTrackerBuilder&& builder)
+    : m_clock(std::move(builder.m_clock)),
+      m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_inertial_sensor(std::move(builder.m_inertial_sensor)),
+      m_linear_distance_tracker(std::move(builder.m_linear_distance_tracker)),
+      m_linear_distance_tracker_offset(
+          builder.m_linear_distance_tracker_offset),
+      m_strafe_distance_tracker(std::move(builder.m_strafe_distance_tracker)),
+      m_strafe_distance_tracker_offset(
+          builder.m_strafe_distance_tracker_offset) {}
 
 void InertialPositionTracker::taskUpdate() {
   updatePosition();
@@ -178,51 +193,6 @@ void InertialPositionTracker::setTheta(double theta) {
   if (m_mutex) {
     m_mutex->give();
   }
-}
-
-void InertialPositionTracker::setClock(
-    std::unique_ptr<driftless::rtos::IClock>& clock) {
-  m_clock = std::move(clock);
-}
-
-void InertialPositionTracker::setDelayer(
-    std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
-  m_delayer = std::move(delayer);
-}
-
-void InertialPositionTracker::setMutex(
-    std::unique_ptr<driftless::rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void InertialPositionTracker::setTask(
-    std::unique_ptr<driftless::rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void InertialPositionTracker::setInertialSensor(
-    std::unique_ptr<driftless::io::IInertialSensor>& inertial_sensor) {
-  m_inertial_sensor = std::move(inertial_sensor);
-}
-
-void InertialPositionTracker::setLinearDistanceTracker(
-    std::unique_ptr<driftless::io::IDistanceTracker>& linear_distance_tracker) {
-  m_linear_distance_tracker = std::move(linear_distance_tracker);
-}
-
-void InertialPositionTracker::setLinearDIstanceTrackerOffset(
-    double linear_distance_tracker_offset) {
-  m_linear_distance_tracker_offset = linear_distance_tracker_offset;
-}
-
-void InertialPositionTracker::setStrafeDistanceTracker(
-    std::unique_ptr<driftless::io::IDistanceTracker>& strafe_distance_tracker) {
-  m_strafe_distance_tracker = std::move(strafe_distance_tracker);
-}
-
-void InertialPositionTracker::setStrafeDistanceTrackerOffset(
-    double strafe_distance_tracker_offset) {
-  m_strafe_distance_tracker_offset = strafe_distance_tracker_offset;
 }
 }  // namespace odometry
 }  // namespace subsystems

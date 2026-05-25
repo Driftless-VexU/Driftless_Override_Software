@@ -27,9 +27,13 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace holonomic_drive_train {
 
+class ModularHolonomicDriveBuilder;
+
 /// @brief Class representing a modular holonomic drive train
 /// @author Matthew Backman
 class ModularHolonomicDrive : public IHolonomicDrive {
+  friend class ModularHolonomicDriveBuilder;
+
  private:
   static constexpr uint8_t TASK_DELAY{10};
 
@@ -57,9 +61,20 @@ class ModularHolonomicDrive : public IHolonomicDrive {
 
   bool m_paused{false};
 
+  /// @brief Constructs a ModularHolonomicDrive with the given builder
+  /// @param builder __ModularHolonomicDriveBuilder&&__ The builder to construct
+  /// the drive with
+  explicit ModularHolonomicDrive(ModularHolonomicDriveBuilder&& builder);
+
   void taskUpdate();
 
  public:
+ ModularHolonomicDrive(const ModularHolonomicDrive&) = delete;
+
+ /// @brief Constructs a ModularHolonomicDrive by moving the given ModularHolonomicDrive
+ /// @param  __ModularHolonomicDrive&&__ The ModularHolonomicDrive to move
+ ModularHolonomicDrive(ModularHolonomicDrive&&) = default;
+
   /// @brief Initializes the modular holonomic drive
   void init() override;
 
@@ -107,32 +122,6 @@ class ModularHolonomicDrive : public IHolonomicDrive {
   /// @param wheel __int__ The index of the wheel to get the speed of
   /// @return __double__ The speed of the specified wheel in rad/s
   double getWheelSpeed(int wheel) override;
-
-  /// @brief Adds a module to the modular holonomic drive
-  /// @param module __unique_ptr<IHolonomicDriveModule>&__ The module to be
-  /// added
-  void setModules(std::vector<std::unique_ptr<
-                      holonomic_drive_module::IHolonomicDriveModule>>& modules);
-
-  /// @brief Sets the task for the modular holonomic drive
-  /// @param task The task to be used
-  void setTask(std::unique_ptr<rtos::ITask>& task);
-
-  /// @brief Sets the delayer for the modular holonomic drive
-  /// @param delayer The delayer to be used
-  void setDelayer(std::unique_ptr<rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex for the modular holonomic drive
-  /// @param mutex The mutex to be used
-  void setMutex(std::unique_ptr<rtos::IMutex>& mutex);
-
-  /// @brief Sets the maximum linear velocity of the modular holonomic drive
-  /// @param max_linear_velocity The maximum linear velocity
-  void setMaxLinearVelocity(double max_linear_velocity);
-
-  /// @brief Sets the maximum angular velocity of the modular holonomic drive
-  /// @param max_angular_velocity The maximum angular velocity
-  void setMaxAngularVelocity(double max_angular_velocity);
 };
 }  // namespace holonomic_drive_train
 }  // namespace subsystems

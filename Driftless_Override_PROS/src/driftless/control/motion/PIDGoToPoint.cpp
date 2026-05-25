@@ -1,4 +1,5 @@
 #include "driftless/control/motion/PIDGoToPoint.hpp"
+#include "driftless/control/motion/PIDGoToPointBuilder.hpp"
 
 namespace driftless {
 namespace control {
@@ -10,6 +11,15 @@ void PIDGoToPoint::taskLoop(void* params) {
     pid_go_to_point->taskUpdate();
   }
 }
+
+PIDGoToPoint::PIDGoToPoint(PIDGoToPointBuilder&& builder)
+    : m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_linear_pid(std::move(builder.m_linear_pid)),
+      m_rotational_pid(std::move(builder.m_rotational_pid)),
+      m_target_tolerance(builder.m_target_tolerance),
+      m_target_velocity(builder.m_target_velocity) {}
 
 void PIDGoToPoint::setDriveVelocity(double left, double right) {
   m_robot->sendCommand(
@@ -154,33 +164,6 @@ void PIDGoToPoint::setVelocity(double velocity) {
 }
 
 bool PIDGoToPoint::targetReached() { return target_reached; }
-
-void PIDGoToPoint::setDelayer(
-    std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
-  m_delayer = std::move(delayer);
-}
-
-void PIDGoToPoint::setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDGoToPoint::setTask(std::unique_ptr<driftless::rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDGoToPoint::setLinearPID(PID linear_pid) { m_linear_pid = linear_pid; }
-
-void PIDGoToPoint::setRotationalPID(PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
-}
-
-void PIDGoToPoint::setTargetTolerance(double target_tolerance) {
-  m_target_tolerance = target_tolerance;
-}
-
-void PIDGoToPoint::setTargetVelocity(double target_velocity) {
-  m_target_velocity = target_velocity;
-}
 }  // namespace motion
 }  // namespace control
 }  // namespace driftless

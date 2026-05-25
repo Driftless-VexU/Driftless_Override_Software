@@ -31,6 +31,10 @@ class LinearAccelerationConstraint : public IKinematicConstraint {
   double m_max_acceleration{};
 
  public:
+  /// @brief Constructs a new LinearAccelerationConstraint object
+  /// @param max_acceleration __double__ The max acceleration in in/s^2 for the trajectory
+  LinearAccelerationConstraint(double max_acceleration);
+
   /// @brief Gets the max velocity at a given point along the path
   /// @param path __std::unique_ptr<IPath>&__ The path being used for the
   /// trajectory

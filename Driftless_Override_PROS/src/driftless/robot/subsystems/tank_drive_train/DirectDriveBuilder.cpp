@@ -4,43 +4,41 @@ namespace driftless {
 namespace robot {
 namespace subsystems {
 namespace tank_drive_train {
-DirectDriveBuilder *DirectDriveBuilder::withLeftMotor(
-    std::unique_ptr<io::IMotor> &motor) {
+DirectDriveBuilder& DirectDriveBuilder::withLeftMotor(
+    std::unique_ptr<io::IMotor> motor) {
   m_left_motors.addMotor(motor);
-  return this;
+  return *this;
 }
 
-DirectDriveBuilder *DirectDriveBuilder::withRightMotor(
-    std::unique_ptr<io::IMotor> &motor) {
+DirectDriveBuilder& DirectDriveBuilder::withRightMotor(
+    std::unique_ptr<io::IMotor> motor) {
   m_right_motors.addMotor(motor);
-  return this;
+  return *this;
 }
 
-DirectDriveBuilder *DirectDriveBuilder::withVelocityToVoltage(
+DirectDriveBuilder& DirectDriveBuilder::withVelocityToVoltage(
     double velocity_to_voltage) {
   m_velocity_to_voltage = velocity_to_voltage;
-  return this;
+  return *this;
 }
-DirectDriveBuilder *DirectDriveBuilder::withWheelRadius(double wheel_radius) {
+DirectDriveBuilder& DirectDriveBuilder::withWheelRadius(double wheel_radius) {
   m_wheel_radius = wheel_radius;
-  return this;
+  return *this;
 }
 
-DirectDriveBuilder *DirectDriveBuilder::withDriveRadius(double drive_radius) {
+DirectDriveBuilder& DirectDriveBuilder::withDriveRadius(double drive_radius) {
   m_drive_radius = drive_radius;
-  return this;
+  return *this;
 }
 
-std::unique_ptr<ITankDriveTrain> DirectDriveBuilder::build() {
-  std::unique_ptr<DirectDrive> drivetrain{std::make_unique<DirectDrive>()};
-  drivetrain->setLeftMotors(m_left_motors);
-  drivetrain->setRightMotors(m_right_motors);
-  drivetrain->setVelocityToVoltage(m_velocity_to_voltage);
-  drivetrain->setWheelRadius(m_wheel_radius);
-  drivetrain->setDriveRadius(m_drive_radius);
-  return drivetrain;
+DirectDrive DirectDriveBuilder::build() {
+  return DirectDrive{std::move(*this)};
 }
-}  // namespace drivetrain
+
+std::unique_ptr<DirectDrive> DirectDriveBuilder::buildUnique() {
+  return std::unique_ptr<DirectDrive>{new DirectDrive{std::move(*this)}};
+}
+}  // namespace tank_drive_train
 }  // namespace subsystems
 }  // namespace robot
 }  // namespace driftless

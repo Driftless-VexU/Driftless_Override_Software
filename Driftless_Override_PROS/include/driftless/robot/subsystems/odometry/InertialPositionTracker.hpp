@@ -28,9 +28,13 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace odometry {
 
+class InertialPositionTrackerBuilder;
+
 /// @brief Class for tracking the position of the robot using inertial sensors
 /// @author Matthew Backman
 class InertialPositionTracker : public IPositionTracker {
+  friend class InertialPositionTrackerBuilder;
+
  private:
   // the delay between task loops
   static constexpr uint8_t TASK_DELAY{10};
@@ -59,13 +63,15 @@ class InertialPositionTracker : public IPositionTracker {
   // distance tracker on the linear side of the robot
   std::unique_ptr<driftless::io::IDistanceTracker> m_linear_distance_tracker{};
 
-  // the offset, from the linear side of the robot, of the linear distance tracker
+  // the offset, from the linear side of the robot, of the linear distance
+  // tracker
   double m_linear_distance_tracker_offset{};
 
   // distance tracker on the strafe side of the robot
   std::unique_ptr<driftless::io::IDistanceTracker> m_strafe_distance_tracker{};
 
-  // the offset, from the linear side of the robot, of the strafe distance tracker
+  // the offset, from the linear side of the robot, of the strafe distance
+  // tracker
   double m_strafe_distance_tracker_offset{};
 
   // the position on the field
@@ -86,6 +92,8 @@ class InertialPositionTracker : public IPositionTracker {
   // the system time of the latest update
   uint8_t last_time{};
 
+  explicit InertialPositionTracker(InertialPositionTrackerBuilder&& builder);
+
   // run all updates in the system
   void taskUpdate();
 
@@ -93,6 +101,12 @@ class InertialPositionTracker : public IPositionTracker {
   void updatePosition();
 
  public:
+  InertialPositionTracker(const InertialPositionTracker&) = delete;
+
+  /// @brief Move constructor
+  /// @param other __InertialPositionTracker&&__ The position tracker to move
+  InertialPositionTracker(InertialPositionTracker&& other) = default;
+
   /// @brief Initializes the system
   void init() override;
 
@@ -117,46 +131,7 @@ class InertialPositionTracker : public IPositionTracker {
 
   /// @brief Sets the angular offset of the system
   /// @param theta __double__ The angular offset to set
-  void setTheta(double theta);
-
-  /// @brief Sets the clock
-  /// @param clock __std::unique_ptr<driftless::rtos::IClock>&__ The clock to set
-  void setClock(std::unique_ptr<driftless::rtos::IClock>& clock);
-
-  /// @brief Sets the delayer
-  /// @param delayer __std::unique_ptr<driftless::rtos::IDelayer>&__ The delayer to set
-  void setDelayer(std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex
-  /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>&__ The mutex to set
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task
-  /// @param task __std::unique_ptr<driftless::rtos::ITask>&__ The task to set
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the inertial sensor
-  /// @param inertial_sensor __std::unique_ptr<driftless::io::IInertialSensor>&__ The inertial sensor to set
-  void setInertialSensor(
-      std::unique_ptr<driftless::io::IInertialSensor>& inertial_sensor);
-
-  /// @brief Sets the linear distance tracker
-  /// @param linear_distance_tracker __std::unique_ptr<driftless::io::IDistanceTracker>&__ The linear distance tracker to set
-  void setLinearDistanceTracker(
-      std::unique_ptr<driftless::io::IDistanceTracker>& linear_distance_tracker);
-
-  /// @brief Sets the offset of the linear distance tracker
-  /// @param linear_distance_tracker_offset __double__ The offset to set
-  void setLinearDIstanceTrackerOffset(double linear_distance_tracker_offset);
-
-  /// @brief Sets the strafe distance tracker
-  /// @param strafe_distance_tracker __std::unique_ptr<driftless::io::IDistanceTracker>&__ The strafe distance tracker to set
-  void setStrafeDistanceTracker(
-      std::unique_ptr<driftless::io::IDistanceTracker>& strafe_distance_tracker);
-
-  /// @brief Sets the offset of the strafe distance tracker
-  /// @param strafe_distance_tracker_offset __double__ The offset to set
-  void setStrafeDistanceTrackerOffset(double strafe_distance_tracker_offset);
+  void setTheta(double theta) override;
 };
 
 }  // namespace odometry

@@ -2,6 +2,10 @@
 
 namespace driftless::robot::subsystems::holonomic_drive_train::
     holonomic_drive_module {
+
+XDriveModule::XDriveModule(hal::MotorGroup&& motors, double angle_offset)
+    : m_motors{std::move(motors)}, m_angle_offset{angle_offset} {}
+
 void XDriveModule::init() { m_motors.init(); }
 
 void XDriveModule::run() {}
@@ -98,12 +102,6 @@ double XDriveModule::getSpeed() {
   double motor_speed = m_motors.getAngularVelocity();
   double gear_ratio = m_motors.getGearRatio();
   return motor_speed * gear_ratio;
-}
-
-void XDriveModule::setMotors(hal::MotorGroup& motors) { m_motors = motors; }
-
-void XDriveModule::setAngleOffset(double angle_offset) {
-  m_angle_offset = angle_offset;
 }
 }  // namespace
    // driftless::robot::subsystems::holonomic_drive_train::holonomic_drive_module

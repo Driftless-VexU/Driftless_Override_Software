@@ -1,5 +1,7 @@
 #include "driftless/control/path/PIDPathFollower.hpp"
 
+#include "driftless/control/path/PIDPathFollowerBuilder.hpp"
+
 namespace driftless {
 namespace control {
 namespace path {
@@ -9,6 +11,16 @@ void PIDPathFollower::taskLoop(void* params) {
     instance->taskUpdate();
   }
 }
+
+PIDPathFollower::PIDPathFollower(PIDPathFollowerBuilder&& builder)
+    : m_delayer(std::move(builder.m_delayer)),
+      m_mutex(std::move(builder.m_mutex)),
+      m_task(std::move(builder.m_task)),
+      m_linear_pid(std::move(builder.m_linear_pid)),
+      m_rotational_pid(std::move(builder.m_rotational_pid)),
+      m_follow_distance(builder.m_follow_distance),
+      m_target_tolerance(builder.m_target_tolerance),
+      m_target_velocity(builder.m_target_velocity) {}
 
 void PIDPathFollower::taskUpdate() {
   if (m_mutex) {
@@ -295,39 +307,6 @@ void PIDPathFollower::resume() {
 }
 
 bool PIDPathFollower::targetReached() { return target_reached; }
-
-void PIDPathFollower::setDelayer(
-    const std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDPathFollower::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDPathFollower::setTask(std::unique_ptr<rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDPathFollower::setLinearPID(PID linear_pid) {
-  m_linear_pid = linear_pid;
-}
-
-void PIDPathFollower::setRotationalPID(PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
-}
-
-void PIDPathFollower::setFollowDistance(double follow_distance) {
-  m_follow_distance = follow_distance;
-}
-
-void PIDPathFollower::setTargetTolerance(double target_tolerance) {
-  m_target_tolerance = target_tolerance;
-}
-
-void PIDPathFollower::setTargetVelocity(double target_velocity) {
-  m_target_velocity = target_velocity;
-}
 }  // namespace path
 }  // namespace control
 }  // namespace driftless

@@ -18,6 +18,8 @@ namespace path {
 /// @brief Builder for the PIDPathFollower
 /// @author Matthew Backman
 class PIDPathFollowerBuilder {
+  friend class PIDPathFollower;
+
  private:
   // the delayer used in the path follower
   std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
@@ -46,52 +48,59 @@ class PIDPathFollowerBuilder {
  public:
   /// @brief Adds a delayer to the builder
   /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withDelayer(
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withDelayer(
       std::unique_ptr<driftless::rtos::IDelayer>& delayer);
 
   /// @brief Adds a mutex to the builder
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withMutex(
-      std::unique_ptr<driftless::rtos::IMutex>& mutex);
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withMutex(
+      std::unique_ptr<driftless::rtos::IMutex> mutex);
 
   /// @brief Adds a task to the builder
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withTask(
-      std::unique_ptr<driftless::rtos::ITask>& task);
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withTask(
+      std::unique_ptr<driftless::rtos::ITask> task);
 
   /// @brief Adds a linear PID controller to the builder
   /// @param linear_pid __PID__ The linear PID controller to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withLinearPID(driftless::control::PID linear_pid);
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withLinearPID(driftless::control::PID linear_pid);
 
   /// @brief Adds a rotational PID controller to the builder
   /// @param rotational_pid __PID__ The rotational PID controller to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withRotationalPID(
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withRotationalPID(
       driftless::control::PID rotational_pid);
 
   /// @brief Adds a follow distance to the builder
   /// @param follow_distance __double__ The follow distance to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withFollowDistance(double follow_distance);
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withFollowDistance(double follow_distance);
 
   /// @brief Adds a target tolerance to the builder
   /// @param target_tolerance __double__ The target tolerance to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withTargetTolerance(double target_tolerance);
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withTargetTolerance(double target_tolerance);
 
   /// @brief Adds a target velocity to the builder
   /// @param target_velocity __double__ The target velocity to add
-  /// @return __PIDPathFollowerBuilder*__ Pointer to the current builder
-  PIDPathFollowerBuilder* withTargetVelocity(double target_velocity);
+  /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
+  PIDPathFollowerBuilder& withTargetVelocity(double target_velocity);
 
   /// @brief Builds a new PID path follower
-  /// @return __std::unique_ptr<PIDPathFollower>__ Pointer to the new PID path
+  /// @return __PIDPathFollower__ Pointer to the new PID path
   /// follower
-  std::unique_ptr<PIDPathFollower> build();
+  [[nodiscard]]
+  PIDPathFollower build();
+
+  /// @brief Builds a new PID path follower and returns a unique pointer to it
+  /// @return __std::unique_ptr<PIDPathFollower>__ A unique pointer to the new
+  /// PID path follower
+  [[nodiscard]] 
+  std::unique_ptr<PIDPathFollower> buildUnique();
 };
 }  // namespace path
 }  // namespace control

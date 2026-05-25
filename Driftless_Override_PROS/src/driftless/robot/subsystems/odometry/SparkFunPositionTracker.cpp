@@ -1,4 +1,5 @@
 #include "driftless/robot/subsystems/odometry/SparkFunPositionTracker.hpp"
+#include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
 
 #include "pros/screen.hpp"
 namespace driftless::robot::subsystems::odometry {
@@ -10,6 +11,17 @@ void SparkFunPositionTracker::taskLoop(void* params) {
     instance->taskUpdate();
   }
 }
+
+SparkFunPositionTracker::SparkFunPositionTracker(
+    SparkFunPositionTrackerBuilder&& builder) :
+  m_clock{std::move(builder.m_clock)},
+  m_delayer{std::move(builder.m_delayer)},
+  m_mutex{std::move(builder.m_mutex)},
+  m_task{std::move(builder.m_task)},
+  m_local_x_offset{builder.m_local_x_offset},
+  m_local_y_offset{builder.m_local_y_offset},
+  m_local_theta_offset{builder.m_local_theta_offset}
+  {}
 
 void SparkFunPositionTracker::taskUpdate() {
   uint64_t start_time{m_clock->getTime()};
@@ -151,34 +163,5 @@ void SparkFunPositionTracker::setTheta(double theta) {
 
   global_x_offset = current_position.x - rotated_x;
   global_y_offset = current_position.y - rotated_y;
-}
-
-void SparkFunPositionTracker::setClock(std::unique_ptr<rtos::IClock>& clock) {
-  m_clock = std::move(clock);
-}
-
-void SparkFunPositionTracker::setDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = std::move(delayer);
-}
-
-void SparkFunPositionTracker::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void SparkFunPositionTracker::setTask(std::unique_ptr<rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void SparkFunPositionTracker::setLocalXOffset(double local_x_offset) {
-  m_local_x_offset = local_x_offset;
-}
-
-void SparkFunPositionTracker::setLocalYOffset(double local_y_offset) {
-  m_local_y_offset = local_y_offset;
-}
-
-void SparkFunPositionTracker::setLocalThetaOffset(double local_theta_offset) {
-  m_local_theta_offset = local_theta_offset;
 }
 }  // namespace driftless::robot::subsystems::odometry

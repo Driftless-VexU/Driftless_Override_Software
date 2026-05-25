@@ -31,6 +31,10 @@ class MaxVelocityConstraint : public IKinematicConstraint {
   double m_max_velocity;
 
  public:
+  /// @brief Constructs a new MaxVelocityConstraint object
+  /// @param max_velocity __double__ The max velocity in in/s for the trajectory
+  MaxVelocityConstraint(double max_velocity);
+
   /// @brief Gets the max velocity at a given point along the path
   /// @param path __std::unique_ptr<IPath>&__ The path being used for the
   /// trajectory

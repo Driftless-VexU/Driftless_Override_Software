@@ -24,14 +24,14 @@ class MotorGroup {
   /// @brief Constructs a new motor group with the given motors
   /// @tparam ...Motors The types of the motors, must be derived from
   /// __io::IMotor__
-  /// @param ...motors __Motors&...__ The motors to be added to the group
+  /// @param ...motors __Motors&&...__ The motors to be added to the group
   template <typename... Motors,
             typename = std::enable_if_t<(
                 std::is_convertible_v<Motors, std::unique_ptr<io::IMotor>>&& ...)>>
   explicit MotorGroup(Motors&&... motors) {
     m_motors.reserve(sizeof...(motors));
 
-    (m_motors.push_back(std::move(motors)), ...);
+    (m_motors.push_back(std::forward<Motors>(motors)), ...);
   }
 
   MotorGroup(const MotorGroup& other) = delete;

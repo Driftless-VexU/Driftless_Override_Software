@@ -2,7 +2,6 @@
 #define __DIRECT_DRIVE_HPP__
 
 #include "driftless/hal/MotorGroup.hpp"
-#include "driftless/hal/PistonGroup.hpp"
 #include "driftless/robot/subsystems/tank_drive_train/ITankDriveTrain.hpp"
 
 /// @brief The namespace for driftless library code

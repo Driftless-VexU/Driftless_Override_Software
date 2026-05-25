@@ -75,7 +75,7 @@ class PID {
   /// @brief Moves another PID controller
   /// @param rhs __PID&&__ The PID controller being moved
   /// @return __PID&__ Reference to the new PID controller
-  PID& operator=(PID&& rhs);
+  PID& operator=(PID&& rhs) = default;
 };
 }  // namespace control
 }  // namespace driftless

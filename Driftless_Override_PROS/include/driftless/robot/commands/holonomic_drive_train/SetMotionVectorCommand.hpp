@@ -28,14 +28,19 @@ class SetMotionVectorCommand : public ICommand {
 
   double m_angular_velocity;
 
+  bool m_is_normal;
+
  public:
   /// @brief Constructs a new SetMotionVectorCommand with the given velocities
   /// @param x_velocity __double__ The x velocity of the motion vector
   /// @param y_velocity __double__ The y velocity of the motion vector
   /// @param angular_velocity __double__ The angular velocity of the motion
   /// vector
+  /// @param is_normal __bool__ Whether the velocities are normalized (between -1 and 1)
   SetMotionVectorCommand(double x_velocity, double y_velocity,
-                         double angular_velocity);
+                         double angular_velocity, bool is_normal = false);
+
+  bool isNormal() const;
 
   double getXVelocity() const;
 

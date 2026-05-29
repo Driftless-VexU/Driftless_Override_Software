@@ -10,6 +10,10 @@ SetMotionVectorCommand::SetMotionVectorCommand(double x_velocity,
       m_angular_velocity(angular_velocity),
       m_is_normal(is_normal) {}
 
+subsystems::ESubsystem SetMotionVectorCommand::getTarget() const {
+  return subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN;
+}
+
 bool SetMotionVectorCommand::isNormal() const { return m_is_normal; }
 
 double SetMotionVectorCommand::getXVelocity() const { return m_x_velocity; }

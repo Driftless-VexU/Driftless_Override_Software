@@ -34,6 +34,8 @@ class SetLinearVelocityCommand : public ICommand {
   SetLinearVelocityCommand(double x_velocity, double y_velocity,
                            bool is_normal = false);
 
+  subsystems::ESubsystem getTarget() const override;
+
   bool isNormal() const;
 
   double getXVelocity() const;

@@ -8,6 +8,10 @@ SetLinearVelocityCommand::SetLinearVelocityCommand(double x_velocity,
       m_y_velocity(y_velocity),
       m_is_normal(is_normal) {}
 
+subsystems::ESubsystem SetLinearVelocityCommand::getTarget() const {
+  return subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN;
+}
+
 bool SetLinearVelocityCommand::isNormal() const { return m_is_normal; }
 
 double SetLinearVelocityCommand::getXVelocity() const { return m_x_velocity; }

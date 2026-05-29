@@ -40,6 +40,8 @@ class SetMotionVectorCommand : public ICommand {
   SetMotionVectorCommand(double x_velocity, double y_velocity,
                          double angular_velocity, bool is_normal = false);
 
+  subsystems::ESubsystem getTarget() const override;
+
   bool isNormal() const;
 
   double getXVelocity() const;

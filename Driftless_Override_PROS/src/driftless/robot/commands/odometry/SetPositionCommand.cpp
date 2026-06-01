@@ -5,10 +5,6 @@ SetPositionCommand::SetPositionCommand(double x_pos, double y_pos,
                                        double theta_pos)
     : m_x_pos(x_pos), m_y_pos(y_pos), m_theta_pos(theta_pos) {}
 
-subsystems::ESubsystem SetPositionCommand::getTarget() const {
-  return subsystems::ESubsystem::ODOMETRY;
-}
-
 double SetPositionCommand::getXPos() const { return m_x_pos; }
 
 double SetPositionCommand::getYPos() const { return m_y_pos; }

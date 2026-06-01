@@ -5,10 +5,6 @@ SetAngularVelocityCommand::SetAngularVelocityCommand(double angular_velocity,
                                                      bool is_normal)
     : m_angular_velocity(angular_velocity), m_is_normal(is_normal) {}
 
-subsystems::ESubsystem SetAngularVelocityCommand::getTarget() const {
-  return subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN;
-}
-
 bool SetAngularVelocityCommand::isNormal() const { return m_is_normal; }
 
 double SetAngularVelocityCommand::getAngularVelocity() const {

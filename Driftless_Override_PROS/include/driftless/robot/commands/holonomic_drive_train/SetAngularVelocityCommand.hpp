@@ -1,7 +1,6 @@
 #ifndef __SET_ANGULAR_VELOCITY_COMMAND_HPP__
 #define __SET_ANGULAR_VELOCITY_COMMAND_HPP__
 
-#include "driftless/robot/commands/ICommand.hpp"
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {
@@ -18,7 +17,7 @@ namespace commands {
 /// @author Matthew Backman
 namespace holonomic_drive_train {
 
-class SetAngularVelocityCommand : public ICommand {
+class SetAngularVelocityCommand {
  private:
   double m_angular_velocity;
 
@@ -32,8 +31,6 @@ class SetAngularVelocityCommand : public ICommand {
   /// @param is_normal __bool__ Whether the angular velocity is normalized
   /// (between -1 and 1)
   SetAngularVelocityCommand(double angular_velocity, bool is_normal = false);
-
-  subsystems::ESubsystem getTarget() const override;
 
   bool isNormal() const;
 

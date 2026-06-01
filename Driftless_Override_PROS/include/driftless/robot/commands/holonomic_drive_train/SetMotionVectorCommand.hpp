@@ -1,7 +1,6 @@
 #ifndef __SET_MOTION_VECTOR_COMMAND_HPP__
 #define __SET_MOTION_VECTOR_COMMAND_HPP__
 
-#include "driftless/robot/commands/ICommand.hpp"
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {
@@ -20,7 +19,7 @@ namespace holonomic_drive_train {
 
 /// @brief Command for setting the motion vector of the holonomic drivetrain
 /// @author Matthew Backman
-class SetMotionVectorCommand : public ICommand {
+class SetMotionVectorCommand {
  private:
   double m_x_velocity;
 
@@ -36,11 +35,10 @@ class SetMotionVectorCommand : public ICommand {
   /// @param y_velocity __double__ The y velocity of the motion vector
   /// @param angular_velocity __double__ The angular velocity of the motion
   /// vector
-  /// @param is_normal __bool__ Whether the velocities are normalized (between -1 and 1)
+  /// @param is_normal __bool__ Whether the velocities are normalized (between
+  /// -1 and 1)
   SetMotionVectorCommand(double x_velocity, double y_velocity,
                          double angular_velocity, bool is_normal = false);
-
-  subsystems::ESubsystem getTarget() const override;
 
   bool isNormal() const;
 

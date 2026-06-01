@@ -1,7 +1,6 @@
 #ifndef __SET_X_POSITION_COMMAND_HPP__
 #define __SET_X_POSITION_COMMAND_HPP__
 
-#include "driftless/robot/commands/ICommand.hpp"
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {
@@ -20,7 +19,7 @@ namespace odometry {
 
 /// @brief Sets the X position of the robot in the odometry subsystem
 /// @author Matthew Backman
-class SetXPositionCommand : public ICommand {
+class SetXPositionCommand {
  private:
   double m_x_position;
 
@@ -28,8 +27,6 @@ class SetXPositionCommand : public ICommand {
   /// @brief Constructs a new SetXPositionCommand with the given X position
   /// @param x_position __double__ The X position to set the robot to
   explicit SetXPositionCommand(double x_position);
-
-  subsystems::ESubsystem getTarget() const override;
 
   double getXPosition() const;
 };

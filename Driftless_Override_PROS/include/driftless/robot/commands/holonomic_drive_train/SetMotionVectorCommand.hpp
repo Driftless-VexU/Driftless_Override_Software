@@ -19,34 +19,18 @@ namespace holonomic_drive_train {
 
 /// @brief Command for setting the motion vector of the holonomic drivetrain
 /// @author Matthew Backman
-class SetMotionVectorCommand {
- private:
-  double m_x_velocity;
+struct SetMotionVectorCommand {
+  /// @brief The x-velocity of the drivetrain
+  const double m_x_velocity;
 
-  double m_y_velocity;
+  /// @brief The y-velocity of the drivetrain
+  const double m_y_velocity;
 
-  double m_angular_velocity;
+  /// @brief The angular velocity of the drivetrain
+  const double m_angular_velocity;
 
-  bool m_is_normal;
-
- public:
-  /// @brief Constructs a new SetMotionVectorCommand with the given velocities
-  /// @param x_velocity __double__ The x velocity of the motion vector
-  /// @param y_velocity __double__ The y velocity of the motion vector
-  /// @param angular_velocity __double__ The angular velocity of the motion
-  /// vector
-  /// @param is_normal __bool__ Whether the velocities are normalized (between
-  /// -1 and 1)
-  SetMotionVectorCommand(double x_velocity, double y_velocity,
-                         double angular_velocity, bool is_normal = false);
-
-  bool isNormal() const;
-
-  double getXVelocity() const;
-
-  double getYVelocity() const;
-
-  double getAngularVelocity() const;
+  /// @brief Whether the velocities are normalized (between -1 and 1)
+  const bool m_is_normal;
 };
 }  // namespace holonomic_drive_train
 }  // namespace commands

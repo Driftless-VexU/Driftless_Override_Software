@@ -17,24 +17,15 @@ namespace commands {
 /// @author Matthew Backman
 namespace holonomic_drive_train {
 
-class SetAngularVelocityCommand {
- private:
-  double m_angular_velocity;
-
-  bool m_is_normal;
-
- public:
-  /// @brief Constructs a new SetAngularVelocityCommand with the given angular
-  /// velocity
-  /// @param angular_velocity __double__ The desired angular velocity of the
-  /// robot
-  /// @param is_normal __bool__ Whether the angular velocity is normalized
-  /// (between -1 and 1)
-  SetAngularVelocityCommand(double angular_velocity, bool is_normal = false);
-
-  bool isNormal() const;
-
-  double getAngularVelocity() const;
+/// @brief Struct containing information needed to command the holonomic
+/// drivetrain to set its angular velocity
+/// @author Matthew Backman
+struct SetAngularVelocityCommand {
+  /// @brief The desired angular velocity of the robot (rad/s)
+  const double m_angular_velocity;
+  
+  /// @brief Whether the angular velocity is normalized (between -1 and 1)
+  const bool m_is_normal;
 };
 }  // namespace holonomic_drive_train
 }  // namespace commands

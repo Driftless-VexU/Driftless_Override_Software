@@ -16,28 +16,18 @@ namespace commands {
 /// @brief Namespace containing commands for the holonomic drivetrain subsystem
 /// @author Matthew Backman
 namespace holonomic_drive_train {
-class SetLinearVelocityCommand {
- private:
-  double m_x_velocity;
 
-  double m_y_velocity;
+/// @brief Command to set the linear velocity (x, y) of a holonomic drivetrain
+/// @author Matthew Backman
+struct SetLinearVelocityCommand {
+  /// @brief The x-velocity of the drivetrain
+  const double m_x_velocity;
 
-  bool m_is_normal;
+  /// @brief The y-velocity of the drivetrain
+  const double m_y_velocity;
 
- public:
-  /// @brief Constructs a new SetLinearVelocityCommand with the given velocities
-  /// @param x_velocity __double__ The x velocity of the motion vector
-  /// @param y_velocity __double__ The y velocity of the motion vector
-  /// @param is_normal __bool__ Whether the velocities are normalized (between
-  /// -1 and 1)
-  SetLinearVelocityCommand(double x_velocity, double y_velocity,
-                           bool is_normal = false);
-
-  bool isNormal() const;
-
-  double getXVelocity() const;
-
-  double getYVelocity() const;
+  /// @brief Whether the velocities are normalized (-1 to 1)
+  const bool m_is_normal;
 };
 }  // namespace holonomic_drive_train
 }  // namespace commands

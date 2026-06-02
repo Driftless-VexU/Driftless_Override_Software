@@ -19,16 +19,9 @@ namespace odometry {
 
 /// @brief Sets the X position of the robot in the odometry subsystem
 /// @author Matthew Backman
-class SetXPositionCommand {
- private:
-  double m_x_position;
-
- public:
-  /// @brief Constructs a new SetXPositionCommand with the given X position
-  /// @param x_position __double__ The X position to set the robot to
-  explicit SetXPositionCommand(double x_position);
-
-  double getXPosition() const;
+struct SetXPositionCommand {
+  /// @brief The x position to set the robot to (in)
+  const double m_x_position;
 };
 }  // namespace odometry
 }  // namespace commands

@@ -17,26 +17,17 @@ namespace commands {
 /// @author Matthew Backman
 namespace odometry {
 
-class SetPositionCommand {
- private:
-  double m_x_pos;
+/// @brief Command to manually set the position of the odometry
+/// @author Matthew Backman
+struct SetPositionCommand {
+  /// @brief The x position to set the robot to (in)
+  const double m_x_pos;
 
-  double m_y_pos;
+  /// @brief The y position to set the robot to (in)
+  const double m_y_pos;
 
-  double m_theta_pos;
-
- public:
-  /// @brief Construct a new Set Position Command object
-  /// @param x_pos The x position to set the odometry to
-  /// @param y_pos The y position to set the odometry to
-  /// @param theta_pos The theta position to set the odometry to
-  SetPositionCommand(double x_pos, double y_pos, double theta_pos);
-
-  double getXPos() const;
-
-  double getYPos() const;
-
-  double getThetaPos() const;
+  /// @brief The heading to set the robot to (rad)
+  const double m_theta_pos;
 };
 }  // namespace odometry
 }  // namespace commands

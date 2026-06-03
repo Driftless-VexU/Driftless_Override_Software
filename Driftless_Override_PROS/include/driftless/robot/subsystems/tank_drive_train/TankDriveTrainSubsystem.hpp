@@ -43,14 +43,19 @@ class TankDriveTrainSubsystem : public ASubsystem {
   void run() override;
 
   /// @brief Sends a command to the subsystem
-  /// @param command_name __ESubsystemCommand__ The desired command
-  /// @param args __va_list&__ The arguments for the command, if any
-  void command(ESubsystemCommand command_name, va_list &args) override;
+  /// @param cmd __commands::Command&__ The command to send
+  void command(const commands::Command& cmd) override;
 
   /// @brief Gets a state of the subsystem
   /// @param state_name __ESubsystemState__ The desired state
   /// @return __void*__ A pointer to the state of the subsystem
   void *state(ESubsystemState state_name) override;
+
+  void handleCommand(const commands::tank_drive_train::SetVelocityCommand& cmd);
+
+  void handleCommand(const commands::tank_drive_train::SetVoltageCommand& cmd);
+
+  constexpr void handleCommand(const auto& cmd) {}
 };
 }  // namespace tank_drive_train
 }  // namespace subsystems

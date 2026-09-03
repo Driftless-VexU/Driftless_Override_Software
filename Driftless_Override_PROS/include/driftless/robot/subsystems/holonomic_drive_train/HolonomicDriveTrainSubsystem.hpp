@@ -27,15 +27,15 @@ namespace holonomic_drive_train {
 /// @brief The holonomic drive train subsystem
 /// @author Matthew Backman
 class HolonomicDriveTrainSubsystem : public ASubsystem {
-private:
+ private:
   /// @brief The holonomic drive train object being wrapped
   std::unique_ptr<IHolonomicDrive> m_drive_train{};
 
-public:
+ public:
   /// @brief Constructor
   /// @param drive_train __std::unique_ptr<IHolonomicDrive>&__ The holonomic
   /// drive train object to wrap
-  HolonomicDriveTrainSubsystem(std::unique_ptr<IHolonomicDrive> &drive_train);
+  HolonomicDriveTrainSubsystem(std::unique_ptr<IHolonomicDrive>& drive_train);
 
   /// @brief Initializes the holonomic drive train subsystem
   void init() override;
@@ -45,28 +45,28 @@ public:
 
   /// @brief Sends a command to the holonomic drive train subsystem
   /// @param cmd __commands::Command&__ The command to send
-  void command(const commands::Command &cmd) override;
+  void command(const commands::Command& cmd) override;
 
   /// @brief Gets the state of the holonomic drive train subsystem
   /// @param state_name __ESubsystemState__ The state to get
   /// @return __void*__ The state data
-  void *state(ESubsystemState state_name) override;
+  void* state(ESubsystemState state_name) override;
 
   void handleCommand(
-      const commands::holonomic_drive_train::SetMotionVectorCommand &cmd);
+      const commands::holonomic_drive_train::SetMotionVectorCommand& cmd);
 
   void handleCommand(
-      const commands::holonomic_drive_train::SetLinearVelocityCommand &cmd);
+      const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd);
 
   void handleCommand(
-      const commands::holonomic_drive_train::SetAngularVelocityCommand &cmd);
+      const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd);
 
-  void handleCommand(const auto &cmd) {}
+  void handleCommand(const auto& cmd) {}
 };
 
-} // namespace holonomic_drive_train
-} // namespace subsystems
-} // namespace robot
-} // namespace driftless
+}  // namespace holonomic_drive_train
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

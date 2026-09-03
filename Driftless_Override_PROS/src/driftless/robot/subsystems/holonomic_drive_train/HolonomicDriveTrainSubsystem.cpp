@@ -6,8 +6,9 @@ void HolonomicDriveTrainSubsystem::handleCommand(
   if (cmd.m_is_normal)
     m_drive_train->setNormalizedMotionVector(
         {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
-  m_drive_train->setMotionVector(
-      {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
+  else
+    m_drive_train->setMotionVector(
+        {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
 }
 
 void HolonomicDriveTrainSubsystem::handleCommand(
@@ -15,20 +16,23 @@ void HolonomicDriveTrainSubsystem::handleCommand(
   if (cmd.m_is_normal)
     m_drive_train->setNormalizedLinearVelocity(cmd.m_x_velocity,
                                                cmd.m_y_velocity);
-  m_drive_train->setLinearVelocity(cmd.m_x_velocity, cmd.m_y_velocity);
+  else
+    m_drive_train->setLinearVelocity(cmd.m_x_velocity, cmd.m_y_velocity);
 }
 
 void HolonomicDriveTrainSubsystem::handleCommand(
     const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd) {
   if (cmd.m_is_normal)
     m_drive_train->setNormalizedAngularVelocity(cmd.m_angular_velocity);
-  m_drive_train->setAngularVelocity(cmd.m_angular_velocity);
+  else
+    m_drive_train->setAngularVelocity(cmd.m_angular_velocity);
 }
 
 void HolonomicDriveTrainSubsystem::handleCommand(const auto& cmd) {
   throw std::invalid_argument(
       "No behavior defined to handle the command of type: " +
-      std::string(typeid(cmd).name()));
+      std::string(typeid(cmd).name()) +
+      " for the holonomic drive train subsystem");
 }
 
 HolonomicDriveTrainSubsystem::HolonomicDriveTrainSubsystem(

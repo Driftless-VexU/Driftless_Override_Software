@@ -1,6 +1,30 @@
 #include "driftless/robot/subsystems/holonomic_drive_train/HolonomicDriveTrainSubsystem.hpp"
 
 namespace driftless::robot::subsystems::holonomic_drive_train {
+void HolonomicDriveTrainSubsystem::handleCommand(
+    const commands::holonomic_drive_train::SetMotionVectorCommand& cmd) {
+  if (cmd.m_is_normal)
+    m_drive_train->setNormalizedMotionVector(
+        {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
+  m_drive_train->setMotionVector(
+      {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
+}
+
+void HolonomicDriveTrainSubsystem::handleCommand(
+    const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd) {
+  if (cmd.m_is_normal)
+    m_drive_train->setNormalizedLinearVelocity(cmd.m_x_velocity,
+                                               cmd.m_y_velocity);
+  m_drive_train->setLinearVelocity(cmd.m_x_velocity, cmd.m_y_velocity);
+}
+
+void HolonomicDriveTrainSubsystem::handleCommand(
+    const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd) {
+  if (cmd.m_is_normal)
+    m_drive_train->setNormalizedAngularVelocity(cmd.m_angular_velocity);
+  m_drive_train->setAngularVelocity(cmd.m_angular_velocity);
+}
+
 HolonomicDriveTrainSubsystem::HolonomicDriveTrainSubsystem(
     std::unique_ptr<IHolonomicDrive>& drive_train)
     : m_drive_train(std::move(drive_train)),
@@ -27,29 +51,5 @@ void* HolonomicDriveTrainSubsystem::state(ESubsystemState state_name) {
     }
   }
   return out;
-}
-
-void HolonomicDriveTrainSubsystem::handleCommand(
-    const commands::holonomic_drive_train::SetMotionVectorCommand& cmd) {
-  if (cmd.m_is_normal)
-    m_drive_train->setNormalizedMotionVector(
-        {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
-  m_drive_train->setMotionVector(
-      {cmd.m_x_velocity, cmd.m_y_velocity, cmd.m_angular_velocity});
-}
-
-void HolonomicDriveTrainSubsystem::handleCommand(
-    const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd) {
-  if (cmd.m_is_normal)
-    m_drive_train->setNormalizedLinearVelocity(cmd.m_x_velocity,
-                                               cmd.m_y_velocity);
-  m_drive_train->setLinearVelocity(cmd.m_x_velocity, cmd.m_y_velocity);
-}
-
-void HolonomicDriveTrainSubsystem::handleCommand(
-    const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd) {
-  if (cmd.m_is_normal)
-    m_drive_train->setNormalizedAngularVelocity(cmd.m_angular_velocity);
-  m_drive_train->setAngularVelocity(cmd.m_angular_velocity);
 }
 }  // namespace driftless::robot::subsystems::holonomic_drive_train

@@ -31,6 +31,17 @@ class HolonomicDriveTrainSubsystem : public ASubsystem {
   /// @brief The holonomic drive train object being wrapped
   std::unique_ptr<IHolonomicDrive> m_drive_train{};
 
+  void handleCommand(
+      const commands::holonomic_drive_train::SetMotionVectorCommand& cmd);
+
+  void handleCommand(
+      const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd);
+
+  void handleCommand(
+      const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd);
+
+  void handleCommand(const auto& cmd) {}
+
  public:
   /// @brief Constructor
   /// @param drive_train __std::unique_ptr<IHolonomicDrive>&__ The holonomic
@@ -51,17 +62,6 @@ class HolonomicDriveTrainSubsystem : public ASubsystem {
   /// @param state_name __ESubsystemState__ The state to get
   /// @return __void*__ The state data
   void* state(ESubsystemState state_name) override;
-
-  void handleCommand(
-      const commands::holonomic_drive_train::SetMotionVectorCommand& cmd);
-
-  void handleCommand(
-      const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd);
-
-  void handleCommand(
-      const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd);
-
-  void handleCommand(const auto& cmd) {}
 };
 
 }  // namespace holonomic_drive_train

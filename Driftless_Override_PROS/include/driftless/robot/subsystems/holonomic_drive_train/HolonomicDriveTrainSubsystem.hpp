@@ -32,15 +32,24 @@ class HolonomicDriveTrainSubsystem : public ASubsystem {
   std::unique_ptr<IHolonomicDrive> m_drive_train{};
 
   void handleCommand(
+      /// @brief Handles the SetMotionVectorCommand command
+      /// @param cmd __SetMotionVectorCommand&__ The command to handle
       const commands::holonomic_drive_train::SetMotionVectorCommand& cmd);
 
+  /// @brief Handles the SetLinearVelocityCommand command
+  /// @param cmd __SetLinearVelocityCommand&__ The command to handle
   void handleCommand(
       const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd);
 
+  /// @brief Handles the SetAngularVelocityCommand command
+  /// @param cmd __SetAngularVelocityCommand&__ The command to handle
   void handleCommand(
       const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd);
 
-  void handleCommand(const auto& cmd) {}
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd);
 
  public:
   /// @brief Constructor

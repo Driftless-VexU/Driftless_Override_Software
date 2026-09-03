@@ -25,6 +25,12 @@ void HolonomicDriveTrainSubsystem::handleCommand(
   m_drive_train->setAngularVelocity(cmd.m_angular_velocity);
 }
 
+void HolonomicDriveTrainSubsystem::handleCommand(const auto& cmd) {
+  throw std::invalid_argument(
+      "No behavior defined to handle the command of type: " +
+      std::string(typeid(cmd).name()));
+}
+
 HolonomicDriveTrainSubsystem::HolonomicDriveTrainSubsystem(
     std::unique_ptr<IHolonomicDrive>& drive_train)
     : m_drive_train(std::move(drive_train)),

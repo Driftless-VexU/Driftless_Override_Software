@@ -29,9 +29,31 @@ class OdometrySubsystem : public ASubsystem {
   // the position tracker being used
   std::unique_ptr<IPositionTracker> m_position_tracker{};
 
+  /// @brief Handles the SetHeadingCommand command
+  /// @param cmd __SetHeadingCommand&__ The command to handle
+  void handleCommand(const commands::odometry::SetHeadingCommand& cmd);
+
+  /// @brief Handles the SetPositionCommand command
+  /// @param cmd __SetPositionCommand&__ The command to handle
+  void handleCommand(const commands::odometry::SetPositionCommand& cmd);
+
+  /// @brief Handles the SetXPositionCommand command
+  /// @param cmd __SetXPositionCommand&__ The command to handle
+  void handleCommand(const commands::odometry::SetXPositionCommand& cmd);
+
+  /// @brief Handles the SetYPositionCommand command
+  /// @param cmd __SetYPositionCommand&__ The command to handle
+  void handleCommand(const commands::odometry::SetYPositionCommand& cmd);
+
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd);
+
  public:
   /// @brief Constructor
-  /// @param position_tracker __std::unique_ptr<IPositionTracker>&__ The position tracker to use
+  /// @param position_tracker __std::unique_ptr<IPositionTracker>&__ The
+  /// position tracker to use
   OdometrySubsystem(std::unique_ptr<IPositionTracker>& position_tracker);
 
   /// @brief Initializes the subsystem
@@ -41,9 +63,8 @@ class OdometrySubsystem : public ASubsystem {
   void run() override;
 
   /// @brief Sends a command to the subsystem
-  /// @param command_name __ESubsystemCommand__ The command to send
-  /// @param args __va_list&__ The arguments for the command
-  void command(ESubsystemCommand command_name, va_list& args) override;
+  /// @param cmd __commands::Command&__ The command to send
+  void command(const commands::Command& cmd) override;
 
   /// @brief Gets a specified state of the subsystem
   /// @param state_name __ESubsystemState__ The state to get

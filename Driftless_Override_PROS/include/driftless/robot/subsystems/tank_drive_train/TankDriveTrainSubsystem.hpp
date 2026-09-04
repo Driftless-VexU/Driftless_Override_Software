@@ -30,11 +30,24 @@ class TankDriveTrainSubsystem : public ASubsystem {
  private:
   std::unique_ptr<ITankDriveTrain> m_drive_train{};
 
+  /// @brief Handles the set velocity command
+  /// @param cmd __SetVelocityCommand&__ The command to handle
+  void handleCommand(const commands::tank_drive_train::SetVelocityCommand& cmd);
+
+  /// @brief Handles the set voltage command
+  /// @param cmd __SetVoltageCommand&__ The command to handle
+  void handleCommand(const commands::tank_drive_train::SetVoltageCommand& cmd);
+
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd);
+
  public:
   /// @brief Constructs a new drive train subsystem
   /// @param drivetrain __std::unique_ptr<IDrivetrain>&__ The drive train
   /// controller used by the subsystem
-  TankDriveTrainSubsystem(std::unique_ptr<ITankDriveTrain> &drivetrain);
+  TankDriveTrainSubsystem(std::unique_ptr<ITankDriveTrain>& drivetrain);
 
   /// @brief Initializes the subsystem
   void init() override;
@@ -49,13 +62,7 @@ class TankDriveTrainSubsystem : public ASubsystem {
   /// @brief Gets a state of the subsystem
   /// @param state_name __ESubsystemState__ The desired state
   /// @return __void*__ A pointer to the state of the subsystem
-  void *state(ESubsystemState state_name) override;
-
-  void handleCommand(const commands::tank_drive_train::SetVelocityCommand& cmd);
-
-  void handleCommand(const commands::tank_drive_train::SetVoltageCommand& cmd);
-
-  constexpr void handleCommand(const auto& cmd) {}
+  void* state(ESubsystemState state_name) override;
 };
 }  // namespace tank_drive_train
 }  // namespace subsystems

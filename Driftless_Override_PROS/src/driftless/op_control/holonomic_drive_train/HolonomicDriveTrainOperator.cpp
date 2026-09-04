@@ -49,10 +49,10 @@ void HolonomicDriveTrainOperator::updateDriveMotionVector(
   motion_vector.angular_velocity = -turn_input;
 
   // Send the motion vector to the holonomic drive train subsystem
-  m_robot->sendCommand(robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-                       robot::subsystems::ESubsystemCommand::
-                           HOLONOMIC_DRIVE_TRAIN_SET_NORMALIZED_LINEAR_VELOCITY,
-                       motion_vector.x, motion_vector.y);
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
+      robot::commands::holonomic_drive_train::SetLinearVelocityCommand{
+          motion_vector.x, motion_vector.y, true});
 
   if (std::abs(turn_input) > 0.1) {
     lock_direction = LockDirection::NONE;
@@ -62,9 +62,8 @@ void HolonomicDriveTrainOperator::updateDriveMotionVector(
   if (lock_direction == LockDirection::NONE) {
     m_robot->sendCommand(
         robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-        robot::subsystems::ESubsystemCommand::
-            HOLONOMIC_DRIVE_TRAIN_SET_NORMALIZED_ANGULAR_VELOCITY,
-        motion_vector.angular_velocity);
+        robot::commands::holonomic_drive_train::SetAngularVelocityCommand{
+            motion_vector.angular_velocity, true});
   }
 }
 

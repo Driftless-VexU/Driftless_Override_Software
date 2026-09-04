@@ -5,10 +5,9 @@ namespace tank_drive_train {
 void TankDriveTrainOperator::updateDriveVoltage(double left_voltage,
                                                 double right_voltage) {
   if (m_robot) {
-    m_robot->sendCommand(
-        robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
-        robot::subsystems::ESubsystemCommand::TANK_DRIVE_TRAIN_SET_VOLTAGE,
-        left_voltage, right_voltage);
+    m_robot->sendCommand(robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
+                         robot::commands::tank_drive_train::SetVoltageCommand{
+                             left_voltage, right_voltage});
   }
 }
 
@@ -35,12 +34,12 @@ void TankDriveTrainOperator::updateArcade(EControllerAnalog linear,
 }
 
 TankDriveTrainOperator::TankDriveTrainOperator(
-    const std::shared_ptr<io::IController> &controller,
-    const std::shared_ptr<robot::Robot> &robot)
+    const std::shared_ptr<io::IController>& controller,
+    const std::shared_ptr<robot::Robot>& robot)
     : m_controller{controller}, m_robot{robot} {}
 
 void TankDriveTrainOperator::setDriveVoltage(
-    std::unique_ptr<driftless::profiles::IProfile> &profile) {
+    std::unique_ptr<driftless::profiles::IProfile>& profile) {
   if (!m_controller) {
     updateDriveVoltage(0, 0);
     return;

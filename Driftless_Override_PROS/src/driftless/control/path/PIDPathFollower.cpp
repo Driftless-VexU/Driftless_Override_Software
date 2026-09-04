@@ -54,10 +54,9 @@ void PIDPathFollower::taskUpdate() {
 void PIDPathFollower::setDriveVelocity(
     robot::subsystems::tank_drive_train::Velocity velocity) {
   if (m_robot) {
-    m_robot->sendCommand(
-        robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
-        robot::subsystems::ESubsystemCommand::TANK_DRIVE_TRAIN_SET_VELOCITY,
-        velocity);
+    m_robot->sendCommand(robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
+                         robot::commands::tank_drive_train::SetVelocityCommand{
+                             velocity.left_velocity, velocity.right_velocity});
   }
 }
 

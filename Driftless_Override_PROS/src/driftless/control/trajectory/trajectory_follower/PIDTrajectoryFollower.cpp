@@ -1,4 +1,5 @@
 #include "driftless/control/trajectory/trajectory_follower/PIDTrajectoryFollower.hpp"
+
 #include "driftless/control/trajectory/trajectory_follower/PIDTrajectoryFollowerBuilder.hpp"
 
 namespace driftless::control::trajectory::trajectory_follower {
@@ -13,7 +14,8 @@ void PIDTrajectoryFollower::taskLoop(void* params) {
   }
 }
 
-PIDTrajectoryFollower::PIDTrajectoryFollower(PIDTrajectoryFollowerBuilder&& builder)
+PIDTrajectoryFollower::PIDTrajectoryFollower(
+    PIDTrajectoryFollowerBuilder&& builder)
     : m_delayer(std::move(builder.m_delayer)),
       m_mutex(std::move(builder.m_mutex)),
       m_task(std::move(builder.m_task)),
@@ -64,9 +66,7 @@ void PIDTrajectoryFollower::setDriveMotionVector(double x_velocity,
                                                  double angular_velocity) {
   m_robot->sendCommand(
       robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-      robot::subsystems::ESubsystemCommand::
-          HOLONOMIC_DRIVE_TRAIN_SET_MOTION_VECTOR,
-      robot::subsystems::holonomic_drive_train::HolonomicMotionVector{
+      robot::commands::holonomic_drive_train::SetMotionVectorCommand{
           x_velocity, y_velocity, angular_velocity});
 }
 

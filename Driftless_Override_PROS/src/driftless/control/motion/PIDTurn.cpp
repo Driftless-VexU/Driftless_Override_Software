@@ -1,4 +1,5 @@
 #include "driftless/control/motion/PIDTurn.hpp"
+
 #include "driftless/control/motion/PIDTurnBuilder.hpp"
 
 namespace driftless {
@@ -12,18 +13,19 @@ void PIDTurn::taskLoop(void* params) {
   }
 }
 
-PIDTurn::PIDTurn(PIDTurnBuilder&& builder) : m_delayer{std::move(builder.m_delayer)},
-                                              m_mutex{std::move(builder.m_mutex)},
-                                              m_task{std::move(builder.m_task)},
-                                              m_rotational_pid{std::move(builder.m_rotational_pid)},
-                                              m_target_tolerance{builder.m_target_tolerance},
-                                              m_target_velocity{builder.m_target_velocity} {}
+PIDTurn::PIDTurn(PIDTurnBuilder&& builder)
+    : m_delayer{std::move(builder.m_delayer)},
+      m_mutex{std::move(builder.m_mutex)},
+      m_task{std::move(builder.m_task)},
+      m_rotational_pid{std::move(builder.m_rotational_pid)},
+      m_target_tolerance{builder.m_target_tolerance},
+      m_target_velocity{builder.m_target_velocity} {}
 
 void PIDTurn::setDriveVelocity(
     driftless::robot::subsystems::tank_drive_train::Velocity velocity) {
-  m_robot->sendCommand(
-      robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
-      robot::subsystems::ESubsystemCommand::TANK_DRIVE_TRAIN_SET_VELOCITY, velocity);
+  m_robot->sendCommand(robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
+                       robot::commands::tank_drive_train::SetVelocityCommand{
+                           velocity.left_velocity, velocity.right_velocity});
 }
 
 driftless::robot::subsystems::odometry::Position PIDTurn::getPosition() {
@@ -75,7 +77,7 @@ robot::subsystems::tank_drive_train::Velocity PIDTurn::calculateDriveVelocity(
     rotational_control *= m_max_velocity / std::abs(rotational_control);
   }
   robot::subsystems::tank_drive_train::Velocity velocity{-rotational_control,
-                                                   rotational_control};
+                                                         rotational_control};
   return velocity;
 }
 

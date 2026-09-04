@@ -1,4 +1,5 @@
 #include "driftless/control/motion/PIDDriveStraight.hpp"
+
 #include "driftless/control/motion/PIDDriveStraightBuilder.hpp"
 
 namespace driftless {
@@ -12,21 +13,20 @@ void PIDDriveStraight::taskLoop(void* params) {
   }
 }
 
-PIDDriveStraight::PIDDriveStraight(PIDDriveStraightBuilder&& builder) :
-    m_delayer{std::move(builder.m_delayer)},
-    m_mutex{std::move(builder.m_mutex)},
-    m_task{std::move(builder.m_task)},
-    m_linear_pid{std::move(builder.m_linear_pid)},
-    m_rotational_pid{std::move(builder.m_rotational_pid)},
-    m_target_tolerance{builder.m_target_tolerance},
-    m_target_velocity{builder.m_target_velocity} {}
+PIDDriveStraight::PIDDriveStraight(PIDDriveStraightBuilder&& builder)
+    : m_delayer{std::move(builder.m_delayer)},
+      m_mutex{std::move(builder.m_mutex)},
+      m_task{std::move(builder.m_task)},
+      m_linear_pid{std::move(builder.m_linear_pid)},
+      m_rotational_pid{std::move(builder.m_rotational_pid)},
+      m_target_tolerance{builder.m_target_tolerance},
+      m_target_velocity{builder.m_target_velocity} {}
 
 void PIDDriveStraight::setDriveVelocity(double left, double right) {
   if (m_robot) {
     m_robot->sendCommand(
         robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
-        robot::subsystems::ESubsystemCommand::TANK_DRIVE_TRAIN_SET_VELOCITY, left,
-        right);
+        robot::commands::tank_drive_train::SetVelocityCommand{left, right});
   }
 }
 

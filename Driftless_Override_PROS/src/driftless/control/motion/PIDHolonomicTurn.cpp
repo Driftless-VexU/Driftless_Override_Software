@@ -20,10 +20,10 @@ PIDHolonomicTurn::PIDHolonomicTurn(PIDHolonomicTurnBuilder&& builder)
       m_target_velocity{builder.m_target_velocity} {}
 
 void PIDHolonomicTurn::setDriveTurnVelocity(double velocity) {
-  m_robot->sendCommand(robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-                       robot::subsystems::ESubsystemCommand::
-                           HOLONOMIC_DRIVE_TRAIN_SET_ANGULAR_VELOCITY,
-                       velocity);
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
+      robot::commands::holonomic_drive_train::SetAngularVelocityCommand{
+          velocity, false});
 }
 
 robot::subsystems::odometry::Position PIDHolonomicTurn::getPosition() {

@@ -26,14 +26,14 @@ namespace robot {
 /// @author Matthew Backman
 namespace commands {
 
-using Command =
-    std::variant<holonomic_drive_train::SetMotionVectorCommand,
-                 holonomic_drive_train::SetLinearVelocityCommand,
-                 holonomic_drive_train::SetAngularVelocityCommand,
-                 odometry::SetPositionCommand, odometry::SetXPositionCommand,
-                 odometry::SetYPositionCommand, odometry::SetHeadingCommand,
-                 tank_drive_train::SetVelocityCommand,
-                 tank_drive_train::SetVoltageCommand>;
+using Command = std::variant<
+    /* INSERT COMMAND TYPES HERE */
+    holonomic_drive_train::SetMotionVectorCommand,
+    holonomic_drive_train::SetLinearVelocityCommand,
+    holonomic_drive_train::SetAngularVelocityCommand,
+    odometry::SetPositionCommand, odometry::SetXPositionCommand,
+    odometry::SetYPositionCommand, odometry::SetHeadingCommand,
+    tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand>;
 
 }  // namespace commands
 }  // namespace robot

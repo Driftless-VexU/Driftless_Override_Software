@@ -21,6 +21,8 @@ namespace commands {
 /// @author Matthew Backman
 namespace motion {
 
+/// @brief Struct representing a command to go to a specific pose
+/// @author Matthew Backman
 struct GoToPoseCommand {
   /// @brief A reference to the robot to go to a pose
   std::shared_ptr<driftless::robot::Robot>& m_robot;

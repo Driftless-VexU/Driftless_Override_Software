@@ -1,5 +1,5 @@
-#ifndef __SET_LINEAR_VELOCITY_COMMAND_HPP__
-#define __SET_LINEAR_VELOCITY_COMMAND_HPP__
+#ifndef __CONTROL_SET_LINEAR_VELOCITY_COMMAND_HPP__
+#define __CONTROL_SET_LINEAR_VELOCITY_COMMAND_HPP__
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman

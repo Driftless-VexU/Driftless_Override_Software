@@ -4,6 +4,8 @@
 #include <variant>
 
 /* ADD COMMAND HEADERS HERE */
+#include "driftless/control/commands/SetAngularVelocityCommand.hpp"
+#include "driftless/control/commands/SetLinearVelocityCommand.hpp"
 #include "driftless/control/commands/motion/DriveStraightCommand.hpp"
 #include "driftless/control/commands/motion/GoToPointCommand.hpp"
 #include "driftless/control/commands/motion/GoToPoseCommand.hpp"
@@ -23,6 +25,7 @@ namespace commands {
 
 using Command = std::variant<
     /* INSERT COMMAND TYPES HERE */
+    SetLinearVelocityCommand, SetAngularVelocityCommand,
     motion::DriveStraightCommand, motion::GoToPointCommand,
     motion::GoToPoseCommand, motion::TurnToAngleCommand>;
 

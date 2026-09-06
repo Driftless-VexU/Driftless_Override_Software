@@ -11,6 +11,7 @@
 #include "driftless/control/commands/motion/GoToPoseCommand.hpp"
 #include "driftless/control/commands/motion/TurnToAngleCommand.hpp"
 #include "driftless/control/commands/path/FollowPathCommand.hpp"
+#include "driftless/control/commands/trajectory/FollowTrajectoryCommand.hpp"
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -29,7 +30,7 @@ using Command = std::variant<
     SetLinearVelocityCommand, SetAngularVelocityCommand,
     motion::DriveStraightCommand, motion::GoToPointCommand,
     motion::GoToPoseCommand, motion::TurnToAngleCommand,
-    path::FollowPathCommand>;
+    path::FollowPathCommand, trajectory::FollowTrajectoryCommand>;
 
 }  // namespace commands
 }  // namespace control

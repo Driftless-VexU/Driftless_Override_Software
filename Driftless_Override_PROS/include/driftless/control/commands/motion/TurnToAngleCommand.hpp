@@ -28,9 +28,9 @@ struct TurnToAngleCommand {
   /// @brief A reference to the robot to turn to an angle
   std::shared_ptr<driftless::robot::Robot>& m_robot;
 
-  /// @brief The target linear velocity to turn to the angle at, in inches per
+  /// @brief The target angular velocity to turn to the angle at, in inches per
   /// second
-  double m_linear_velocity;
+  double m_angular_velocity;
 
   /// @brief The desired angle to turn to, in radians
   double m_theta;

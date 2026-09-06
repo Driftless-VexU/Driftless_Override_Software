@@ -10,6 +10,7 @@
 #include "driftless/control/commands/motion/GoToPointCommand.hpp"
 #include "driftless/control/commands/motion/GoToPoseCommand.hpp"
 #include "driftless/control/commands/motion/TurnToAngleCommand.hpp"
+#include "driftless/control/commands/motion/TurnToPointCommand.hpp"
 #include "driftless/control/commands/path/FollowPathCommand.hpp"
 #include "driftless/control/commands/trajectory/FollowTrajectoryCommand.hpp"
 
@@ -30,7 +31,8 @@ using Command = std::variant<
     SetLinearVelocityCommand, SetAngularVelocityCommand,
     motion::DriveStraightCommand, motion::GoToPointCommand,
     motion::GoToPoseCommand, motion::TurnToAngleCommand,
-    path::FollowPathCommand, trajectory::FollowTrajectoryCommand>;
+    motion::TurnToPointCommand, path::FollowPathCommand,
+    trajectory::FollowTrajectoryCommand>;
 
 }  // namespace commands
 }  // namespace control

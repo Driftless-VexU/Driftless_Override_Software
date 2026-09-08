@@ -4,6 +4,66 @@
 namespace driftless {
 namespace control {
 namespace motion {
+void MotionControl::switchMotionType(EMotionType motion_type) {
+  if (m_motion_type != motion_type) {
+    pause();
+    m_motion_type = motion_type;
+  }
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::DriveStraightCommand& cmd) {
+  switchMotionType(EMotionType::DRIVE_STRAIGHT);
+  m_drive_straight->driveStraight(cmd.m_robot, cmd.m_velocity, cmd.m_distance,
+                                  cmd.m_theta);
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::GoToPointCommand& cmd) {
+  switchMotionType(EMotionType::GO_TO_POINT);
+  m_go_to_point->goToPoint(cmd.m_robot, cmd.m_velocity,
+                           Point{cmd.m_x, cmd.m_y});
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::GoToPoseCommand& cmd) {
+  switchMotionType(EMotionType::GO_TO_POSE);
+  m_go_to_pose->goToPose(cmd.m_robot, cmd.m_linear_velocity,
+                         cmd.m_angular_velocity, cmd.m_linear_acceleration,
+                         Point{cmd.m_x, cmd.m_y, cmd.m_theta});
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::TurnToAngleCommand& cmd) {
+  switchMotionType(EMotionType::TURN);
+  m_turn->turnToAngle(cmd.m_robot, cmd.m_angular_velocity, cmd.m_theta,
+                      cmd.m_direction);
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::TurnToPointCommand& cmd) {
+  switchMotionType(EMotionType::TURN);
+  m_turn->turnToPoint(cmd.m_robot, cmd.m_angular_velocity,
+                      Point{cmd.m_x_pos, cmd.m_y_pos}, cmd.m_direction);
+}
+
+void MotionControl::handleCommand(
+    const commands::SetLinearVelocityCommand& cmd) const {
+  m_drive_straight->setVelocity(cmd.m_linear_velocity);
+  m_go_to_point->setVelocity(cmd.m_linear_velocity);
+  m_go_to_pose->setVelocity(cmd.m_linear_velocity);
+}
+
+void MotionControl::handleCommand(
+    const commands::SetAngularVelocityCommand& cmd) const {
+  m_go_to_pose->setAngularVelocity(cmd.m_angular_velocity);
+}
+
+void MotionControl::handleCommand(const auto& cmd) const {
+  throw std::invalid_argument("MotionControl: No handler for command type " +
+                              std::string{typeid(cmd).name()});
+}
+
 MotionControl::MotionControl(
     std::unique_ptr<driftless::control::motion::IDriveStraight>& drive_straight,
     std::unique_ptr<driftless::control::motion::IGoToPoint>& go_to_point,
@@ -62,104 +122,8 @@ void MotionControl::resume() {
   }
 }
 
-void MotionControl::command(EControlCommand command_name, va_list& args) {
-  if (command_name == EControlCommand::DRIVE_STRAIGHT) {
-    if (m_motion_type != EMotionType::DRIVE_STRAIGHT) {
-      pause();
-      m_motion_type = EMotionType::DRIVE_STRAIGHT;
-    }
-
-    void* temp_robot{va_arg(args, void*)};
-    std::shared_ptr<driftless::robot::Robot> robot{
-        *static_cast<std::shared_ptr<driftless::robot::Robot>*>(temp_robot)};
-    double velocity{va_arg(args, double)};
-    double distance{va_arg(args, double)};
-    double theta{va_arg(args, double)};
-
-    m_drive_straight->driveStraight(robot, velocity, distance, theta);
-
-  } else if (command_name == EControlCommand::GO_TO_POINT) {
-    if (m_motion_type != EMotionType::GO_TO_POINT) {
-      pause();
-      m_motion_type = EMotionType::GO_TO_POINT;
-    }
-
-    void* temp_robot{va_arg(args, void*)};
-    std::shared_ptr<driftless::robot::Robot> robot{
-        *static_cast<std::shared_ptr<driftless::robot::Robot>*>(temp_robot)};
-    double velocity{va_arg(args, double)};
-    double x{va_arg(args, double)};
-    double y{va_arg(args, double)};
-    double theta{va_arg(args, double)};
-    Point point{x, y, theta};
-
-    m_go_to_point->goToPoint(robot, velocity, point);
-  } else if (command_name == EControlCommand::GO_TO_POSE) {
-    if (m_motion_type != EMotionType::GO_TO_POSE) {
-      pause();
-      m_motion_type = EMotionType::GO_TO_POSE;
-    }
-
-    void* temp_robot{va_arg(args, void*)};
-    std::shared_ptr<driftless::robot::Robot> robot{
-        *static_cast<std::shared_ptr<driftless::robot::Robot>*>(temp_robot)};
-    double velocity{va_arg(args, double)};
-    double angular_velocity{va_arg(args, double)};
-    double linear_acceleration{va_arg(args, double)};
-    double x{va_arg(args, double)};
-    double y{va_arg(args, double)};
-    double theta{va_arg(args, double)};
-    Point point{x, y, theta};
-
-    m_go_to_pose->goToPose(robot, velocity, angular_velocity,
-                           linear_acceleration, point);
-
-  } else if (command_name == EControlCommand::TURN_TO_ANGLE) {
-    if (m_motion_type != EMotionType::TURN) {
-      pause();
-      m_motion_type = EMotionType::TURN;
-    }
-
-    void* temp_robot{va_arg(args, void*)};
-    std::shared_ptr<driftless::robot::Robot> robot{
-        *static_cast<std::shared_ptr<driftless::robot::Robot>*>(temp_robot)};
-    double velocity{va_arg(args, double)};
-    double theta{va_arg(args, double)};
-    ETurnDirection direction{va_arg(args, ETurnDirection)};
-
-    m_turn->turnToAngle(robot, velocity, theta, direction);
-
-  } else if (command_name == EControlCommand::TURN_TO_POINT) {
-    if (m_motion_type != EMotionType::TURN) {
-      pause();
-      m_motion_type = EMotionType::TURN;
-    }
-
-    void* temp_robot{va_arg(args, void*)};
-    std::shared_ptr<driftless::robot::Robot> robot{
-        *static_cast<std::shared_ptr<driftless::robot::Robot>*>(temp_robot)};
-    double velocity{va_arg(args, double)};
-    double x{va_arg(args, double)};
-    double y{va_arg(args, double)};
-    ETurnDirection direction{va_arg(args, ETurnDirection)};
-
-    Point point{x, y};
-    m_turn->turnToPoint(robot, velocity, point, direction);
-
-  } else if (command_name == EControlCommand::DRIVE_STRAIGHT_SET_VELOCITY) {
-    double velocity{va_arg(args, double)};
-    m_drive_straight->setVelocity(velocity);
-
-  } else if (command_name == EControlCommand::GO_TO_POINT_SET_VELOCITY) {
-    double velocity{va_arg(args, double)};
-    m_go_to_point->setVelocity(velocity);
-  } else if (command_name == EControlCommand::GO_TO_POSE_SET_VELOCITY) {
-    double velocity{va_arg(args, double)};
-    m_go_to_pose->setVelocity(velocity);
-  } else if (command_name == EControlCommand::GO_TO_POSE_SET_ANGULAR_VELOCITY) {
-    double angular_velocity{va_arg(args, double)};
-    m_go_to_pose->setAngularVelocity(angular_velocity);
-  }
+void MotionControl::command(const commands::Command& command) {
+  std::visit([this](auto&& cmd) { handleCommand(cmd); }, command);
 }
 
 void* MotionControl::state(EControlState state_name) {

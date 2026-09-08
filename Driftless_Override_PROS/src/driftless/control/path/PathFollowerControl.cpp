@@ -3,6 +3,22 @@
 namespace driftless {
 namespace control {
 namespace path {
+void PathFollowerControl::handleCommand(
+    const commands::path::FollowPathCommand& cmd) {
+  m_path_follower->followPath(cmd.m_robot, cmd.m_path, cmd.m_velocity);
+}
+
+void PathFollowerControl::handleCommand(
+    const commands::SetLinearVelocityCommand& cmd) {
+  m_path_follower->setVelocity(cmd.m_linear_velocity);
+}
+
+void PathFollowerControl::handleCommand(const auto& cmd) const {
+  throw std::invalid_argument(
+      "PathFollowerControl: No handler for command type " +
+      std::string{typeid(cmd).name()});
+}
+
 PathFollowerControl::PathFollowerControl(
     std::unique_ptr<driftless::control::path::IPathFollower>& path_follower)
     : AControl{EControl::PATH_FOLLOWER},
@@ -32,27 +48,8 @@ void PathFollowerControl::resume() {
   }
 }
 
-void PathFollowerControl::command(EControlCommand command_name, va_list& args) {
-  if (command_name == EControlCommand::FOLLOW_PATH) {
-    // get the robot from the va_list
-    void* temp_robot{va_arg(args, void*)};
-    // cast the robot to the desired type
-    std::shared_ptr<driftless::robot::Robot> robot{
-        *static_cast<std::shared_ptr<driftless::robot::Robot>*>(temp_robot)};
-    // get the control path from the va_list
-    void* temp_path{va_arg(args, void*)};
-    // cast the path to the desired type
-    std::vector<driftless::control::Point> control_path{
-        *static_cast<std::vector<driftless::control::Point>*>(temp_path)};
-    // get the max velocity from the va_list
-    double velocity{va_arg(args, double)};
-
-    // pass inputs to the follow path command
-    m_path_follower->followPath(robot, control_path, velocity);
-  } else if (command_name == EControlCommand::PATH_FOLLOWER_SET_VELOCITY) {
-    double velocity{va_arg(args, double)};
-    m_path_follower->setVelocity(velocity);
-  }
+void PathFollowerControl::command(const commands::Command& command) {
+  std::visit([this](const auto& cmd) { handleCommand(cmd); }, command);
 }
 
 void* PathFollowerControl::state(EControlState state_name) {

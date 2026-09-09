@@ -30,7 +30,7 @@ class ControlSystem {
  public:
   /// @brief Adds a control to the control system
   /// @param control __std::unique_ptr<AControl>&__ The control added
-  void addControl(std::unique_ptr<AControl> &control);
+  void addControl(std::unique_ptr<AControl>& control);
 
   /// @brief Removes a control from the system
   /// @param control __EControl__ The control to remove
@@ -51,15 +51,14 @@ class ControlSystem {
 
   /// @brief Sends a command to a given control
   /// @param control_name __EControl__ The control to command
-  /// @param command_name __EControlCommand__ The command given
-  /// @param ... __va_list__ Potential arguements for the command
-  void sendCommand(EControl control_name, EControlCommand command_name, ...);
+  /// @param command __commands::Command&__ The command to send
+  void sendCommand(EControl control_name, const commands::Command& command);
 
   /// @brief Gets a state of a given control
   /// @param control_name __EControl__ The control to get a state from
   /// @param state_name __EControlState__ The state to get
   /// @return __void*__ The state of the control
-  void *getState(EControl control_name, EControlState state_name);
+  void* getState(EControl control_name, EControlState state_name);
 };
 }  // namespace control
 }  // namespace driftless

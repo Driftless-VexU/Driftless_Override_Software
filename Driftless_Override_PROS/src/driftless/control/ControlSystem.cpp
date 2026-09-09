@@ -47,7 +47,7 @@ void ControlSystem::resume() {
 }
 
 void ControlSystem::sendCommand(EControl control_name,
-                                EControlCommand command_name, ...) {
+                                const commands::Command& command) {
   // pauses the current control if its not the desired control, then sets the
   // active control to the desired one
   if (control_name != active_control) {
@@ -55,15 +55,9 @@ void ControlSystem::sendCommand(EControl control_name,
     active_control = control_name;
   }
 
-  // creates and assigns a va_list for possible command arguments
-  va_list args;
-  va_start(args, command_name);
-  // finds desired control and sends the specified command
   if (controls.contains(control_name)) {
-    controls.at(control_name)->command(command_name, args);
+    controls.at(control_name)->command(command);
   }
-  // ends the variable list
-  va_end(args);
 }
 
 void* ControlSystem::getState(EControl control_name, EControlState state_name) {

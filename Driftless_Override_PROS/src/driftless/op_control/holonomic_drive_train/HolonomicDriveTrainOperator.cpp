@@ -99,9 +99,9 @@ void HolonomicDriveTrainOperator::updateHeadingLock(
                            : -M_PI / 2.0 - hemisphere_angle;
     target_angle = current_angle + angle_difference;
     m_control_system->sendCommand(control::EControl::MOTION,
-                                  control::EControlCommand::TURN_TO_ANGLE,
-                                  m_robot, M_PI * 3.0, target_angle,
-                                  control::motion::ETurnDirection::AUTO);
+                                  control::commands::motion::TurnToAngleCommand{
+                                      m_robot, M_PI * 3.0, target_angle,
+                                      control::motion::ETurnDirection::AUTO});
   } else if (start_lock_45) {
     double quadrant_angle = current_angle;
 
@@ -117,17 +117,18 @@ void HolonomicDriveTrainOperator::updateHeadingLock(
     angle_difference = M_PI / 4 - quadrant_angle;
     target_angle = current_angle + angle_difference;
     m_control_system->sendCommand(control::EControl::MOTION,
-                                  control::EControlCommand::TURN_TO_ANGLE,
-                                  m_robot, M_PI * 3.0, target_angle,
-                                  control::motion::ETurnDirection::AUTO);
+                                  control::commands::motion::TurnToAngleCommand{
+                                      m_robot, M_PI * 3.0, target_angle,
+                                      control::motion::ETurnDirection::AUTO});
   }
 
   if (lock_direction != LockDirection::NONE && turn_target_reached) {
     if (std::abs(target_angle - current_angle) > M_PI / 45.0) {
-      m_control_system->sendCommand(control::EControl::MOTION,
-                                    control::EControlCommand::TURN_TO_ANGLE,
-                                    m_robot, M_PI * 3.0, target_angle,
-                                    control::motion::ETurnDirection::AUTO);
+      m_control_system->sendCommand(
+          control::EControl::MOTION,
+          control::commands::motion::TurnToAngleCommand{
+              m_robot, M_PI * 3.0, target_angle,
+              control::motion::ETurnDirection::AUTO});
     }
   }
 }

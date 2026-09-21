@@ -49,10 +49,10 @@ void HolonomicDriveTrainOperator::updateDriveMotionVector(
   motion_vector.angular_velocity = -turn_input;
 
   // Send the motion vector to the holonomic drive train subsystem
-  m_robot->sendCommand(robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-                       robot::subsystems::ESubsystemCommand::
-                           HOLONOMIC_DRIVE_TRAIN_SET_NORMALIZED_LINEAR_VELOCITY,
-                       motion_vector.x, motion_vector.y);
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
+      robot::commands::holonomic_drive_train::SetLinearVelocityCommand{
+          motion_vector.x, motion_vector.y, true});
 
   if (std::abs(turn_input) > 0.1) {
     lock_direction = LockDirection::NONE;
@@ -62,9 +62,8 @@ void HolonomicDriveTrainOperator::updateDriveMotionVector(
   if (lock_direction == LockDirection::NONE) {
     m_robot->sendCommand(
         robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-        robot::subsystems::ESubsystemCommand::
-            HOLONOMIC_DRIVE_TRAIN_SET_NORMALIZED_ANGULAR_VELOCITY,
-        motion_vector.angular_velocity);
+        robot::commands::holonomic_drive_train::SetAngularVelocityCommand{
+            motion_vector.angular_velocity, true});
   }
 }
 
@@ -100,9 +99,9 @@ void HolonomicDriveTrainOperator::updateHeadingLock(
                            : -M_PI / 2.0 - hemisphere_angle;
     target_angle = current_angle + angle_difference;
     m_control_system->sendCommand(control::EControl::MOTION,
-                                  control::EControlCommand::TURN_TO_ANGLE,
-                                  m_robot, M_PI * 3.0, target_angle,
-                                  control::motion::ETurnDirection::AUTO);
+                                  control::commands::motion::TurnToAngleCommand{
+                                      m_robot, M_PI * 3.0, target_angle,
+                                      control::motion::ETurnDirection::AUTO});
   } else if (start_lock_45) {
     double quadrant_angle = current_angle;
 
@@ -118,17 +117,18 @@ void HolonomicDriveTrainOperator::updateHeadingLock(
     angle_difference = M_PI / 4 - quadrant_angle;
     target_angle = current_angle + angle_difference;
     m_control_system->sendCommand(control::EControl::MOTION,
-                                  control::EControlCommand::TURN_TO_ANGLE,
-                                  m_robot, M_PI * 3.0, target_angle,
-                                  control::motion::ETurnDirection::AUTO);
+                                  control::commands::motion::TurnToAngleCommand{
+                                      m_robot, M_PI * 3.0, target_angle,
+                                      control::motion::ETurnDirection::AUTO});
   }
 
   if (lock_direction != LockDirection::NONE && turn_target_reached) {
     if (std::abs(target_angle - current_angle) > M_PI / 45.0) {
-      m_control_system->sendCommand(control::EControl::MOTION,
-                                    control::EControlCommand::TURN_TO_ANGLE,
-                                    m_robot, M_PI * 3.0, target_angle,
-                                    control::motion::ETurnDirection::AUTO);
+      m_control_system->sendCommand(
+          control::EControl::MOTION,
+          control::commands::motion::TurnToAngleCommand{
+              m_robot, M_PI * 3.0, target_angle,
+              control::motion::ETurnDirection::AUTO});
     }
   }
 }

@@ -84,7 +84,9 @@ class AAuton {
   void waitForGoToPoint(control::Point target_point, double tolerance,
                         uint32_t timeout);
 
-  void setGoToPointVelocity(double velocity);
+  void setMotionLinearVelocity(double velocity);
+
+  void setMotionAngularVelocity(double velocity);
 
   void goToPose(control::Point target_point, double target_velocity,
                 double target_angular_velocity,
@@ -94,10 +96,6 @@ class AAuton {
 
   void waitForGoToPose(control::Point target_point, double position_tolerance,
                        uint32_t timeout);
-
-  void setGoToPoseVelocity(double velocity);
-
-  void setGoToPoseAngularVelocity(double angular_velocity);
 
   void turnToPoint(control::Point target_point, double target_velocity,
                    control::motion::ETurnDirection direction =

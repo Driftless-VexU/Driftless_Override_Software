@@ -40,14 +40,15 @@ robot::subsystems::odometry::Position AAuton::getOdomPosition() {
 void AAuton::setOdomPosition(double x, double y, double theta) {
   m_robot->sendCommand(
       robot::subsystems::ESubsystem::ODOMETRY,
-      robot::subsystems::ESubsystemCommand::ODOMETRY_SET_POSITION, x, y, theta);
+      robot::commands::odometry::SetPositionCommand{x, y, theta});
 }
 
 void AAuton::followTrajectory(
     std::vector<control::trajectory::TrajectoryPoint>& trajectory) {
-  m_control_system->sendCommand(control::EControl::TRAJECTORY_FOLLOWER,
-                                control::EControlCommand::FOLLOW_TRAJECTORY,
-                                m_robot, trajectory);
+  m_control_system->sendCommand(
+      control::EControl::TRAJECTORY_FOLLOWER,
+      control::commands::trajectory::FollowTrajectoryCommand{m_robot,
+                                                             trajectory});
 }
 
 bool AAuton::trajectoryTargetReached() {
@@ -76,8 +77,9 @@ void AAuton::waitForTrajectory(control::trajectory::TrajectoryPoint& endpoint,
 
 void AAuton::goToPoint(control::Point target_point, double target_velocity) {
   m_control_system->sendCommand(
-      control::EControl::MOTION, control::EControlCommand::GO_TO_POINT, m_robot,
-      target_velocity, target_point.getX(), target_point.getY());
+      control::EControl::MOTION,
+      control::commands::motion::GoToPointCommand{
+          m_robot, target_velocity, target_point.getX(), target_point.getY()});
 }
 
 bool AAuton::goToPointTargetReached() {
@@ -104,19 +106,27 @@ void AAuton::waitForGoToPoint(control::Point target_point, double tolerance,
   }
 }
 
-void AAuton::setGoToPointVelocity(double velocity) {
+void AAuton::setMotionLinearVelocity(double velocity) {
   m_control_system->sendCommand(
       control::EControl::MOTION,
-      control::EControlCommand::GO_TO_POINT_SET_VELOCITY, velocity);
+      control::commands::SetLinearVelocityCommand{velocity});
+}
+
+void AAuton::setMotionAngularVelocity(double velocity) {
+  m_control_system->sendCommand(
+      control::EControl::MOTION,
+      control::commands::SetAngularVelocityCommand{velocity});
 }
 
 void AAuton::goToPose(control::Point target_point, double target_velocity,
                       double target_angular_velocity,
                       double linear_acceleration) {
   m_control_system->sendCommand(
-      control::EControl::MOTION, control::EControlCommand::GO_TO_POSE, m_robot,
-      target_velocity, target_angular_velocity, linear_acceleration,
-      target_point.getX(), target_point.getY(), target_point.getTheta());
+      control::EControl::MOTION,
+      control::commands::motion::GoToPoseCommand{
+          m_robot, target_velocity, target_angular_velocity,
+          linear_acceleration, target_point.getX(), target_point.getY(),
+          target_point.getTheta()});
 }
 
 bool AAuton::goToPoseTargetReached() {
@@ -143,32 +153,21 @@ void AAuton::waitForGoToPose(control::Point target_point,
   }
 }
 
-void AAuton::setGoToPoseVelocity(double velocity) {
-  m_control_system->sendCommand(
-      control::EControl::MOTION,
-      control::EControlCommand::GO_TO_POSE_SET_VELOCITY, velocity);
-}
-
-void AAuton::setGoToPoseAngularVelocity(double angular_velocity) {
-  m_control_system->sendCommand(
-      control::EControl::MOTION,
-      control::EControlCommand::GO_TO_POSE_SET_ANGULAR_VELOCITY,
-      angular_velocity);
-}
-
 void AAuton::turnToPoint(control::Point target_point, double target_velocity,
                          control::motion::ETurnDirection direction) {
-  m_control_system->sendCommand(control::EControl::MOTION,
-                                control::EControlCommand::TURN_TO_POINT,
-                                m_robot, target_velocity, target_point.getX(),
-                                target_point.getY(), direction);
+  m_control_system->sendCommand(
+      control::EControl::MOTION,
+      control::commands::motion::TurnToPointCommand{
+          m_robot, target_velocity, target_point.getX(), target_point.getY(),
+          direction});
 }
 
 void AAuton::turnToHeading(double heading, double target_velocity,
                            control::motion::ETurnDirection direction) {
-  m_control_system->sendCommand(control::EControl::MOTION,
-                                control::EControlCommand::TURN_TO_ANGLE,
-                                m_robot, target_velocity, heading, direction);
+  m_control_system->sendCommand(
+      control::EControl::MOTION,
+      control::commands::motion::TurnToAngleCommand{m_robot, target_velocity,
+                                                    heading, direction});
 }
 
 bool AAuton::turnTargetReached() {
@@ -217,10 +216,8 @@ void AAuton::stopMotion() {
 
   m_robot->sendCommand(
       robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-      robot::subsystems::ESubsystemCommand::
-          HOLONOMIC_DRIVE_TRAIN_SET_MOTION_VECTOR,
-      robot::subsystems::holonomic_drive_train::HolonomicMotionVector{0.0, 0.0,
-                                                                      0.0});
+      robot::commands::holonomic_drive_train::SetMotionVectorCommand{
+          0.0, 0.0, 0.0, true});
 }
 
 AAuton::AAuton(std::string name) : m_name{name} {}

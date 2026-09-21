@@ -30,17 +30,10 @@ void Robot::run() {
 }
 
 void Robot::sendCommand(subsystems::ESubsystem subsystem_name,
-                        subsystems::ESubsystemCommand command_name, ...) {
-  // variable list to store any extra parameters to be passed to the command
-  va_list args;
-  // tells the list to store anything past command_name
-  va_start(args, command_name);
-  // find correct subsystem
+                        const commands::Command command) {
   if (subsystems.contains(subsystem_name)) {
-    subsystems.at(subsystem_name)->command(command_name, args);
+    subsystems.at(subsystem_name)->command(command);
   }
-  // closes the variable list
-  va_end(args);
 }
 
 void* Robot::getState(subsystems::ESubsystem subsystem_name,

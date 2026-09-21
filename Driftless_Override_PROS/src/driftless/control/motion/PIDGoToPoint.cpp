@@ -1,4 +1,5 @@
 #include "driftless/control/motion/PIDGoToPoint.hpp"
+
 #include "driftless/control/motion/PIDGoToPointBuilder.hpp"
 
 namespace driftless {
@@ -24,8 +25,7 @@ PIDGoToPoint::PIDGoToPoint(PIDGoToPointBuilder&& builder)
 void PIDGoToPoint::setDriveVelocity(double left, double right) {
   m_robot->sendCommand(
       robot::subsystems::ESubsystem::TANK_DRIVE_TRAIN,
-      robot::subsystems::ESubsystemCommand::TANK_DRIVE_TRAIN_SET_VELOCITY, left,
-      right);
+      robot::commands::tank_drive_train::SetVelocityCommand{left, right});
 }
 
 driftless::robot::subsystems::odometry::Position PIDGoToPoint::getPosition() {

@@ -19,3 +19,6 @@
 # DOCUMENTATION
 */html/
 */latex/
+
+# CONFIGS
+*.clangd

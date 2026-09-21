@@ -25,9 +25,20 @@ class TrajectoryFollowerControl : public AControl {
  private:
   std::unique_ptr<ITrajectoryFollower> m_trajectory_follower{};
 
+  /// @brief Handles the follow trajectory command
+  /// @param cmd __FollowTrajectoryCommand&__ The command to handle
+  void handleCommand(
+      const commands::trajectory::FollowTrajectoryCommand& cmd) const;
+
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd) const;
+
  public:
   /// @brief Constructs a new TrajectoryFollowerControl
-  /// @param trajectory_follower __std::unique_ptr<ITrajectoryFollower>&__ The trajectory follower to wrap
+  /// @param trajectory_follower __std::unique_ptr<ITrajectoryFollower>&__ The
+  /// trajectory follower to wrap
   TrajectoryFollowerControl(
       std::unique_ptr<ITrajectoryFollower>& trajectory_follower);
 
@@ -44,9 +55,8 @@ class TrajectoryFollowerControl : public AControl {
   void resume() override;
 
   /// @brief Sends a command to the trajectory follower
-  /// @param command_name __EControlCommand__ The command to follow
-  /// @param args __va_list&__ The arguments of the command
-  void command(EControlCommand command_name, va_list& args) override;
+  /// @param command __commands::Command&__ The command to send
+  void command(const commands::Command& command) override;
 
   /// @brief Gets a state of the trajectory follower
   /// @param state_name __EControlState__ The state to gather

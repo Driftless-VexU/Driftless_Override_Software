@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "driftless/control/AControl.hpp"
+#include "driftless/control/commands/Commands.hpp"
 #include "driftless/control/motion/EMotionType.hpp"
 #include "driftless/control/motion/IDriveStraight.hpp"
 #include "driftless/control/motion/IGoToPoint.hpp"
@@ -23,6 +24,9 @@ namespace control {
 namespace motion {
 
 /// @brief Class to hold and control all motion algorithms
+/// @note This class should be split up, and each motion type should be its own
+/// control. Try to avoid making major changes here, instead use the opportunity
+/// to split this class into more manageable pieces.
 /// @author Matthew Backman
 class MotionControl : public driftless::control::AControl {
  private:
@@ -41,6 +45,44 @@ class MotionControl : public driftless::control::AControl {
 
   /// @brief The current type of motion, defaults to __NONE__
   driftless::control::motion::EMotionType m_motion_type{EMotionType::NONE};
+
+  /// @brief Changes the type of motion being used and pauses the previous
+  /// motion type
+  /// @param motion_type __EMotionType__ The new motion type to switch to
+  void switchMotionType(EMotionType motion_type);
+
+  /// @brief Handles the drive straight command
+  /// @param cmd __DriveStraightCommand&__ The command to handle
+  void handleCommand(const commands::motion::DriveStraightCommand& cmd);
+
+  /// @brief Handles the go to point command
+  /// @param cmd __GoToPointCommand&__ The command to handle
+  void handleCommand(const commands::motion::GoToPointCommand& cmd);
+
+  /// @brief Handles the go to pose command
+  /// @param cmd __GoToPoseCommand&__ The command to handle
+  void handleCommand(const commands::motion::GoToPoseCommand& cmd);
+
+  /// @brief Handles the turn to angle command
+  /// @param cmd __TurnToAngleCommand&__ The command to handle
+  void handleCommand(const commands::motion::TurnToAngleCommand& cmd);
+
+  /// @brief Handles the turn to point command
+  /// @param cmd __TurnToPointCommand&__ The command to handle
+  void handleCommand(const commands::motion::TurnToPointCommand& cmd);
+
+  /// @brief Handles the set linear velocity command
+  /// @param cmd __SetLinearVelocityCommand&__ The command to handle
+  void handleCommand(const commands::SetLinearVelocityCommand& cmd) const;
+
+  /// @brief Handles the set angular velocity command
+  /// @param cmd __SetAngularVelocityCommand&__ The command to handle
+  void handleCommand(const commands::SetAngularVelocityCommand& cmd) const;
+
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd) const;
 
  public:
   /// @brief Constructs a new Motion Control object
@@ -73,7 +115,7 @@ class MotionControl : public driftless::control::AControl {
   /// @brief Sends a command to the motion control
   /// @param command_name __EControlCommand__ The name of the command to run
   /// @param args __va_list&__ Any arguments needed for the command
-  void command(EControlCommand command_name, va_list& args) override;
+  void command(const commands::Command& command) override;
 
   /// @brief Gets a state of the motion control
   /// @param state_name __EControlState__ The name of the state desired

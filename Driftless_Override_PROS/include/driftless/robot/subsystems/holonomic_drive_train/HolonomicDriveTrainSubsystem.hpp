@@ -4,6 +4,7 @@
 #include <functional>
 #include <memory>
 
+#include "driftless/robot/commands/Commands.hpp"
 #include "driftless/robot/subsystems/ASubsystem.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/IHolonomicDrive.hpp"
 
@@ -30,10 +31,30 @@ class HolonomicDriveTrainSubsystem : public ASubsystem {
   /// @brief The holonomic drive train object being wrapped
   std::unique_ptr<IHolonomicDrive> m_drive_train{};
 
+  void handleCommand(
+      /// @brief Handles the SetMotionVectorCommand command
+      /// @param cmd __SetMotionVectorCommand&__ The command to handle
+      const commands::holonomic_drive_train::SetMotionVectorCommand& cmd);
+
+  /// @brief Handles the SetLinearVelocityCommand command
+  /// @param cmd __SetLinearVelocityCommand&__ The command to handle
+  void handleCommand(
+      const commands::holonomic_drive_train::SetLinearVelocityCommand& cmd);
+
+  /// @brief Handles the SetAngularVelocityCommand command
+  /// @param cmd __SetAngularVelocityCommand&__ The command to handle
+  void handleCommand(
+      const commands::holonomic_drive_train::SetAngularVelocityCommand& cmd);
+
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd);
+
  public:
   /// @brief Constructor
-  /// @param drive_train __std::unique_ptr<IHolonomicDrive>&__ The holonomic drive
-  /// train object to wrap
+  /// @param drive_train __std::unique_ptr<IHolonomicDrive>&__ The holonomic
+  /// drive train object to wrap
   HolonomicDriveTrainSubsystem(std::unique_ptr<IHolonomicDrive>& drive_train);
 
   /// @brief Initializes the holonomic drive train subsystem
@@ -43,9 +64,8 @@ class HolonomicDriveTrainSubsystem : public ASubsystem {
   void run() override;
 
   /// @brief Sends a command to the holonomic drive train subsystem
-  /// @param command_name __ESubsystemCommand__ The command to send
-  /// @param args __va_list&__ The arguments for the command
-  void command(ESubsystemCommand command_name, va_list& args) override;
+  /// @param cmd __commands::Command&__ The command to send
+  void command(const commands::Command& cmd) override;
 
   /// @brief Gets the state of the holonomic drive train subsystem
   /// @param state_name __ESubsystemState__ The state to get

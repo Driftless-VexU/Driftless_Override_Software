@@ -1,11 +1,10 @@
 #ifndef __A_SUBSYSTEM_HPP__
 #define __A_SUBSYSTEM_HPP__
 
-#include <cstdarg>
 #include <string>
 
+#include "driftless/robot/commands/Commands.hpp"
 #include "driftless/robot/subsystems/ESubsystem.hpp"
-#include "driftless/robot/subsystems/ESubsystemCommand.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
 
 /// @brief The namespace for driftless library code
@@ -52,9 +51,8 @@ class ASubsystem {
   virtual void run() = 0;
 
   /// @brief Sends a command to the subsystem
-  /// @param command_name __ESubsystemCommand__ The command to send
-  /// @param args __va_list__ The arguments for the command
-  virtual void command(ESubsystemCommand command_name, va_list& args) = 0;
+  /// @param command __commands::Command&__ The command to send
+  virtual void command(const commands::Command& command) = 0;
 
   /// @brief Gets the state of the subsystem
   /// @param state_name __ESubsystemState__ The state to get

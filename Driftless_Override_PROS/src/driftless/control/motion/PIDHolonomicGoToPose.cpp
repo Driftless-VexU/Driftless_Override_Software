@@ -1,4 +1,5 @@
 #include "driftless/control/motion/PIDHolonomicGoToPose.hpp"
+
 #include "driftless/control/motion/PIDHolonomicGoToPoseBuilder.hpp"
 
 namespace driftless::control::motion {
@@ -10,7 +11,8 @@ void PIDHolonomicGoToPose::taskLoop(void* params) {
   }
 }
 
-PIDHolonomicGoToPose::PIDHolonomicGoToPose(PIDHolonomicGoToPoseBuilder&& builder)
+PIDHolonomicGoToPose::PIDHolonomicGoToPose(
+    PIDHolonomicGoToPoseBuilder&& builder)
     : m_delayer(std::move(builder.m_delayer)),
       m_mutex(std::move(builder.m_mutex)),
       m_task(std::move(builder.m_task)),
@@ -24,10 +26,10 @@ PIDHolonomicGoToPose::PIDHolonomicGoToPose(PIDHolonomicGoToPoseBuilder&& builder
 void PIDHolonomicGoToPose::setDriveMotionVector(double x_velocity,
                                                 double y_velocity,
                                                 double angular_velocity) {
-  m_robot->sendCommand(robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
-                       robot::subsystems::ESubsystemCommand::
-                           HOLONOMIC_DRIVE_TRAIN_SET_MOTION_VECTOR,
-                       x_velocity, y_velocity, angular_velocity);
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::HOLONOMIC_DRIVE_TRAIN,
+      robot::commands::holonomic_drive_train::SetMotionVectorCommand{
+          x_velocity, y_velocity, angular_velocity, false});
 }
 
 robot::subsystems::odometry::Position PIDHolonomicGoToPose::getPosition() {
@@ -92,7 +94,6 @@ void PIDHolonomicGoToPose::taskUpdate() {
         velocity < m_velocity_tolerance) {
       m_target_reached = true;
       setDriveMotionVector(0, 0, 0);
-      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8, "Target Reached");
     } else {
       updateVelocity(x_distance, y_distance, position.theta, angular_distance);
     }

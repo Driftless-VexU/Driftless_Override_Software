@@ -84,8 +84,7 @@ void MatchController::operatorControl() {
   if (m_alliance->getAlliance() == alliance::EAlliance::NONE) {
     robot->sendCommand(
         robot::subsystems::ESubsystem::ODOMETRY,
-        robot::subsystems::ESubsystemCommand::ODOMETRY_SET_POSITION, 0.0, 0.0,
-        M_PI);
+        robot::commands::odometry::SetPositionCommand{0.0, 0.0, M_PI});
   }
   op_control_manager.run(control_system, process_system, controller, robot);
 }

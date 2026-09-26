@@ -7,6 +7,7 @@
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
+#include "driftless/robot/commands/lift/SetPositionCommand.hpp"
 #include "driftless/robot/commands/odometry/SetHeadingCommand.hpp"
 #include "driftless/robot/commands/odometry/SetPositionCommand.hpp"
 #include "driftless/robot/commands/odometry/SetXPositionCommand.hpp"
@@ -33,7 +34,8 @@ using Command = std::variant<
     holonomic_drive_train::SetAngularVelocityCommand,
     odometry::SetPositionCommand, odometry::SetXPositionCommand,
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
-    tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand>;
+    tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
+    lift::SetPositionCommand>;
 
 }  // namespace commands
 }  // namespace robot

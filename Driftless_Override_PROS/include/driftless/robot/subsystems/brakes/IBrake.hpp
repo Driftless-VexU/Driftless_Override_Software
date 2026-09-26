@@ -28,7 +28,7 @@ class IBrake {
   /// @brief Run the IBrake object
   virtual void run() = 0;
 
-  /// @brief Set the State object
+  /// @brief Set the state of the brakes
   /// @param deployed __bool__ Whether the brakes are deployed or not. True for
   /// deployed, false for retracted.
   virtual void setState(bool deployed);

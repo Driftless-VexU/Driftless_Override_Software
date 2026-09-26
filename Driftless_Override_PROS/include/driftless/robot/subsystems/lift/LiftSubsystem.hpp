@@ -1,6 +1,10 @@
 #ifndef __LIFT_SUBSYSTEM_HPP__
 #define __LIFT_SUBSYSTEM_HPP__
 
+#include <memory>
+
+#include "ILift.hpp"
+#include "driftless/robot/commands/lift/SetPositionCommand.hpp"
 #include "driftless/robot/subsystems/ASubsystem.hpp"
 
 /// @brief The namespace for driftless library code
@@ -23,6 +27,7 @@ namespace lift {
 class LiftSubsystem : public ASubsystem {
  public:
   // ADD CONSTRUCTOR
+  LiftSubsystem(std::unique_ptr<ILift>& lift);
 
   /// @brief Initializes the lift subsystem
   void init() override;
@@ -39,6 +44,11 @@ class LiftSubsystem : public ASubsystem {
   void* state(const ESubsystemState) override;
 
  private:
+  std::unique_ptr<ILift> m_lift{};
+
+  void handleCommand(const commands::lift::SetPositionCommand cmd);
+
+  void handleCommand(const auto cmd);
 };
 }  // namespace lift
 }  // namespace subsystems

@@ -37,6 +37,14 @@ public:
   * Add additional behavior below
   * -----------------------------
   */
+  
+  /// @brief Set the Position object 
+  /// @param position __float__ the position to target, in inches
+  virtual void setPosition(float position) = 0;
+
+  /// @brief Get the Position object 
+  /// @return __float__ the current position of the lift, in inches
+  virtual float getPosition() = 0;
 };
 } // namespace lift
 } // namespace subsystems

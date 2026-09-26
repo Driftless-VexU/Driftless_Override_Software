@@ -1,6 +1,9 @@
 #ifndef __CONTINUOUS_LIFT_HPP__
 #define __CONTINUOUS_LIFT_HPP__
 
+#include <memory>
+
+#include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/lift/ILift.hpp"
 
 /// @brief The namespace for driftless library code
@@ -29,7 +32,20 @@ public:
   /// @author Matthew Backman
   void run() override;
 
+  /// @brief Set the Position of the lift 
+  /// @param position __float__ The position to target, in inches
+  void setPosition(float position) override;
+
+  /// @brief Get the Position of the lift 
+  /// @return  __float__ The position of the lift, in inches
+  float getPosition() override;
+
 private:
+  float m_position{};
+
+  float m_target_position{};
+
+  std::unique_ptr<hal::MotorGroup> m_motors{};
 };
 } // namespace lift
 } // namespace subsystems

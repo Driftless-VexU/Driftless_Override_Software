@@ -4,6 +4,9 @@
 #include "driftless/control/PID.hpp"
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/claw/IClaw.hpp"
+#include "driftless/rtos/IDelayer.hpp"
+#include "driftless/rtos/IMutex.hpp"
+#include "driftless/rtos/ITask.hpp"
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -78,6 +81,12 @@ class MotorDirectClaw : public IClaw {
   control::PID m_wrist_pid{};
 
   control::PID m_flip_pid{};
+
+  std::unique_ptr<rtos::ITask> m_task{};
+
+  std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
 
   const float m_motor_to_elbow_rotations{};
 

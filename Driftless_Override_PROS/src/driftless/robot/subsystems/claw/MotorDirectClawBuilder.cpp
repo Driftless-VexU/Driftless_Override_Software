@@ -39,6 +39,24 @@ MotorDirectClawBuilder&& MotorDirectClawBuilder::withFlipPID(
   return std::move(*this);
 }
 
+MotorDirectClawBuilder&& MotorDirectClawBuilder::withTask(
+    std::unique_ptr<rtos::ITask> task) && {
+  m_task = std::move(task);
+  return std::move(*this);
+}
+
+MotorDirectClawBuilder&& MotorDirectClawBuilder::withMutex(
+    std::unique_ptr<rtos::IMutex> mutex) && {
+  m_mutex = std::move(mutex);
+  return std::move(*this);
+}
+
+MotorDirectClawBuilder&& MotorDirectClawBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
+  m_delayer = std::move(delayer);
+  return std::move(*this);
+}
+
 MotorDirectClawBuilder&& MotorDirectClawBuilder::withMotorToElbowRotations(
     float motor_to_elbow_rotations) && {
   m_motor_to_elbow_rotations = motor_to_elbow_rotations;

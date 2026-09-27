@@ -55,6 +55,22 @@ class MotorDirectClawBuilder {
   /// @return  __MotorDirectClawBuilder&&__ The current builder
   MotorDirectClawBuilder&& withFlipPID(control::PID pid) &&;
 
+  /// @brief Add a task object to run background processes
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
+  /// @return __MotorDirectClawBuilder&&__ The current builder
+  MotorDirectClawBuilder&& withTask(std::unique_ptr<rtos::ITask> task) &&;
+
+  /// @brief Add a mutex to support multitasking
+  /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
+  /// @return __MotorDirectClawBuilder&&__ The current builder
+  MotorDirectClawBuilder&& withMutex(std::unique_ptr<rtos::IMutex> mutex) &&;
+
+  /// @brief Add a delayer to support multitasking
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
+  /// @return __MotorDirectClawBuilder&&__ The current builder
+  MotorDirectClawBuilder&& withDelayer(
+      std::unique_ptr<rtos::IDelayer> delayer) &&;
+
   /// @brief Add a conversion rate between motor rotations and elbow joint
   /// rotations
   /// @param motor_to_elbow_rotations __float__ The conversion rate between
@@ -103,6 +119,12 @@ class MotorDirectClawBuilder {
   control::PID m_wrist_pid{};
 
   control::PID m_flip_pid{};
+
+  std::unique_ptr<rtos::ITask> m_task{};
+
+  std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
 
   float m_motor_to_elbow_rotations{};
 

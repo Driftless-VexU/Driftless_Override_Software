@@ -21,9 +21,13 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace claw {
 
+class MotorDirectClawBuilder;
+
 /// @brief Claw driver using separate motors for each joint.
 /// @author Matthew Backman
 class MotorDirectClaw : public IClaw {
+  friend class MotorDirectClawBuilder;
+
  public:
   /// @brief Initialize the Motor Direct Claw object
   void init() override;
@@ -58,7 +62,8 @@ class MotorDirectClaw : public IClaw {
  private:
   static constexpr uint8_t TASK_DELAY{10};
 
-  /// @brief Continuously loop the task update of the provided MotorDirectClaw object   
+  /// @brief Continuously loop the task update of the provided MotorDirectClaw
+  /// object
   /// @param params __void*__ The claw to update
   static void taskLoop(void* params);
 
@@ -82,7 +87,12 @@ class MotorDirectClaw : public IClaw {
 
   bool m_is_flipped{};
 
-  /// @brief Updates the state of the claw 
+  /// @brief Construct a new Motor Direct Claw object
+  /// @param builder __MotorDirectClawBuilder&&__ The builder consumed to create
+  /// this object
+  MotorDirectClaw(MotorDirectClawBuilder&& builder);
+
+  /// @brief Updates the state of the claw
   void taskUpdate();
 };
 }  // namespace claw

@@ -90,7 +90,7 @@ class MotorDirectClaw : public IClaw {
   /// @brief Construct a new Motor Direct Claw object
   /// @param builder __MotorDirectClawBuilder&&__ The builder consumed to create
   /// this object
-  MotorDirectClaw(MotorDirectClawBuilder&& builder);
+  explicit MotorDirectClaw(MotorDirectClawBuilder&& builder);
 
   /// @brief Updates the state of the claw
   void taskUpdate();

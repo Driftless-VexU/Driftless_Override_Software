@@ -94,6 +94,12 @@ class MotorDirectClaw : public IClaw {
 
   const float m_motor_to_flip_rotations{};
 
+  float m_target_elbow_rotation{};
+
+  float m_target_wrist_rotation{};
+
+  float m_target_flip_rotation{};
+
   bool m_is_flipped{};
 
   /// @brief Construct a new Motor Direct Claw object

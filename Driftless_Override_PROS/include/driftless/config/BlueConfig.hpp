@@ -70,6 +70,11 @@
 #include "driftless/robot/subsystems/holonomic_drive_train/ModularHolonomicDriveBuilder.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/holonomic_drive_module/XDriveModule.hpp"
 
+// lift subsystem includes
+#include "driftless/robot/subsystems/lift/ContinuousLiftBuilder.hpp"
+#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
+
+
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system

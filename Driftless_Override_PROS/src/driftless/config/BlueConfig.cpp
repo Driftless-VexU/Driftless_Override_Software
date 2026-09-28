@@ -1,5 +1,7 @@
 #include "driftless/config/BlueConfig.hpp"
 
+#include "driftless/robot/subsystems/lift/ContinuousLift.hpp"
+
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
 
@@ -301,6 +303,21 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
 
   // add the subsystem to the robot
   robot->addSubsystem(drive_train_subsystem);
+
+  std::unique_ptr<pros::Motor> lift_motor{std::make_unique<pros::Motor>(1)};
+
+  std::unique_ptr<io::IMotor> adapted_lift_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(lift_motor)};
+
+  std::unique_ptr<robot::subsystems::lift::ILift> lift_driver{
+      robot::subsystems::lift::ContinuousLiftBuilder{}
+          .withMotor(std::move(adapted_lift_motor))
+          .buildUnique()};
+
+  std::unique_ptr<robot::subsystems::ASubsystem> lift_subsystem{
+      std::make_unique<robot::subsystems::lift::LiftSubsystem>(lift_driver)};
+
+    robot->addSubsystem(lift_subsystem);
 
   // return complete robot
   return robot;

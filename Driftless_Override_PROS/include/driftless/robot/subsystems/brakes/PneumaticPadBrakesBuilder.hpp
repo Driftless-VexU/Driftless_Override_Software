@@ -27,20 +27,20 @@ class PneumaticPadBrakesBuilder {
  public:
   /// @brief Add a piston to the builder
   /// @param piston __std::unique_ptr<io::IPiston>__ The piston to use
-  /// @return __PneumaticPadBrakesBuilder&__ Reference to the active builder
-  PneumaticPadBrakesBuilder& withPiston(std::unique_ptr<io::IPiston> piston);
+  /// @return __PneumaticPadBrakesBuilder&&__ Reference to the active builder
+  PneumaticPadBrakesBuilder&& withPiston(std::unique_ptr<io::IPiston> piston) &&;
 
   /// @brief Builds a new PneumaticPadBrakes object
   /// @return __PneumaticPadBrakes__ The newly constructed PneumaticPadBrakes
   /// object
   [[nodiscard]]
-  PneumaticPadBrakes build();
+  PneumaticPadBrakes build() &&;
 
   /// @brief Builds a new PneumaticPadBrakes object wrapped in a unique pointer
   /// @return __std::unique_ptr<PneumaticPadBrakes>__ Unique pointer to the
   /// newly constructed PneumaticPadBrakes object
   [[nodiscard]]
-  std::unique_ptr<PneumaticPadBrakes> buildUnique();
+  std::unique_ptr<PneumaticPadBrakes> buildUnique() &&;
 
  private:
   std::unique_ptr<io::IPiston> m_pistons{};

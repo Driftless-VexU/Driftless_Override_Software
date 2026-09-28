@@ -20,6 +20,8 @@ namespace subsystems {
 namespace lift {
 
 class ContinuousLiftBuilder {
+  friend class ContinuousLift;
+
  public:
   ContinuousLiftBuilder&& withMotor(std::unique_ptr<io::IMotor> motor) &&;
 
@@ -28,7 +30,7 @@ class ContinuousLiftBuilder {
 
   [[nodiscard]]
   std::unique_ptr<ContinuousLift> buildUnique() &&;
-  
+
  private:
   hal::MotorGroup m_motors{};
 };

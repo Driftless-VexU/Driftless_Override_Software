@@ -22,8 +22,12 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace lift {
 
+class ContinuousLiftBuilder;
+
 class ContinuousLift : public ILift {
-public:
+  friend class ContinuousLiftBuilder;
+
+ public:
   /// @brief Initialize the lift
   /// @author Matthew Backman
   void init() override;
@@ -32,24 +36,26 @@ public:
   /// @author Matthew Backman
   void run() override;
 
-  /// @brief Set the Position of the lift 
+  /// @brief Set the Position of the lift
   /// @param position __float__ The position to target, in inches
   void setPosition(float position) override;
 
-  /// @brief Get the Position of the lift 
+  /// @brief Get the Position of the lift
   /// @return  __float__ The position of the lift, in inches
   float getPosition() override;
 
-private:
+ private:
   float m_position{};
 
   float m_target_position{};
 
-  std::unique_ptr<hal::MotorGroup> m_motors{};
+  hal::MotorGroup m_motors{};
+
+  ContinuousLift(ContinuousLiftBuilder&& builder);
 };
-} // namespace lift
-} // namespace subsystems
-} // namespace robot
-} // namespace driftless
+}  // namespace lift
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

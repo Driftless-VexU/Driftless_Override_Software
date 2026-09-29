@@ -1,3 +1,6 @@
+#ifndef __CLAW_FLIP_COMMAND_HPP__
+#define __CLAW_FLIP_COMMAND_HPP__
+
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {
@@ -16,8 +19,10 @@ namespace claw {
 
 /// @brief Command to flip the claw
 /// @author Matthew Backman
-struct ClawSetElbowRotationCommand {};
+struct ClawFlipCommand {};
 }  // namespace claw
 }  // namespace commands
 }  // namespace robot
 }  // namespace driftless
+
+#endif

@@ -4,6 +4,9 @@
 #include <variant>
 
 /* ADD COMMAND HEADERS HERE */
+#include "driftless/robot/commands/claw/ClawFlipCommand.hpp"
+#include "driftless/robot/commands/claw/ClawSetElbowRotationCommand.hpp"
+#include "driftless/robot/commands/claw/ClawSetWristRotationCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
@@ -33,7 +36,9 @@ using Command = std::variant<
     holonomic_drive_train::SetAngularVelocityCommand,
     odometry::SetPositionCommand, odometry::SetXPositionCommand,
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
-    tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand>;
+    tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
+    claw::ClawSetElbowRotationCommand, claw::ClawSetWristRotationCommand,
+    claw::ClawFlipCommand>;
 
 }  // namespace commands
 }  // namespace robot

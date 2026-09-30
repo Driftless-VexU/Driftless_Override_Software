@@ -302,6 +302,27 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
   // add the subsystem to the robot
   robot->addSubsystem(drive_train_subsystem);
 
+  // ## BRAKES ##
+
+  // create pros object
+  std::unique_ptr<pros::adi::DigitalOut> pros_brake_piston{
+      std::make_unique<pros::adi::DigitalOut>(BRAKE_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IPiston> brake_piston{
+      std::make_unique<pros_adapters::ProsPiston>(pros_brake_piston)};
+
+  std::unique_ptr<robot::subsystems::brakes::IBrake> brake_driver{
+      robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
+          .withPiston(std::move(brake_piston))
+          .buildUnique()};
+
+  // create the brakes subsystem
+  std::unique_ptr<robot::subsystems::ASubsystem> brakes_subsystem{
+      std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
+          std::move(brake_driver))};
+
+  robot->addSubsystem(brakes_subsystem);
   // return complete robot
   return robot;
 }

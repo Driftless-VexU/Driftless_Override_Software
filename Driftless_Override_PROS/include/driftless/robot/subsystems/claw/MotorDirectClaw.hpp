@@ -38,6 +38,11 @@ class MotorDirectClaw : public IClaw {
   /// @brief Run the Motor Direct Claw object
   void run() override;
 
+  /// @brief Set the claw to target a set position, rather than manually
+  /// positioning the joints
+  /// @param pos __const EClawPosition__ The target position
+  void goToSetPosition(const EClawPosition position) override;
+
   /// @brief Set the rotation of the elbow joint of the claw
   /// @param target __float__ The target rotation of the elbow joint
   void setElbowRotation(float target) override;

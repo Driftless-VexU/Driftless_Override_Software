@@ -160,7 +160,7 @@ class BlueConfig : public IConfig {
 
   // ## BRAKES ##
 
-  static constexpr  int BRAKE_PORT{1};
+  static constexpr int8_t BRAKE_PORT{1};
 
   // #### ROBOT CONSTANTS ####
 

@@ -31,16 +31,16 @@ class IBrake {
   /// @brief Set the state of the brakes
   /// @param deployed __bool__ Whether the brakes are deployed or not. True for
   /// deployed, false for retracted.
-  virtual void setState(bool deployed);
+  virtual void setState(bool deployed) = 0;
 
   /// @brief Toggle the state of the brakes. I.e. retract them if deployed,
   /// deploy them if retracted.
-  virtual void toggleState();
+  virtual void toggleState() = 0;
 
   /// @brief Determine if the brakes are deployed
   /// @return __bool__ Whether the brakes are deployed or not. True for
   /// deployed, false for retracted.
-  virtual bool isDeployed();
+  virtual bool isDeployed() = 0;
 };
 }  // namespace brakes
 }  // namespace subsystems

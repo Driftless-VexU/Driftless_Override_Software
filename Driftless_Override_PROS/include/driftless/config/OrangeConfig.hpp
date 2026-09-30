@@ -70,6 +70,11 @@
 #include "driftless/robot/subsystems/holonomic_drive_train/ModularHolonomicDriveBuilder.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/holonomic_drive_module/XDriveModule.hpp"
 
+// Brakes subsystem includes
+#include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
+#include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
+#include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
+
 namespace driftless {
 namespace config {
 class OrangeConfig : public IConfig {
@@ -150,6 +155,10 @@ class OrangeConfig : public IConfig {
   static constexpr int DRIVE_BACK_LEFT_BOTTOM_PORT{-19};
   static constexpr int DRIVE_BACK_RIGHT_TOP_PORT{18};
   static constexpr int DRIVE_BACK_RIGHT_BOTTOM_PORT{-14};
+
+  // ## BRAKES ##
+
+  static constexpr int8_t BRAKE_PORT{1};
 
   // #### ROBOT CONSTANTS ####
 

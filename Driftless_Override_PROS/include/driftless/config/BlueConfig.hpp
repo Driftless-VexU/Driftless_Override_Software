@@ -70,6 +70,11 @@
 #include "driftless/robot/subsystems/holonomic_drive_train/ModularHolonomicDriveBuilder.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/holonomic_drive_module/XDriveModule.hpp"
 
+// Brakes subsystem includes
+#include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
+#include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
+#include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
+
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system
@@ -153,6 +158,10 @@ class BlueConfig : public IConfig {
   static constexpr int DRIVE_BACK_RIGHT_TOP_PORT{18};
   static constexpr int DRIVE_BACK_RIGHT_BOTTOM_PORT{-17};
 
+  // ## BRAKES ##
+
+  static constexpr  int BRAKE_PORT{1};
+
   // #### ROBOT CONSTANTS ####
 
   // ## COPROCESSOR ##
@@ -173,6 +182,7 @@ class BlueConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{0.0f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
+
 
  public:
   std::string getName() override;

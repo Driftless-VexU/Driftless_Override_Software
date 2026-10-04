@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "driftless/robot/subsystems/claw/MotorDirectClawBuilder.hpp"
+
 namespace driftless::robot::subsystems::claw {
 
 void MotorDirectClaw::init() {}
@@ -86,6 +88,21 @@ void MotorDirectClaw::taskLoop(void* params) {
     claw->taskUpdate();
   }
 }
+
+MotorDirectClaw::MotorDirectClaw(MotorDirectClawBuilder&& builder)
+    : m_elbow_motors{std::move(builder.m_elbow_motors)},
+      m_wrist_motors{std::move(builder.m_wrist_motors)},
+      m_flip_motors{std::move(builder.m_flip_motors)},
+      m_claw_positions{builder.m_claw_positions},
+      m_elbow_pid{builder.m_elbow_pid},
+      m_wrist_pid{builder.m_wrist_pid},
+      m_flip_pid{builder.m_flip_pid},
+      m_task{std::move(builder.m_task)},
+      m_mutex{std::move(builder.m_mutex)},
+      m_delayer{std::move(builder.m_delayer)},
+      m_motor_to_elbow_rotations{builder.m_motor_to_elbow_rotations},
+      m_motor_to_wrist_rotations{builder.m_motor_to_wrist_rotations},
+      m_motor_to_flip_rotations{builder.m_motor_to_flip_rotations} {}
 
 void MotorDirectClaw::taskUpdate() {
   if (m_mutex) {

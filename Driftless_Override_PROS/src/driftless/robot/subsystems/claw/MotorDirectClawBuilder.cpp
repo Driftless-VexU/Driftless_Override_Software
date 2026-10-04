@@ -75,6 +75,12 @@ MotorDirectClawBuilder&& MotorDirectClawBuilder::withMotorToFlipRotations(
   return std::move(*this);
 }
 
+MotorDirectClawBuilder&& MotorDirectClawBuilder::withClawPosition(
+    const EClawPositionName name, const ClawPosition position) && {
+  m_claw_positions[static_cast<uint8_t>(name)] = position;
+  return std::move(*this);
+}
+
 MotorDirectClaw MotorDirectClawBuilder::build() && {
   return MotorDirectClaw{std::move(*this)};
 }

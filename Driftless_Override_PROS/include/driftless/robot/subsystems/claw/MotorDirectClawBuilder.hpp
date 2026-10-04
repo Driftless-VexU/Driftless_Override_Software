@@ -95,6 +95,13 @@ class MotorDirectClawBuilder {
   MotorDirectClawBuilder&& withMotorToFlipRotations(
       const float motor_to_flip_rotations) &&;
 
+  /// @brief Add position values for a given set position of the claw
+  /// @param name __const EClawPositionName__ The name of the set position
+  /// @param position __const ClawPosition__ The position values
+  /// @return __MotorDirectClawBuilder&&__ The current builder
+  MotorDirectClawBuilder&& withClawPosition(const EClawPositionName name,
+                                            const ClawPosition position) &&;
+
   /// @brief Consume the builder to create a new MotorDirectClaw object
   /// @return __MotorDirectClaw__ The new MotorDirectClaw object
   [[nodiscard]]
@@ -119,6 +126,9 @@ class MotorDirectClawBuilder {
   control::PID m_wrist_pid{};
 
   control::PID m_flip_pid{};
+
+  std::array<ClawPosition, static_cast<uint8_t>(EClawPositionName::MANUAL)>
+      m_claw_positions{};
 
   std::unique_ptr<rtos::ITask> m_task{};
 

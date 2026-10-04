@@ -17,11 +17,17 @@ namespace subsystems {
 /// @author Matthew Backman
 namespace claw {
 /// @brief Set positions the claw can target, or manual for manual override
-enum class EClawPosition {
+enum class EClawPositionName {
   LOAD,
   SCORE_LOW,
   SCORE_HIGH,
   MANUAL,
+};
+
+struct ClawPosition {
+  float m_elbow_rotation{};
+
+  float m_wrist_rotation{};
 };
 
 /// @brief Generic claw driver class
@@ -40,7 +46,7 @@ class IClaw {
   /// @brief Set the claw to target a set position, rather than manually
   /// positioning the joints
   /// @param pos __const EClawPosition__ The target position
-  virtual void goToSetPosition(const EClawPosition pos) = 0;
+  virtual void goToSetPosition(const EClawPositionName pos) = 0;
 
   /// @brief Set the rotation of the elbow joint of the claw
   /// @param target __float__ The target rotation of the elbow joint

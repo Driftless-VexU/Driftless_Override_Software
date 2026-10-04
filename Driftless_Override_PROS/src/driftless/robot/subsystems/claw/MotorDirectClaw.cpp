@@ -8,11 +8,29 @@ void MotorDirectClaw::init() {}
 
 void MotorDirectClaw::run() { m_task->start(&MotorDirectClaw::taskLoop, this); }
 
+void MotorDirectClaw::goToSetPosition(const EClawPositionName pos) {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_target_position = pos;
+  m_target_elbow_rotation =
+      m_claw_positions[static_cast<int>(m_target_position)].m_elbow_rotation;
+  m_target_wrist_rotation =
+      m_claw_positions[static_cast<int>(m_target_wrist_rotation)]
+          .m_wrist_rotation;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
 void MotorDirectClaw::setElbowRotation(float target) {
   if (m_mutex) {
     m_mutex->take();
   }
 
+  m_target_position = EClawPositionName::MANUAL;
   m_target_elbow_rotation =
       std::max(0.0f, std::min(static_cast<float>(M_PI), target)) /
       m_motor_to_elbow_rotations;
@@ -27,6 +45,7 @@ void MotorDirectClaw::setWristRotation(float target) {
     m_mutex->take();
   }
 
+  m_target_position = EClawPositionName::MANUAL;
   m_target_wrist_rotation =
       std::max(0.0f, std::min(static_cast<float>(M_PI), target)) /
       m_motor_to_wrist_rotations;

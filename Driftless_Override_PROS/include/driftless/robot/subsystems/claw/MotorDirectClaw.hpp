@@ -1,6 +1,8 @@
 #ifndef __MOTOR_DIRECT_DRIVE_HPP__
 #define __MOTOR_DIRECT_DRIVE_HPP__
 
+#include <array>
+
 #include "driftless/control/PID.hpp"
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/claw/IClaw.hpp"
@@ -41,7 +43,7 @@ class MotorDirectClaw : public IClaw {
   /// @brief Set the claw to target a set position, rather than manually
   /// positioning the joints
   /// @param pos __const EClawPosition__ The target position
-  void goToSetPosition(const EClawPosition position) override;
+  void goToSetPosition(const EClawPositionName position) override;
 
   /// @brief Set the rotation of the elbow joint of the claw
   /// @param target __float__ The target rotation of the elbow joint
@@ -81,6 +83,9 @@ class MotorDirectClaw : public IClaw {
 
   hal::MotorGroup m_flip_motors{};
 
+  std::array<ClawPosition, static_cast<uint8_t>(EClawPositionName::MANUAL)>
+      m_claw_positions{};
+
   control::PID m_elbow_pid{};
 
   control::PID m_wrist_pid{};
@@ -104,6 +109,8 @@ class MotorDirectClaw : public IClaw {
   float m_target_wrist_rotation{};
 
   float m_target_flip_rotation{};
+
+  EClawPositionName m_target_position{EClawPositionName::MANUAL};
 
   bool m_is_flipped{};
 

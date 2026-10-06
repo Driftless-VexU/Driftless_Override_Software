@@ -4,38 +4,38 @@ namespace driftless {
 namespace robot {
 namespace subsystems {
 namespace tank_drive_train {
-DirectDriveBuilder& DirectDriveBuilder::withLeftMotor(
-    std::unique_ptr<io::IMotor> motor) {
+DirectDriveBuilder&& DirectDriveBuilder::withLeftMotor(
+    std::unique_ptr<io::IMotor> motor) &&{
   m_left_motors.addMotor(motor);
-  return *this;
+  return std::move(*this);
 }
 
-DirectDriveBuilder& DirectDriveBuilder::withRightMotor(
-    std::unique_ptr<io::IMotor> motor) {
+DirectDriveBuilder&& DirectDriveBuilder::withRightMotor(
+    std::unique_ptr<io::IMotor> motor) && {
   m_right_motors.addMotor(motor);
-  return *this;
+  return std::move(*this);
 }
 
-DirectDriveBuilder& DirectDriveBuilder::withVelocityToVoltage(
-    double velocity_to_voltage) {
+DirectDriveBuilder&& DirectDriveBuilder::withVelocityToVoltage(
+    double velocity_to_voltage) && {
   m_velocity_to_voltage = velocity_to_voltage;
-  return *this;
+  return std::move(*this);
 }
-DirectDriveBuilder& DirectDriveBuilder::withWheelRadius(double wheel_radius) {
+DirectDriveBuilder&& DirectDriveBuilder::withWheelRadius(double wheel_radius) && {
   m_wheel_radius = wheel_radius;
-  return *this;
+  return std::move(*this);
 }
 
-DirectDriveBuilder& DirectDriveBuilder::withDriveRadius(double drive_radius) {
+DirectDriveBuilder&& DirectDriveBuilder::withDriveRadius(double drive_radius) && {
   m_drive_radius = drive_radius;
-  return *this;
+  return std::move(*this);
 }
 
-DirectDrive DirectDriveBuilder::build() {
+DirectDrive DirectDriveBuilder::build() && {
   return DirectDrive{std::move(*this)};
 }
 
-std::unique_ptr<DirectDrive> DirectDriveBuilder::buildUnique() {
+std::unique_ptr<DirectDrive> DirectDriveBuilder::buildUnique() && {
   return std::unique_ptr<DirectDrive>{new DirectDrive{std::move(*this)}};
 }
 }  // namespace tank_drive_train

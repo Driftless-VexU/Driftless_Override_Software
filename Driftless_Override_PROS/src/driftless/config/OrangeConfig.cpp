@@ -278,21 +278,19 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
               DRIVE_BACK_RIGHT_ANGLE_OFFSET)};
 
   // build the drive train
-  robot::subsystems::holonomic_drive_train::ModularHolonomicDriveBuilder
-      drive_train_builder;
-
   std::unique_ptr<robot::subsystems::holonomic_drive_train::IHolonomicDrive>
-      drive_train{
-          drive_train_builder.withModule(std::move(drive_front_left_module))
-              .withModule(std::move(drive_front_right_module))
-              .withModule(std::move(drive_back_left_module))
-              .withModule(std::move(drive_back_right_module))
-              .withDelayer(std::move(drive_delayer))
-              .withTask(std::move(drive_task))
-              .withMutex(std::move(drive_mutex))
-              .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
-              .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
-              .buildUnique()};
+      drive_train{robot::subsystems::holonomic_drive_train::
+                      ModularHolonomicDriveBuilder{}
+                          .withModule(std::move(drive_front_left_module))
+                          .withModule(std::move(drive_front_right_module))
+                          .withModule(std::move(drive_back_left_module))
+                          .withModule(std::move(drive_back_right_module))
+                          .withDelayer(std::move(drive_delayer))
+                          .withTask(std::move(drive_task))
+                          .withMutex(std::move(drive_mutex))
+                          .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
+                          .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
+                          .buildUnique()};
 
   // create the subsystem
   std::unique_ptr<robot::subsystems::ASubsystem> drive_train_subsystem{

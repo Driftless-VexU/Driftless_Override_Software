@@ -52,7 +52,7 @@ void OdometrySubsystem::handleCommand(const auto& cmd) {
 }
 
 OdometrySubsystem::OdometrySubsystem(
-    std::unique_ptr<IPositionTracker>& position_tracker)
+    std::unique_ptr<IPositionTracker> position_tracker)
     : ASubsystem{ESubsystem::ODOMETRY},
       m_position_tracker{std::move(position_tracker)} {}
 

@@ -52,9 +52,9 @@ class OdometrySubsystem : public ASubsystem {
 
  public:
   /// @brief Constructor
-  /// @param position_tracker __std::unique_ptr<IPositionTracker>&__ The
+  /// @param position_tracker __std::unique_ptr<IPositionTracker>__ The
   /// position tracker to use
-  OdometrySubsystem(std::unique_ptr<IPositionTracker>& position_tracker);
+  OdometrySubsystem(std::unique_ptr<IPositionTracker> position_tracker);
 
   /// @brief Initializes the subsystem
   void init() override;

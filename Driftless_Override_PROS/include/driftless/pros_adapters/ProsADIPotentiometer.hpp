@@ -6,7 +6,6 @@
 
 #include "driftless/io/IPotentiometer.hpp"
 #include "pros/adi.hpp"
-#include "pros/rtos.hpp"
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -37,10 +36,10 @@ class ProsADIPotentiometer : public driftless::io::IPotentiometer {
 
  public:
   /// @brief Constructor
-  /// @param potentiometer __std::unique_ptr<pros::adi::AnalogIn>&__ The
+  /// @param potentiometer __std::unique_ptr<pros::adi::AnalogIn>__ The
   /// potentiometer to adapt
   /// @param reversed __bool__ Whether the potentiometer is reversed
-  ProsADIPotentiometer(std::unique_ptr<pros::adi::AnalogIn>& potentiometer,
+  ProsADIPotentiometer(std::unique_ptr<pros::adi::AnalogIn> potentiometer,
                        bool reversed);
 
   /// @brief Initializes the potentiometer

@@ -53,9 +53,9 @@ class HolonomicDriveTrainSubsystem : public ASubsystem {
 
  public:
   /// @brief Constructor
-  /// @param drive_train __std::unique_ptr<IHolonomicDrive>&__ The holonomic
+  /// @param drive_train __std::unique_ptr<IHolonomicDrive>__ The holonomic
   /// drive train object to wrap
-  HolonomicDriveTrainSubsystem(std::unique_ptr<IHolonomicDrive>& drive_train);
+  HolonomicDriveTrainSubsystem(std::unique_ptr<IHolonomicDrive> drive_train);
 
   /// @brief Initializes the holonomic drive train subsystem
   void init() override;

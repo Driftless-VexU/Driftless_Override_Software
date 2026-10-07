@@ -21,7 +21,7 @@ void TankDriveTrainSubsystem::handleCommand(const auto& cmd) {
 }
 
 TankDriveTrainSubsystem::TankDriveTrainSubsystem(
-    std::unique_ptr<ITankDriveTrain>& drivetrain)
+    std::unique_ptr<ITankDriveTrain> drivetrain)
     : ASubsystem{ESubsystem::TANK_DRIVE_TRAIN},
       m_drive_train(std::move(drivetrain)) {}
 

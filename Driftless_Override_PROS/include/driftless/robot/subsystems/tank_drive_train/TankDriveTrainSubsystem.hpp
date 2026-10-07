@@ -45,9 +45,9 @@ class TankDriveTrainSubsystem : public ASubsystem {
 
  public:
   /// @brief Constructs a new drive train subsystem
-  /// @param drivetrain __std::unique_ptr<IDrivetrain>&__ The drive train
+  /// @param drivetrain __std::unique_ptr<IDrivetrain>__ The drive train
   /// controller used by the subsystem
-  TankDriveTrainSubsystem(std::unique_ptr<ITankDriveTrain>& drivetrain);
+  TankDriveTrainSubsystem(std::unique_ptr<ITankDriveTrain> drivetrain);
 
   /// @brief Initializes the subsystem
   void init() override;

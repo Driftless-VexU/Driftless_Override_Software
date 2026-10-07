@@ -27,9 +27,9 @@ class Robot {
 
  public:
   /// @brief Adds a subsystem to the robot
-  /// @param subsystem __unique_ptr<subsystems::ASubsystem>&__ A unique pointer
+  /// @param subsystem __unique_ptr<subsystems::ASubsystem>__ A unique pointer
   /// to the subsystem to add
-  void addSubsystem(std::unique_ptr<subsystems::ASubsystem>& subsystem);
+  void addSubsystem(std::unique_ptr<subsystems::ASubsystem> subsystem);
 
   /// @brief Removes a subsystem from the robot
   /// @param subsystem __subsystems::ESubsystem__ The subsystem to remove

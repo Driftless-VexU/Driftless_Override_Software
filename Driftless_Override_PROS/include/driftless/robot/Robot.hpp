@@ -2,8 +2,6 @@
 #define __ROBOT_HPP__
 #include <map>
 #include <memory>
-#include <string>
-#include <vector>
 
 #include "driftless/robot/commands/Commands.hpp"
 #include "driftless/robot/subsystems/ASubsystem.hpp"

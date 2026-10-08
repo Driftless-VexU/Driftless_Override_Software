@@ -161,13 +161,6 @@ std::shared_ptr<control::ControlSystem> OrangeConfig::buildControlSystem() {
   return control_system;
 }
 
-std::shared_ptr<processes::ProcessSystem> OrangeConfig::buildProcessSystem() {
-  std::shared_ptr<processes::ProcessSystem> process_system =
-      std::make_shared<processes::ProcessSystem>();
-
-  return process_system;
-}
-
 std::shared_ptr<io::IController> OrangeConfig::buildController() {
   // creates a default pros controller
   std::unique_ptr<pros::Controller> pros_controller{

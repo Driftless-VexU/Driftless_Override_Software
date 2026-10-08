@@ -17,19 +17,6 @@ namespace pros_adapters {
 /// @brief Adapter class for the PROS distance sensor
 /// @author Matthew Backman
 class ProsDistanceSensor : public driftless::io::IDistanceSensor {
- private:
-  // conversion factor from mm to in
-  static constexpr double MM_TO_INCHES{1.0 / 25.4};
-
-  // sensor being adapted
-  std::unique_ptr<pros::Distance> m_distance_sensor{};
-
-  // tuning constant for readings to improve accuracy
-  double m_tuning_constant{};
-
-  // distance offset for the sensor
-  double m_tuning_offset{};
-
  public:
   /// @brief Constructor
   /// @param distance_sensor __std::unique_ptr<pros::Distance>__ The distance
@@ -50,6 +37,19 @@ class ProsDistanceSensor : public driftless::io::IDistanceSensor {
   /// @brief Gets the distance from the sensor
   /// @return __double__ The distance measured by the sensor
   double getDistance() override;
+
+ private:
+  // conversion factor from mm to in
+  static constexpr double MM_TO_INCHES{1.0 / 25.4};
+
+  // sensor being adapted
+  std::unique_ptr<pros::Distance> m_distance_sensor{};
+
+  // tuning constant for readings to improve accuracy
+  double m_tuning_constant{};
+
+  // distance offset for the sensor
+  double m_tuning_offset{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

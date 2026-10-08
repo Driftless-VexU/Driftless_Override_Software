@@ -24,17 +24,6 @@ namespace driftless {
 /// @brief Manages the operator control of the robot
 /// @author Matthew Backman
 class OpControlManager {
- private:
-  static constexpr uint32_t CONTROL_DELAY{10};
-
-  std::shared_ptr<rtos::IClock> m_clock{};
-
-  std::unique_ptr<rtos::IDelayer> m_delayer{};
-
-  std::unique_ptr<profiles::IProfile> m_profile{};
-
-  std::shared_ptr<alliance::IAlliance> m_alliance{};
-
  public:
   /// @brief Constructs a new OpControlManager object
   /// @param clock __std::shared_ptr<rtos::IClock>&__ The clock to use
@@ -78,6 +67,17 @@ class OpControlManager {
            std::shared_ptr<driftless::processes::ProcessSystem> process_system,
            std::shared_ptr<io::IController> controller,
            std::shared_ptr<robot::Robot> robot);
+
+ private:
+  static constexpr uint32_t CONTROL_DELAY{10};
+
+  std::shared_ptr<rtos::IClock> m_clock{};
+
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
+
+  std::unique_ptr<profiles::IProfile> m_profile{};
+
+  std::shared_ptr<alliance::IAlliance> m_alliance{};
 };
 }  // namespace driftless
 #endif

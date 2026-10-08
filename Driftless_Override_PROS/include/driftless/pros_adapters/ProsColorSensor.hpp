@@ -27,9 +27,9 @@ class ProsColorSensor : public driftless::io::IColorSensor {
 
  public:
   /// @brief Constructor
-  /// @param optical_sensor __std::unique_ptr<pros::Optical>&__ The optical
+  /// @param optical_sensor __std::unique_ptr<pros::Optical>__ The optical
   /// sensor to adapt
-  ProsColorSensor(std::unique_ptr<pros::Optical>& optical_sensor);
+  ProsColorSensor(std::unique_ptr<pros::Optical> optical_sensor);
 
   /// @brief Initializes the color sensor
   void init() override;

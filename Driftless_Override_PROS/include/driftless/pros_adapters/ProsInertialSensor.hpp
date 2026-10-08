@@ -31,9 +31,11 @@ class ProsInertialSensor : public driftless::io::IInertialSensor {
 
  public:
   /// @brief Constructs a new ProsInertialSensor object
-  /// @param inertial_sensor The inertial sensor being adapted
-  /// @param tuning_constant The tuning constant to ensure accuracy
-  ProsInertialSensor(std::unique_ptr<pros::IMU>& inertial_sensor,
+  /// @param inertial_sensor __std::unique_ptr<pros::IMU>__ The inertial sensor
+  /// being adapted
+  /// @param tuning_constant __double__ The tuning constant to ensure accuracy.
+  /// Defaults to 1.
+  ProsInertialSensor(std::unique_ptr<pros::IMU> inertial_sensor,
                      double tuning_constant = 1);
 
   /// @brief Initializes the inertial sensor

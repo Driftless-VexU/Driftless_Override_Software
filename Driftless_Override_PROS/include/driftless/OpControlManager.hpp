@@ -38,13 +38,13 @@ class OpControlManager {
  public:
   /// @brief Constructs a new OpControlManager object
   /// @param clock __std::shared_ptr<rtos::IClock>&__ The clock to use
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to use
   OpControlManager(const std::shared_ptr<rtos::IClock>& clock,
-                   const std::unique_ptr<rtos::IDelayer>& delayer);
+                   const std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Sets the profile used in the operator control
-  /// @param profile __std::unique_ptr<profiles::IProfile>&__ The profile to use
-  void setProfile(std::unique_ptr<profiles::IProfile>& profile);
+  /// @param profile __std::unique_ptr<profiles::IProfile>__ The profile to use
+  void setProfile(std::unique_ptr<profiles::IProfile> profile);
 
   /// @brief Sets the alliance used in the operator control
   /// @param alliance __std::shared_ptr<alliance::IAlliance>&__ The alliance to

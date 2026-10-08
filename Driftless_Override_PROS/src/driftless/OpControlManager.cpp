@@ -4,12 +4,12 @@ namespace driftless {
 // constructor
 OpControlManager::OpControlManager(
     const std::shared_ptr<rtos::IClock>& clock,
-    const std::unique_ptr<rtos::IDelayer>& delayer)
+    const std::unique_ptr<rtos::IDelayer> delayer)
     : m_clock{clock}, m_delayer{delayer->clone()} {}
 
 // sets the controller's profile
 void OpControlManager::setProfile(
-    std::unique_ptr<profiles::IProfile>& profile) {
+    std::unique_ptr<profiles::IProfile> profile) {
   m_profile = std::move(profile);
 }
 

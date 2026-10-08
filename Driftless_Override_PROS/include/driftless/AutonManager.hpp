@@ -14,15 +14,6 @@ namespace driftless {
 /// @brief Manages the autonomous mode of the robot
 /// @author Matthew Backman
 class AutonManager {
- private:
-  std::shared_ptr<alliance::IAlliance> m_alliance{};
-
-  std::unique_ptr<auton::AAuton> m_auton{};
-
-  std::shared_ptr<rtos::IClock> m_clock{};
-
-  std::unique_ptr<rtos::IDelayer> m_delayer{};
-
  public:
   /// @brief Constructs a new AutonManager object
   /// @param clock __std::shared_ptr<rtos::IClock>&__ The clock to use
@@ -43,9 +34,8 @@ class AutonManager {
   /// @param robot __std::shared_ptr<robot::Robot>&__ The robot to use
   /// @param control_system __std::shared_ptr<control::ControlSystem>&__ The
   /// control system to use
-  void initAuton(
-      std::shared_ptr<robot::Robot>& robot,
-      std::shared_ptr<control::ControlSystem>& control_system);
+  void initAuton(std::shared_ptr<robot::Robot>& robot,
+                 std::shared_ptr<control::ControlSystem>& control_system);
 
   /// @brief Runs the selected auton
   /// @param robot __std::shared_ptr<robot::Robot>&__ The robot to use
@@ -54,6 +44,15 @@ class AutonManager {
   void runAuton(
       std::shared_ptr<driftless::robot::Robot>& robot,
       std::shared_ptr<driftless::control::ControlSystem>& control_system);
+
+ private:
+  std::shared_ptr<alliance::IAlliance> m_alliance{};
+
+  std::unique_ptr<auton::AAuton> m_auton{};
+
+  std::shared_ptr<rtos::IClock> m_clock{};
+
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
 };
 }  // namespace driftless
 #endif

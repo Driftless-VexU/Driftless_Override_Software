@@ -39,8 +39,8 @@ class MotorGroup {
   MotorGroup(MotorGroup&& other) = default;
 
   /// @brief Adds a motor to the group
-  /// @param motor __std::unique_ptr<io::IMotor>&__ The motor to add
-  void addMotor(std::unique_ptr<io::IMotor>& motor);
+  /// @param motor __std::unique_ptr<io::IMotor>__ The motor to add
+  void addMotor(std::unique_ptr<io::IMotor> motor);
 
   /// @brief Initializes the motor group
   void init();

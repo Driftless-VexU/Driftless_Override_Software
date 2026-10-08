@@ -2,7 +2,7 @@
 
 namespace driftless {
 namespace hal {
-void MotorGroup::addMotor(std::unique_ptr<io::IMotor>& motor) {
+void MotorGroup::addMotor(std::unique_ptr<io::IMotor> motor) {
   m_motors.push_back(std::move(motor));
 }
 

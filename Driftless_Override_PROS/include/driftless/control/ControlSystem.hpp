@@ -20,13 +20,6 @@ namespace control {
 /// @brief Class to handle control algorithm management
 /// @author Matthew Backman
 class ControlSystem {
- private:
-  // possible controls for the robot
-  std::map<EControl, std::unique_ptr<AControl>> controls{};
-
-  // the name of the active control
-  EControl active_control{};
-
  public:
   /// @brief Adds a control to the control system
   /// @param control __std::unique_ptr<AControl>__ The control added
@@ -59,6 +52,13 @@ class ControlSystem {
   /// @param state_name __EControlState__ The state to get
   /// @return __void*__ The state of the control
   void* getState(EControl control_name, EControlState state_name);
+
+ private:
+  // possible controls for the robot
+  std::map<EControl, std::unique_ptr<AControl>> controls{};
+
+  // the name of the active control
+  EControl active_control{};
 };
 }  // namespace control
 }  // namespace driftless

@@ -32,13 +32,13 @@ class ProsDistanceSensor : public driftless::io::IDistanceSensor {
 
  public:
   /// @brief Constructor
-  /// @param distance_sensor __std::unique_ptr<pros::Distance>&__ The distance
+  /// @param distance_sensor __std::unique_ptr<pros::Distance>__ The distance
   /// sensor to adapt
   /// @param tuning_constant __double__ The tuning constant for readings
   /// (default is 1)
   /// @param tuning_offset __double__ The distance offset for the sensor
   /// (default is 0)
-  ProsDistanceSensor(std::unique_ptr<pros::Distance>& distance_sensor,
+  ProsDistanceSensor(std::unique_ptr<pros::Distance> distance_sensor,
                      double tuning_constant = 1, double tuning_offset = 0);
 
   /// @brief Initializes the distance sensor

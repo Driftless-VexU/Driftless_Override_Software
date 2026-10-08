@@ -29,8 +29,8 @@ class ControlSystem {
 
  public:
   /// @brief Adds a control to the control system
-  /// @param control __std::unique_ptr<AControl>&__ The control added
-  void addControl(std::unique_ptr<AControl>& control);
+  /// @param control __std::unique_ptr<AControl>__ The control added
+  void addControl(std::unique_ptr<AControl> control);
 
   /// @brief Removes a control from the system
   /// @param control __EControl__ The control to remove

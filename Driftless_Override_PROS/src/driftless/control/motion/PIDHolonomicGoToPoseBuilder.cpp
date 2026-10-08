@@ -1,59 +1,61 @@
 #include "driftless/control/motion/PIDHolonomicGoToPoseBuilder.hpp"
 
 namespace driftless::control::motion {
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer> delayer) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex> mutex) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withMutex(
+    std::unique_ptr<rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withTask(
-    std::unique_ptr<rtos::ITask> task) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withTask(
+    std::unique_ptr<rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withXPID(
-    PID pid) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withXPID(
+    PID pid) && {
   m_x_pid = std::move(pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withYPID(PID pid) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withYPID(
+    PID pid) && {
   m_y_pid = std::move(pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withRotationalPID(PID pid) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withRotationalPID(
+    PID pid) && {
   m_rotational_pid = std::move(pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withDistanceTolerance(
-    double tolerance) {
+PIDHolonomicGoToPoseBuilder&&
+PIDHolonomicGoToPoseBuilder::withDistanceTolerance(double tolerance) && {
   m_distance_tolerance = tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withVelocityTolerance(
-    double tolerance) {
+PIDHolonomicGoToPoseBuilder&&
+PIDHolonomicGoToPoseBuilder::withVelocityTolerance(double tolerance) && {
   m_velocity_tolerance = tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoseBuilder& PIDHolonomicGoToPoseBuilder::withAngularTolerance(
-    double tolerance) {
+PIDHolonomicGoToPoseBuilder&& PIDHolonomicGoToPoseBuilder::withAngularTolerance(
+    double tolerance) && {
   m_angular_tolerance = tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPose PIDHolonomicGoToPoseBuilder::build() {
+PIDHolonomicGoToPose PIDHolonomicGoToPoseBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");
@@ -63,7 +65,7 @@ PIDHolonomicGoToPose PIDHolonomicGoToPoseBuilder::build() {
 }
 
 std::unique_ptr<PIDHolonomicGoToPose>
-PIDHolonomicGoToPoseBuilder::buildUnique() {
+PIDHolonomicGoToPoseBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");

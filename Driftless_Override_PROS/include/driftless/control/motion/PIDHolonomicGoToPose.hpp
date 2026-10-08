@@ -37,6 +37,54 @@ class PIDHolonomicGoToPoseBuilder;
 class PIDHolonomicGoToPose : public IGoToPose {
   friend class PIDHolonomicGoToPoseBuilder;
 
+ public:
+  /// @brief Copies another PIDHolonomicGoToPose
+  /// @param other __const PIDHolonomicGoToPose&__ The PIDHolonomicGoToPose
+  /// being copied
+  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = delete;
+
+  /// @brief Moves another PIDHolonomicGoToPose
+  /// @param other __PIDHolonomicGoToPose&&__ The PIDHolonomicGoToPose being
+  /// moved
+  PIDHolonomicGoToPose(PIDHolonomicGoToPose&& other) = default;
+
+  /// @brief Initializes the control
+  void init() override;
+
+  /// @brief Runs the control
+  void run() override;
+
+  /// @brief Pauses the control
+  void pause() override;
+
+  /// @brief Resumes the control
+  void resume() override;
+
+  /// @brief Drives the given robot to a pose (x, y, theta)
+  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
+  /// controlled
+  /// @param velocity __double__ The maximum velocity of the robot
+  /// @param angular_velocity __double__ The maximum angular velocity of
+  /// the robot
+  /// @param linear_acceleration __double__ The maximum linear acceleration of
+  /// the robot
+  /// @param point __Point__ The pose (x, y, theta) for the robot to go to
+  void goToPose(const std::shared_ptr<robot::Robot>& robot, double velocity,
+                double angular_velocity, double linear_acceleration,
+                Point point) override;
+
+  /// @brief Updates the max velocity for motion
+  /// @param velocity __double__ The max velocity for motion
+  void setVelocity(double velocity) override;
+
+  /// @brief Updates the max angular velocity for motion
+  /// @param angular_velocity __double__ The max angular velocity for motion
+  void setAngularVelocity(double angular_velocity) override;
+
+  /// @brief Checks if the target point has been reached
+  /// @return True if the target point has been reached, false otherwise
+  bool targetReached() override;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -107,54 +155,6 @@ class PIDHolonomicGoToPose : public IGoToPose {
 
   /// @brief Runs all instance specific updates
   void taskUpdate();
-
- public:
-  /// @brief Copies another PIDHolonomicGoToPose
-  /// @param other __const PIDHolonomicGoToPose&__ The PIDHolonomicGoToPose
-  /// being copied
-  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = delete;
-
-  /// @brief Moves another PIDHolonomicGoToPose
-  /// @param other __PIDHolonomicGoToPose&&__ The PIDHolonomicGoToPose being
-  /// moved
-  PIDHolonomicGoToPose(PIDHolonomicGoToPose&& other) = default;
-
-  /// @brief Initializes the control
-  void init() override;
-
-  /// @brief Runs the control
-  void run() override;
-
-  /// @brief Pauses the control
-  void pause() override;
-
-  /// @brief Resumes the control
-  void resume() override;
-
-  /// @brief Drives the given robot to a pose (x, y, theta)
-  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
-  /// controlled
-  /// @param velocity __double__ The maximum velocity of the robot
-  /// @param angular_velocity __double__ The maximum angular velocity of
-  /// the robot
-  /// @param linear_acceleration __double__ The maximum linear acceleration of
-  /// the robot
-  /// @param point __Point__ The pose (x, y, theta) for the robot to go to
-  void goToPose(const std::shared_ptr<robot::Robot>& robot, double velocity,
-                double angular_velocity, double linear_acceleration,
-                Point point) override;
-
-  /// @brief Updates the max velocity for motion
-  /// @param velocity __double__ The max velocity for motion
-  void setVelocity(double velocity) override;
-
-  /// @brief Updates the max angular velocity for motion
-  /// @param angular_velocity __double__ The max angular velocity for motion
-  void setAngularVelocity(double angular_velocity) override;
-
-  /// @brief Checks if the target point has been reached
-  /// @return True if the target point has been reached, false otherwise
-  bool targetReached() override;
 };
 }  // namespace motion
 }  // namespace control

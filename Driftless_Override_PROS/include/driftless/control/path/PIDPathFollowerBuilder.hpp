@@ -20,31 +20,6 @@ namespace path {
 class PIDPathFollowerBuilder {
   friend class PIDPathFollower;
 
- private:
-  // the delayer used in the path follower
-  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
-
-  // the mutex used in the path follower
-  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
-
-  // the task used in the path follower
-  std::unique_ptr<driftless::rtos::ITask> m_task{};
-
-  // the linear PID controller used in the path follower
-  driftless::control::PID m_linear_pid{};
-
-  // the rotational PID controller used in the path follower
-  driftless::control::PID m_rotational_pid{};
-
-  // the follow distance used in the path follower
-  double m_follow_distance{};
-
-  // the target tolerance used in the path follower
-  double m_target_tolerance{};
-
-  // the target velocity used in the path follower
-  double m_target_velocity{};
-
  public:
   /// @brief Adds a delayer to the builder
   /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
@@ -101,6 +76,31 @@ class PIDPathFollowerBuilder {
   /// PID path follower
   [[nodiscard]]
   std::unique_ptr<PIDPathFollower> buildUnique();
+
+ private:
+  // the delayer used in the path follower
+  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
+
+  // the mutex used in the path follower
+  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
+
+  // the task used in the path follower
+  std::unique_ptr<driftless::rtos::ITask> m_task{};
+
+  // the linear PID controller used in the path follower
+  driftless::control::PID m_linear_pid{};
+
+  // the rotational PID controller used in the path follower
+  driftless::control::PID m_rotational_pid{};
+
+  // the follow distance used in the path follower
+  double m_follow_distance{};
+
+  // the target tolerance used in the path follower
+  double m_target_tolerance{};
+
+  // the target velocity used in the path follower
+  double m_target_velocity{};
 };
 }  // namespace path
 }  // namespace control

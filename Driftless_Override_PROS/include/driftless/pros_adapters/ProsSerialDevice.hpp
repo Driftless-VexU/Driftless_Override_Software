@@ -13,9 +13,6 @@ namespace pros_adapters {
 
 /// @brief Class to adapt a pros serial device to the serial device interface
 class ProsSerialDevice : public io::ISerialDevice {
- private:
-  std::unique_ptr<pros::Serial> m_serial_device{};
-
  public:
   /// @brief Constructs a new pros serial device
   /// @param serial_device __std::unique_ptr<pros::Serial>__ The serial device
@@ -48,7 +45,10 @@ class ProsSerialDevice : public io::ISerialDevice {
 
   /// @brief Gets the number of bytes in the input stream
   /// @return __int__ The number of bytes in the input stream
-  int getInputBytes();
+  int getInputBytes() override;
+
+ private:
+  std::unique_ptr<pros::Serial> m_serial_device{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

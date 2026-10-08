@@ -27,9 +27,9 @@ class ProsRotationSensor : public driftless::io::IRotationSensor {
 
  public:
   /// @brief Constructs a new ProsRotationSensor object
-  /// @param rotation_sensor __std::unique_ptr<pros::Rotation>&__ The rotation
+  /// @param rotation_sensor __std::unique_ptr<pros::Rotation>__ The rotation
   /// sensor being adapted
-  ProsRotationSensor(std::unique_ptr<pros::Rotation>& rotation_sensor);
+  ProsRotationSensor(std::unique_ptr<pros::Rotation> rotation_sensor);
 
   /// @brief Initializes the rotational sensor
   void init() override;

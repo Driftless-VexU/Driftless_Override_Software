@@ -3,7 +3,7 @@
 namespace driftless {
 namespace pros_adapters {
 ProsRotationSensor::ProsRotationSensor(
-    std::unique_ptr<pros::Rotation>& rotation_sensor)
+    std::unique_ptr<pros::Rotation> rotation_sensor)
     : m_rotation_sensor{std::move(rotation_sensor)} {}
 
 void ProsRotationSensor::init() {

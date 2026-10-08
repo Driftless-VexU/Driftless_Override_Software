@@ -1,47 +1,47 @@
 #include "driftless/control/motion/PIDHolonomicGoToPointBuilder.hpp"
 
 namespace driftless::control::motion {
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer> delayer) {
+PIDHolonomicGoToPointBuilder&& PIDHolonomicGoToPointBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex> mutex) {
+PIDHolonomicGoToPointBuilder&& PIDHolonomicGoToPointBuilder::withMutex(
+    std::unique_ptr<rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withTask(
-    std::unique_ptr<rtos::ITask> task) {
+PIDHolonomicGoToPointBuilder&& PIDHolonomicGoToPointBuilder::withTask(
+    std::unique_ptr<rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withXPID(PID pid) {
+PIDHolonomicGoToPointBuilder&& PIDHolonomicGoToPointBuilder::withXPID(PID pid) && {
   m_x_pid = std::move(pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPointBuilder& PIDHolonomicGoToPointBuilder::withYPID(PID pid) {
+PIDHolonomicGoToPointBuilder&& PIDHolonomicGoToPointBuilder::withYPID(PID pid) && {
   m_y_pid = std::move(pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPointBuilder&
-PIDHolonomicGoToPointBuilder::withDistanceTolerance(double tolerance) {
+PIDHolonomicGoToPointBuilder&&
+PIDHolonomicGoToPointBuilder::withDistanceTolerance(double tolerance) && {
   m_distance_tolerance = tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPointBuilder&
-PIDHolonomicGoToPointBuilder::withVelocityTolerance(double tolerance) {
+PIDHolonomicGoToPointBuilder&&
+PIDHolonomicGoToPointBuilder::withVelocityTolerance(double tolerance) && {
   m_velocity_tolerance = tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDHolonomicGoToPoint PIDHolonomicGoToPointBuilder::build() {
+PIDHolonomicGoToPoint PIDHolonomicGoToPointBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");
@@ -51,7 +51,7 @@ PIDHolonomicGoToPoint PIDHolonomicGoToPointBuilder::build() {
 }
 
 std::unique_ptr<PIDHolonomicGoToPoint>
-PIDHolonomicGoToPointBuilder::buildUnique() {
+PIDHolonomicGoToPointBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");

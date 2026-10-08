@@ -26,11 +26,11 @@ class TrackingWheel : public driftless::io::IDistanceTracker {
 
  public:
   /// @brief Constructs a new tracking wheel
-  /// @param rotation_sensor __std::unique_ptr<io::IRotationSensor>&__ The
+  /// @param rotation_sensor __std::unique_ptr<io::IRotationSensor>__ The
   /// rotation sensor used in the tracking wheel
   /// @param wheel_radius __double__ The radius of the tracking wheel, in inches
   TrackingWheel(
-      std::unique_ptr<driftless::io::IRotationSensor>& rotation_sensor,
+      std::unique_ptr<driftless::io::IRotationSensor> rotation_sensor,
       double wheel_radius);
 
   /// @brief Initializes the tracking wheel

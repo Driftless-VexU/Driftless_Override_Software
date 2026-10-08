@@ -3,7 +3,7 @@
 namespace driftless {
 namespace hal {
 TrackingWheel::TrackingWheel(
-    std::unique_ptr<driftless::io::IRotationSensor>& rotation_sensor,
+    std::unique_ptr<driftless::io::IRotationSensor> rotation_sensor,
     double wheel_radius)
     : m_rotation_sensor{std::move(rotation_sensor)},
       m_wheel_radius{wheel_radius} {}

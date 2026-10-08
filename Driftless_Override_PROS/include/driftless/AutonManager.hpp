@@ -26,9 +26,9 @@ class AutonManager {
  public:
   /// @brief Constructs a new AutonManager object
   /// @param clock __std::shared_ptr<rtos::IClock>&__ The clock to use
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to use
   AutonManager(const std::shared_ptr<rtos::IClock>& clock,
-               const std::unique_ptr<rtos::IDelayer>& delayer);
+               const std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Sets the alliance used in the autonomous manager
   /// @param alliance __std::shared_ptr<alliance::IAlliance>&__ The alliance to
@@ -36,8 +36,8 @@ class AutonManager {
   void setAlliance(const std::shared_ptr<alliance::IAlliance>& alliance);
 
   /// @brief Sets the auton used in the autonomous manager
-  /// @param auton __std::unique_ptr<auton::AAuton>&__ The auton to use
-  void setAuton(std::unique_ptr<auton::AAuton>& auton);
+  /// @param auton __std::unique_ptr<auton::AAuton>__ The auton to use
+  void setAuton(std::unique_ptr<auton::AAuton> auton);
 
   /// @brief Initializes the selected auton
   /// @param robot __std::shared_ptr<robot::Robot>&__ The robot to use

@@ -87,7 +87,7 @@ class MotionControl : public driftless::control::AControl {
   /// @brief Changes the type of motion being used and pauses the previous
   /// motion type
   /// @param motion_type __EMotionType__ The new motion type to switch to
-  void switchMotionType(EMotionType motion_type);
+  inline void switchMotionType(EMotionType motion_type);
 
   /// @brief Handles the drive straight command
   /// @param cmd __DriveStraightCommand&__ The command to handle

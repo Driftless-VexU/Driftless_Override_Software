@@ -81,7 +81,7 @@ void* MotionControl::state(EControlState state_name) {
   return result;
 }
 
-void MotionControl::switchMotionType(EMotionType motion_type) {
+inline void MotionControl::switchMotionType(EMotionType motion_type) {
   if (m_motion_type != motion_type) {
     pause();
     m_motion_type = motion_type;

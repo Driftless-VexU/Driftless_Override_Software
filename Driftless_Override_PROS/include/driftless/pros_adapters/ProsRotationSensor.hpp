@@ -18,13 +18,6 @@ namespace pros_adapters {
 /// @brief The class for adapting a PROS rotation sensor
 /// @author Matthew Backman
 class ProsRotationSensor : public driftless::io::IRotationSensor {
- private:
-  // conversion factor between centidegrees and radians
-  static constexpr double CENTIDEGREES_TO_RADIANS{M_PI / 18000};
-
-  // the rotation sensor being adapted
-  std::unique_ptr<pros::Rotation> m_rotation_sensor{};
-
  public:
   /// @brief Constructs a new ProsRotationSensor object
   /// @param rotation_sensor __std::unique_ptr<pros::Rotation>__ The rotation
@@ -48,6 +41,13 @@ class ProsRotationSensor : public driftless::io::IRotationSensor {
   /// @brief Gets the angle the rotational sensor is at
   /// @return __double__ The angle of the rotational sensor
   double getAngle() override;
+
+ private:
+  // conversion factor between centidegrees and radians
+  static constexpr double CENTIDEGREES_TO_RADIANS{M_PI / 18000};
+
+  // the rotation sensor being adapted
+  std::unique_ptr<pros::Rotation> m_rotation_sensor{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

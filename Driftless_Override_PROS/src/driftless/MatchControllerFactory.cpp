@@ -23,25 +23,25 @@ driftless::MatchController MatchControllerFactory::createMatchController() {
   // add configs
   std::unique_ptr<config::IConfig> blue_config{
       std::make_unique<config::BlueConfig>()};
-  lvgl_menu->addConfig(blue_config);
+  lvgl_menu->addConfig(std::move(blue_config));
   std::unique_ptr<config::IConfig> orange_config{
       std::make_unique<config::OrangeConfig>()};
-  lvgl_menu->addConfig(orange_config);
+  lvgl_menu->addConfig(std::move(orange_config));
 
   // add profiles
   std::unique_ptr<profiles::IProfile> ethan_profile{
       std::make_unique<driftless::profiles::EthanProfile>()};
-  lvgl_menu->addProfile(ethan_profile);
+  lvgl_menu->addProfile(std::move(ethan_profile));
   std::unique_ptr<profiles::IProfile> ethan_skills_profile{
       std::make_unique<profiles::EthanSkillsProfile>()};
-  lvgl_menu->addProfile(ethan_skills_profile);
+  lvgl_menu->addProfile(std::move(ethan_skills_profile));
 
   std::unique_ptr<profiles::IProfile> asher_profile{
       std::make_unique<profiles::AsherProfile>()};
-  lvgl_menu->addProfile(asher_profile);
+  lvgl_menu->addProfile(std::move(asher_profile));
   std::unique_ptr<profiles::IProfile> asher_skills_profile{
       std::make_unique<profiles::AsherSkillsProfile>()};
-  lvgl_menu->addProfile(asher_skills_profile);
+  lvgl_menu->addProfile(std::move(asher_skills_profile));
 
   // create RTOS
   std::shared_ptr<rtos::IClock> clock{
@@ -50,6 +50,6 @@ driftless::MatchController MatchControllerFactory::createMatchController() {
       std::make_unique<pros_adapters::ProsDelayer>()};
 
   // create and send out the match controller
-  return MatchController{lvgl_menu, clock, delayer};
+  return MatchController{std::move(lvgl_menu), clock, std::move(delayer)};
 }
 }  // namespace driftless

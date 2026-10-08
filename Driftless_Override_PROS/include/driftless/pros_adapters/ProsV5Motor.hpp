@@ -81,17 +81,17 @@ class ProsV5Motor : public io::IMotor {
   /**
    * @brief Construct a new Pros V5 Motor object
    *
-   * @param motor __std::unique_ptr<pros::Motor>&__ The motor being adapted
+   * @param motor __std::unique_ptr<pros::Motor>__ The motor being adapted
    */
-  ProsV5Motor(std::unique_ptr<pros::Motor>& motor);
+  ProsV5Motor(std::unique_ptr<pros::Motor> motor);
 
   /// @brief Construct a new Pros V5 Motor object with a voltage controller
-  /// @param motor __std::unique_ptr<pros::Motor>&__ The motor being adapted
+  /// @param motor __std::unique_ptr<pros::Motor>__ The motor being adapted
   /// @param voltage_controller
-  /// __std::unique_ptr<io::motor_voltage_control::IVoltageController>&__ The
+  /// __std::unique_ptr<io::motor_voltage_control::IVoltageController>__ The
   /// voltage controller to use for velocity control
-  ProsV5Motor(std::unique_ptr<pros::Motor>& motor,
-              std::unique_ptr<io::motor_voltage_control::IVoltageController>&
+  ProsV5Motor(std::unique_ptr<pros::Motor> motor,
+              std::unique_ptr<io::motor_voltage_control::IVoltageController>
                   voltage_controller);
 
   /**

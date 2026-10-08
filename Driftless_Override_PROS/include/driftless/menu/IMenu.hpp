@@ -40,19 +40,19 @@ class IMenu {
   virtual void addAlliance(std::shared_ptr<alliance::IAlliance>& alliance) = 0;
 
   /// @brief Adds an auton to the menu
-  /// @param auton __std::unique_ptr<auton::AAuton>&__ Reference to the auton
+  /// @param auton __std::unique_ptr<auton::AAuton>__ Reference to the auton
   /// being added
-  virtual void addAuton(std::unique_ptr<auton::AAuton>& auton) = 0;
+  virtual void addAuton(std::unique_ptr<auton::AAuton> auton) = 0;
 
   /// @brief Adds a config to the menu
-  /// @param config __std::unique_ptr<config::IConfig>&__ Reference to the
+  /// @param config __std::unique_ptr<config::IConfig>__ Reference to the
   /// config being added
-  virtual void addConfig(std::unique_ptr<config::IConfig>& config) = 0;
+  virtual void addConfig(std::unique_ptr<config::IConfig> config) = 0;
 
   /// @brief Adds a profile to the menu
-  /// @param profile __std::unique_ptr<profiles::IProfile>&__ Reference to the
+  /// @param profile __std::unique_ptr<profiles::IProfile>__ Reference to the
   /// profile being added
-  virtual void addProfile(std::unique_ptr<profiles::IProfile>& profile) = 0;
+  virtual void addProfile(std::unique_ptr<profiles::IProfile> profile) = 0;
 };
 }  // namespace menu
 }  // namespace driftless

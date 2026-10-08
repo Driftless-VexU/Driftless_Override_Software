@@ -17,15 +17,6 @@ namespace pros_adapters {
 /// @brief The class for adapting a PROS piston
 /// @author Matthew Backman
 class ProsPiston : public driftless::io::IPiston {
- private:
-  // the ADI port used by the piston
-  std::unique_ptr<pros::adi::DigitalOut> m_adi_digital_out{};
-
-  bool m_extended_value{};
-
-  // whether the piston is extended or retracted
-  bool extended{};
-
  public:
   /// @brief Constructs a new ProsPiston object
   /// @param adi_digital_out __std::unique_ptr<pros::adi::DigitalOut>__ The ADI
@@ -47,6 +38,15 @@ class ProsPiston : public driftless::io::IPiston {
   /// @brief Determines if the piston is extended
   /// @return __bool__ True if extended, false otherwise
   bool isExtended() override;
+
+ private:
+  // the ADI port used by the piston
+  std::unique_ptr<pros::adi::DigitalOut> m_adi_digital_out{};
+
+  bool m_extended_value{};
+
+  // whether the piston is extended or retracted
+  bool extended{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

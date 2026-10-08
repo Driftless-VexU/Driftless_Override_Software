@@ -22,32 +22,6 @@ namespace menu {
 /// @brief Class to adapt the lvgl menu to the IMenu interface
 /// @author Matthew Backman
 class MenuAdapter : public IMenu {
- private:
-  // Name used for the alliance settings
-  static constexpr char ALLIANCE_OPTION_NAME[]{"ALLIANCE"};
-
-  static constexpr char AUTON_OPTION_NAME[]{"AUTON"};
-
-  // name used for the config settings
-  static constexpr char CONFIG_OPTION_NAME[]{"CONFIG"};
-
-  // name used for the profile settings
-  static constexpr char PROFILE_OPTION_NAME[]{"PROFILE"};
-
-  // Available alliances
-  std::vector<std::shared_ptr<alliance::IAlliance>> alliances{};
-
-  std::vector<std::unique_ptr<auton::AAuton>> autons{};
-
-  // Available configs
-  std::vector<std::unique_ptr<config::IConfig>> configs{};
-
-  // Available profiles
-  std::vector<std::unique_ptr<profiles::IProfile>> profiles{};
-
-  // display
-  LvglMenu lvgl_menu{};
-
  public:
   /// @brief Adds an alliance to the menu
   /// @param alliance __std::unique_ptr<alliance::IAlliance>__ Reference to the
@@ -81,6 +55,32 @@ class MenuAdapter : public IMenu {
   /// the memory, or let the user configure settings
   /// @return __SystemConfig__ The configurations to use during the match
   SystemConfig getSystemConfig(bool read_only = false) override;
+
+ private:
+  // Name used for the alliance settings
+  static constexpr char ALLIANCE_OPTION_NAME[]{"ALLIANCE"};
+
+  static constexpr char AUTON_OPTION_NAME[]{"AUTON"};
+
+  // name used for the config settings
+  static constexpr char CONFIG_OPTION_NAME[]{"CONFIG"};
+
+  // name used for the profile settings
+  static constexpr char PROFILE_OPTION_NAME[]{"PROFILE"};
+
+  // Available alliances
+  std::vector<std::shared_ptr<alliance::IAlliance>> alliances{};
+
+  std::vector<std::unique_ptr<auton::AAuton>> autons{};
+
+  // Available configs
+  std::vector<std::unique_ptr<config::IConfig>> configs{};
+
+  // Available profiles
+  std::vector<std::unique_ptr<profiles::IProfile>> profiles{};
+
+  // display
+  LvglMenu lvgl_menu{};
 };
 }  // namespace menu
 }  // namespace driftless

@@ -28,9 +28,12 @@ class ProsPiston : public driftless::io::IPiston {
 
  public:
   /// @brief Constructs a new ProsPiston object
-  /// @param adi_digital_out __std::unique_ptr<pros::adi::DigitalOut>&__ The ADI
+  /// @param adi_digital_out __std::unique_ptr<pros::adi::DigitalOut>__ The ADI
   /// port used by the piston
-  ProsPiston(std::unique_ptr<pros::adi::DigitalOut>& adi_digital_out, bool extended_value=true);
+  /// @param extended_value __bool__ The value that represents the extended
+  /// state of the piston
+  ProsPiston(std::unique_ptr<pros::adi::DigitalOut> adi_digital_out,
+             bool extended_value = true);
 
   /// @brief Extends the piston
   void extend() override;

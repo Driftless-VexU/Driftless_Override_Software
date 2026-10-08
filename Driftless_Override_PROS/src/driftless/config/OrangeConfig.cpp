@@ -277,28 +277,21 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
                               std::move(drive_back_right_bottom_motor)},
               DRIVE_BACK_RIGHT_ANGLE_OFFSET)};
 
-  // build the drive train
-  std::unique_ptr<robot::subsystems::holonomic_drive_train::IHolonomicDrive>
-      drive_train{robot::subsystems::holonomic_drive_train::
-                      ModularHolonomicDriveBuilder{}
-                          .withModule(std::move(drive_front_left_module))
-                          .withModule(std::move(drive_front_right_module))
-                          .withModule(std::move(drive_back_left_module))
-                          .withModule(std::move(drive_back_right_module))
-                          .withDelayer(std::move(drive_delayer))
-                          .withTask(std::move(drive_task))
-                          .withMutex(std::move(drive_mutex))
-                          .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
-                          .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
-                          .buildUnique()};
-
-  // create the subsystem
-  std::unique_ptr<robot::subsystems::ASubsystem> drive_train_subsystem{
-      std::make_unique<robot::subsystems::holonomic_drive_train::
-                           HolonomicDriveTrainSubsystem>(drive_train)};
-
   // add the subsystem to the robot
-  robot->addSubsystem(drive_train_subsystem);
+  robot->addSubsystem(std::make_unique<
+                      robot::subsystems::holonomic_drive_train::
+                          HolonomicDriveTrainSubsystem>(
+      robot::subsystems::holonomic_drive_train::ModularHolonomicDriveBuilder{}
+          .withModule(std::move(drive_front_left_module))
+          .withModule(std::move(drive_front_right_module))
+          .withModule(std::move(drive_back_left_module))
+          .withModule(std::move(drive_back_right_module))
+          .withDelayer(std::move(drive_delayer))
+          .withTask(std::move(drive_task))
+          .withMutex(std::move(drive_mutex))
+          .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
+          .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
+          .buildUnique()));
 
   // ## BRAKES ##
 
@@ -310,17 +303,11 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   std::unique_ptr<io::IPiston> brake_piston{
       std::make_unique<pros_adapters::ProsPiston>(pros_brake_piston)};
 
-  std::unique_ptr<robot::subsystems::brakes::IBrake> brake_driver{
-      robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
-          .withPiston(std::move(brake_piston))
-          .buildUnique()};
-
-  // create the brakes subsystem
-  std::unique_ptr<robot::subsystems::ASubsystem> brakes_subsystem{
+  robot->addSubsystem(
       std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
-          std::move(brake_driver))};
-
-  robot->addSubsystem(brakes_subsystem);
+          robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
+              .withPiston(std::move(brake_piston))
+              .buildUnique()));
 
   // return complete robot
   return robot;

@@ -37,7 +37,7 @@ void ProsController::taskUpdate() {
   mutex.give();
 }
 
-ProsController::ProsController(std::unique_ptr<pros::Controller> &controller)
+ProsController::ProsController(std::unique_ptr<pros::Controller> controller)
     : m_controller{std::move(controller)} {}
 
 void ProsController::init() {}

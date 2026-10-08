@@ -83,9 +83,9 @@ class ProsController : public io::IController {
 
  public:
   /// @brief Constructor
-  /// @param controller __std::unique_ptr<pros::Controller>&__ The controller to
+  /// @param controller __std::unique_ptr<pros::Controller>__ The controller to
   /// adapt
-  ProsController(std::unique_ptr<pros::Controller> &controller);
+  ProsController(std::unique_ptr<pros::Controller> controller);
 
   /// @brief Initializes the controller
   void init() override;

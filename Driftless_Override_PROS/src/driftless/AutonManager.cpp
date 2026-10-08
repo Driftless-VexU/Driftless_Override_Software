@@ -27,7 +27,7 @@ void AutonManager::runAuton(
     std::shared_ptr<driftless::control::ControlSystem>& control_system) {
   if (m_auton) {
     m_auton->run(robot, control_system, m_alliance, m_clock,
-                 m_delayer);
+                 m_delayer->clone());
   }
 }
 }  // namespace driftless

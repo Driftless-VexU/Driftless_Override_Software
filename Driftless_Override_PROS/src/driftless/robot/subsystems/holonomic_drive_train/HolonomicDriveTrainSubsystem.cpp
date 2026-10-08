@@ -36,7 +36,7 @@ void HolonomicDriveTrainSubsystem::handleCommand(const auto& cmd) {
 }
 
 HolonomicDriveTrainSubsystem::HolonomicDriveTrainSubsystem(
-    std::unique_ptr<IHolonomicDrive>& drive_train)
+    std::unique_ptr<IHolonomicDrive> drive_train)
     : m_drive_train(std::move(drive_train)),
       ASubsystem(ESubsystem::HOLONOMIC_DRIVE_TRAIN) {}
 

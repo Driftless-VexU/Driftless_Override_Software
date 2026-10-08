@@ -15,16 +15,16 @@ namespace pros_adapters {
 /// @brief The class for adapting a PROS mutex
 /// @author Matthew Backman
 class ProsMutex : public rtos::IMutex {
- private:
-  // pros mutex being adapted
-  pros::Mutex mutex{};
-
  public:
   /// @brief Takes the mutex, blocking other tasks from running without it
   void take() override;
 
   /// @brief Gives the mutex back, unblocking it for other tasks
   void give() override;
+
+ private:
+  // pros mutex being adapted
+  pros::Mutex mutex{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

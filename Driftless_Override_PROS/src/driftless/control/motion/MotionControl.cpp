@@ -4,71 +4,11 @@
 namespace driftless {
 namespace control {
 namespace motion {
-void MotionControl::switchMotionType(EMotionType motion_type) {
-  if (m_motion_type != motion_type) {
-    pause();
-    m_motion_type = motion_type;
-  }
-}
-
-void MotionControl::handleCommand(
-    const commands::motion::DriveStraightCommand& cmd) {
-  switchMotionType(EMotionType::DRIVE_STRAIGHT);
-  m_drive_straight->driveStraight(cmd.m_robot, cmd.m_velocity, cmd.m_distance,
-                                  cmd.m_theta);
-}
-
-void MotionControl::handleCommand(
-    const commands::motion::GoToPointCommand& cmd) {
-  switchMotionType(EMotionType::GO_TO_POINT);
-  m_go_to_point->goToPoint(cmd.m_robot, cmd.m_velocity,
-                           Point{cmd.m_x, cmd.m_y});
-}
-
-void MotionControl::handleCommand(
-    const commands::motion::GoToPoseCommand& cmd) {
-  switchMotionType(EMotionType::GO_TO_POSE);
-  m_go_to_pose->goToPose(cmd.m_robot, cmd.m_linear_velocity,
-                         cmd.m_angular_velocity, cmd.m_linear_acceleration,
-                         Point{cmd.m_x, cmd.m_y, cmd.m_theta});
-}
-
-void MotionControl::handleCommand(
-    const commands::motion::TurnToAngleCommand& cmd) {
-  switchMotionType(EMotionType::TURN);
-  m_turn->turnToAngle(cmd.m_robot, cmd.m_angular_velocity, cmd.m_theta,
-                      cmd.m_direction);
-}
-
-void MotionControl::handleCommand(
-    const commands::motion::TurnToPointCommand& cmd) {
-  switchMotionType(EMotionType::TURN);
-  m_turn->turnToPoint(cmd.m_robot, cmd.m_angular_velocity,
-                      Point{cmd.m_x_pos, cmd.m_y_pos}, cmd.m_direction);
-}
-
-void MotionControl::handleCommand(
-    const commands::SetLinearVelocityCommand& cmd) const {
-  m_drive_straight->setVelocity(cmd.m_linear_velocity);
-  m_go_to_point->setVelocity(cmd.m_linear_velocity);
-  m_go_to_pose->setVelocity(cmd.m_linear_velocity);
-}
-
-void MotionControl::handleCommand(
-    const commands::SetAngularVelocityCommand& cmd) const {
-  m_go_to_pose->setAngularVelocity(cmd.m_angular_velocity);
-}
-
-void MotionControl::handleCommand(const auto& cmd) const {
-  throw std::invalid_argument("MotionControl: No handler for command type " +
-                              std::string{typeid(cmd).name()});
-}
-
 MotionControl::MotionControl(
-    std::unique_ptr<driftless::control::motion::IDriveStraight>& drive_straight,
-    std::unique_ptr<driftless::control::motion::IGoToPoint>& go_to_point,
-    std::unique_ptr<driftless::control::motion::IGoToPose>& go_to_pose,
-    std::unique_ptr<driftless::control::motion::ITurn>& turn)
+    std::unique_ptr<driftless::control::motion::IDriveStraight> drive_straight,
+    std::unique_ptr<driftless::control::motion::IGoToPoint> go_to_point,
+    std::unique_ptr<driftless::control::motion::IGoToPose> go_to_pose,
+    std::unique_ptr<driftless::control::motion::ITurn> turn)
     : AControl{EControl::MOTION},
       m_drive_straight{std::move(drive_straight)},
       m_go_to_point{std::move(go_to_point)},
@@ -139,6 +79,66 @@ void* MotionControl::state(EControlState state_name) {
   }
 
   return result;
+}
+
+inline void MotionControl::switchMotionType(EMotionType motion_type) {
+  if (m_motion_type != motion_type) {
+    pause();
+    m_motion_type = motion_type;
+  }
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::DriveStraightCommand& cmd) {
+  switchMotionType(EMotionType::DRIVE_STRAIGHT);
+  m_drive_straight->driveStraight(cmd.m_robot, cmd.m_velocity, cmd.m_distance,
+                                  cmd.m_theta);
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::GoToPointCommand& cmd) {
+  switchMotionType(EMotionType::GO_TO_POINT);
+  m_go_to_point->goToPoint(cmd.m_robot, cmd.m_velocity,
+                           Point{cmd.m_x, cmd.m_y});
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::GoToPoseCommand& cmd) {
+  switchMotionType(EMotionType::GO_TO_POSE);
+  m_go_to_pose->goToPose(cmd.m_robot, cmd.m_linear_velocity,
+                         cmd.m_angular_velocity, cmd.m_linear_acceleration,
+                         Point{cmd.m_x, cmd.m_y, cmd.m_theta});
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::TurnToAngleCommand& cmd) {
+  switchMotionType(EMotionType::TURN);
+  m_turn->turnToAngle(cmd.m_robot, cmd.m_angular_velocity, cmd.m_theta,
+                      cmd.m_direction);
+}
+
+void MotionControl::handleCommand(
+    const commands::motion::TurnToPointCommand& cmd) {
+  switchMotionType(EMotionType::TURN);
+  m_turn->turnToPoint(cmd.m_robot, cmd.m_angular_velocity,
+                      Point{cmd.m_x_pos, cmd.m_y_pos}, cmd.m_direction);
+}
+
+void MotionControl::handleCommand(
+    const commands::SetLinearVelocityCommand& cmd) const {
+  m_drive_straight->setVelocity(cmd.m_linear_velocity);
+  m_go_to_point->setVelocity(cmd.m_linear_velocity);
+  m_go_to_pose->setVelocity(cmd.m_linear_velocity);
+}
+
+void MotionControl::handleCommand(
+    const commands::SetAngularVelocityCommand& cmd) const {
+  m_go_to_pose->setAngularVelocity(cmd.m_angular_velocity);
+}
+
+void MotionControl::handleCommand(const auto& cmd) const {
+  throw std::invalid_argument("MotionControl: No handler for command type " +
+                              std::string{typeid(cmd).name()});
 }
 }  // namespace motion
 }  // namespace control

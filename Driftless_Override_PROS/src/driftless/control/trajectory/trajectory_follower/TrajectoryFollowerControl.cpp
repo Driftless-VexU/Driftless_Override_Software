@@ -13,7 +13,7 @@ void TrajectoryFollowerControl::handleCommand(const auto& cmd) const {
 }
 
 TrajectoryFollowerControl::TrajectoryFollowerControl(
-    std::unique_ptr<ITrajectoryFollower>& trajectory_follower)
+    std::unique_ptr<ITrajectoryFollower> trajectory_follower)
     : m_trajectory_follower{std::move(trajectory_follower)},
       AControl(EControl::TRAJECTORY_FOLLOWER) {}
 

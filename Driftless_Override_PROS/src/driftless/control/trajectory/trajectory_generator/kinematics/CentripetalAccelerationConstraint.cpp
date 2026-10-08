@@ -6,7 +6,7 @@ CentripetalAccelerationConstraint::CentripetalAccelerationConstraint(
     : m_max_centripetal_acceleration{max_centripetal_acceleration} {}
 
 double CentripetalAccelerationConstraint::getMaxVelocity(
-    std::unique_ptr<IPath>& path, TrajectoryPoint last_point, double delta_d,
+    const std::unique_ptr<IPath>& path, TrajectoryPoint last_point, double delta_d,
     double t) {
   Point current_point{path->getPoint(t)};
   Point derivative{path->getDerivative(t)};

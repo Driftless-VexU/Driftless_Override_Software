@@ -22,25 +22,12 @@ namespace trajectory_follower {
 
 /// @brief Wrapper class for trajectory followers to adapt to control system
 class TrajectoryFollowerControl : public AControl {
- private:
-  std::unique_ptr<ITrajectoryFollower> m_trajectory_follower{};
-
-  /// @brief Handles the follow trajectory command
-  /// @param cmd __FollowTrajectoryCommand&__ The command to handle
-  void handleCommand(
-      const commands::trajectory::FollowTrajectoryCommand& cmd) const;
-
-  /// @brief Handles any command with no explicit handler
-  /// @throws std::invalid_argument for all commands with no explicit handler
-  /// @param cmd __auto&__ The command to handle
-  void handleCommand(const auto& cmd) const;
-
  public:
   /// @brief Constructs a new TrajectoryFollowerControl
-  /// @param trajectory_follower __std::unique_ptr<ITrajectoryFollower>&__ The
+  /// @param trajectory_follower __std::unique_ptr<ITrajectoryFollower>__ The
   /// trajectory follower to wrap
   TrajectoryFollowerControl(
-      std::unique_ptr<ITrajectoryFollower>& trajectory_follower);
+      std::unique_ptr<ITrajectoryFollower> trajectory_follower);
 
   /// @brief Initializes the TrajectoryFollowerControl
   void init() override;
@@ -62,6 +49,19 @@ class TrajectoryFollowerControl : public AControl {
   /// @param state_name __EControlState__ The state to gather
   /// @return __void*__ The state of the trajectory follower
   void* state(EControlState state_name) override;
+
+ private:
+  std::unique_ptr<ITrajectoryFollower> m_trajectory_follower{};
+
+  /// @brief Handles the follow trajectory command
+  /// @param cmd __FollowTrajectoryCommand&__ The command to handle
+  void handleCommand(
+      const commands::trajectory::FollowTrajectoryCommand& cmd) const;
+
+  /// @brief Handles any command with no explicit handler
+  /// @throws std::invalid_argument for all commands with no explicit handler
+  /// @param cmd __auto&__ The command to handle
+  void handleCommand(const auto& cmd) const;
 };
 }  // namespace trajectory_follower
 }  // namespace trajectory

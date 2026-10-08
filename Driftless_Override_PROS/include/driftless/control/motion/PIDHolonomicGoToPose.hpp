@@ -37,6 +37,54 @@ class PIDHolonomicGoToPoseBuilder;
 class PIDHolonomicGoToPose : public IGoToPose {
   friend class PIDHolonomicGoToPoseBuilder;
 
+ public:
+  /// @brief Copies another PIDHolonomicGoToPose
+  /// @param other __const PIDHolonomicGoToPose&__ The PIDHolonomicGoToPose
+  /// being copied
+  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = delete;
+
+  /// @brief Moves another PIDHolonomicGoToPose
+  /// @param other __PIDHolonomicGoToPose&&__ The PIDHolonomicGoToPose being
+  /// moved
+  PIDHolonomicGoToPose(PIDHolonomicGoToPose&& other) = default;
+
+  /// @brief Initializes the control
+  void init() override;
+
+  /// @brief Runs the control
+  void run() override;
+
+  /// @brief Pauses the control
+  void pause() override;
+
+  /// @brief Resumes the control
+  void resume() override;
+
+  /// @brief Drives the given robot to a pose (x, y, theta)
+  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
+  /// controlled
+  /// @param velocity __double__ The maximum velocity of the robot
+  /// @param angular_velocity __double__ The maximum angular velocity of
+  /// the robot
+  /// @param linear_acceleration __double__ The maximum linear acceleration of
+  /// the robot
+  /// @param point __Point__ The pose (x, y, theta) for the robot to go to
+  void goToPose(const std::shared_ptr<robot::Robot>& robot, double velocity,
+                double angular_velocity, double linear_acceleration,
+                Point point) override;
+
+  /// @brief Updates the max velocity for motion
+  /// @param velocity __double__ The max velocity for motion
+  void setVelocity(double velocity) override;
+
+  /// @brief Updates the max angular velocity for motion
+  /// @param angular_velocity __double__ The max angular velocity for motion
+  void setAngularVelocity(double angular_velocity) override;
+
+  /// @brief Checks if the target point has been reached
+  /// @return True if the target point has been reached, false otherwise
+  bool targetReached() override;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -107,90 +155,6 @@ class PIDHolonomicGoToPose : public IGoToPose {
 
   /// @brief Runs all instance specific updates
   void taskUpdate();
-
- public:
-  /// @brief Copies another PIDHolonomicGoToPose
-  /// @param other __const PIDHolonomicGoToPose&__ The PIDHolonomicGoToPose
-  /// being copied
-  PIDHolonomicGoToPose(const PIDHolonomicGoToPose& other) = delete;
-
-  /// @brief Moves another PIDHolonomicGoToPose
-  /// @param other __PIDHolonomicGoToPose&&__ The PIDHolonomicGoToPose being
-  /// moved
-  PIDHolonomicGoToPose(PIDHolonomicGoToPose&& other) = default;
-
-  /// @brief Initializes the control
-  void init() override;
-
-  /// @brief Runs the control
-  void run() override;
-
-  /// @brief Pauses the control
-  void pause() override;
-
-  /// @brief Resumes the control
-  void resume() override;
-
-  /// @brief Drives the given robot to a pose (x, y, theta)
-  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
-  /// controlled
-  /// @param velocity __double__ The maximum velocity of the robot
-  /// @param angular_velocity __double__ The maximum angular velocity of
-  /// the robot
-  /// @param linear_acceleration __double__ The maximum linear acceleration of
-  /// the robot
-  /// @param point __Point__ The pose (x, y, theta) for the robot to go to
-  void goToPose(const std::shared_ptr<robot::Robot>& robot, double velocity,
-                double angular_velocity, double linear_acceleration,
-                Point point) override;
-
-  /// @brief Updates the max velocity for motion
-  /// @param velocity __double__ The max velocity for motion
-  void setVelocity(double velocity) override;
-
-  /// @brief Updates the max angular velocity for motion
-  /// @param angular_velocity __double__ The max angular velocity for motion
-  void setAngularVelocity(double angular_velocity) override;
-
-  /// @brief Checks if the target point has been reached
-  /// @return True if the target point has been reached, false otherwise
-  bool targetReached() override;
-
-  /// @brief Sets the delayer for the control
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
-  void setDelayer(std::unique_ptr<rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex for the control
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to use
-  void setMutex(std::unique_ptr<rtos::IMutex>& mutex);
-
-  /// @brief Sets the task for the control
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to use
-  void setTask(std::unique_ptr<rtos::ITask>& task);
-
-  /// @brief Sets the x PID controller
-  /// @param x_pid The x PID controller to use
-  void setXPID(PID x_pid);
-
-  /// @brief Sets the y PID controller
-  /// @param y_pid The y PID controller to use
-  void setYPID(PID y_pid);
-
-  /// @brief Sets the rotational PID controller
-  /// @param rotational_pid The rotational PID controller to use
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the distance tolerance for reaching the target
-  /// @param distance_tolerance __double__ The distance tolerance
-  void setDistanceTolerance(double distance_tolerance);
-
-  /// @brief Sets the velocity tolerance for reaching the target
-  /// @param velocity_tolerance __double__ The velocity tolerance
-  void setVelocityTolerance(double velocity_tolerance);
-
-  /// @brief Sets the angular tolerance for reaching the target
-  /// @param angular_tolerance __double__ The angular tolerance
-  void setAngularTolerance(double angular_tolerance);
 };
 }  // namespace motion
 }  // namespace control

@@ -22,35 +22,13 @@ namespace motion {
 class PIDDriveStraightBuilder {
   friend class PIDDriveStraight;
 
- private:
-  // the delayer used for the control
-  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
-
-  // the mutex used for the control
-  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
-
-  // the task used for the control
-  std::unique_ptr<driftless::rtos::ITask> m_task{};
-
-  // the linear PID controller used for the control
-  PID m_linear_pid{};
-
-  // the rotational PID controller used for the control
-  PID m_rotational_pid{};
-
-  // the target tolerance used for the control
-  double m_target_tolerance{};
-
-  // the target velocity used for the control
-  double m_target_velocity{};
-
  public:
   /// @brief Adds a delayer to the builder
-  /// @param delayer __const std::unique_ptr<driftless::rtos::IDelayer>&__ The
+  /// @param delayer __const std::unique_ptr<driftless::rtos::IDelayer>__ The
   /// delayer added
   /// @return __PIDDriveStraightBuilder&__ Pointer to the current builder
   PIDDriveStraightBuilder& withDelayer(
-      const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
+      std::unique_ptr<driftless::rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>__ The mutex added
@@ -96,6 +74,28 @@ class PIDDriveStraightBuilder {
   /// PIDDriveStraight object
   [[nodiscard]]
   std::unique_ptr<PIDDriveStraight> buildUnique();
+
+ private:
+  // the delayer used for the control
+  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
+
+  // the mutex used for the control
+  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
+
+  // the task used for the control
+  std::unique_ptr<driftless::rtos::ITask> m_task{};
+
+  // the linear PID controller used for the control
+  PID m_linear_pid{};
+
+  // the rotational PID controller used for the control
+  PID m_rotational_pid{};
+
+  // the target tolerance used for the control
+  double m_target_tolerance{};
+
+  // the target velocity used for the control
+  double m_target_velocity{};
 };
 }  // namespace motion
 }  // namespace control

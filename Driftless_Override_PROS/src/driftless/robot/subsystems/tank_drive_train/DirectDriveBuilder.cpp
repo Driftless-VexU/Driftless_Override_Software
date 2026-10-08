@@ -6,13 +6,13 @@ namespace subsystems {
 namespace tank_drive_train {
 DirectDriveBuilder&& DirectDriveBuilder::withLeftMotor(
     std::unique_ptr<io::IMotor> motor) &&{
-  m_left_motors.addMotor(motor);
+  m_left_motors.addMotor(std::move(motor));
   return std::move(*this);
 }
 
 DirectDriveBuilder&& DirectDriveBuilder::withRightMotor(
     std::unique_ptr<io::IMotor> motor) && {
-  m_right_motors.addMotor(motor);
+  m_right_motors.addMotor(std::move(motor));
   return std::move(*this);
 }
 

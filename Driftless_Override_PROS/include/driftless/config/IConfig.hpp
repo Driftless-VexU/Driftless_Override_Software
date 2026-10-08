@@ -6,7 +6,6 @@
 
 #include "driftless/control/ControlSystem.hpp"
 #include "driftless/io/IController.hpp"
-#include "driftless/processes/ProcessSystem.hpp"
 #include "driftless/robot/Robot.hpp"
 
 /// @brief Namespace for driftless library code
@@ -39,10 +38,6 @@ class IConfig {
   /// @brief Builds a robot object using the config values
   /// @return std::shared_ptr<robot::Robot>__ The new robot object
   virtual std::shared_ptr<robot::Robot> buildRobot() = 0;
-
-  /// @brief Builds a process system using config values
-  /// @return __shared_ptr<ProcessSystem>__ The new process system
-  virtual std::shared_ptr<processes::ProcessSystem> buildProcessSystem() = 0;
 };
 }  // namespace config
 }  // namespace driftless

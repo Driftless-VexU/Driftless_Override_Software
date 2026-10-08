@@ -2,8 +2,8 @@
 
 namespace driftless::control::motion {
 PIDHolonomicTurnBuilder& PIDHolonomicTurnBuilder::withDelayer(
-    const std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
+    std::unique_ptr<rtos::IDelayer> delayer) {
+  m_delayer = std::move(delayer);
   return *this;
 }
 

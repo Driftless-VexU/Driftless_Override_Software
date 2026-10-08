@@ -17,10 +17,6 @@
 #include "driftless/control/trajectory/trajectory_generator/kinematics/LinearAccelerationConstraint.hpp"
 #include "driftless/control/trajectory/trajectory_generator/kinematics/MaxVelocityConstraint.hpp"
 #include "driftless/control/trajectory/trajectory_generator/modifiers/HolonomicSpinModifier.hpp"
-#include "driftless/processes/EProcess.hpp"
-#include "driftless/processes/EProcessCommand.hpp"
-#include "driftless/processes/EProcessState.hpp"
-#include "driftless/processes/ProcessSystem.hpp"
 #include "driftless/robot/Robot.hpp"
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemCommand.hpp"
@@ -145,13 +141,13 @@ class AAuton {
   /// @param alliance __std::shared_ptr<alliance::IAlliance>&__ The current
   /// alliance
   /// @param clock __std::shared_ptr<rtos::IClock>&__ The system clock
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer used
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer used
   virtual void run(
       std::shared_ptr<driftless::robot::Robot>& robot,
       std::shared_ptr<driftless::control::ControlSystem>& control_system,
       std::shared_ptr<driftless::alliance::IAlliance>& alliance,
       std::shared_ptr<rtos::IClock>& clock,
-      std::unique_ptr<rtos::IDelayer>& delayer) = 0;
+      std::unique_ptr<rtos::IDelayer> delayer) = 0;
 };
 }  // namespace auton
 }  // namespace driftless

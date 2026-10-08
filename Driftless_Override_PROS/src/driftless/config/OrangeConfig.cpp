@@ -23,39 +23,32 @@ std::shared_ptr<control::ControlSystem> OrangeConfig::buildControlSystem() {
       std::make_unique<pros_adapters::ProsMutex>()};
 
   // PID controllers
-  control::PID trajectory_follower_x_pid{clock, TRAJECTORY_FOLLOWER_X_KP,
-                                         TRAJECTORY_FOLLOWER_X_KI,
-                                         TRAJECTORY_FOLLOWER_X_KD};
-  control::PID trajectory_follower_y_pid{clock, TRAJECTORY_FOLLOWER_Y_KP,
-                                         TRAJECTORY_FOLLOWER_Y_KI,
-                                         TRAJECTORY_FOLLOWER_Y_KD};
+  control::PID trajectory_follower_x_pid{
+      clock->clone(), TRAJECTORY_FOLLOWER_X_KP, TRAJECTORY_FOLLOWER_X_KI,
+      TRAJECTORY_FOLLOWER_X_KD};
+  control::PID trajectory_follower_y_pid{
+      clock->clone(), TRAJECTORY_FOLLOWER_Y_KP, TRAJECTORY_FOLLOWER_Y_KI,
+      TRAJECTORY_FOLLOWER_Y_KD};
   control::PID trajectory_follower_theta_PID{
-      clock, TRAJECTORY_FOLLOWER_THETA_KP, TRAJECTORY_FOLLOWER_THETA_KI,
-      TRAJECTORY_FOLLOWER_THETA_KD};
+      clock->clone(), TRAJECTORY_FOLLOWER_THETA_KP,
+      TRAJECTORY_FOLLOWER_THETA_KI, TRAJECTORY_FOLLOWER_THETA_KD};
 
   // build the trajectory follower
-  control::trajectory::trajectory_follower::PIDTrajectoryFollowerBuilder
-      trajectory_follower_builder{};
-
-  std::unique_ptr<control::trajectory::trajectory_follower::ITrajectoryFollower>
-      trajectory_follower{
-          trajectory_follower_builder.withClock(clock)
-              .withDelayer(delayer)
-              .withTask(std::move(trajectory_follower_task))
-              .withMutex(std::move(trajectory_follower_mutex))
-              .withXPID(std::move(trajectory_follower_x_pid))
-              .withYPID(std::move(trajectory_follower_y_pid))
-              .withThetaPID(std::move(trajectory_follower_theta_PID))
-              .withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
-              .withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
-              .buildUnique()};
-
-  std::unique_ptr<control::AControl> trajectory_follower_control{
+  control_system->addControl(
       std::make_unique<
           control::trajectory::trajectory_follower::TrajectoryFollowerControl>(
-          trajectory_follower)};
-
-  control_system->addControl(trajectory_follower_control);
+          control::trajectory::trajectory_follower::
+              PIDTrajectoryFollowerBuilder{}
+                  .withClock(clock->clone())
+                  .withDelayer(delayer->clone())
+                  .withTask(std::move(trajectory_follower_task))
+                  .withMutex(std::move(trajectory_follower_mutex))
+                  .withXPID(std::move(trajectory_follower_x_pid))
+                  .withYPID(std::move(trajectory_follower_y_pid))
+                  .withThetaPID(std::move(trajectory_follower_theta_PID))
+                  .withTargetTolerance(TRAJECTORY_FOLLOWER_TARGET_TOLERANCE)
+                  .withTargetVelocity(TRAJECTORY_FOLLOWER_TARGET_VELOCITY)
+                  .buildUnique()));
 
   // ## MOTION CONTROL ##
 
@@ -81,65 +74,50 @@ std::shared_ptr<control::ControlSystem> OrangeConfig::buildControlSystem() {
       std::make_unique<pros_adapters::ProsMutex>()};
 
   // PID controllers
-  control::PID drive_straight_linear_pid{clock, DRIVE_STRAIGHT_LINEAR_KP,
-                                         DRIVE_STRAIGHT_LINEAR_KI,
-                                         DRIVE_STRAIGHT_LINEAR_KD};
-  control::PID drive_straight_angular_pid{clock, DRIVE_STRAIGHT_ANGULAR_KP,
-                                          DRIVE_STRAIGHT_ANGULAR_KI,
-                                          DRIVE_STRAIGHT_ANGULAR_KD};
+  control::PID drive_straight_linear_pid{
+      clock->clone(), DRIVE_STRAIGHT_LINEAR_KP, DRIVE_STRAIGHT_LINEAR_KI,
+      DRIVE_STRAIGHT_LINEAR_KD};
+  control::PID drive_straight_angular_pid{
+      clock->clone(), DRIVE_STRAIGHT_ANGULAR_KP, DRIVE_STRAIGHT_ANGULAR_KI,
+      DRIVE_STRAIGHT_ANGULAR_KD};
 
-  control::PID turn_pid{clock, TURN_KP, TURN_KI, TURN_KD};
+  control::PID turn_pid{clock->clone(), TURN_KP, TURN_KI, TURN_KD};
 
-  control::PID go_to_point_x_pid{clock, GO_TO_POINT_X_KP, GO_TO_POINT_X_KI,
-                                 GO_TO_POINT_X_KD};
-  control::PID go_to_point_y_pid{clock, GO_TO_POINT_Y_KP, GO_TO_POINT_Y_KI,
-                                 GO_TO_POINT_Y_KD};
+  control::PID go_to_point_x_pid{clock->clone(), GO_TO_POINT_X_KP,
+                                 GO_TO_POINT_X_KI, GO_TO_POINT_X_KD};
+  control::PID go_to_point_y_pid{clock->clone(), GO_TO_POINT_Y_KP,
+                                 GO_TO_POINT_Y_KI, GO_TO_POINT_Y_KD};
 
-  control::PID go_to_pose_x_pid{clock, GO_TO_POSE_X_KP, GO_TO_POSE_X_KI,
-                                GO_TO_POSE_X_KD};
-  control::PID go_to_pose_y_pid{clock, GO_TO_POSE_Y_KP, GO_TO_POSE_Y_KI,
-                                GO_TO_POSE_Y_KD};
-  control::PID go_to_pose_rotational_pid{clock, GO_TO_POSE_ROTATIONAL_KP,
-                                         GO_TO_POSE_ROTATIONAL_KI,
-                                         GO_TO_POSE_ROTATIONAL_KD};
+  control::PID go_to_pose_x_pid{clock->clone(), GO_TO_POSE_X_KP,
+                                GO_TO_POSE_X_KI, GO_TO_POSE_X_KD};
+  control::PID go_to_pose_y_pid{clock->clone(), GO_TO_POSE_Y_KP,
+                                GO_TO_POSE_Y_KI, GO_TO_POSE_Y_KD};
+  control::PID go_to_pose_rotational_pid{
+      clock->clone(), GO_TO_POSE_ROTATIONAL_KP, GO_TO_POSE_ROTATIONAL_KI,
+      GO_TO_POSE_ROTATIONAL_KD};
 
-  // build the motion controls
-  control::motion::PIDDriveStraightBuilder drive_straight_builder{};
-  control::motion::PIDHolonomicTurnBuilder turn_builder{};
-  control::motion::PIDHolonomicGoToPointBuilder go_to_point_builder{};
-  control::motion::PIDHolonomicGoToPoseBuilder go_to_pose_builder{};
-
-  std::unique_ptr<control::motion::IDriveStraight> drive_straight{
-      drive_straight_builder.withDelayer(delayer)
+  // add to the control system
+  control_system->addControl(std::make_unique<control::motion::MotionControl>(
+      control::motion::PIDDriveStraightBuilder{}
+          .withDelayer(delayer->clone())
           .withMutex(std::move(drive_straight_mutex))
           .withTask(std::move(drive_straight_task))
           .withLinearPID(std::move(drive_straight_linear_pid))
           .withRotationalPID(std::move(drive_straight_angular_pid))
           .withTargetTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
           .withTargetVelocity(1.0)
-          .buildUnique()};
-
-  std::unique_ptr<control::motion::ITurn> turn{
-      turn_builder.withDelayer(delayer)
-          .withMutex(std::move(turn_mutex))
-          .withTask(std::move(turn_task))
-          .withRotationalPID(std::move(turn_pid))
-          .withTargetTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
-          .withTargetVelocity(0.1)
-          .buildUnique()};
-
-  std::unique_ptr<control::motion::IGoToPoint> go_to_point{
-      go_to_point_builder.withDelayer(delayer)
+          .buildUnique(),
+      control::motion::PIDHolonomicGoToPointBuilder{}
+          .withDelayer(delayer->clone())
           .withMutex(std::move(go_to_point_mutex))
           .withTask(std::move(go_to_point_task))
           .withXPID(std::move(go_to_point_x_pid))
           .withYPID(std::move(go_to_point_y_pid))
           .withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
           .withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
-          .buildUnique()};
-
-  std::unique_ptr<control::motion::IGoToPose> go_to_pose{
-      go_to_pose_builder.withDelayer(delayer)
+          .buildUnique(),
+      control::motion::PIDHolonomicGoToPoseBuilder{}
+          .withDelayer(delayer->clone())
           .withMutex(std::move(go_to_pose_mutex))
           .withTask(std::move(go_to_pose_task))
           .withXPID(std::move(go_to_pose_x_pid))
@@ -148,24 +126,17 @@ std::shared_ptr<control::ControlSystem> OrangeConfig::buildControlSystem() {
           .withVelocityTolerance(MOTION_LINEAR_VELOCITY_TOLERANCE)
           .withDistanceTolerance(MOTION_LINEAR_DISTANCE_TOLERANCE)
           .withAngularTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
-          .buildUnique()};
-
-  // make the controller
-  std::unique_ptr<control::AControl> motion_control{
-      std::make_unique<control::motion::MotionControl>(
-          drive_straight, go_to_point, go_to_pose, turn)};
-
-  // add to the control system
-  control_system->addControl(motion_control);
+          .buildUnique(),
+      control::motion::PIDHolonomicTurnBuilder{}
+          .withDelayer(delayer->clone())
+          .withMutex(std::move(turn_mutex))
+          .withTask(std::move(turn_task))
+          .withRotationalPID(std::move(turn_pid))
+          .withTargetTolerance(MOTION_ANGULAR_DISTANCE_TOLERANCE)
+          .withTargetVelocity(0.1)
+          .buildUnique()));
 
   return control_system;
-}
-
-std::shared_ptr<processes::ProcessSystem> OrangeConfig::buildProcessSystem() {
-  std::shared_ptr<processes::ProcessSystem> process_system =
-      std::make_shared<processes::ProcessSystem>();
-
-  return process_system;
 }
 
 std::shared_ptr<io::IController> OrangeConfig::buildController() {
@@ -174,7 +145,8 @@ std::shared_ptr<io::IController> OrangeConfig::buildController() {
       std::make_unique<pros::Controller>(pros::E_CONTROLLER_MASTER)};
   // adapts the pros controller to work as an IController object
   std::shared_ptr<io::IController> adapted_controller{
-      std::make_shared<pros_adapters::ProsController>(pros_controller)};
+      std::make_shared<pros_adapters::ProsController>(
+          std::move(pros_controller))};
   // send back a new adapted controller
   return adapted_controller;
 }
@@ -217,28 +189,28 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   // adapt the pros objects
   std::unique_ptr<io::IMotor> drive_front_left_top_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_front_left_top_motor)};
+          std::move(pros_drive_front_left_top_motor))};
   std::unique_ptr<io::IMotor> drive_front_left_bottom_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_front_left_bottom_motor)};
+          std::move(pros_drive_front_left_bottom_motor))};
   std::unique_ptr<io::IMotor> drive_front_right_top_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_front_right_top_motor)};
+          std::move(pros_drive_front_right_top_motor))};
   std::unique_ptr<io::IMotor> drive_front_right_bottom_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_front_right_bottom_motor)};
+          std::move(pros_drive_front_right_bottom_motor))};
   std::unique_ptr<io::IMotor> drive_back_left_top_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_back_left_top_motor)};
+          std::move(pros_drive_back_left_top_motor))};
   std::unique_ptr<io::IMotor> drive_back_left_bottom_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_back_left_bottom_motor)};
+          std::move(pros_drive_back_left_bottom_motor))};
   std::unique_ptr<io::IMotor> drive_back_right_top_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_back_right_top_motor)};
+          std::move(pros_drive_back_right_top_motor))};
   std::unique_ptr<io::IMotor> drive_back_right_bottom_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(
-          pros_drive_back_right_bottom_motor)};
+          std::move(pros_drive_back_right_bottom_motor))};
 
   // build the drive modules
   std::unique_ptr<robot::subsystems::holonomic_drive_train::
@@ -277,28 +249,21 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
                               std::move(drive_back_right_bottom_motor)},
               DRIVE_BACK_RIGHT_ANGLE_OFFSET)};
 
-  // build the drive train
-  std::unique_ptr<robot::subsystems::holonomic_drive_train::IHolonomicDrive>
-      drive_train{robot::subsystems::holonomic_drive_train::
-                      ModularHolonomicDriveBuilder{}
-                          .withModule(std::move(drive_front_left_module))
-                          .withModule(std::move(drive_front_right_module))
-                          .withModule(std::move(drive_back_left_module))
-                          .withModule(std::move(drive_back_right_module))
-                          .withDelayer(std::move(drive_delayer))
-                          .withTask(std::move(drive_task))
-                          .withMutex(std::move(drive_mutex))
-                          .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
-                          .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
-                          .buildUnique()};
-
-  // create the subsystem
-  std::unique_ptr<robot::subsystems::ASubsystem> drive_train_subsystem{
-      std::make_unique<robot::subsystems::holonomic_drive_train::
-                           HolonomicDriveTrainSubsystem>(drive_train)};
-
   // add the subsystem to the robot
-  robot->addSubsystem(drive_train_subsystem);
+  robot->addSubsystem(std::make_unique<
+                      robot::subsystems::holonomic_drive_train::
+                          HolonomicDriveTrainSubsystem>(
+      robot::subsystems::holonomic_drive_train::ModularHolonomicDriveBuilder{}
+          .withModule(std::move(drive_front_left_module))
+          .withModule(std::move(drive_front_right_module))
+          .withModule(std::move(drive_back_left_module))
+          .withModule(std::move(drive_back_right_module))
+          .withDelayer(std::move(drive_delayer))
+          .withTask(std::move(drive_task))
+          .withMutex(std::move(drive_mutex))
+          .withMaxLinearVelocity(DRIVE_MAX_LINEAR_VELOCITY)
+          .withMaxAngularVelocity(DRIVE_MAX_ANGULAR_VELOCITY)
+          .buildUnique()));
 
   // ## BRAKES ##
 
@@ -308,19 +273,13 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   // Adapt to pros
   std::unique_ptr<io::IPiston> brake_piston{
-      std::make_unique<pros_adapters::ProsPiston>(pros_brake_piston)};
+      std::make_unique<pros_adapters::ProsPiston>(std::move(pros_brake_piston))};
 
-  std::unique_ptr<robot::subsystems::brakes::IBrake> brake_driver{
-      robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
-          .withPiston(std::move(brake_piston))
-          .buildUnique()};
-
-  // create the brakes subsystem
-  std::unique_ptr<robot::subsystems::ASubsystem> brakes_subsystem{
+  robot->addSubsystem(
       std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
-          std::move(brake_driver))};
-
-  robot->addSubsystem(brakes_subsystem);
+          robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
+              .withPiston(std::move(brake_piston))
+              .buildUnique()));
 
   // return complete robot
   return robot;

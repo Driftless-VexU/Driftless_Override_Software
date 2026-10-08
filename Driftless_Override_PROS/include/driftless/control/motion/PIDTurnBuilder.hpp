@@ -19,32 +19,13 @@ namespace motion {
 class PIDTurnBuilder {
   friend class PIDTurn;
 
- private:
-  // the delayer used to build the control
-  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
-
-  // the mutex used to build the control
-  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
-
-  // the task used to build the control
-  std::unique_ptr<driftless::rtos::ITask> m_task{};
-
-  // the rotational PID controller used to build the control
-  PID m_rotational_pid{};
-
-  // the target tolerance used to build the control
-  double m_target_tolerance{};
-
-  // the target velocity used to build the control
-  double m_target_velocity{};
-
  public:
   /// @brief Adds a delayer to the builder
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer
   /// added
   /// @return __PIDTurnBuilder&__ Pointer to the current builder
   PIDTurnBuilder& withDelayer(
-      const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
+      std::unique_ptr<driftless::rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex added
@@ -77,9 +58,29 @@ class PIDTurnBuilder {
   PIDTurn build();
 
   /// @brief Builds a new PIDTurn object and returns a unique pointer to it
-  /// @return __std::unique_ptr<PIDTurn>__ A unique pointer to the new PIDTurn object
+  /// @return __std::unique_ptr<PIDTurn>__ A unique pointer to the new PIDTurn
+  /// object
   [[nodiscard]]
   std::unique_ptr<PIDTurn> buildUnique();
+
+ private:
+  // the delayer used to build the control
+  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
+
+  // the mutex used to build the control
+  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
+
+  // the task used to build the control
+  std::unique_ptr<driftless::rtos::ITask> m_task{};
+
+  // the rotational PID controller used to build the control
+  PID m_rotational_pid{};
+
+  // the target tolerance used to build the control
+  double m_target_tolerance{};
+
+  // the target velocity used to build the control
+  double m_target_velocity{};
 };
 }  // namespace motion
 }  // namespace control

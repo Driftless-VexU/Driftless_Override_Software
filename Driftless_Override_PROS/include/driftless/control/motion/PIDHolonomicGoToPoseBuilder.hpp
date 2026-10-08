@@ -19,31 +19,12 @@ namespace motion {
 class PIDHolonomicGoToPoseBuilder {
   friend class PIDHolonomicGoToPose;
 
- private:
-  std::unique_ptr<rtos::IDelayer> m_delayer{};
-
-  std::unique_ptr<rtos::IMutex> m_mutex{};
-
-  std::unique_ptr<rtos::ITask> m_task{};
-
-  PID m_x_pid{};
-
-  PID m_y_pid{};
-
-  PID m_rotational_pid{};
-
-  double m_distance_tolerance{};
-
-  double m_velocity_tolerance{};
-
-  double m_angular_tolerance{};
-
  public:
   /// @brief Sets the delayer for the control
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to use
   /// @return __PIDHolonomicGoToPoseBuilder&__ Pointer to the builder
   PIDHolonomicGoToPoseBuilder& withDelayer(
-      std::unique_ptr<rtos::IDelayer>& delayer);
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Sets the mutex for the control
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to use
@@ -96,6 +77,25 @@ class PIDHolonomicGoToPoseBuilder {
   /// built object
   [[nodiscard]]
   std::unique_ptr<PIDHolonomicGoToPose> buildUnique();
+
+ private:
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
+
+  std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  std::unique_ptr<rtos::ITask> m_task{};
+
+  PID m_x_pid{};
+
+  PID m_y_pid{};
+
+  PID m_rotational_pid{};
+
+  double m_distance_tolerance{};
+
+  double m_velocity_tolerance{};
+
+  double m_angular_tolerance{};
 };
 }  // namespace motion
 }  // namespace control

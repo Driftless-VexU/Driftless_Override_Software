@@ -20,28 +20,6 @@ namespace motion {
 class PIDGoToPointBuilder {
   friend class PIDGoToPoint;
 
- private:
-  // the delayer used to build the control
-  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
-
-  // the mutex used to build the control
-  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
-
-  // the task used to build the control
-  std::unique_ptr<driftless::rtos::ITask> m_task{};
-
-  // the linear PID controller used to build the control
-  PID m_linear_pid{};
-
-  // the rotational PID controller used to build the control
-  PID m_rotational_pid{};
-
-  // the target tolerance used to build the control
-  double m_target_tolerance{};
-
-  // the target velocity used to build the control
-  double m_target_velocity{};
-
  public:
   /// @brief Adds a delayer to the builder
   /// @param delayer __const std::unique_ptr<driftless::rtos::IDelayer>__ The
@@ -87,9 +65,32 @@ class PIDGoToPointBuilder {
   PIDGoToPoint build();
 
   /// @brief Builds a new PIDGoToPoint object and returns a unique pointer to it
-  /// @return __std::unique_ptr<PIDGoToPoint>__ A unique pointer to the new PIDGoToPoint
+  /// @return __std::unique_ptr<PIDGoToPoint>__ A unique pointer to the new
+  /// PIDGoToPoint
   [[nodiscard]]
   std::unique_ptr<PIDGoToPoint> buildUnique();
+
+ private:
+  // the delayer used to build the control
+  std::unique_ptr<driftless::rtos::IDelayer> m_delayer{};
+
+  // the mutex used to build the control
+  std::unique_ptr<driftless::rtos::IMutex> m_mutex{};
+
+  // the task used to build the control
+  std::unique_ptr<driftless::rtos::ITask> m_task{};
+
+  // the linear PID controller used to build the control
+  PID m_linear_pid{};
+
+  // the rotational PID controller used to build the control
+  PID m_rotational_pid{};
+
+  // the target tolerance used to build the control
+  double m_target_tolerance{};
+
+  // the target velocity used to build the control
+  double m_target_velocity{};
 };
 }  // namespace motion
 }  // namespace control

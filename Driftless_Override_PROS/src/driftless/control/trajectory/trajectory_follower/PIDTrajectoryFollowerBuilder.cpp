@@ -2,8 +2,8 @@
 
 namespace driftless::control::trajectory::trajectory_follower {
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withDelayer(
-    const std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
+    std::unique_ptr<rtos::IDelayer> delayer) {
+  m_delayer = std::move(delayer);
   return *this;
 }
 
@@ -20,8 +20,8 @@ PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTask(
 }
 
 PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withClock(
-    const std::unique_ptr<rtos::IClock>& clock) {
-  m_clock = clock->clone();
+    std::unique_ptr<rtos::IClock> clock) {
+  m_clock = std::move(clock);
   return *this;
 }
 
@@ -70,7 +70,7 @@ PIDTrajectoryFollowerBuilder::buildUnique() {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDTrajectoryFollowerBuilder");
   }
-  
+
   return std::unique_ptr<PIDTrajectoryFollower>{
       new PIDTrajectoryFollower{std::move(*this)}};
 }

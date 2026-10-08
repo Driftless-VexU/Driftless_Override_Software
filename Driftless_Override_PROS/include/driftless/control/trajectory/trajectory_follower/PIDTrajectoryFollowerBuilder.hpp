@@ -44,10 +44,10 @@ class PIDTrajectoryFollowerBuilder {
 
  public:
   /// @brief Sets the delayer used by the trajectory follower
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer used
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer used
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
   PIDTrajectoryFollowerBuilder& withDelayer(
-      const std::unique_ptr<rtos::IDelayer>& delayer);
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Sets the mutex used by the trajectory follower
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex used
@@ -55,15 +55,15 @@ class PIDTrajectoryFollowerBuilder {
   PIDTrajectoryFollowerBuilder& withMutex(std::unique_ptr<rtos::IMutex> mutex);
 
   /// @brief Sets the task used by the trajectory follower
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task used
+  /// @param task __std::unique_ptr<rtos::ITask>__ The task used
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
   PIDTrajectoryFollowerBuilder& withTask(std::unique_ptr<rtos::ITask> task);
 
   /// @brief Sets the clock used by the trajectory follower
-  /// @param clock __const std::unique_ptr<rtos::IClock>&__ The clock used
+  /// @param clock __const std::unique_ptr<rtos::IClock>__ The clock used
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
   PIDTrajectoryFollowerBuilder& withClock(
-      const std::unique_ptr<rtos::IClock>& clock);
+      std::unique_ptr<rtos::IClock> clock);
 
   /// @brief Sets the x-axis PID controller used by the trajectory follower
   /// @param x_pid __PID__ The PID controller to use

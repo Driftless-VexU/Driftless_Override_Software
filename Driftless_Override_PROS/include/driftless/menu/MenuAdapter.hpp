@@ -55,19 +55,19 @@ class MenuAdapter : public IMenu {
   void addAlliance(std::shared_ptr<alliance::IAlliance>& alliance) override;
 
   /// @brief Adds an auton to the menu
-  /// @param auton __std::unique_ptr<auton::AAuton>&__ Reference to the auton
+  /// @param auton __std::unique_ptr<auton::AAuton>__ Reference to the auton
   /// being added
-  void addAuton(std::unique_ptr<auton::AAuton>& auton) override;
+  void addAuton(std::unique_ptr<auton::AAuton> auton) override;
 
   /// @brief Adds a config to the menu
-  /// @param config __std::unique_ptr<config::IConfig>&__ Reference to the
+  /// @param config __std::unique_ptr<config::IConfig>__ Reference to the
   /// config being added
-  void addConfig(std::unique_ptr<config::IConfig>& config) override;
+  void addConfig(std::unique_ptr<config::IConfig> config) override;
 
   /// @brief Adds a profile to the menu
-  /// @param profile __std::unique_ptr<profiles::IProfile>&__ Reference to the
+  /// @param profile __std::unique_ptr<profiles::IProfile>__ Reference to the
   /// profile being added
-  void addProfile(std::unique_ptr<profiles::IProfile>& profile) override;
+  void addProfile(std::unique_ptr<profiles::IProfile> profile) override;
 
   /// @brief Displays the menu on the brain
   void display() override;

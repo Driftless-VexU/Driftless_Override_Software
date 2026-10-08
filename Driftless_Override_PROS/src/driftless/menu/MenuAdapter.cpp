@@ -16,7 +16,7 @@ void MenuAdapter::addAlliance(std::shared_ptr<alliance::IAlliance>& alliance) {
   }
 }
 
-void MenuAdapter::addAuton(std::unique_ptr<auton::AAuton>& auton) {
+void MenuAdapter::addAuton(std::unique_ptr<auton::AAuton> auton) {
   bool unique{true};
 
   for (std::unique_ptr<auton::AAuton>& current_auton : autons) {
@@ -31,7 +31,7 @@ void MenuAdapter::addAuton(std::unique_ptr<auton::AAuton>& auton) {
   }
 }
 
-void MenuAdapter::addConfig(std::unique_ptr<config::IConfig>& config) {
+void MenuAdapter::addConfig(std::unique_ptr<config::IConfig> config) {
   bool unique{true};
   // check if the config has already been added
   for (std::unique_ptr<config::IConfig>& current_config : configs) {
@@ -46,7 +46,7 @@ void MenuAdapter::addConfig(std::unique_ptr<config::IConfig>& config) {
   }
 }
 
-void MenuAdapter::addProfile(std::unique_ptr<profiles::IProfile>& profile) {
+void MenuAdapter::addProfile(std::unique_ptr<profiles::IProfile> profile) {
   bool unique{true};
   // check if the profile has already been added
   for (std::unique_ptr<profiles::IProfile>& current_profile : profiles) {

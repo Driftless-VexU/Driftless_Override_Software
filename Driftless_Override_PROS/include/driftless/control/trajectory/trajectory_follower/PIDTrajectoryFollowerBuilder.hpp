@@ -23,25 +23,6 @@ namespace trajectory_follower {
 class PIDTrajectoryFollowerBuilder {
   friend class PIDTrajectoryFollower;
 
- private:
-  std::unique_ptr<rtos::IDelayer> m_delayer{};
-
-  std::unique_ptr<rtos::IMutex> m_mutex{};
-
-  std::unique_ptr<rtos::ITask> m_task{};
-
-  std::unique_ptr<rtos::IClock> m_clock{};
-
-  PID m_x_pid{};
-
-  PID m_y_pid{};
-
-  PID m_theta_pid{};
-
-  double m_target_tolerance{};
-
-  double m_target_velocity{};
-
  public:
   /// @brief Sets the delayer used by the trajectory follower
   /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer used
@@ -62,8 +43,7 @@ class PIDTrajectoryFollowerBuilder {
   /// @brief Sets the clock used by the trajectory follower
   /// @param clock __const std::unique_ptr<rtos::IClock>__ The clock used
   /// @return __PIDTrajectoryFollowerBuilder&__ Pointer to the current builder
-  PIDTrajectoryFollowerBuilder& withClock(
-      std::unique_ptr<rtos::IClock> clock);
+  PIDTrajectoryFollowerBuilder& withClock(std::unique_ptr<rtos::IClock> clock);
 
   /// @brief Sets the x-axis PID controller used by the trajectory follower
   /// @param x_pid __PID__ The PID controller to use
@@ -102,6 +82,25 @@ class PIDTrajectoryFollowerBuilder {
   /// new PIDTrajectoryFollower
   [[nodiscard]]
   std::unique_ptr<PIDTrajectoryFollower> buildUnique();
+
+ private:
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
+
+  std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  std::unique_ptr<rtos::ITask> m_task{};
+
+  std::unique_ptr<rtos::IClock> m_clock{};
+
+  PID m_x_pid{};
+
+  PID m_y_pid{};
+
+  PID m_theta_pid{};
+
+  double m_target_tolerance{};
+
+  double m_target_velocity{};
 };
 }  // namespace trajectory_follower
 }  // namespace trajectory

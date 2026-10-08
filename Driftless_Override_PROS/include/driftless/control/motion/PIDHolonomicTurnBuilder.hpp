@@ -35,10 +35,10 @@ class PIDHolonomicTurnBuilder {
 
  public:
   /// @brief Adds a delayer to the builder
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to add
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
   /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
   PIDHolonomicTurnBuilder& withDelayer(
-      const std::unique_ptr<rtos::IDelayer>& delayer);
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add

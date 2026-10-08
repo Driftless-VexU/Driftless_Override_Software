@@ -36,10 +36,10 @@ class PIDHolonomicGoToPointBuilder {
 
  public:
   /// @brief Sets the delayer for the control
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to use
   /// @return __PIDHolonomicGoToPointBuilder&__ Pointer to the builder
   PIDHolonomicGoToPointBuilder& withDelayer(
-      std::unique_ptr<rtos::IDelayer>& delayer);
+      std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Sets the mutex for the control
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to use

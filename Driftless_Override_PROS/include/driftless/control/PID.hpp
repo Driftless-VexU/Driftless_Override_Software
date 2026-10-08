@@ -43,11 +43,11 @@ class PID {
   PID() = default;
 
   /// @brief Constructs a new PID controller
-  /// @param clock __std::unique_ptr<rtos::IClock>&__ The system clock used
+  /// @param clock __std::unique_ptr<rtos::IClock>__ The system clock used
   /// @param kp __double__ The proportional coefficient
   /// @param ki __double__ The integral coefficient
   /// @param kd __double__ The derivitive coefficient
-  PID(const std::unique_ptr<driftless::rtos::IClock>& clock, double kp,
+  PID(std::unique_ptr<driftless::rtos::IClock> clock, double kp,
       double ki, double kd);
 
   /// @brief Copies another PID controller

@@ -37,10 +37,10 @@ class TrajectoryFollowerControl : public AControl {
 
  public:
   /// @brief Constructs a new TrajectoryFollowerControl
-  /// @param trajectory_follower __std::unique_ptr<ITrajectoryFollower>&__ The
+  /// @param trajectory_follower __std::unique_ptr<ITrajectoryFollower>__ The
   /// trajectory follower to wrap
   TrajectoryFollowerControl(
-      std::unique_ptr<ITrajectoryFollower>& trajectory_follower);
+      std::unique_ptr<ITrajectoryFollower> trajectory_follower);
 
   /// @brief Initializes the TrajectoryFollowerControl
   void init() override;

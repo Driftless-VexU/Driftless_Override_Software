@@ -28,13 +28,12 @@ void MatchController::init(bool fast_init) {
   // send the profile info to the op control manager
   auton_manager.setAlliance(system_config.alliance);
   auton_manager.setAuton(std::move(system_config.auton));
-  op_control_manager.setProfile(system_config.profile);
+  op_control_manager.setProfile(std::move(system_config.profile));
   op_control_manager.setAlliance(system_config.alliance);
   // get configuration settings
   control_system = system_config.config->buildControlSystem();
   controller = system_config.config->buildController();
   robot = system_config.config->buildRobot();
-  process_system = system_config.config->buildProcessSystem();
 
   // if fast init isn't being used, take time to initialize the parts of the
   // robot
@@ -48,9 +47,6 @@ void MatchController::init(bool fast_init) {
     if (controller) {
       controller->init();
     }
-    if (process_system) {
-      process_system->init();
-    }
   }
 
   // run the robot
@@ -63,13 +59,10 @@ void MatchController::init(bool fast_init) {
   if (controller) {
     controller->run();
   }
-  if (process_system) {
-    process_system->run();
-  }
 
   // initialize the auton and op control managers
   auton_manager.initAuton(robot, control_system);
-  op_control_manager.init(control_system, process_system, controller, robot);
+  op_control_manager.init(control_system, controller, robot);
 }
 
 void MatchController::disabled() {}
@@ -86,7 +79,7 @@ void MatchController::operatorControl() {
         robot::subsystems::ESubsystem::ODOMETRY,
         robot::commands::odometry::SetPositionCommand{0.0, 0.0, M_PI});
   }
-  op_control_manager.run(control_system, process_system, controller, robot);
+  op_control_manager.run(control_system, controller, robot);
 }
 
 }  // namespace driftless

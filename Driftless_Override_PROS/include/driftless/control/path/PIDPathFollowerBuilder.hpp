@@ -47,10 +47,10 @@ class PIDPathFollowerBuilder {
 
  public:
   /// @brief Adds a delayer to the builder
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to add
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
   /// @return __PIDPathFollowerBuilder&__ Pointer to the current builder
   PIDPathFollowerBuilder& withDelayer(
-      std::unique_ptr<driftless::rtos::IDelayer>& delayer);
+      std::unique_ptr<driftless::rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
@@ -99,7 +99,7 @@ class PIDPathFollowerBuilder {
   /// @brief Builds a new PID path follower and returns a unique pointer to it
   /// @return __std::unique_ptr<PIDPathFollower>__ A unique pointer to the new
   /// PID path follower
-  [[nodiscard]] 
+  [[nodiscard]]
   std::unique_ptr<PIDPathFollower> buildUnique();
 };
 }  // namespace path

@@ -65,10 +65,10 @@ void MotionControl::handleCommand(const auto& cmd) const {
 }
 
 MotionControl::MotionControl(
-    std::unique_ptr<driftless::control::motion::IDriveStraight>& drive_straight,
-    std::unique_ptr<driftless::control::motion::IGoToPoint>& go_to_point,
-    std::unique_ptr<driftless::control::motion::IGoToPose>& go_to_pose,
-    std::unique_ptr<driftless::control::motion::ITurn>& turn)
+    std::unique_ptr<driftless::control::motion::IDriveStraight> drive_straight,
+    std::unique_ptr<driftless::control::motion::IGoToPoint> go_to_point,
+    std::unique_ptr<driftless::control::motion::IGoToPose> go_to_pose,
+    std::unique_ptr<driftless::control::motion::ITurn> turn)
     : AControl{EControl::MOTION},
       m_drive_straight{std::move(drive_straight)},
       m_go_to_point{std::move(go_to_point)},

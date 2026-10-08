@@ -86,19 +86,19 @@ class MotionControl : public driftless::control::AControl {
 
  public:
   /// @brief Constructs a new Motion Control object
-  /// @param drive_straight __std::unique_ptr<IDriveStraight>&__ The algorithm
+  /// @param drive_straight __std::unique_ptr<IDriveStraight>__ The algorithm
   /// used to drive straight
-  /// @param go_to_point __std::unique_ptr<IGoToPoint>&__ The algorithm used to
+  /// @param go_to_point __std::unique_ptr<IGoToPoint>__ The algorithm used to
   /// go to a point
-  /// @param go_to_pose __std::unique_ptr<IGoToPose>&__ The algorithm used to
+  /// @param go_to_pose __std::unique_ptr<IGoToPose>__ The algorithm used to
   /// go to a pose
-  /// @param turn __std::unique_ptr<ITurn>&__ The algorithm used to turn
+  /// @param turn __std::unique_ptr<ITurn>__ The algorithm used to turn
   MotionControl(
-      std::unique_ptr<driftless::control::motion::IDriveStraight>&
+      std::unique_ptr<driftless::control::motion::IDriveStraight>
           drive_straight,
-      std::unique_ptr<driftless::control::motion::IGoToPoint>& go_to_point,
-      std::unique_ptr<driftless::control::motion::IGoToPose>& go_to_pose,
-      std::unique_ptr<driftless::control::motion::ITurn>& turn);
+      std::unique_ptr<driftless::control::motion::IGoToPoint> go_to_point,
+      std::unique_ptr<driftless::control::motion::IGoToPose> go_to_pose,
+      std::unique_ptr<driftless::control::motion::ITurn> turn);
 
   /// @brief Initializes the motion control
   void init() override;

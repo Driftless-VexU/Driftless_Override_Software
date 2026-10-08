@@ -4,8 +4,8 @@ namespace driftless {
 namespace control {
 namespace motion {
 PIDDriveStraightBuilder& PIDDriveStraightBuilder::withDelayer(
-    const std::unique_ptr<driftless::rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
+    std::unique_ptr<driftless::rtos::IDelayer> delayer) {
+  m_delayer = std::move(delayer);
   return *this;
 }
 

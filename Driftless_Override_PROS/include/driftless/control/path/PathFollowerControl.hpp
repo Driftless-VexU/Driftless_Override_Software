@@ -40,10 +40,10 @@ class PathFollowerControl : public driftless::control::AControl {
 
  public:
   /// @brief Constructs a new path follower control
-  /// @param path_follower __std::unique_ptr<IPathFollower>& The path follower
+  /// @param path_follower __std::unique_ptr<IPathFollower>__ The path follower
   /// to control
   PathFollowerControl(
-      std::unique_ptr<driftless::control::path::IPathFollower>& path_follower);
+      std::unique_ptr<driftless::control::path::IPathFollower> path_follower);
 
   /// @brief Initializes the path follower control
   void init() override;

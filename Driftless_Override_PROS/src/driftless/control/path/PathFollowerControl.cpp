@@ -20,7 +20,7 @@ void PathFollowerControl::handleCommand(const auto& cmd) const {
 }
 
 PathFollowerControl::PathFollowerControl(
-    std::unique_ptr<driftless::control::path::IPathFollower>& path_follower)
+    std::unique_ptr<driftless::control::path::IPathFollower> path_follower)
     : AControl{EControl::PATH_FOLLOWER},
       m_path_follower{std::move(path_follower)} {}
 

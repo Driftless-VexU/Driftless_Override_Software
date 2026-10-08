@@ -30,9 +30,9 @@ class MatchController {
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-  OpControlManager op_control_manager{m_clock, m_delayer};
+  OpControlManager op_control_manager;
 
-  AutonManager auton_manager{m_clock, m_delayer};
+  AutonManager auton_manager;
 
   std::shared_ptr<control::ControlSystem> control_system{};
 
@@ -46,12 +46,12 @@ class MatchController {
 
  public:
   /// @brief Constructs a new MatchController object
-  /// @param new_menu __std::unique_ptr<menu::IMenu>&__ The menu to use
+  /// @param new_menu __std::unique_ptr<menu::IMenu>__ The menu to use
   /// @param clock __std::shared_ptr<rtos::IClock>&__ The clock to use
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
-  MatchController(std::unique_ptr<menu::IMenu> &new_menu,
+  /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to use
+  MatchController(std::unique_ptr<menu::IMenu> new_menu,
                   std::shared_ptr<rtos::IClock> &clock,
-                  std::unique_ptr<rtos::IDelayer> &delayer);
+                  std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Initializes the MatchController
   /// @param fast_init __bool__ True if the MatchController should be initialized quickly, false otherwise

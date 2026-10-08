@@ -1,13 +1,13 @@
 #include "driftless/MatchController.hpp"
 namespace driftless {
-MatchController::MatchController(std::unique_ptr<menu::IMenu>& new_menu,
+MatchController::MatchController(std::unique_ptr<menu::IMenu> new_menu,
                                  std::shared_ptr<rtos::IClock>& clock,
-                                 std::unique_ptr<rtos::IDelayer>& delayer)
+                                 std::unique_ptr<rtos::IDelayer> delayer)
     : m_menu{std::move(new_menu)},
       m_clock{clock},
       m_delayer{std::move(delayer)},
-      auton_manager{m_clock, m_delayer},
-      op_control_manager{m_clock, m_delayer} {}
+      auton_manager{m_clock, m_delayer->clone()},
+      op_control_manager{m_clock, m_delayer->clone()} {}
 
 void MatchController::init(bool fast_init) {
   // if the menu exists, display the menu
@@ -27,7 +27,7 @@ void MatchController::init(bool fast_init) {
   m_alliance = system_config.alliance;
   // send the profile info to the op control manager
   auton_manager.setAlliance(system_config.alliance);
-  auton_manager.setAuton(system_config.auton);
+  auton_manager.setAuton(std::move(system_config.auton));
   op_control_manager.setProfile(system_config.profile);
   op_control_manager.setAlliance(system_config.alliance);
   // get configuration settings

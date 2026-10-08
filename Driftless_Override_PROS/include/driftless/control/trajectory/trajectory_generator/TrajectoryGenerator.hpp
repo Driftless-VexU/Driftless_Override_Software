@@ -44,10 +44,10 @@ class TrajectoryGenerator {
   TrajectoryGenerator(double delta_d);
 
   /// @brief Adds a constraint to the trajectory
-  /// @param constraint __std::unique_ptr<kinematics::IKinematicConstraint>&__
+  /// @param constraint __std::unique_ptr<kinematics::IKinematicConstraint>__
   /// The constraint to add
   void addConstraint(
-      std::unique_ptr<kinematics::IKinematicConstraint>& constraint);
+      std::unique_ptr<kinematics::IKinematicConstraint> constraint);
 
   /// @brief Generates a trajectory using the given path
   /// @param path __std::unique_ptr<IPath>&__ The path to use for the trajectory

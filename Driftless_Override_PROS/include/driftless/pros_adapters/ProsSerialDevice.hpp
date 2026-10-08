@@ -18,9 +18,9 @@ class ProsSerialDevice : public io::ISerialDevice {
 
  public:
   /// @brief Constructs a new pros serial device
-  /// @param serial_device __std::unique_ptr<pros::Serial>&__ The serial device
+  /// @param serial_device __std::unique_ptr<pros::Serial>__ The serial device
   /// being adapted
-  ProsSerialDevice(std::unique_ptr<pros::Serial>& serial_device);
+  ProsSerialDevice(std::unique_ptr<pros::Serial> serial_device);
 
   /// @brief Initializes the pros serial device
   void initialize() override;

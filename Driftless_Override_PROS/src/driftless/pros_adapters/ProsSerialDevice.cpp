@@ -1,7 +1,7 @@
 #include "driftless/pros_adapters/ProsSerialDevice.hpp"
 
 namespace driftless::pros_adapters {
-ProsSerialDevice::ProsSerialDevice(std::unique_ptr<pros::Serial>& serial_device)
+ProsSerialDevice::ProsSerialDevice(std::unique_ptr<pros::Serial> serial_device)
     : m_serial_device{std::move(serial_device)} {}
 
 void ProsSerialDevice::initialize() { m_serial_device->flush(); }

@@ -40,7 +40,7 @@ class TrajectoryGenerator {
 
   /// @brief Generates a trajectory using the given path
   /// @param path __std::unique_ptr<IPath>&__ The path to use for the trajectory
-  void generateTrajectory(std::unique_ptr<IPath>& path);
+  void generateTrajectory(const std::unique_ptr<IPath>& path);
 
   /// @brief Gets the latest generated trajectory
   /// @return __std::vector<TrajectoryPoint>__ The generated trajectory

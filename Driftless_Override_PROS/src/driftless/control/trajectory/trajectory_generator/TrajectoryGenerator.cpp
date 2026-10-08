@@ -8,7 +8,7 @@ void TrajectoryGenerator::addConstraint(
   m_constraints.push_back(std::move(constraint));
 }
 
-void TrajectoryGenerator::generateTrajectory(std::unique_ptr<IPath>& path) {
+void TrajectoryGenerator::generateTrajectory(const std::unique_ptr<IPath>& path) {
   double t = 0;
   std::vector<TrajectoryPoint> dist_trajectory{};
   dist_trajectory.push_back(TrajectoryPoint{

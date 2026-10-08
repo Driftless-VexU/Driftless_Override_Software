@@ -20,25 +20,11 @@ namespace motion {
 class PIDHolonomicTurnBuilder {
   friend class PIDHolonomicTurn;
 
- private:
-  std::unique_ptr<rtos::IDelayer> m_delayer{};
-
-  std::unique_ptr<rtos::IMutex> m_mutex{};
-
-  std::unique_ptr<rtos::ITask> m_task{};
-
-  PID m_rotational_pid{};
-
-  double m_target_tolerance{};
-
-  double m_target_velocity{};
-
  public:
   /// @brief Adds a delayer to the builder
   /// @param delayer __std::unique_ptr<rtos::IDelayer>__ The delayer to add
   /// @return __PIDHolonomicTurnBuilder&__ Reference to the current builder
-  PIDHolonomicTurnBuilder& withDelayer(
-      std::unique_ptr<rtos::IDelayer> delayer);
+  PIDHolonomicTurnBuilder& withDelayer(std::unique_ptr<rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<rtos::IMutex>__ The mutex to add
@@ -77,6 +63,19 @@ class PIDHolonomicTurnBuilder {
   /// newly created PIDHolonomicTurn
   [[nodiscard]]
   std::unique_ptr<PIDHolonomicTurn> buildUnique();
+
+ private:
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
+
+  std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  std::unique_ptr<rtos::ITask> m_task{};
+
+  PID m_rotational_pid{};
+
+  double m_target_tolerance{};
+
+  double m_target_velocity{};
 };
 }  // namespace motion
 }  // namespace control

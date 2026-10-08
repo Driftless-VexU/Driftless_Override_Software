@@ -16,18 +16,15 @@ namespace hal {
 /// @brief Class for a group of related motors
 /// @author Matthew Backman
 class MotorGroup {
- private:
-  /// @brief The motors in the group
-  std::vector<std::unique_ptr<io::IMotor>> m_motors{};
-
  public:
   /// @brief Constructs a new motor group with the given motors
   /// @tparam ...Motors The types of the motors, must be derived from
   /// __io::IMotor__
   /// @param ...motors __Motors&&...__ The motors to be added to the group
-  template <typename... Motors,
-            typename = std::enable_if_t<(
-                std::is_convertible_v<Motors, std::unique_ptr<io::IMotor>>&& ...)>>
+  template <
+      typename... Motors,
+      typename = std::enable_if_t<
+          (std::is_convertible_v<Motors, std::unique_ptr<io::IMotor>> && ...)>>
   explicit MotorGroup(Motors&&... motors) {
     m_motors.reserve(sizeof...(motors));
 
@@ -81,6 +78,10 @@ class MotorGroup {
   /// @param rhs __MotorGroup&__ Reference to the desired motor group
   /// @return __MotorGroup&__ Reference to the copy of the motor group
   MotorGroup& operator=(MotorGroup& rhs);
+
+ private:
+  /// @brief The motors in the group
+  std::vector<std::unique_ptr<io::IMotor>> m_motors{};
 };
 }  // namespace hal
 }  // namespace driftless

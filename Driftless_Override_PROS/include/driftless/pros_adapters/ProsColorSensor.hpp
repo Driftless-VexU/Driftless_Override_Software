@@ -18,13 +18,6 @@ namespace pros_adapters {
 /// @brief Adapter class for the PROS color sensor
 /// @author Matthew Backman
 class ProsColorSensor : public driftless::io::IColorSensor {
- private:
-  // the default brightness on the LEDs
-  static constexpr uint8_t DEFAULT_LED_BRIGHTNESS{100};
-
-  // the optical sensor being adapted
-  std::unique_ptr<pros::Optical> m_optical_sensor{};
-
  public:
   /// @brief Constructor
   /// @param optical_sensor __std::unique_ptr<pros::Optical>__ The optical
@@ -49,6 +42,13 @@ class ProsColorSensor : public driftless::io::IColorSensor {
   /// @brief Gets the proximity from the color sensor
   /// @return __uint32_t__ The proximity value
   uint32_t getProximity() override;
+
+ private:
+  // the default brightness on the LEDs
+  static constexpr uint8_t DEFAULT_LED_BRIGHTNESS{100};
+
+  // the optical sensor being adapted
+  std::unique_ptr<pros::Optical> m_optical_sensor{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

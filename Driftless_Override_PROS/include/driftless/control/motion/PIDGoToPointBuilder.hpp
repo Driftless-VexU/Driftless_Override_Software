@@ -44,11 +44,11 @@ class PIDGoToPointBuilder {
 
  public:
   /// @brief Adds a delayer to the builder
-  /// @param delayer __const std::unique_ptr<driftless::rtos::IDelayer>&__ The
+  /// @param delayer __const std::unique_ptr<driftless::rtos::IDelayer>__ The
   /// delayer added
   /// @return __PIDGoToPointBuilder&__ Pointer to the current builder
   PIDGoToPointBuilder& withDelayer(
-      const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
+      std::unique_ptr<driftless::rtos::IDelayer> delayer);
 
   /// @brief Adds a mutex to the builder
   /// @param mutex __std::unique_ptr<driftless::rtos::IMutex>__ The mutex added

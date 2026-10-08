@@ -31,6 +31,8 @@ class MotorGroup {
     (m_motors.push_back(std::forward<Motors>(motors)), ...);
   }
 
+  MotorGroup() = default;
+  
   MotorGroup(const MotorGroup& other) = delete;
 
   MotorGroup(MotorGroup&& other) = default;
@@ -74,10 +76,13 @@ class MotorGroup {
   /// @param position __double__ The new position
   void setPosition(double position);
 
-  /// @brief Copies a given motor group
-  /// @param rhs __MotorGroup&__ Reference to the desired motor group
+  // Delete copy assignment operator
+  MotorGroup& operator=(const MotorGroup& rhs) = delete;
+
+  /// @brief moves a given motor group
+  /// @param rhs __MotorGroup&&__ Reference to the desired motor group
   /// @return __MotorGroup&__ Reference to the copy of the motor group
-  MotorGroup& operator=(MotorGroup& rhs);
+  MotorGroup& operator=(MotorGroup&& rhs) = default;
 
  private:
   /// @brief The motors in the group

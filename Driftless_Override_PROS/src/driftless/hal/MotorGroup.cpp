@@ -74,13 +74,5 @@ void MotorGroup::setPosition(double position) {
   for (auto& motor : m_motors)
     if (motor) motor->setPosition(position);
 }
-
-MotorGroup& MotorGroup::operator=(MotorGroup& rhs) {
-  m_motors.clear();
-  for (uint8_t i{0}; i < rhs.m_motors.size(); ++i)
-    m_motors.push_back(std::move(rhs.m_motors.at(i)));
-  rhs.m_motors.clear();
-  return *this;
-}
 }  // namespace hal
 }  // namespace driftless

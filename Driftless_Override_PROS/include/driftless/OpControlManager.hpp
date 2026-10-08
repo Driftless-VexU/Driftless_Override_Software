@@ -7,7 +7,6 @@
 #include "driftless/alliance/IAlliance.hpp"
 #include "driftless/control/ControlSystem.hpp"
 #include "driftless/io/IController.hpp"
-#include "driftless/processes/ProcessSystem.hpp"
 #include "driftless/profiles/IProfile.hpp"
 #include "driftless/robot/Robot.hpp"
 #include "driftless/rtos/IClock.hpp"
@@ -50,7 +49,6 @@ class OpControlManager {
   /// use
   /// @param robot __std::shared_ptr<robot::Robot>&__ The robot to use
   void init(std::shared_ptr<control::ControlSystem> control_system,
-            std::shared_ptr<driftless::processes::ProcessSystem> process_system,
             std::shared_ptr<io::IController> controller,
             std::shared_ptr<robot::Robot> robot);
 
@@ -64,7 +62,6 @@ class OpControlManager {
   /// use
   /// @param robot __std::shared_ptr<robot::Robot>&__ The robot to use
   void run(std::shared_ptr<control::ControlSystem> control_system,
-           std::shared_ptr<driftless::processes::ProcessSystem> process_system,
            std::shared_ptr<io::IController> controller,
            std::shared_ptr<robot::Robot> robot);
 

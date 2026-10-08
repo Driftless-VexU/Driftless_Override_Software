@@ -20,17 +20,14 @@ void OpControlManager::setAlliance(
 
 void OpControlManager::init(
     std::shared_ptr<control::ControlSystem> control_system,
-    std::shared_ptr<driftless::processes::ProcessSystem> process_system,
     std::shared_ptr<io::IController> controller,
     std::shared_ptr<robot::Robot> robot) {}
 void OpControlManager::run(
     std::shared_ptr<control::ControlSystem> control_system,
-    std::shared_ptr<driftless::processes::ProcessSystem> process_system,
     std::shared_ptr<io::IController> controller,
     std::shared_ptr<robot::Robot> robot) {
   // pause control system to allow operator takeover
   control_system->pause();
-  process_system->resumeAll();
 
   // set subsystems to driver control
   op_control::holonomic_drive_train::HolonomicDriveTrainOperator

@@ -155,42 +155,6 @@ class PIDHolonomicGoToPose : public IGoToPose {
   /// @brief Checks if the target point has been reached
   /// @return True if the target point has been reached, false otherwise
   bool targetReached() override;
-
-  /// @brief Sets the delayer for the control
-  /// @param delayer __std::unique_ptr<rtos::IDelayer>&__ The delayer to use
-  void setDelayer(std::unique_ptr<rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex for the control
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex to use
-  void setMutex(std::unique_ptr<rtos::IMutex>& mutex);
-
-  /// @brief Sets the task for the control
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task to use
-  void setTask(std::unique_ptr<rtos::ITask>& task);
-
-  /// @brief Sets the x PID controller
-  /// @param x_pid The x PID controller to use
-  void setXPID(PID x_pid);
-
-  /// @brief Sets the y PID controller
-  /// @param y_pid The y PID controller to use
-  void setYPID(PID y_pid);
-
-  /// @brief Sets the rotational PID controller
-  /// @param rotational_pid The rotational PID controller to use
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the distance tolerance for reaching the target
-  /// @param distance_tolerance __double__ The distance tolerance
-  void setDistanceTolerance(double distance_tolerance);
-
-  /// @brief Sets the velocity tolerance for reaching the target
-  /// @param velocity_tolerance __double__ The velocity tolerance
-  void setVelocityTolerance(double velocity_tolerance);
-
-  /// @brief Sets the angular tolerance for reaching the target
-  /// @param angular_tolerance __double__ The angular tolerance
-  void setAngularTolerance(double angular_tolerance);
 };
 }  // namespace motion
 }  // namespace control

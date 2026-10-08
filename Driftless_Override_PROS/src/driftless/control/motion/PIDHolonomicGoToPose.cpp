@@ -195,37 +195,4 @@ void PIDHolonomicGoToPose::setAngularVelocity(double angular_velocity) {
 }
 
 bool PIDHolonomicGoToPose::targetReached() { return m_target_reached; }
-
-void PIDHolonomicGoToPose::setDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDHolonomicGoToPose::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDHolonomicGoToPose::setTask(std::unique_ptr<rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDHolonomicGoToPose::setXPID(PID x_pid) { m_x_pid = x_pid; }
-
-void PIDHolonomicGoToPose::setYPID(PID y_pid) { m_y_pid = y_pid; }
-
-void PIDHolonomicGoToPose::setRotationalPID(PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
-}
-
-void PIDHolonomicGoToPose::setDistanceTolerance(double distance_tolerance) {
-  m_distance_tolerance = distance_tolerance;
-}
-
-void PIDHolonomicGoToPose::setVelocityTolerance(double velocity_tolerance) {
-  m_velocity_tolerance = velocity_tolerance;
-}
-
-void PIDHolonomicGoToPose::setAngularTolerance(double angular_tolerance) {
-  m_angular_tolerance = angular_tolerance;
-}
 }  // namespace driftless::control::motion

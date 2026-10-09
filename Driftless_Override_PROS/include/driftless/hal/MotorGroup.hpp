@@ -16,31 +16,30 @@ namespace hal {
 /// @brief Class for a group of related motors
 /// @author Matthew Backman
 class MotorGroup {
- private:
-  /// @brief The motors in the group
-  std::vector<std::unique_ptr<io::IMotor>> m_motors{};
-
  public:
   /// @brief Constructs a new motor group with the given motors
   /// @tparam ...Motors The types of the motors, must be derived from
   /// __io::IMotor__
   /// @param ...motors __Motors&&...__ The motors to be added to the group
-  template <typename... Motors,
-            typename = std::enable_if_t<(
-                std::is_convertible_v<Motors, std::unique_ptr<io::IMotor>>&& ...)>>
+  template <
+      typename... Motors,
+      typename = std::enable_if_t<
+          (std::is_convertible_v<Motors, std::unique_ptr<io::IMotor>> && ...)>>
   explicit MotorGroup(Motors&&... motors) {
     m_motors.reserve(sizeof...(motors));
 
     (m_motors.push_back(std::forward<Motors>(motors)), ...);
   }
 
+  MotorGroup() = default;
+  
   MotorGroup(const MotorGroup& other) = delete;
 
   MotorGroup(MotorGroup&& other) = default;
 
   /// @brief Adds a motor to the group
-  /// @param motor __std::unique_ptr<io::IMotor>&__ The motor to add
-  void addMotor(std::unique_ptr<io::IMotor>& motor);
+  /// @param motor __std::unique_ptr<io::IMotor>__ The motor to add
+  void addMotor(std::unique_ptr<io::IMotor> motor);
 
   /// @brief Initializes the motor group
   void init();
@@ -77,10 +76,17 @@ class MotorGroup {
   /// @param position __double__ The new position
   void setPosition(double position);
 
-  /// @brief Copies a given motor group
-  /// @param rhs __MotorGroup&__ Reference to the desired motor group
+  // Delete copy assignment operator
+  MotorGroup& operator=(const MotorGroup& rhs) = delete;
+
+  /// @brief moves a given motor group
+  /// @param rhs __MotorGroup&&__ Reference to the desired motor group
   /// @return __MotorGroup&__ Reference to the copy of the motor group
-  MotorGroup& operator=(MotorGroup& rhs);
+  MotorGroup& operator=(MotorGroup&& rhs) = default;
+
+ private:
+  /// @brief The motors in the group
+  std::vector<std::unique_ptr<io::IMotor>> m_motors{};
 };
 }  // namespace hal
 }  // namespace driftless

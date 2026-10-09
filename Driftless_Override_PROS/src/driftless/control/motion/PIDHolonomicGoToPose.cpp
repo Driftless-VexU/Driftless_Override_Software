@@ -3,6 +3,94 @@
 #include "driftless/control/motion/PIDHolonomicGoToPoseBuilder.hpp"
 
 namespace driftless::control::motion {
+void PIDHolonomicGoToPose::init() {
+  m_x_pid.reset();
+  m_y_pid.reset();
+  m_rotational_pid.reset();
+}
+
+void PIDHolonomicGoToPose::run() {
+  if (m_task) {
+    m_task->start(&PIDHolonomicGoToPose::taskLoop, this);
+  }
+}
+
+void PIDHolonomicGoToPose::pause() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_paused = true;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void PIDHolonomicGoToPose::resume() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_paused = false;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void PIDHolonomicGoToPose::goToPose(const std::shared_ptr<robot::Robot>& robot,
+                                    double velocity, double angular_velocity,
+                                    double linear_acceleration, Point point) {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_robot = robot;
+  m_max_velocity = velocity;
+  m_max_rotational_velocity = angular_velocity;
+  m_max_linear_acceleration = linear_acceleration;
+  m_target_point = point;
+  robot::subsystems::odometry::Position start_pos = getPosition();
+  m_initial_point = Point{start_pos.x, start_pos.y, start_pos.theta};
+  m_target_reached = false;
+  m_paused = false;
+
+  m_x_pid.reset();
+  m_y_pid.reset();
+  m_rotational_pid.reset();
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void PIDHolonomicGoToPose::setVelocity(double velocity) {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_max_velocity = velocity;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void PIDHolonomicGoToPose::setAngularVelocity(double angular_velocity) {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_max_rotational_velocity = angular_velocity;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+bool PIDHolonomicGoToPose::targetReached() { return m_target_reached; }
+
 void PIDHolonomicGoToPose::taskLoop(void* params) {
   PIDHolonomicGoToPose* go_to_point{static_cast<PIDHolonomicGoToPose*>(params)};
 
@@ -106,126 +194,5 @@ void PIDHolonomicGoToPose::taskUpdate() {
   if (m_delayer) {
     m_delayer->delay(TASK_DELAY);
   }
-}
-
-void PIDHolonomicGoToPose::init() {
-  m_x_pid.reset();
-  m_y_pid.reset();
-  m_rotational_pid.reset();
-}
-
-void PIDHolonomicGoToPose::run() {
-  if (m_task) {
-    m_task->start(&PIDHolonomicGoToPose::taskLoop, this);
-  }
-}
-
-void PIDHolonomicGoToPose::pause() {
-  if (m_mutex) {
-    m_mutex->take();
-  }
-
-  m_paused = true;
-
-  if (m_mutex) {
-    m_mutex->give();
-  }
-}
-
-void PIDHolonomicGoToPose::resume() {
-  if (m_mutex) {
-    m_mutex->take();
-  }
-
-  m_paused = false;
-
-  if (m_mutex) {
-    m_mutex->give();
-  }
-}
-
-void PIDHolonomicGoToPose::goToPose(const std::shared_ptr<robot::Robot>& robot,
-                                    double velocity, double angular_velocity,
-                                    double linear_acceleration, Point point) {
-  if (m_mutex) {
-    m_mutex->take();
-  }
-
-  m_robot = robot;
-  m_max_velocity = velocity;
-  m_max_rotational_velocity = angular_velocity;
-  m_max_linear_acceleration = linear_acceleration;
-  m_target_point = point;
-  robot::subsystems::odometry::Position start_pos = getPosition();
-  m_initial_point = Point{start_pos.x, start_pos.y, start_pos.theta};
-  m_target_reached = false;
-  m_paused = false;
-
-  m_x_pid.reset();
-  m_y_pid.reset();
-  m_rotational_pid.reset();
-
-  if (m_mutex) {
-    m_mutex->give();
-  }
-}
-
-void PIDHolonomicGoToPose::setVelocity(double velocity) {
-  if (m_mutex) {
-    m_mutex->take();
-  }
-
-  m_max_velocity = velocity;
-
-  if (m_mutex) {
-    m_mutex->give();
-  }
-}
-
-void PIDHolonomicGoToPose::setAngularVelocity(double angular_velocity) {
-  if (m_mutex) {
-    m_mutex->take();
-  }
-
-  m_max_rotational_velocity = angular_velocity;
-
-  if (m_mutex) {
-    m_mutex->give();
-  }
-}
-
-bool PIDHolonomicGoToPose::targetReached() { return m_target_reached; }
-
-void PIDHolonomicGoToPose::setDelayer(
-    std::unique_ptr<rtos::IDelayer>& delayer) {
-  m_delayer = delayer->clone();
-}
-
-void PIDHolonomicGoToPose::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
-  m_mutex = std::move(mutex);
-}
-
-void PIDHolonomicGoToPose::setTask(std::unique_ptr<rtos::ITask>& task) {
-  m_task = std::move(task);
-}
-
-void PIDHolonomicGoToPose::setXPID(PID x_pid) { m_x_pid = x_pid; }
-
-void PIDHolonomicGoToPose::setYPID(PID y_pid) { m_y_pid = y_pid; }
-
-void PIDHolonomicGoToPose::setRotationalPID(PID rotational_pid) {
-  m_rotational_pid = rotational_pid;
-}
-
-void PIDHolonomicGoToPose::setDistanceTolerance(double distance_tolerance) {
-  m_distance_tolerance = distance_tolerance;
-}
-
-void PIDHolonomicGoToPose::setVelocityTolerance(double velocity_tolerance) {
-  m_velocity_tolerance = velocity_tolerance;
-}
-
-void PIDHolonomicGoToPose::setAngularTolerance(double angular_tolerance) {
-  m_angular_tolerance = angular_tolerance;
 }
 }  // namespace driftless::control::motion

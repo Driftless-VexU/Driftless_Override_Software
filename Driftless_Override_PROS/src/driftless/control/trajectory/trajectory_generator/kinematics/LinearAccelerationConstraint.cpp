@@ -6,7 +6,7 @@ LinearAccelerationConstraint::LinearAccelerationConstraint(
     : m_max_acceleration{max_acceleration} {}
     
 double LinearAccelerationConstraint::getMaxVelocity(
-    std::unique_ptr<IPath>& path, TrajectoryPoint last_point, double delta_d,
+    const std::unique_ptr<IPath>& path, TrajectoryPoint last_point, double delta_d,
     double t) {
   double max_velocity = std::sqrt(std::pow(last_point.m_velocity, 2) +
                                   2 * m_max_acceleration * delta_d);

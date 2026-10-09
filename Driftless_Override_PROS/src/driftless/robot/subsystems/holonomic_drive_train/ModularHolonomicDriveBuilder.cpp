@@ -1,45 +1,45 @@
 #include "driftless/robot/subsystems/holonomic_drive_train/ModularHolonomicDriveBuilder.hpp"
 
 namespace driftless::robot::subsystems::holonomic_drive_train {
-ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withModule(
-    std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule> module) {
+ModularHolonomicDriveBuilder&& ModularHolonomicDriveBuilder::withModule(
+    std::unique_ptr<holonomic_drive_module::IHolonomicDriveModule> module) && {
   m_modules.push_back(std::move(module));
-  return *this;
+  return std::move(*this);
 }
 
-ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withTask(
-    std::unique_ptr<rtos::ITask> task) {
+ModularHolonomicDriveBuilder&& ModularHolonomicDriveBuilder::withTask(
+    std::unique_ptr<rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer> delayer) {
+ModularHolonomicDriveBuilder&& ModularHolonomicDriveBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-ModularHolonomicDriveBuilder& ModularHolonomicDriveBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex> mutex) {
+ModularHolonomicDriveBuilder&& ModularHolonomicDriveBuilder::withMutex(
+    std::unique_ptr<rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-ModularHolonomicDriveBuilder&
+ModularHolonomicDriveBuilder&&
 ModularHolonomicDriveBuilder::withMaxLinearVelocity(
-    double max_linear_velocity) {
+    double max_linear_velocity) && {
   m_max_linear_velocity = max_linear_velocity;
-  return *this;
+  return std::move(*this);
 }
 
-ModularHolonomicDriveBuilder&
+ModularHolonomicDriveBuilder&&
 ModularHolonomicDriveBuilder::withMaxAngularVelocity(
-    double max_angular_velocity) {
+    double max_angular_velocity) && {
   m_max_angular_velocity = max_angular_velocity;
-  return *this;
+  return std::move(*this);
 }
 
-ModularHolonomicDrive ModularHolonomicDriveBuilder::build() {
+ModularHolonomicDrive ModularHolonomicDriveBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for ModularHolonomicDriveBuilder");
@@ -49,7 +49,7 @@ ModularHolonomicDrive ModularHolonomicDriveBuilder::build() {
 }
 
 std::unique_ptr<ModularHolonomicDrive>
-ModularHolonomicDriveBuilder::buildUnique() {
+ModularHolonomicDriveBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for ModularHolonomicDriveBuilder");

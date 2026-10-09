@@ -25,6 +25,27 @@ namespace odometry {
 /// @brief Class representing the odometry subsystem of the robot
 /// @author Matthew Backman
 class OdometrySubsystem : public ASubsystem {
+ public:
+  /// @brief Constructor
+  /// @param position_tracker __std::unique_ptr<IPositionTracker>__ The
+  /// position tracker to use
+  OdometrySubsystem(std::unique_ptr<IPositionTracker> position_tracker);
+
+  /// @brief Initializes the subsystem
+  void init() override;
+
+  /// @brief Runs the subsystem
+  void run() override;
+
+  /// @brief Sends a command to the subsystem
+  /// @param cmd __commands::Command&__ The command to send
+  void command(const commands::Command& cmd) override;
+
+  /// @brief Gets a specified state of the subsystem
+  /// @param state_name __ESubsystemState__ The state to get
+  /// @return __void*__ The state
+  void* state(ESubsystemState state_name) override;
+
  private:
   // the position tracker being used
   std::unique_ptr<IPositionTracker> m_position_tracker{};
@@ -49,27 +70,6 @@ class OdometrySubsystem : public ASubsystem {
   /// @throws std::invalid_argument for all commands with no explicit handler
   /// @param cmd __auto&__ The command to handle
   void handleCommand(const auto& cmd);
-
- public:
-  /// @brief Constructor
-  /// @param position_tracker __std::unique_ptr<IPositionTracker>&__ The
-  /// position tracker to use
-  OdometrySubsystem(std::unique_ptr<IPositionTracker>& position_tracker);
-
-  /// @brief Initializes the subsystem
-  void init() override;
-
-  /// @brief Runs the subsystem
-  void run() override;
-
-  /// @brief Sends a command to the subsystem
-  /// @param cmd __commands::Command&__ The command to send
-  void command(const commands::Command& cmd) override;
-
-  /// @brief Gets a specified state of the subsystem
-  /// @param state_name __ESubsystemState__ The state to get
-  /// @return __void*__ The state
-  void* state(ESubsystemState state_name) override;
 };
 
 }  // namespace odometry

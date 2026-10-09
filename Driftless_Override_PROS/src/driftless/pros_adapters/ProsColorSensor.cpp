@@ -2,7 +2,7 @@
 
 namespace driftless {
 namespace pros_adapters {
-ProsColorSensor::ProsColorSensor(std::unique_ptr<pros::Optical>& optical_sensor)
+ProsColorSensor::ProsColorSensor(std::unique_ptr<pros::Optical> optical_sensor)
     : m_optical_sensor{std::move(optical_sensor)} {}
 
 void ProsColorSensor::init() {

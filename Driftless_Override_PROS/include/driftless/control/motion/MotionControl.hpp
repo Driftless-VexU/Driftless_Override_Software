@@ -29,6 +29,44 @@ namespace motion {
 /// to split this class into more manageable pieces.
 /// @author Matthew Backman
 class MotionControl : public driftless::control::AControl {
+ public:
+  /// @brief Constructs a new Motion Control object
+  /// @param drive_straight __std::unique_ptr<IDriveStraight>__ The algorithm
+  /// used to drive straight
+  /// @param go_to_point __std::unique_ptr<IGoToPoint>__ The algorithm used to
+  /// go to a point
+  /// @param go_to_pose __std::unique_ptr<IGoToPose>__ The algorithm used to
+  /// go to a pose
+  /// @param turn __std::unique_ptr<ITurn>__ The algorithm used to turn
+  MotionControl(
+      std::unique_ptr<driftless::control::motion::IDriveStraight>
+          drive_straight,
+      std::unique_ptr<driftless::control::motion::IGoToPoint> go_to_point,
+      std::unique_ptr<driftless::control::motion::IGoToPose> go_to_pose,
+      std::unique_ptr<driftless::control::motion::ITurn> turn);
+
+  /// @brief Initializes the motion control
+  void init() override;
+
+  /// @brief Runs the motion control
+  void run() override;
+
+  /// @brief Pauses the motion control
+  void pause() override;
+
+  /// @brief Resumes the motion control
+  void resume() override;
+
+  /// @brief Sends a command to the motion control
+  /// @param command_name __EControlCommand__ The name of the command to run
+  /// @param args __va_list&__ Any arguments needed for the command
+  void command(const commands::Command& command) override;
+
+  /// @brief Gets a state of the motion control
+  /// @param state_name __EControlState__ The name of the state desired
+  /// @return __void*__ The desired state of the motion control
+  void* state(EControlState state_name) override;
+
  private:
   /// @brief The algorithm to drive straight
   std::unique_ptr<driftless::control::motion::IDriveStraight>
@@ -49,7 +87,7 @@ class MotionControl : public driftless::control::AControl {
   /// @brief Changes the type of motion being used and pauses the previous
   /// motion type
   /// @param motion_type __EMotionType__ The new motion type to switch to
-  void switchMotionType(EMotionType motion_type);
+  inline void switchMotionType(EMotionType motion_type);
 
   /// @brief Handles the drive straight command
   /// @param cmd __DriveStraightCommand&__ The command to handle
@@ -83,44 +121,6 @@ class MotionControl : public driftless::control::AControl {
   /// @throws std::invalid_argument for all commands with no explicit handler
   /// @param cmd __auto&__ The command to handle
   void handleCommand(const auto& cmd) const;
-
- public:
-  /// @brief Constructs a new Motion Control object
-  /// @param drive_straight __std::unique_ptr<IDriveStraight>&__ The algorithm
-  /// used to drive straight
-  /// @param go_to_point __std::unique_ptr<IGoToPoint>&__ The algorithm used to
-  /// go to a point
-  /// @param go_to_pose __std::unique_ptr<IGoToPose>&__ The algorithm used to
-  /// go to a pose
-  /// @param turn __std::unique_ptr<ITurn>&__ The algorithm used to turn
-  MotionControl(
-      std::unique_ptr<driftless::control::motion::IDriveStraight>&
-          drive_straight,
-      std::unique_ptr<driftless::control::motion::IGoToPoint>& go_to_point,
-      std::unique_ptr<driftless::control::motion::IGoToPose>& go_to_pose,
-      std::unique_ptr<driftless::control::motion::ITurn>& turn);
-
-  /// @brief Initializes the motion control
-  void init() override;
-
-  /// @brief Runs the motion control
-  void run() override;
-
-  /// @brief Pauses the motion control
-  void pause() override;
-
-  /// @brief Resumes the motion control
-  void resume() override;
-
-  /// @brief Sends a command to the motion control
-  /// @param command_name __EControlCommand__ The name of the command to run
-  /// @param args __va_list&__ Any arguments needed for the command
-  void command(const commands::Command& command) override;
-
-  /// @brief Gets a state of the motion control
-  /// @param state_name __EControlState__ The name of the state desired
-  /// @return __void*__ The desired state of the motion control
-  void* state(EControlState state_name) override;
 };
 }  // namespace motion
 }  // namespace control

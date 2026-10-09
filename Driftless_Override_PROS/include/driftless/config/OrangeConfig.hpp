@@ -186,7 +186,6 @@ class OrangeConfig : public IConfig {
   std::shared_ptr<control::ControlSystem> buildControlSystem() override;
   std::shared_ptr<io::IController> buildController() override;
   std::shared_ptr<robot::Robot> buildRobot() override;
-  std::shared_ptr<processes::ProcessSystem> buildProcessSystem() override;
 };
 }  // namespace config
 }  // namespace driftless

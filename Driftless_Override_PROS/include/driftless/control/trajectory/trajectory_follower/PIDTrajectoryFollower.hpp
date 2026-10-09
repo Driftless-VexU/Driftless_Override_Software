@@ -1,6 +1,8 @@
 #ifndef __PID_TRAJECTORY_FOLLOWER_HPP__
 #define __PID_TRAJECTORY_FOLLOWER_HPP__
 
+#include <vector>
+
 #include "driftless/control/PID.hpp"
 #include "driftless/control/trajectory/trajectory_follower/ITrajectoryFollower.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/HolonomicMotionVector.hpp"

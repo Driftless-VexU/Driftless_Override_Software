@@ -4,24 +4,8 @@ namespace driftless {
 namespace robot {
 namespace subsystems {
 namespace tank_drive_train {
-void TankDriveTrainSubsystem::handleCommand(
-    const commands::tank_drive_train::SetVelocityCommand& cmd) {
-  m_drive_train->setVelocity({cmd.m_left_velocity, cmd.m_right_velocity});
-}
-
-void TankDriveTrainSubsystem::handleCommand(
-    const commands::tank_drive_train::SetVoltageCommand& cmd) {
-  m_drive_train->setVoltage(cmd.m_left_voltage, cmd.m_right_voltage);
-}
-
-void TankDriveTrainSubsystem::handleCommand(const auto& cmd) {
-  throw std::invalid_argument(
-      "No behavior defined to handle the command of type: " +
-      std::string(typeid(cmd).name()) + " for the tank drive train subsystem");
-}
-
 TankDriveTrainSubsystem::TankDriveTrainSubsystem(
-    std::unique_ptr<ITankDriveTrain>& drivetrain)
+    std::unique_ptr<ITankDriveTrain> drivetrain)
     : ASubsystem{ESubsystem::TANK_DRIVE_TRAIN},
       m_drive_train(std::move(drivetrain)) {}
 
@@ -44,6 +28,22 @@ void* TankDriveTrainSubsystem::state(ESubsystemState state_name) {
     result = radius;
   }
   return result;
+}
+
+void TankDriveTrainSubsystem::handleCommand(
+    const commands::tank_drive_train::SetVelocityCommand& cmd) {
+  m_drive_train->setVelocity({cmd.m_left_velocity, cmd.m_right_velocity});
+}
+
+void TankDriveTrainSubsystem::handleCommand(
+    const commands::tank_drive_train::SetVoltageCommand& cmd) {
+  m_drive_train->setVoltage(cmd.m_left_voltage, cmd.m_right_voltage);
+}
+
+void TankDriveTrainSubsystem::handleCommand(const auto& cmd) {
+  throw std::invalid_argument(
+      "No behavior defined to handle the command of type: " +
+      std::string(typeid(cmd).name()) + " for the tank drive train subsystem");
 }
 }  // namespace tank_drive_train
 }  // namespace subsystems

@@ -22,6 +22,40 @@ namespace menu {
 /// @brief Class to adapt the lvgl menu to the IMenu interface
 /// @author Matthew Backman
 class MenuAdapter : public IMenu {
+ public:
+  /// @brief Adds an alliance to the menu
+  /// @param alliance __std::unique_ptr<alliance::IAlliance>__ Reference to the
+  /// desired alliance to add
+  void addAlliance(std::shared_ptr<alliance::IAlliance>& alliance) override;
+
+  /// @brief Adds an auton to the menu
+  /// @param auton __std::unique_ptr<auton::AAuton>__ Reference to the auton
+  /// being added
+  void addAuton(std::unique_ptr<auton::AAuton> auton) override;
+
+  /// @brief Adds a config to the menu
+  /// @param config __std::unique_ptr<config::IConfig>__ Reference to the
+  /// config being added
+  void addConfig(std::unique_ptr<config::IConfig> config) override;
+
+  /// @brief Adds a profile to the menu
+  /// @param profile __std::unique_ptr<profiles::IProfile>__ Reference to the
+  /// profile being added
+  void addProfile(std::unique_ptr<profiles::IProfile> profile) override;
+
+  /// @brief Displays the menu on the brain
+  void display() override;
+
+  /// @brief Determines if the start button has been pressed
+  /// @return __bool__ True if the button was pressed, false otherwise
+  bool isStarted() override;
+
+  /// @brief Gets the system configuration to use during the match
+  /// @param read_only __bool__ Whether to get the system config straight from
+  /// the memory, or let the user configure settings
+  /// @return __SystemConfig__ The configurations to use during the match
+  SystemConfig getSystemConfig(bool read_only = false) override;
+
  private:
   // Name used for the alliance settings
   static constexpr char ALLIANCE_OPTION_NAME[]{"ALLIANCE"};
@@ -47,40 +81,6 @@ class MenuAdapter : public IMenu {
 
   // display
   LvglMenu lvgl_menu{};
-
- public:
-  /// @brief Adds an alliance to the menu
-  /// @param alliance __std::unique_ptr<alliance::IAlliance>__ Reference to the
-  /// desired alliance to add
-  void addAlliance(std::shared_ptr<alliance::IAlliance>& alliance) override;
-
-  /// @brief Adds an auton to the menu
-  /// @param auton __std::unique_ptr<auton::AAuton>&__ Reference to the auton
-  /// being added
-  void addAuton(std::unique_ptr<auton::AAuton>& auton) override;
-
-  /// @brief Adds a config to the menu
-  /// @param config __std::unique_ptr<config::IConfig>&__ Reference to the
-  /// config being added
-  void addConfig(std::unique_ptr<config::IConfig>& config) override;
-
-  /// @brief Adds a profile to the menu
-  /// @param profile __std::unique_ptr<profiles::IProfile>&__ Reference to the
-  /// profile being added
-  void addProfile(std::unique_ptr<profiles::IProfile>& profile) override;
-
-  /// @brief Displays the menu on the brain
-  void display() override;
-
-  /// @brief Determines if the start button has been pressed
-  /// @return __bool__ True if the button was pressed, false otherwise
-  bool isStarted() override;
-
-  /// @brief Gets the system configuration to use during the match
-  /// @param read_only __bool__ Whether to get the system config straight from
-  /// the memory, or let the user configure settings
-  /// @return __SystemConfig__ The configurations to use during the match
-  SystemConfig getSystemConfig(bool read_only = false) override;
 };
 }  // namespace menu
 }  // namespace driftless

@@ -17,14 +17,11 @@ namespace pros_adapters {
 /// @brief Class to adapt the pros task class to the ITask interface
 /// @author Matthew Backman
 class ProsTask : public rtos::ITask {
- private:
-  std::unique_ptr<pros::Task> task{};
-
  public:
   /// @brief Starts a new task
   /// @param function __void (*)(void*)__ The function callback ran by the task
   /// @param params __void*__ Potential parameters of the given function
-  void start(void (*function)(void *), void *params) override;
+  void start(void (*function)(void*), void* params) override;
 
   /// @brief Removes the task
   void remove() override;
@@ -37,6 +34,9 @@ class ProsTask : public rtos::ITask {
 
   /// @brief Joins the task
   void join() override;
+
+ private:
+  std::unique_ptr<pros::Task> task{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

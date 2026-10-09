@@ -2,7 +2,7 @@
 
 namespace driftless {
 AutonManager::AutonManager(const std::shared_ptr<rtos::IClock>& clock,
-                           const std::unique_ptr<rtos::IDelayer>& delayer)
+                           const std::unique_ptr<rtos::IDelayer> delayer)
     : m_clock{clock}, m_delayer{delayer->clone()} {}
 
 void AutonManager::setAlliance(
@@ -10,7 +10,7 @@ void AutonManager::setAlliance(
   m_alliance = alliance;
 }
 
-void AutonManager::setAuton(std::unique_ptr<auton::AAuton>& auton) {
+void AutonManager::setAuton(std::unique_ptr<auton::AAuton> auton) {
   m_auton = std::move(auton);
 }
 
@@ -27,7 +27,7 @@ void AutonManager::runAuton(
     std::shared_ptr<driftless::control::ControlSystem>& control_system) {
   if (m_auton) {
     m_auton->run(robot, control_system, m_alliance, m_clock,
-                 m_delayer);
+                 m_delayer->clone());
   }
 }
 }  // namespace driftless

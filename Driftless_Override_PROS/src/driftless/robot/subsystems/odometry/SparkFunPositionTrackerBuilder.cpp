@@ -1,50 +1,50 @@
 #include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
 
 namespace driftless::robot::subsystems::odometry {
-SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withClock(
-    std::unique_ptr<rtos::IClock> clock) {
+SparkFunPositionTrackerBuilder&& SparkFunPositionTrackerBuilder::withClock(
+    std::unique_ptr<rtos::IClock> clock) && {
   m_clock = std::move(clock);
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer> delayer) {
+SparkFunPositionTrackerBuilder&& SparkFunPositionTrackerBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex> mutex) {
+SparkFunPositionTrackerBuilder&& SparkFunPositionTrackerBuilder::withMutex(
+    std::unique_ptr<rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTrackerBuilder& SparkFunPositionTrackerBuilder::withTask(
-    std::unique_ptr<rtos::ITask> task) {
+SparkFunPositionTrackerBuilder&& SparkFunPositionTrackerBuilder::withTask(
+    std::unique_ptr<rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTrackerBuilder&
-SparkFunPositionTrackerBuilder::withLocalXOffset(double local_x_offset) {
+SparkFunPositionTrackerBuilder&&
+SparkFunPositionTrackerBuilder::withLocalXOffset(double local_x_offset) && {
   m_local_x_offset = local_x_offset;
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTrackerBuilder&
-SparkFunPositionTrackerBuilder::withLocalYOffset(double local_y_offset) {
+SparkFunPositionTrackerBuilder&&
+SparkFunPositionTrackerBuilder::withLocalYOffset(double local_y_offset) && {
   m_local_y_offset = local_y_offset;
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTrackerBuilder&
+SparkFunPositionTrackerBuilder&&
 SparkFunPositionTrackerBuilder::withLocalThetaOffset(
-    double local_theta_offset) {
+    double local_theta_offset) && {
   m_local_theta_offset = local_theta_offset;
-  return *this;
+  return std::move(*this);
 }
 
-SparkFunPositionTracker SparkFunPositionTrackerBuilder::build() {
+SparkFunPositionTracker SparkFunPositionTrackerBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for "
@@ -55,7 +55,7 @@ SparkFunPositionTracker SparkFunPositionTrackerBuilder::build() {
 }
 
 std::unique_ptr<SparkFunPositionTracker>
-SparkFunPositionTrackerBuilder::buildUnique() {
+SparkFunPositionTrackerBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for "

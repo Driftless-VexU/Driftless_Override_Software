@@ -1,12 +1,12 @@
 #include "driftless/pros_adapters/ProsV5Motor.hpp"
 namespace driftless {
 namespace pros_adapters {
-ProsV5Motor::ProsV5Motor(std::unique_ptr<pros::Motor>& motor)
+ProsV5Motor::ProsV5Motor(std::unique_ptr<pros::Motor> motor)
     : m_motor{std::move(motor)} {}
 
 ProsV5Motor::ProsV5Motor(
-    std::unique_ptr<pros::Motor>& motor,
-    std::unique_ptr<io::motor_voltage_control::IVoltageController>&
+    std::unique_ptr<pros::Motor> motor,
+    std::unique_ptr<io::motor_voltage_control::IVoltageController>
         voltage_controller)
     : m_motor{std::move(motor)},
       voltage_controller{std::move(voltage_controller)} {}

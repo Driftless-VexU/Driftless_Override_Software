@@ -3,7 +3,7 @@
 namespace driftless {
 namespace pros_adapters {
 ProsDistanceSensor::ProsDistanceSensor(
-    std::unique_ptr<pros::Distance>& distance_sensor,
+    std::unique_ptr<pros::Distance> distance_sensor,
     double tuning_constant, double tuning_offset)
     : m_distance_sensor{std::move(distance_sensor)},
       m_tuning_constant{tuning_constant},

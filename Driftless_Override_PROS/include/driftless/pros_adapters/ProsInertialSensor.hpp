@@ -19,21 +19,13 @@ namespace pros_adapters {
 /// @brief The class for adapting a PROS inertial sensor
 /// @author Matthew Backman
 class ProsInertialSensor : public driftless::io::IInertialSensor {
- private:
-  // conversion factor from degrees to radians, also flips direction
-  static constexpr double DEGREES_TO_RADIANS{-M_PI / 180};
-
-  // inertial sensor being adapted
-  std::unique_ptr<pros::IMU> m_inertial_sensor{};
-
-  // tuning constant to ensure accuracy
-  double m_tuning_constant{};
-
  public:
   /// @brief Constructs a new ProsInertialSensor object
-  /// @param inertial_sensor The inertial sensor being adapted
-  /// @param tuning_constant The tuning constant to ensure accuracy
-  ProsInertialSensor(std::unique_ptr<pros::IMU>& inertial_sensor,
+  /// @param inertial_sensor __std::unique_ptr<pros::IMU>__ The inertial sensor
+  /// being adapted
+  /// @param tuning_constant __double__ The tuning constant to ensure accuracy.
+  /// Defaults to 1.
+  ProsInertialSensor(std::unique_ptr<pros::IMU> inertial_sensor,
                      double tuning_constant = 1);
 
   /// @brief Initializes the inertial sensor
@@ -57,6 +49,16 @@ class ProsInertialSensor : public driftless::io::IInertialSensor {
   /// @brief Sets the rotation to a new value
   /// @param rotation The new rotation value
   void setRotation(double rotation) override;
+
+ private:
+  // conversion factor from degrees to radians, also flips direction
+  static constexpr double DEGREES_TO_RADIANS{-M_PI / 180};
+
+  // inertial sensor being adapted
+  std::unique_ptr<pros::IMU> m_inertial_sensor{};
+
+  // tuning constant to ensure accuracy
+  double m_tuning_constant{};
 };
 }  // namespace pros_adapters
 }  // namespace driftless

@@ -6,7 +6,6 @@
 
 #include "driftless/io/IPotentiometer.hpp"
 #include "pros/adi.hpp"
-#include "pros/rtos.hpp"
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -19,6 +18,24 @@ namespace pros_adapters {
 /// @brief Adapter class for the PROS ADI potentiometer
 /// @author Matthew Backman
 class ProsADIPotentiometer : public driftless::io::IPotentiometer {
+ public:
+  /// @brief Constructor
+  /// @param potentiometer __std::unique_ptr<pros::adi::AnalogIn>__ The
+  /// potentiometer to adapt
+  /// @param reversed __bool__ Whether the potentiometer is reversed
+  ProsADIPotentiometer(std::unique_ptr<pros::adi::AnalogIn> potentiometer,
+                       bool reversed);
+
+  /// @brief Initializes the potentiometer
+  void init() override;
+
+  /// @brief Calibrates the potentiometer
+  void calibrate() override;
+
+  /// @brief Gets the angle from the potentiometer
+  /// @return __double__ The angle value
+  double getAngle() override;
+
  private:
   // converts decidegrees to radians
   static constexpr double DECIDEGREES_TO_RADIANS{M_PI / 1800.0};
@@ -34,24 +51,6 @@ class ProsADIPotentiometer : public driftless::io::IPotentiometer {
 
   // the position offset
   double position_offset{};
-
- public:
-  /// @brief Constructor
-  /// @param potentiometer __std::unique_ptr<pros::adi::AnalogIn>&__ The
-  /// potentiometer to adapt
-  /// @param reversed __bool__ Whether the potentiometer is reversed
-  ProsADIPotentiometer(std::unique_ptr<pros::adi::AnalogIn>& potentiometer,
-                       bool reversed);
-
-  /// @brief Initializes the potentiometer
-  void init() override;
-
-  /// @brief Calibrates the potentiometer
-  void calibrate() override;
-
-  /// @brief Gets the angle from the potentiometer
-  /// @return __double__ The angle value
-  double getAngle() override;
 };
 }  // namespace pros_adapters
 }  // namespace driftless

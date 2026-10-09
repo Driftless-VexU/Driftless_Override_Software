@@ -39,7 +39,7 @@ TankDriveTrainOperator::TankDriveTrainOperator(
     : m_controller{controller}, m_robot{robot} {}
 
 void TankDriveTrainOperator::setDriveVoltage(
-    std::unique_ptr<driftless::profiles::IProfile>& profile) {
+    const std::unique_ptr<driftless::profiles::IProfile>& profile) {
   if (!m_controller) {
     updateDriveVoltage(0, 0);
     return;

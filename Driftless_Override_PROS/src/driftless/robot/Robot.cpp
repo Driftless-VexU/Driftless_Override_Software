@@ -2,7 +2,7 @@
 
 namespace driftless {
 namespace robot {
-void Robot::addSubsystem(std::unique_ptr<subsystems::ASubsystem>& subsystem) {
+void Robot::addSubsystem(std::unique_ptr<subsystems::ASubsystem> subsystem) {
   subsystems::ESubsystem subsystem_name{subsystem->getName()};
   subsystems.emplace(subsystem_name, std::move(subsystem));
 }

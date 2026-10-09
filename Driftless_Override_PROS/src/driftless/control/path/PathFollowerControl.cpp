@@ -3,24 +3,8 @@
 namespace driftless {
 namespace control {
 namespace path {
-void PathFollowerControl::handleCommand(
-    const commands::path::FollowPathCommand& cmd) {
-  m_path_follower->followPath(cmd.m_robot, cmd.m_path, cmd.m_velocity);
-}
-
-void PathFollowerControl::handleCommand(
-    const commands::SetLinearVelocityCommand& cmd) {
-  m_path_follower->setVelocity(cmd.m_linear_velocity);
-}
-
-void PathFollowerControl::handleCommand(const auto& cmd) const {
-  throw std::invalid_argument(
-      "PathFollowerControl: No handler for command type " +
-      std::string{typeid(cmd).name()});
-}
-
 PathFollowerControl::PathFollowerControl(
-    std::unique_ptr<driftless::control::path::IPathFollower>& path_follower)
+    std::unique_ptr<driftless::control::path::IPathFollower> path_follower)
     : AControl{EControl::PATH_FOLLOWER},
       m_path_follower{std::move(path_follower)} {}
 
@@ -58,6 +42,22 @@ void* PathFollowerControl::state(EControlState state_name) {
     result = new bool(m_path_follower->targetReached());
   }
   return result;
+}
+
+void PathFollowerControl::handleCommand(
+    const commands::path::FollowPathCommand& cmd) {
+  m_path_follower->followPath(cmd.m_robot, cmd.m_path, cmd.m_velocity);
+}
+
+void PathFollowerControl::handleCommand(
+    const commands::SetLinearVelocityCommand& cmd) {
+  m_path_follower->setVelocity(cmd.m_linear_velocity);
+}
+
+void PathFollowerControl::handleCommand(const auto& cmd) const {
+  throw std::invalid_argument(
+      "PathFollowerControl: No handler for command type " +
+      std::string{typeid(cmd).name()});
 }
 }  // namespace path
 }  // namespace control

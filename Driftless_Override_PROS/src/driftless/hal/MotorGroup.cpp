@@ -2,7 +2,7 @@
 
 namespace driftless {
 namespace hal {
-void MotorGroup::addMotor(std::unique_ptr<io::IMotor>& motor) {
+void MotorGroup::addMotor(std::unique_ptr<io::IMotor> motor) {
   m_motors.push_back(std::move(motor));
 }
 
@@ -73,14 +73,6 @@ void MotorGroup::setCurrentLimit(double amps) {
 void MotorGroup::setPosition(double position) {
   for (auto& motor : m_motors)
     if (motor) motor->setPosition(position);
-}
-
-MotorGroup& MotorGroup::operator=(MotorGroup& rhs) {
-  m_motors.clear();
-  for (uint8_t i{0}; i < rhs.m_motors.size(); ++i)
-    m_motors.push_back(std::move(rhs.m_motors.at(i)));
-  rhs.m_motors.clear();
-  return *this;
 }
 }  // namespace hal
 }  // namespace driftless

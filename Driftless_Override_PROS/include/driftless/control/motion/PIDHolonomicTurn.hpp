@@ -34,6 +34,53 @@ class PIDHolonomicTurnBuilder;
 class PIDHolonomicTurn : public ITurn {
   friend class PIDHolonomicTurnBuilder;
 
+ public:
+  /// @brief Copies another PIDHolonomicTurn object
+  /// @param other __const PIDHolonomicTurn&__ The PIDHolonomicTurn to copy
+  PIDHolonomicTurn(const PIDHolonomicTurn& other) = delete;
+
+  /// @brief Moves another PIDHolonomicTurn object
+  /// @param other __PIDHolonomicTurn&&__ The PIDHolonomicTurn to move
+  PIDHolonomicTurn(PIDHolonomicTurn&& other) = default;
+
+  /// @brief Initializes the PIDHolonomicTurn
+  void init() override;
+
+  /// @brief Runs the PIDHolonomicTurn
+  void run() override;
+
+  /// @brief Pauses the PIDHolonomicTurn
+  void pause() override;
+
+  /// @brief Resumes the PIDHolonomicTurn
+  void resume() override;
+
+  /// @brief Turns towards a designated angle, in radians
+  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
+  /// controlled
+  /// @param velocity __double__ The max velocity to move at
+  /// @param theta __double__ The desired angle
+  /// @param direction __ETurnDirection__ The direction to turn in; leave blank
+  /// to take shortest path
+  void turnToAngle(const std::shared_ptr<driftless::robot::Robot>& robot,
+                   double velocity, double theta,
+                   ETurnDirection direction = ETurnDirection::AUTO) override;
+
+  /// @brief Turns towards a point on the field
+  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
+  /// controlled
+  /// @param velocity __double__ The max velocity to move at
+  /// @param point __Point__ The point on the field to turn towards
+  /// @param direction __ETurnDirection__ The direction to turn in; leave blank
+  /// to take shortest path
+  void turnToPoint(const std::shared_ptr<driftless::robot::Robot>& robot,
+                   double velocity, Point point,
+                   ETurnDirection direction = ETurnDirection::AUTO) override;
+
+  /// @brief Determines if the target angle has been reached
+  /// @return __bool__ True if within the target range, else false
+  bool targetReached() override;
+
  private:
   // the task delay
   static constexpr uint8_t TASK_DELAY{10};
@@ -113,77 +160,6 @@ class PIDHolonomicTurn : public ITurn {
 
   /// @brief Runs all instance related updates
   void taskUpdate();
-
- public:
-  /// @brief Copies another PIDHolonomicTurn object
-  /// @param other __const PIDHolonomicTurn&__ The PIDHolonomicTurn to copy
-  PIDHolonomicTurn(const PIDHolonomicTurn& other) = delete;
-
-  /// @brief Moves another PIDHolonomicTurn object
-  /// @param other __PIDHolonomicTurn&&__ The PIDHolonomicTurn to move
-  PIDHolonomicTurn(PIDHolonomicTurn&& other) = default;
-
-  /// @brief Initializes the PIDHolonomicTurn
-  void init() override;
-
-  /// @brief Runs the PIDHolonomicTurn
-  void run() override;
-
-  /// @brief Pauses the PIDHolonomicTurn
-  void pause() override;
-
-  /// @brief Resumes the PIDHolonomicTurn
-  void resume() override;
-
-  /// @brief Turns towards a designated angle, in radians
-  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
-  /// controlled
-  /// @param velocity __double__ The max velocity to move at
-  /// @param theta __double__ The desired angle
-  /// @param direction __ETurnDirection__ The direction to turn in; leave blank
-  /// to take shortest path
-  void turnToAngle(const std::shared_ptr<driftless::robot::Robot>& robot,
-                   double velocity, double theta,
-                   ETurnDirection direction = ETurnDirection::AUTO) override;
-
-  /// @brief Turns towards a point on the field
-  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot being
-  /// controlled
-  /// @param velocity __double__ The max velocity to move at
-  /// @param point __Point__ The point on the field to turn towards
-  /// @param direction __ETurnDirection__ The direction to turn in; leave blank
-  /// to take shortest path
-  void turnToPoint(const std::shared_ptr<driftless::robot::Robot>& robot,
-                   double velocity, Point point,
-                   ETurnDirection direction = ETurnDirection::AUTO) override;
-
-  /// @brief Determines if the target angle has been reached
-  /// @return __bool__ True if within the target range, else false
-  bool targetReached() override;
-
-  /// @brief Sets the delayer used
-  /// @param delayer __const std::unique_ptr<rtos::IDelayer>&__ The delayer
-  void setDelayer(const std::unique_ptr<driftless::rtos::IDelayer>& delayer);
-
-  /// @brief Sets the mutex used
-  /// @param mutex __std::unique_ptr<rtos::IMutex>&__ The mutex
-  void setMutex(std::unique_ptr<driftless::rtos::IMutex>& mutex);
-
-  /// @brief Sets the task used
-  /// @param task __std::unique_ptr<rtos::ITask>&__ The task
-  void setTask(std::unique_ptr<driftless::rtos::ITask>& task);
-
-  /// @brief Sets the rotational PID controller used
-  /// @param rotational_pid __PID__ The rotational PID controller
-  void setRotationalPID(PID rotational_pid);
-
-  /// @brief Sets the target tolerance
-  /// @param target_tolerance __double__ The target tolerance
-  void setTargetTolerance(double target_tolerance);
-
-  /// @brief Sets the target velocity
-  /// @param target_velocity __double__ The target velocity
-  void setTargetVelocity(double target_velocity);
 };
 }  // namespace motion
 }  // namespace control

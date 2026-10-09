@@ -52,16 +52,16 @@ class TankDriveTrainOperator {
   /// @param controller __std::shared_ptr<io::IController>&__ The controller
   /// used by the robot
   /// @param robot __std::shared_ptr<robot::Robot>&__ The robot being controlled
-  TankDriveTrainOperator(const std::shared_ptr<io::IController> &controller,
-                     const std::shared_ptr<robot::Robot> &robot);
+  TankDriveTrainOperator(const std::shared_ptr<io::IController>& controller,
+                         const std::shared_ptr<robot::Robot>& robot);
 
   /// @brief Sets the drive voltage
-  /// @param profile __std::unique_ptr<profiles::IProfile>&__ The profile used
+  /// @param profile __const std::unique_ptr<profiles::IProfile>&__ The profile used
   /// for control mappings
-  void setDriveVoltage(std::unique_ptr<driftless::profiles::IProfile> &profile);
+  void setDriveVoltage(const std::unique_ptr<profiles::IProfile>& profile);
 };
 
-}  // namespace drivetrain
+}  // namespace tank_drive_train
 }  // namespace op_control
 }  // namespace driftless
 #endif

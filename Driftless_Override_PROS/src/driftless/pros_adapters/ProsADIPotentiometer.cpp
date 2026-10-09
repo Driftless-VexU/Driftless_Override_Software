@@ -3,7 +3,7 @@
 namespace driftless {
 namespace pros_adapters {
 ProsADIPotentiometer::ProsADIPotentiometer(
-    std::unique_ptr<pros::adi::AnalogIn>& potentiometer, bool reversed)
+    std::unique_ptr<pros::adi::AnalogIn> potentiometer, bool reversed)
     : m_potentiometer{std::move(potentiometer)}, m_reversed{reversed} {}
 
 void ProsADIPotentiometer::init() { calibrate(); }

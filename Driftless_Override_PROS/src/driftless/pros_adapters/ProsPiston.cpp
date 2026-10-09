@@ -2,7 +2,7 @@
 
 namespace driftless {
 namespace pros_adapters {
-ProsPiston::ProsPiston(std::unique_ptr<pros::adi::DigitalOut>& adi_digital_out, bool extended_value)
+ProsPiston::ProsPiston(std::unique_ptr<pros::adi::DigitalOut> adi_digital_out, bool extended_value)
     : m_adi_digital_out{std::move(adi_digital_out)}, m_extended_value{extended_value} {}
 
 void ProsPiston::extend() {

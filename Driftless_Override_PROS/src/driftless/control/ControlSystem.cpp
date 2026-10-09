@@ -5,7 +5,7 @@
 
 namespace driftless {
 namespace control {
-void ControlSystem::addControl(std::unique_ptr<AControl>& control) {
+void ControlSystem::addControl(std::unique_ptr<AControl> control) {
   // moves the specified control from one spot in memory to one allocated to the
   // controls list
   controls.emplace(control->getName(), std::move(control));

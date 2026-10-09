@@ -17,21 +17,13 @@ namespace hal {
 /// @brief Class representing a tracking wheel
 /// @author Matthew Backman
 class TrackingWheel : public driftless::io::IDistanceTracker {
- private:
-  // the rotation sensor for the wheel
-  std::unique_ptr<driftless::io::IRotationSensor> m_rotation_sensor{};
-
-  // the radius of the wheel
-  double m_wheel_radius{};
-
  public:
   /// @brief Constructs a new tracking wheel
-  /// @param rotation_sensor __std::unique_ptr<io::IRotationSensor>&__ The
+  /// @param rotation_sensor __std::unique_ptr<io::IRotationSensor>__ The
   /// rotation sensor used in the tracking wheel
   /// @param wheel_radius __double__ The radius of the tracking wheel, in inches
-  TrackingWheel(
-      std::unique_ptr<driftless::io::IRotationSensor>& rotation_sensor,
-      double wheel_radius);
+  TrackingWheel(std::unique_ptr<driftless::io::IRotationSensor> rotation_sensor,
+                double wheel_radius);
 
   /// @brief Initializes the tracking wheel
   void init() override;
@@ -46,6 +38,13 @@ class TrackingWheel : public driftless::io::IDistanceTracker {
   /// @brief Sets the distance on the tracking wheel
   /// @param distance __double__ The new distance
   void setDistance(double distance) override;
+
+ private:
+  // the rotation sensor for the wheel
+  std::unique_ptr<driftless::io::IRotationSensor> m_rotation_sensor{};
+
+  // the radius of the wheel
+  double m_wheel_radius{};
 };
 }  // namespace hal
 }  // namespace driftless

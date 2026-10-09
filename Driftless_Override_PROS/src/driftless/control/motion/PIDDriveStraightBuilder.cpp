@@ -3,49 +3,49 @@
 namespace driftless {
 namespace control {
 namespace motion {
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withDelayer(
-    std::unique_ptr<driftless::rtos::IDelayer> delayer) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withDelayer(
+    std::unique_ptr<driftless::rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withMutex(
-    std::unique_ptr<driftless::rtos::IMutex> mutex) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withMutex(
+    std::unique_ptr<driftless::rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTask(
-    std::unique_ptr<driftless::rtos::ITask> task) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withTask(
+    std::unique_ptr<driftless::rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withLinearPID(
-    PID linear_pid) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withLinearPID(
+    PID linear_pid) && {
   m_linear_pid = std::move(linear_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withRotationalPID(
-    PID rotational_pid) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withRotationalPID(
+    PID rotational_pid) && {
   m_rotational_pid = std::move(rotational_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTargetTolerance(
-    double target_tolerance) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withTargetTolerance(
+    double target_tolerance) && {
   m_target_tolerance = target_tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraightBuilder& PIDDriveStraightBuilder::withTargetVelocity(
-    double target_velocity) {
+PIDDriveStraightBuilder&& PIDDriveStraightBuilder::withTargetVelocity(
+    double target_velocity) && {
   m_target_velocity = target_velocity;
-  return *this;
+  return std::move(*this);
 }
 
-PIDDriveStraight PIDDriveStraightBuilder::build() {
+PIDDriveStraight PIDDriveStraightBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for PIDDriveStraightBuilder");
@@ -54,7 +54,7 @@ PIDDriveStraight PIDDriveStraightBuilder::build() {
   return PIDDriveStraight{std::move(*this)};
 }
 
-std::unique_ptr<PIDDriveStraight> PIDDriveStraightBuilder::buildUnique() {
+std::unique_ptr<PIDDriveStraight> PIDDriveStraightBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set for PIDDriveStraightBuilder");

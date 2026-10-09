@@ -3,55 +3,55 @@
 namespace driftless {
 namespace control {
 namespace path {
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withDelayer(
-    std::unique_ptr<driftless::rtos::IDelayer> delayer) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withDelayer(
+    std::unique_ptr<driftless::rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withMutex(
-    std::unique_ptr<driftless::rtos::IMutex> mutex) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withMutex(
+    std::unique_ptr<driftless::rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withTask(
-    std::unique_ptr<driftless::rtos::ITask> task) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withTask(
+    std::unique_ptr<driftless::rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withLinearPID(
-    driftless::control::PID linear_pid) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withLinearPID(
+    driftless::control::PID linear_pid) && {
   m_linear_pid = std::move(linear_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withRotationalPID(
-    driftless::control::PID rotational_pid) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withRotationalPID(
+    driftless::control::PID rotational_pid) && {
   m_rotational_pid = std::move(rotational_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withFollowDistance(
-    double follow_distance) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withFollowDistance(
+    double follow_distance) && {
   m_follow_distance = follow_distance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withTargetTolerance(
-    double target_tolerance) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withTargetTolerance(
+    double target_tolerance) && {
   m_target_tolerance = target_tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollowerBuilder& PIDPathFollowerBuilder::withTargetVelocity(
-    double target_velocity) {
+PIDPathFollowerBuilder&& PIDPathFollowerBuilder::withTargetVelocity(
+    double target_velocity) && {
   m_target_velocity = target_velocity;
-  return *this;
+  return std::move(*this);
 }
 
-PIDPathFollower PIDPathFollowerBuilder::build() {
+PIDPathFollower PIDPathFollowerBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");
@@ -60,7 +60,7 @@ PIDPathFollower PIDPathFollowerBuilder::build() {
   return PIDPathFollower{std::move(*this)};
 }
 
-std::unique_ptr<PIDPathFollower> PIDPathFollowerBuilder::buildUnique() {
+std::unique_ptr<PIDPathFollower> PIDPathFollowerBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDPathFollowerBuilder");

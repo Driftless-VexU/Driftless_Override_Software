@@ -1,61 +1,61 @@
 #include "driftless/control/trajectory/trajectory_follower/PIDTrajectoryFollowerBuilder.hpp"
 
 namespace driftless::control::trajectory::trajectory_follower {
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withDelayer(
-    std::unique_ptr<rtos::IDelayer> delayer) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withMutex(
-    std::unique_ptr<rtos::IMutex> mutex) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withMutex(
+    std::unique_ptr<rtos::IMutex> mutex) && {
   m_mutex = std::move(mutex);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTask(
-    std::unique_ptr<rtos::ITask> task) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withTask(
+    std::unique_ptr<rtos::ITask> task) && {
   m_task = std::move(task);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withClock(
-    std::unique_ptr<rtos::IClock> clock) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withClock(
+    std::unique_ptr<rtos::IClock> clock) && {
   m_clock = std::move(clock);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withXPID(
-    PID x_pid) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withXPID(
+    PID x_pid) && {
   m_x_pid = std::move(x_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withYPID(
-    PID y_pid) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withYPID(
+    PID y_pid) && {
   m_y_pid = std::move(y_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withThetaPID(
-    PID theta_pid) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withThetaPID(
+    PID theta_pid) && {
   m_theta_pid = std::move(theta_pid);
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTargetTolerance(
-    double target_tolerance) {
+PIDTrajectoryFollowerBuilder&&
+PIDTrajectoryFollowerBuilder::withTargetTolerance(double target_tolerance) && {
   m_target_tolerance = target_tolerance;
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollowerBuilder& PIDTrajectoryFollowerBuilder::withTargetVelocity(
-    double target_velocity) {
+PIDTrajectoryFollowerBuilder&& PIDTrajectoryFollowerBuilder::withTargetVelocity(
+    double target_velocity) && {
   m_target_velocity = target_velocity;
-  return *this;
+  return std::move(*this);
 }
 
-PIDTrajectoryFollower PIDTrajectoryFollowerBuilder::build() {
+PIDTrajectoryFollower PIDTrajectoryFollowerBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task || !m_clock) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDTrajectoryFollowerBuilder");
@@ -65,7 +65,7 @@ PIDTrajectoryFollower PIDTrajectoryFollowerBuilder::build() {
 }
 
 std::unique_ptr<PIDTrajectoryFollower>
-PIDTrajectoryFollowerBuilder::buildUnique() {
+PIDTrajectoryFollowerBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task || !m_clock) {
     throw std::runtime_error(
         "One or more RTOS components not set in PIDTrajectoryFollowerBuilder");

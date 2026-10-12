@@ -75,6 +75,10 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
+#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
+#include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
+
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system
@@ -161,6 +165,10 @@ class BlueConfig : public IConfig {
   // ## BRAKES ##
 
   static constexpr int8_t BRAKE_PORT{1};
+
+  // ## LIFT ##
+
+  static constexpr int8_t LIFT_MOTOR_PORT{2};
 
   // #### ROBOT CONSTANTS ####
 

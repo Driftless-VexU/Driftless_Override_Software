@@ -22,9 +22,9 @@ namespace lift {
 struct SetLiftHeightCommand {
   float m_height{};
 };
-}
-}
-}
-}
+}  // namespace lift
+}  // namespace commands
+}  // namespace robot
+}  // namespace driftless
 
 #endif

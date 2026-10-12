@@ -75,6 +75,12 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+// Lift subsystem includes
+#include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
+#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
+#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
+
+
 namespace driftless {
 namespace config {
 class OrangeConfig : public IConfig {
@@ -159,6 +165,10 @@ class OrangeConfig : public IConfig {
   // ## BRAKES ##
 
   static constexpr int8_t BRAKE_PORT{1};
+
+  // ## LIFT ##
+
+  static constexpr int8_t LIFT_MOTOR_PORT{2};
 
   // #### ROBOT CONSTANTS ####
 

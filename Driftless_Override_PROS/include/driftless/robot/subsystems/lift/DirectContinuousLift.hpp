@@ -30,50 +30,51 @@ class DirectContinuousLiftBuilder;
 
 /// @brief Lift implementation using continuous control
 class DirectContinuousLift : public ILift {
-    friend class DirectContinuousLiftBuilder;
-    public:
-    /// @brief Initialize the ContinuousLift
-    void init() override;
+  friend class DirectContinuousLiftBuilder;
 
-    /// @brief Run the ContinuousLift
-    void run() override;
+ public:
+  /// @brief Initialize the ContinuousLift
+  void init() override;
 
-    /// @brief Set the height of the lift
-    /// @param height __float__ The height of the lift
-    void setHeight(float height) override;
+  /// @brief Run the ContinuousLift
+  void run() override;
 
-    /// @brief Get the current height of the lift
-    /// @return __float__ The current height of the lift
-    float getHeight() override;
+  /// @brief Set the height of the lift
+  /// @param height __float__ The height of the lift
+  void setHeight(float height) override;
 
-private:
-    static constexpr uint8_t TASK_DELAY{10};
+  /// @brief Get the current height of the lift
+  /// @return __float__ The current height of the lift
+  float getHeight() override;
 
-    static void taskLoop(void* args);
+ private:
+  static constexpr uint8_t TASK_DELAY{10};
 
-    std::unique_ptr<hal::MotorGroup> m_motors{};
+  static void taskLoop(void* args);
 
-    std::unique_ptr<rtos::ITask> m_task{};
+  std::unique_ptr<hal::MotorGroup> m_motors{};
 
-    /// @brief delays things
-    std::unique_ptr<rtos::IDelayer> m_delayer{};
+  std::unique_ptr<rtos::ITask> m_task{};
 
-    /// @brief Only allows one thing to run at a time
-    std::unique_ptr<rtos::IMutex> m_mutex{};
+  /// @brief delays things
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-    /// @brief stores height
-    float m_height{};
-    /// @brief Updates the task
-    void taskUpdate();
+  /// @brief Only allows one thing to run at a time
+  std::unique_ptr<rtos::IMutex> m_mutex{};
 
-    /// @brief Constructs a DirectContinuousLift object
-    /// @param builder __DirectContinuousLiftBuilder&&__ The builder creating this
-    /// DirectContinousLift object. Consumed on use.
-    DirectContinuousLift(DirectContinuousLiftBuilder&& Builder);
+  /// @brief stores height
+  float m_height{};
+  /// @brief Updates the task
+  void taskUpdate();
+
+  /// @brief Constructs a DirectContinuousLift object
+  /// @param builder __DirectContinuousLiftBuilder&&__ The builder creating this
+  /// DirectContinousLift object. Consumed on use.
+  DirectContinuousLift(DirectContinuousLiftBuilder&& Builder);
 };
-}
-}
-}
-}
+}  // namespace lift
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

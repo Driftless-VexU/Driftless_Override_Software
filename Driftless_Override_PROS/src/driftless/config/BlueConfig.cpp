@@ -1,6 +1,8 @@
 #include "driftless/config/BlueConfig.hpp"
+
 #include "pros/adi.hpp"
 #include "pros/motors.hpp"
+
 
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
@@ -284,13 +286,13 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
               .withPiston(std::move(brake_piston))
               .buildUnique()));
 
-              // ## Lift ##
+  // ## Lift ##
 
   // create pros oject
   std::unique_ptr<pros::Motor> pros_lift_motor{
-    std::make_unique<pros::Motor>(LIFT_MOTOR_PORT)};
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT)};
 
-    // rtos
+  // rtos
   std::unique_ptr<rtos::IDelayer> lift_delayer{
       std::make_unique<pros_adapters::ProsDelayer>()};
   std::unique_ptr<rtos::ITask> lift_task{
@@ -300,21 +302,17 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
 
   // Adapt to pros
   std::unique_ptr<io::IMotor> lift_motor{
-    std::make_unique<pros_adapters::ProsV5Motor>(
-        std::move(pros_lift_motor))};
+      std::make_unique<pros_adapters::ProsV5Motor>(std::move(pros_lift_motor))};
 
-robot->addSubsystem(
-    std::make_unique<robot::subsystems::lift::LiftSubsystem>(
-        robot::subsystems::lift::DirectContinuousLiftBuilder{}
-        .withMotor(std::move(lift_motor))
-        .withDelayer(std::move(lift_delayer))
-        .withTask(std::move(lift_task))
-        .withMutex(std::move(lift_mutex))
-        .buildUnique()));
+  robot->addSubsystem(std::make_unique<robot::subsystems::lift::LiftSubsystem>(
+      robot::subsystems::lift::DirectContinuousLiftBuilder{}
+          .withMotor(std::move(lift_motor))
+          .withDelayer(std::move(lift_delayer))
+          .withTask(std::move(lift_task))
+          .withMutex(std::move(lift_mutex))
+          .buildUnique()));
 
   // return complete robot
   return robot;
-
-  
 };
 }  // namespace driftless::config

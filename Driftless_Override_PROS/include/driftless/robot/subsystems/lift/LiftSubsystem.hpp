@@ -25,39 +25,41 @@ namespace lift {
 /// @brief Class to adapt a lift driver to the subsystem structure
 /// @author Jacob Fiedorowicz
 class LiftSubsystem : public ASubsystem {
-public:
-    /// @brief Construct a new Lift Subsystem object
-    /// @param lift_driver __std::unique_ptr<ILift>__ The lift driver class to use by the subsystem
-    LiftSubsystem(std::unique_ptr<ILift> lift_driver);
+ public:
+  /// @brief Construct a new Lift Subsystem object
+  /// @param lift_driver __std::unique_ptr<ILift>__ The lift driver class to use
+  /// by the subsystem
+  LiftSubsystem(std::unique_ptr<ILift> lift_driver);
 
-    /// @brief Initializes the lift subsystem
-    void init() override;
+  /// @brief Initializes the lift subsystem
+  void init() override;
 
-    /// @brief Runs the lift subsystem
-    void run() override;
+  /// @brief Runs the lift subsystem
+  void run() override;
 
-    /// @brief Send a command to the lift subsystem
-    /// @param cmd __const commands::Command&__ The command to send
-    void command(const commands::Command& cmd) override;
+  /// @brief Send a command to the lift subsystem
+  /// @param cmd __const commands::Command&__ The command to send
+  void command(const commands::Command& cmd) override;
 
-    /// @brief Retrieves a state for the lift subsystem
-    /// @param height __ESubsystemState__ The state to retrieve from the lift subsystem
-    /// @return __void*__ The value of the desired state
-    void* state(ESubsystemState height) override;
+  /// @brief Retrieves a state for the lift subsystem
+  /// @param height __ESubsystemState__ The state to retrieve from the lift
+  /// subsystem
+  /// @return __void*__ The value of the desired state
+  void* state(ESubsystemState height) override;
 
-    private:
-    std::unique_ptr<ILift> m_lift_driver;
+ private:
+  std::unique_ptr<ILift> m_lift_driver;
 
-    /// @brief Handles the set lift state command
-    /// @param cmd __const commands::lift::SetLiftStateCommand__ The command to handle
-    void handleCommand(const commands::lift::SetLiftHeightCommand cmd);
+  /// @brief Handles the set lift state command
+  /// @param cmd __const commands::lift::SetLiftStateCommand__ The command to
+  /// handle
+  void handleCommand(const commands::lift::SetLiftHeightCommand cmd);
 
-    void handleCommand(const auto cmd);
-
+  void handleCommand(const auto cmd);
 };
-}
-}
-}
-}
+}  // namespace lift
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

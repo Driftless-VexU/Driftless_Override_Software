@@ -1,6 +1,7 @@
 #ifndef __DIRECT_CONTINUOUS_LIFT_BUILDER_HPP__
 #define __DIRECT_CONTINUOUS_LIFT_BUILDER_HPP__
 
+#include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/rtos/IMutex.hpp"
@@ -63,7 +64,7 @@ class DirectContinuousLiftBuilder {
   std::unique_ptr<DirectContinuousLift> buildUnique() &&;
 
  private:
-  std::unique_ptr<io::IMotor> m_motor{};
+  hal::MotorGroup m_motors{};
 
   std::unique_ptr<rtos::ITask> m_task{};
 

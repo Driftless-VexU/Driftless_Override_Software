@@ -18,27 +18,27 @@ namespace subsystems {
 namespace lift {
 
 class ILift {
-public:
-/// @brief Destroy the ILift object
-virtual ~ILift() = default;
+ public:
+  /// @brief Destroy the ILift object
+  virtual ~ILift() = default;
 
-/// @brief Initialize the ILift object
-virtual void init() = 0;
+  /// @brief Initialize the ILift object
+  virtual void init() = 0;
 
-/// @brief Run the ILift object
-virtual void run() = 0;
+  /// @brief Run the ILift object
+  virtual void run() = 0;
 
-/// @brief Set height of the lift
-/// @param height __float__ The desired height of the lift
-virtual void setHeight(float height) = 0;
+  /// @brief Set height of the lift
+  /// @param height __float__ The desired height of the lift
+  virtual void setHeight(float height) = 0;
 
-/// @brief Get the current height of the lift
-/// @return __float__ Returns the current height of the lift
-virtual float getHeight() = 0;
+  /// @brief Get the current height of the lift
+  /// @return __float__ Returns the current height of the lift
+  virtual float getHeight() = 0;
 };
-}
-}
-}
-}
+}  // namespace lift
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

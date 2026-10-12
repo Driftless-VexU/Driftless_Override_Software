@@ -273,13 +273,40 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   // Adapt to pros
   std::unique_ptr<io::IPiston> brake_piston{
-      std::make_unique<pros_adapters::ProsPiston>(std::move(pros_brake_piston))};
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_brake_piston))};
 
   robot->addSubsystem(
       std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
           robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
               .withPiston(std::move(brake_piston))
               .buildUnique()));
+
+  // ## Lift ##
+
+  // create pros oject
+  std::unique_ptr<pros::Motor> pros_lift_motor{
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT)};
+
+  // rtos
+  std::unique_ptr<rtos::IDelayer> lift_delayer{
+      std::make_unique<pros_adapters::ProsDelayer>()};
+  std::unique_ptr<rtos::ITask> lift_task{
+      std::make_unique<pros_adapters::ProsTask>()};
+  std::unique_ptr<rtos::IMutex> lift_mutex{
+      std::make_unique<pros_adapters::ProsMutex>()};
+
+  // Adapt to pros
+  std::unique_ptr<io::IMotor> lift_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(std::move(pros_lift_motor))};
+
+  robot->addSubsystem(std::make_unique<robot::subsystems::lift::LiftSubsystem>(
+      robot::subsystems::lift::DirectContinuousLiftBuilder{}
+          .withMotor(std::move(lift_motor))
+          .withDelayer(std::move(lift_delayer))
+          .withTask(std::move(lift_task))
+          .withMutex(std::move(lift_mutex))
+          .buildUnique()));
 
   // return complete robot
   return robot;

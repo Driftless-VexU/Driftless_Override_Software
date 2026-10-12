@@ -33,7 +33,7 @@ DirectContinuousLiftBuilder::buildUnique() && {
         "DirectContinuousLiftBuilder");
   }
   return std::unique_ptr<DirectContinuousLift>{
-      new DirectContinuousLift(std::move(*this))};
+      new DirectContinuousLift{std::move(*this)}};
 }
 DirectContinuousLift DirectContinuousLiftBuilder::build() && {
   if (!m_delayer || !m_mutex || !m_task) {

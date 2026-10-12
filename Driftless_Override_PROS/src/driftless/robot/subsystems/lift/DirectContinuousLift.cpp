@@ -1,5 +1,6 @@
 #include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
-
+#include "driftless/hal/MotorGroup.hpp"
+#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
 namespace driftless::robot::subsystems::lift {
 void DirectContinuousLift::init() {}
 
@@ -19,6 +20,14 @@ void DirectContinuousLift::setHeight(float height) {
 
 float DirectContinuousLift::getHeight() {}
 
+void DirectContinuousLift::taskLoop(void* args) {
+  DirectContinuousLift* lift{static_cast<DirectContinuousLift*>(args)};
+
+  while (1) {
+    lift->taskUpdate();
+  }
+}
+
 void DirectContinuousLift::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
@@ -31,11 +40,9 @@ void DirectContinuousLift::taskUpdate() {
   m_delayer->delay(TASK_DELAY);
 }
 
-void DirectContinuousLift::taskLoop(void* args) {
-  DirectContinuousLift* lift{static_cast<DirectContinuousLift*>(args)};
-
-  while (1) {
-    lift->taskUpdate();
-  }
-}
+DirectContinuousLift::DirectContinuousLift(DirectContinuousLiftBuilder&& builder)
+    : m_motors(std::move(builder.m_motors)),
+        m_task(std::move(builder.m_task)),
+        m_delayer(std::move(builder.m_delayer)),
+        m_mutex(std::move(builder.m_mutex)) {}
 }  // namespace driftless::robot::subsystems::lift

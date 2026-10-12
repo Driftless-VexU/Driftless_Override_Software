@@ -74,10 +74,10 @@
 #include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
-
-#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
-#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
 #include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
+#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
+#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
+
 
 namespace driftless {
 namespace config {
@@ -190,7 +190,6 @@ class BlueConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{0.0f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
-
 
  public:
   std::string getName() override;

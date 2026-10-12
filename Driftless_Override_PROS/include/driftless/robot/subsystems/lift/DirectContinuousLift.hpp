@@ -52,7 +52,7 @@ class DirectContinuousLift : public ILift {
 
   static void taskLoop(void* args);
 
-  std::unique_ptr<hal::MotorGroup> m_motors{};
+  hal::MotorGroup m_motors{};
 
   std::unique_ptr<rtos::ITask> m_task{};
 

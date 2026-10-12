@@ -7,7 +7,7 @@
 namespace driftless::robot::subsystems::lift {
 DirectContinuousLiftBuilder&& DirectContinuousLiftBuilder::withMotor(
     std::unique_ptr<io::IMotor> motor) && {
-  m_motor = std::move(motor);
+  m_motors.addMotor(std::move(motor));
   return std::move(*this);
 }
 DirectContinuousLiftBuilder&& DirectContinuousLiftBuilder::withTask(

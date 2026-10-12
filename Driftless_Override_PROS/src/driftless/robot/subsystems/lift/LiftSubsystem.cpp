@@ -18,6 +18,7 @@ void* LiftSubsystem::state(ESubsystemState state_name) {
     if (m_lift_driver) {
     }
   }
+  return result;
 }
 void LiftSubsystem::handleCommand(
     const commands::lift::SetLiftHeightCommand cmd) {

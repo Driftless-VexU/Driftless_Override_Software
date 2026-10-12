@@ -30,7 +30,7 @@ class DirectContinuousLiftBuilder;
 
 /// @brief Lift implementation using continuous control
 class DirectContinuousLift : public ILift {
-    friend class ILift;
+    friend class DirectContinuousLiftBuilder;
     public:
     /// @brief Initialize the ContinuousLift
     void init() override;

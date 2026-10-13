@@ -18,7 +18,9 @@ void DirectContinuousLift::setHeight(float height) {
   }
 }
 
-float DirectContinuousLift::getHeight() {}
+float DirectContinuousLift::getHeight() {
+    return m_motors.getPosition() * m_rotations_to_inches;
+}
 
 void DirectContinuousLift::taskLoop(void* args) {
   DirectContinuousLift* lift{static_cast<DirectContinuousLift*>(args)};
@@ -32,7 +34,8 @@ void DirectContinuousLift::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
   }
-
+  float voltage = m_pid.getControlValue(m_motors.getPosition() * m_rotations_to_inches, m_height);
+  m_motors.setVoltage(voltage);
   if (m_mutex) {
     m_mutex->give();
   }

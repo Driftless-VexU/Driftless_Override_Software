@@ -66,6 +66,8 @@ class DirectContinuousLiftBuilder {
  private:
   hal::MotorGroup m_motors{};
 
+  control::PID m_pid{};
+
   std::unique_ptr<rtos::ITask> m_task{};
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};

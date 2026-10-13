@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <memory>
 
+#include "driftless/control/PID.hpp"
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/lift/ILift.hpp"
 #include "driftless/rtos/IDelayer.hpp"
@@ -52,8 +53,13 @@ class DirectContinuousLift : public ILift {
 
   static void taskLoop(void* args);
 
+  /// @brief The motors used to control the lift
   hal::MotorGroup m_motors{};
 
+  /// @brief The PID controller for the lift
+  control::PID m_pid{};
+
+  /// @brief The task for thel ift
   std::unique_ptr<rtos::ITask> m_task{};
 
   /// @brief delays things
@@ -62,8 +68,12 @@ class DirectContinuousLift : public ILift {
   /// @brief Only allows one thing to run at a time
   std::unique_ptr<rtos::IMutex> m_mutex{};
 
+  /// @brief Conversion factor for rotations to inches
+  float m_rotations_to_inches{};
+
   /// @brief stores height
   float m_height{};
+
   /// @brief Updates the task
   void taskUpdate();
 

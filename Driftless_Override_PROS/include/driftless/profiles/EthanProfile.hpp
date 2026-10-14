@@ -31,8 +31,13 @@ class EthanProfile : public IProfile {
 
   /// @brief Maps subsystem controls to digital inputs
   const std::map<op_control::EControl, op_control::EControllerDigital>
-      DIGITAL_CONTROL_MAP{{op_control::EControl::BRAKE_TOGGLE,
-                          op_control::EControllerDigital::BUTTON_A}};
+      DIGITAL_CONTROL_MAP{
+          {op_control::EControl::BRAKE_TOGGLE,
+           op_control::EControllerDigital::BUTTON_A},
+          {op_control::EControl::LIFT_RAISE,
+           op_control::EControllerDigital::TRIGGER_LEFT_TOP},
+          {op_control::EControl::LIFT_LOWER,
+           op_control::EControllerDigital::TRIGGER_LEFT_BOTTOM}};
 
   /// @brief Maps startup configurations to their values
   const std::map<op_control::EStartupConfig, bool> STARTUP_CONFIG_MAP{};

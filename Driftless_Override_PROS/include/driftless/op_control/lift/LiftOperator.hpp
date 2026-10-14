@@ -36,13 +36,19 @@ class LiftOperator {
   /// to use for controls
   void update(const std::unique_ptr<profiles::IProfile>& profile);
 
+  /// @brief Gets the height the lift needs to be set to after the button is let go
+  /// @param height __float__ The height to set the lift to
+  float getLiftHeight();
+
+  /// @brief Raises the lift while button is held
+  void setLiftHeight(float height);
+
  private:
   std::shared_ptr<io::IController> m_controller{};
 
   std::shared_ptr<robot::Robot> m_robot{};
 
-  /// @brief Toggles the state of the lift
-  void toggleLiftHeight();
+  float target_height{};
 };
 }  // namespace lift
 }  // namespace op_control

@@ -6,16 +6,44 @@ LiftOperator::LiftOperator(const std::shared_ptr<io::IController>& controller,
     : m_controller{controller}, m_robot{robot} {}
 
 void LiftOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
-  EControllerDigital lift_toggle(
-      profile->getDigitalControlMapping(op_control::EControl::LIFT_TOGGLE));
+  EControllerDigital lift_raise(
+      profile->getDigitalControlMapping(op_control::EControl::LIFT_RAISE));
+  EControllerDigital lift_lower(
+    profile->getDigitalControlMapping(op_control::EControl::LIFT_LOWER));
 
-  if (m_controller->getNewDigital(lift_toggle)) {
-    toggleLiftHeight();
+    static constexpr float LIFT_INCREMENT = 3.0f;
+    static constexpr float LIFT_MAX_HEIGHT = 28.5f;
+    static constexpr float LIFT_TOLERANCE = 0.5f;
+    static constexpr float LIFT_MIN_HEIGHT = 0.0f;
+
+  float current_height = getLiftHeight();
+  if (m_controller->getDigital(lift_raise)) {
+    if(current_height > target_height - LIFT_TOLERANCE && target_height != LIFT_MAX_HEIGHT){
+      target_height += LIFT_INCREMENT;
+      if(target_height > LIFT_MAX_HEIGHT){
+        target_height = LIFT_MAX_HEIGHT;
+      }
+      setLiftHeight(target_height);
+    }
+  } else if(m_controller->getDigital(lift_lower)) {
+    if(current_height < target_height + LIFT_TOLERANCE && target_height != LIFT_MIN_HEIGHT){
+      target_height -= LIFT_INCREMENT;
+      if(target_height < LIFT_MIN_HEIGHT){
+        target_height = LIFT_MIN_HEIGHT;
+      }
+      setLiftHeight(target_height);
+    }   
   }
 }
 
-void LiftOperator::toggleLiftHeight() {
+float LiftOperator::getLiftHeight() {
+  return *static_cast<float*>(
+      m_robot->getState(robot::subsystems::ESubsystem::LIFT,
+                        robot::subsystems::ESubsystemState::LIFT_GET_HEIGHT));
+}
+
+void LiftOperator::setLiftHeight(float height) {
   m_robot->sendCommand(robot::subsystems::ESubsystem::LIFT,
-                       robot::commands::lift::SetLiftHeightCommand{});
+                       robot::commands::lift::SetLiftHeightCommand{height});
 }
 }  // namespace driftless::op_control::lift

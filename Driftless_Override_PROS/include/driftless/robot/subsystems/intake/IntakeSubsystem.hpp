@@ -1,5 +1,5 @@
-#ifndef __BRAKES_SUBSYSTEM_HPP__
-#define __BRAKES_SUBSYSTEM_HPP__
+#ifndef __INTAKE_SUBSYSTEM_HPP__
+#define __INTAKE_SUBSYSTEM_HPP__
 
 #include <memory>
 

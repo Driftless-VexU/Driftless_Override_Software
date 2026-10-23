@@ -169,6 +169,7 @@ class BlueConfig : public IConfig {
   // ## LIFT ##
 
   static constexpr int8_t LIFT_MOTOR_PORT{2};
+  static constexpr int8_t LIFT_MOTOR_PORT_OTHER{3};
 
   // #### ROBOT CONSTANTS ####
 

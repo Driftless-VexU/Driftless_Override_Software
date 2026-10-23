@@ -12,7 +12,7 @@ void LiftOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
     profile->getDigitalControlMapping(op_control::EControl::LIFT_LOWER));
 
     static constexpr float LIFT_INCREMENT = 3.0f;
-    static constexpr float LIFT_MAX_HEIGHT = 28.5f;
+    static constexpr float LIFT_MAX_HEIGHT = 25.0f;
     static constexpr float LIFT_TOLERANCE = 0.5f;
     static constexpr float LIFT_MIN_HEIGHT = 0.0f;
 

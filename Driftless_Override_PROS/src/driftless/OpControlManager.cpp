@@ -33,6 +33,7 @@ void OpControlManager::run(
   /*op_control::holonomic_drive_train::HolonomicDriveTrainOperator
       holonomic_drive_train_operator{controller, robot, control_system};*/
   op_control::brakes::BrakesOperator brakes_operator{controller, robot};
+  op_control::lift::LiftOperator lift_operator{controller, robot};
 
   // variable to hold time for delayer
   uint32_t current_time{};
@@ -45,6 +46,7 @@ void OpControlManager::run(
     // updates all subsystems
     //holonomic_drive_train_operator.update(m_profile);
     brakes_operator.update(m_profile);
+    lift_operator.update(m_profile);
 
     // delay until 10 seconds after loop start
     // keeps time per loop consistent rather than delaying 10 seconds AFTER

@@ -75,6 +75,11 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+// Intake subsystem includes
+#include "driftless/robot/subsystems/intake/IntakeSubsystem.hpp"
+#include "driftless/robot/subsystems/intake/IIntake.hpp"
+#include "driftless/robot/subsystems/intake/IntakeBuilder.hpp"
+
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system

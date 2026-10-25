@@ -15,7 +15,7 @@ namespace commands {
 
 /// @brief The namespace for commands which can be sent to the brakes subsystem
 /// @author Jacob Fiedorowicz
-namespace brakes {
+namespace intake {
 struct SetIntakePistonStateCommand {
     bool m_deployed{};
 };

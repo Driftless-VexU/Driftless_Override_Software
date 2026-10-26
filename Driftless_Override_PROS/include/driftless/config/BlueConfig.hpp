@@ -192,6 +192,12 @@ class BlueConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
 
+  // ## LIFT ##
+  static constexpr float LIFT_KP{1.0f};
+  static constexpr float LIFT_KI{0.0f};
+  static constexpr float LIFT_KD{0.0f};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{0.0002718552f};
+
  public:
   std::string getName() override;
   std::shared_ptr<control::ControlSystem> buildControlSystem() override;

@@ -33,6 +33,11 @@ class DirectContinuousLiftBuilder {
   /// @return _DirectContinuousLift&&__ Referncee to the active builder
   DirectContinuousLiftBuilder&& withMotor(std::unique_ptr<io::IMotor> motor) &&;
 
+  /// @brief Adds a PID controller to the builder
+  /// @param pid __control::PID__ The PID controller to use
+  /// @return _DirectContinuousLift&&__ A pointer to this builder
+  DirectContinuousLiftBuilder&& withPID(control::PID pid) &&;
+
   /// @brief Adds a task to the lift
   /// @param task __std::unique_ptr<rtos::ITask>__ The task to use
   /// @return _DirectContinuousLift&&__ A pointer to this builder
@@ -49,6 +54,12 @@ class DirectContinuousLiftBuilder {
   /// @return _DirectContinuousLift&&__ A pointer to this builder
   DirectContinuousLiftBuilder&& withMutex(
       std::unique_ptr<rtos::IMutex> mutex) &&;
+
+  /// @brief Adds a conversion factor for centidegrees to inches
+  /// @param centidegrees_to_inches __float__ The conversion rate to use
+  /// @return _DirectContinuousLift&&__ A pointer to this builder
+  DirectContinuousLiftBuilder&& withCentidegreesToInches(
+      float centidegrees_to_inches) &&;
 
   /// @brief Builds the DirectContinuousLift object
   /// @return __DirectContinuousLift__ the newly constructed
@@ -73,6 +84,8 @@ class DirectContinuousLiftBuilder {
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
   std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  float m_centidegrees_to_inches{};
 };
 }  // namespace lift
 }  // namespace subsystems

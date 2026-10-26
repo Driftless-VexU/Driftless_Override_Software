@@ -25,6 +25,16 @@ DirectContinuousLiftBuilder&& DirectContinuousLiftBuilder::withMutex(
   m_mutex = std::move(mutex);
   return std::move(*this);
 }
+DirectContinuousLiftBuilder&& DirectContinuousLiftBuilder::withPID(
+  control::PID pid) && {
+    m_pid = pid;
+    return std::move(*this);
+  }
+
+DirectContinuousLiftBuilder&& DirectContinuousLiftBuilder::withCentidegreesToInches(float centidegrees_to_inches)&& {
+  m_centidegrees_to_inches = centidegrees_to_inches;
+  return std::move(*this);
+}
 std::unique_ptr<DirectContinuousLift>
 DirectContinuousLiftBuilder::buildUnique() && {
   if (!m_delayer || !m_mutex || !m_task) {

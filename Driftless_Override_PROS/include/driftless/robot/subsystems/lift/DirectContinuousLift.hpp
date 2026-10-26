@@ -69,7 +69,7 @@ class DirectContinuousLift : public ILift {
   std::unique_ptr<rtos::IMutex> m_mutex{};
 
   /// @brief Conversion factor for rotations to inches
-  float m_rotations_to_inches{};
+  float m_centidegrees_to_inches{};
 
   /// @brief stores height
   float m_height{};

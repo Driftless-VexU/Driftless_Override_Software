@@ -13,12 +13,11 @@ void LiftSubsystem::command(const commands::Command& cmd) {
 }
 
 void* LiftSubsystem::state(ESubsystemState state_name) {
-  void* result{};
-  if (state_name == ESubsystemState::LIFT_GET_HEIGHT) {
-    if (m_lift_driver) {
-    }
+  void* state = nullptr;
+  if (state_name == ESubsystemState::LIFT_GET_HEIGHT && m_lift_driver) {
+    state = new float(m_lift_driver->getHeight());
   }
-  return result;
+  return state;
 }
 void LiftSubsystem::handleCommand(
     const commands::lift::SetLiftHeightCommand cmd) {

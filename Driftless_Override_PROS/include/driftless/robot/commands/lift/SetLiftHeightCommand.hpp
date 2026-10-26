@@ -20,7 +20,7 @@ namespace lift {
 /// @brief Command to set the state of the lift
 /// @author Jacob Fiedorowicz
 struct SetLiftHeightCommand {
-  float m_height{};
+  float m_height {};
 };
 }  // namespace lift
 }  // namespace commands

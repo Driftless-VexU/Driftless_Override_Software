@@ -4,9 +4,9 @@ namespace driftless::robot::subsystems::intake {
 IntakeSubsystem::IntakeSubsystem(std::unique_ptr<IIntake> intake)
     : ASubsystem{ESubsystem::INTAKE}, m_intake_driver{std::move(intake)} {}
 
-void IntakeSubsystem::init() {}
+void IntakeSubsystem::init() { m_intake_driver->init();}
 
-void IntakeSubsystem::run() {}
+void IntakeSubsystem::run() { m_intake_driver->run();}
 
 void IntakeSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);

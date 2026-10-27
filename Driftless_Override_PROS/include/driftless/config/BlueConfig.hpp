@@ -167,6 +167,10 @@ class BlueConfig : public IConfig {
 
   static constexpr int8_t BRAKE_PORT{1};
 
+  //## INTAKE ##
+  static constexpr int8_t INTAKE_PISTON_PORT{2};
+  static constexpr int8_t INTAKE_MOTOR_PORT{4};
+
   // #### ROBOT CONSTANTS ####
 
   // ## COPROCESSOR ##

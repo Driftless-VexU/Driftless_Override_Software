@@ -11,9 +11,13 @@ void IntakeOperator::update(
   EControllerDigital intake_piston_toggle(
       profile->getDigitalControlMapping(op_control::EControl::INTAKE_TOGGLE));
 
-  if (m_controller->getNewDigital(intake_piston_toggle)) {
+  if (m_controller->getDigital(intake_piston_toggle)) {
     toggleIntakePistonState();
-    setIntakeMotorSpeed(1.0f);
+    setIntakeMotorSpeed(12.0f);
+  }
+  else
+  {
+    setIntakeMotorSpeed(0.0f);
   }
 }
 

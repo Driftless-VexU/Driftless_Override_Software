@@ -30,7 +30,7 @@ void IntakeSubsystem::handleCommand(
     const commands::intake::SetIntakeMotorSpeedCommand cmd) {
   m_intake_driver->setMotorSpeed(cmd.m_speed);
 }
-void handleCommand(const auto cmd) {
+void IntakeSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(
       "No behavior defined to handle the command of type: " +
       std::string(typeid(cmd).name()) + " for the intake subsystem");

@@ -13,6 +13,7 @@ void IntakeOperator::update(
 
   if (m_controller->getNewDigital(intake_piston_toggle)) {
     toggleIntakePistonState();
+    setIntakeMotorSpeed(1.0f);
   }
 }
 

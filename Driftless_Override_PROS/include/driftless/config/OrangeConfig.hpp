@@ -75,6 +75,11 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+// Intake subsystem includes
+#include "driftless/robot/subsystems/intake/IntakeSubsystem.hpp"
+#include "driftless/robot/subsystems/intake/IIntake.hpp"
+#include "driftless/robot/subsystems/intake/IntakeBuilder.hpp"
+
 namespace driftless {
 namespace config {
 class OrangeConfig : public IConfig {
@@ -159,6 +164,10 @@ class OrangeConfig : public IConfig {
   // ## BRAKES ##
 
   static constexpr int8_t BRAKE_PORT{1};
+
+  // ## INTAKE ##
+  static constexpr int8_t INTAKE_PISTON_PORT{2};
+  static constexpr int8_t INTAKE_MOTOR_PORT{4};
 
   // #### ROBOT CONSTANTS ####
 

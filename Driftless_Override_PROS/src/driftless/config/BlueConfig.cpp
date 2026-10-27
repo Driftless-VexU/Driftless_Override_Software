@@ -282,6 +282,29 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
               .withPiston(std::move(brake_piston))
               .buildUnique()));
 
+    // ## INTAKE ##
+
+    // create pros object
+    std::unique_ptr<pros::adi::DigitalOut> pros_intake_piston{
+        std::make_unique<pros::adi::DigitalOut>(INTAKE_PISTON_PORT)};
+    std::unique_ptr<pros::Motor> pros_intake_motor{
+        std::make_unique<pros::Motor>(INTAKE_MOTOR_PORT)};
+
+        // Adapt to pros
+        std::unique_ptr<io::IPiston> intake_piston{
+            std::make_unique<pros_adapters::ProsPiston>(
+                std::move(pros_intake_piston))};
+
+        std::unique_ptr<io::IMotor> intake_motor{
+            std::make_unique<pros_adapters::ProsV5Motor>(
+                std::move(pros_intake_motor))};
+
+    robot->addSubsystem(
+        std::make_unique<robot::subsystems::intake::IntakeSubsystem>(
+            robot::subsystems::intake::IntakeBuilder{}
+                .withPiston(std::move(intake_piston))
+                .withMotor(std::move(intake_motor))
+                .buildUnique()));
   // return complete robot
   return robot;
 }

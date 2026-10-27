@@ -193,6 +193,8 @@ class BlueConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
 
+  // ## INTAKE ##
+  static constexpr float INTAKE_MOTOR_SPEED{12.0f};
 
  public:
   std::string getName() override;

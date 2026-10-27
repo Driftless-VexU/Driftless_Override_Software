@@ -14,6 +14,7 @@
 
 // operator controls
 #include "driftless/op_control/brakes/BrakesOperator.hpp"
+#include "driftless/op_control/intake/IntakeOperator.hpp"
 #include "driftless/op_control/holonomic_drive_train/HolonomicDriveTrainOperator.hpp"
 #include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"
 

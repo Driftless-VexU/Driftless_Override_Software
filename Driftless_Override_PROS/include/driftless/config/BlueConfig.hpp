@@ -169,7 +169,8 @@ class BlueConfig : public IConfig {
 
   //## INTAKE ##
   static constexpr int8_t INTAKE_PISTON_PORT{2};
-  static constexpr int8_t INTAKE_MOTOR_PORT{4};
+  static constexpr int8_t INTAKE_MOTOR_PORT_DOWN{-4};
+  static constexpr int8_t INTAKE_MOTOR_PORT_UP{5};
 
   // #### ROBOT CONSTANTS ####
 

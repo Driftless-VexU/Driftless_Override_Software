@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "driftless/robot/subsystems/ASubsystem.hpp"
+#include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/toggle/IToggle.hpp"
 
 /// @brief The namespace for driftless library code
@@ -40,6 +41,8 @@ class ToggleSubsystem : public ASubsystem {
   /// @brief Send a command to the toggle subsystem
   void command(const commands::Command& cmd) override;
 
+  /// @brief Makes a state method
+  void* state(ESubsystemState state) override;
  private:
   std::unique_ptr<IToggle> m_toggle_driver{};
 

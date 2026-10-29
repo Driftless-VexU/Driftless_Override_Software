@@ -23,7 +23,7 @@ void ToggleOperator::update(
     setMotorSpeed(0.0f);
   }
 }
-void ToggleOperator::setMotorSpeed(float speed)() {
+void ToggleOperator::setMotorSpeed(float speed) {
   m_robot->sendCommand(robot::subsystems::ESubsystem::TOGGLE,
                        robot::commands::toggle::SetToggleSpeedCommand{speed});
 }

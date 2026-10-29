@@ -1,6 +1,8 @@
 #include "driftless/op_control/toggle/ToggleOperator.hpp"
 #include "driftless/op_control/EControllerDigital.hpp"
 #include "driftless/profiles/IProfile.hpp"
+#include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
+#include "driftless/robot/subsystems/ESubsystem.hpp"
 
 namespace driftless::op_control::toggle {
     ToggleOperator::ToggleOperator(
@@ -13,8 +15,16 @@ namespace driftless::op_control::toggle {
             EControllerDigital toggle_speed(
                 profile->getDigitalControlMapping(op_control::EControl::TOGGLE_SPEED));
 
-            if (m_controller->getNewDigital(toggle_speed)) {
-                setMotorSpeed();
+            if (m_controller->getDigital(toggle_speed)) {
+                setMotorSpeed(12.0f);
             }
+            else
+            {
+                setMotorSpeed(0.0f);
+            }
+        }
+        void ToggleOperator::setMotorSpeed(float speed)() {
+            m_robot->sendCommand(robot::subsystems::ESubsystem::TOGGLE,
+            robot::commands::toggle::SetToggleSpeedCommand{});
         }
 }

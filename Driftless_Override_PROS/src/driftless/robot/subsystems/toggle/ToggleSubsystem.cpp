@@ -2,6 +2,7 @@
 
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
 #include "driftless/robot/subsystems/ASubsystem.hpp"
+#include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/toggle/IToggle.hpp"
 
 
@@ -15,6 +16,8 @@ void ToggleSubsystem::run() {}
 void ToggleSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);
 }
+
+void* ToggleSubsystem::state(ESubsystemState state) {}
 
 void ToggleSubsystem::handleCommand(
     const commands::toggle::SetToggleSpeedCommand cmd) {

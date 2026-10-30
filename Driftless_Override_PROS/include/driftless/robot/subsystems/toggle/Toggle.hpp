@@ -1,6 +1,8 @@
 #ifndef __TOGGLE_HPP__
 #define __TOGGLE_HPP__
 
+#include <memory>
+
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/toggle/IToggle.hpp"
 

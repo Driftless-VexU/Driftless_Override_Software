@@ -17,7 +17,9 @@ void ToggleSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);
 }
 
-void* ToggleSubsystem::state(ESubsystemState state) {}
+void* ToggleSubsystem::state(ESubsystemState state) {
+    return nullptr;
+}
 
 void ToggleSubsystem::handleCommand(
     const commands::toggle::SetToggleSpeedCommand cmd) {

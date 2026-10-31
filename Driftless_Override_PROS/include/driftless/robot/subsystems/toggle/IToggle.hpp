@@ -29,9 +29,10 @@ class IToggle {
   virtual void run() = 0;
 
   /// @brief Sets the motor speed
+  /// @param speed __float__ The speed to send to the motor
   virtual void setMotorSpeed(float speed) = 0;
 };
-}  // namespace toggles
+}  // namespace toggle
 }  // namespace subsystems
 }  // namespace robot
 }  // namespace driftless

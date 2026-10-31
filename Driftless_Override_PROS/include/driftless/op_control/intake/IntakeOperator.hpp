@@ -42,6 +42,7 @@ class IntakeOperator {
     void toggleIntakePistonState();
 
     /// @brief Sets the speed of the intake motor
+    /// @param speed __float__ The speed to set the motor
     void setIntakeMotorSpeed(float speed);
 };
 }  // namespace intake

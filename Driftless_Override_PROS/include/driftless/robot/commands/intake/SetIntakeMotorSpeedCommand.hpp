@@ -18,6 +18,7 @@ namespace commands {
 namespace intake {
 
 struct SetIntakeMotorSpeedCommand {
+  /// @brief Speed of the motor
   float m_speed;
 };
 }  // namespace intake

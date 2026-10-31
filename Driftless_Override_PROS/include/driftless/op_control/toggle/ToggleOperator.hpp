@@ -40,6 +40,7 @@ std::shared_ptr<io::IController> m_controller{};
 std::shared_ptr<robot::Robot> m_robot{};
 
 /// @brief Sets the motor speed for the toggle
+/// @param speed __float__ The speed the motor should go
 void setMotorSpeed(float speed);
 };
 }

@@ -17,6 +17,7 @@ namespace commands {
 /// @author Jacob Fiedorowicz
 namespace intake {
 struct SetIntakePistonStateCommand {
+    /// @brief Wether the piston is deployed or not
     bool m_deployed{};
 };
 }  // namespace brakes

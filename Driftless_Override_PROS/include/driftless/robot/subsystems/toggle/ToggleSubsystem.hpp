@@ -39,9 +39,11 @@ class ToggleSubsystem : public ASubsystem {
   void run() override;
 
   /// @brief Send a command to the toggle subsystem
+  /// @param cmd __const commands::Command&__ The command to be set
   void command(const commands::Command& cmd) override;
 
   /// @brief Makes a state method
+  /// @param state __ESubsystemState__ The state of the toggle
   void* state(ESubsystemState state) override;
  private:
   std::unique_ptr<IToggle> m_toggle_driver{};

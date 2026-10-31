@@ -44,6 +44,7 @@ class ToggleSubsystem : public ASubsystem {
 
   /// @brief Makes a state method
   /// @param state __ESubsystemState__ The state of the toggle
+  /// @return __void*__ The value of the desired state
   void* state(ESubsystemState state) override;
  private:
   std::unique_ptr<IToggle> m_toggle_driver{};

@@ -287,6 +287,12 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   // create pros oject
   std::unique_ptr<pros::Motor> pros_lift_motor{
       std::make_unique<pros::Motor>(LIFT_MOTOR_PORT)};
+  std::unique_ptr<pros::Motor> pros_lift_motor_other{
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_OTHER)};
+
+  // PID
+  control::PID lift_pid{control::PID(
+      std::make_unique<pros_adapters::ProsClock>(), LIFT_KP, LIFT_KI, LIFT_KD)};
 
   // rtos
   std::unique_ptr<rtos::IDelayer> lift_delayer{
@@ -299,13 +305,19 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   // Adapt to pros
   std::unique_ptr<io::IMotor> lift_motor{
       std::make_unique<pros_adapters::ProsV5Motor>(std::move(pros_lift_motor))};
+  std::unique_ptr<io::IMotor> lift_motor_other{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_lift_motor_other))};
 
   robot->addSubsystem(std::make_unique<robot::subsystems::lift::LiftSubsystem>(
       robot::subsystems::lift::DirectContinuousLiftBuilder{}
           .withMotor(std::move(lift_motor))
+          .withMotor(std::move(lift_motor_other))
           .withDelayer(std::move(lift_delayer))
           .withTask(std::move(lift_task))
           .withMutex(std::move(lift_mutex))
+          .withPID(lift_pid)
+          .withCentidegreesToInches(LIFT_CENTIDEGREES_TO_INCHES)
           .buildUnique()));
 
   // return complete robot

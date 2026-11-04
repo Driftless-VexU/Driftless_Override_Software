@@ -286,9 +286,9 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   // create pros oject
   std::unique_ptr<pros::Motor> pros_lift_motor{
-      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT)};
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT, pros::v5::MotorGearset::blue)};
   std::unique_ptr<pros::Motor> pros_lift_motor_other{
-      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_OTHER)};
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_OTHER, pros::v5::MotorGearset::blue)};
 
   // PID
   control::PID lift_pid{control::PID(

@@ -4,9 +4,9 @@ namespace driftless::robot::subsystems::lift {
 LiftSubsystem::LiftSubsystem(std::unique_ptr<ILift> lift)
     : ASubsystem{ESubsystem::LIFT}, m_lift_driver{std::move(lift)} {}
 
-void LiftSubsystem::init() {}
+void LiftSubsystem::init() {m_lift_driver->init();}
 
-void LiftSubsystem::run() {}
+void LiftSubsystem::run() {m_lift_driver->run();}
 
 void LiftSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);

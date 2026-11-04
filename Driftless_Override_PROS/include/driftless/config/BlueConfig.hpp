@@ -170,7 +170,7 @@ class BlueConfig : public IConfig {
 
   // ## TOGGLES ##
 
-  static constexpr int8_t TOGGLE_PORT{5};
+  static constexpr int8_t TOGGLE_PORT{-5};
 
   // #### ROBOT CONSTANTS ####
 

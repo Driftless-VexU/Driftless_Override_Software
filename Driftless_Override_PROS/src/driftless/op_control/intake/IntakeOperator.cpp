@@ -17,6 +17,7 @@ void IntakeOperator::update(
   }
   else
   {
+    toggleIntakePistonState();
     setIntakeMotorSpeed(0.0f);
   }
 }

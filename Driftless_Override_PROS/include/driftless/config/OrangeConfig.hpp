@@ -168,8 +168,8 @@ class OrangeConfig : public IConfig {
 
   // ## LIFT ##
 
-  static constexpr int8_t LIFT_MOTOR_PORT{18};
-  static constexpr int8_t LIFT_MOTOR_PORT_OTHER{-20};
+  static constexpr int8_t LIFT_MOTOR_PORT{15};
+  static constexpr int8_t LIFT_MOTOR_PORT_OTHER{-16};
 
   // #### ROBOT CONSTANTS ####
 

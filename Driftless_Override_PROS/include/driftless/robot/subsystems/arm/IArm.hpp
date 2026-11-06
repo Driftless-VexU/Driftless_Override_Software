@@ -37,7 +37,13 @@ class IArm {
   /// @brief Virtual destructor
   virtual ~IArm() = default;
 
-  /// @brief move the wrist to a hard-stop and reset position
+  /// @brief Initialize all devices in the arm
+  virtual void init() = 0;
+  
+  /// @brief Run the arm and start background tasks, if any
+  virtual void run() = 0;
+
+  /// @brief Move the wrist to a hard-stop and reset position
   virtual void resetWrist() = 0;
 
   /// @brief Move the arm to the load position

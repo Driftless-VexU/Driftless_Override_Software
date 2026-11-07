@@ -24,7 +24,9 @@ namespace arm {
 enum class EArmState : uint8_t {
   START,
   INITIALIZED,
+  LOAD_PRE,
   LOAD,
+  LOAD_POST,
   SCAN,
   SCORE_LOW,
   SCORE_HIGH,

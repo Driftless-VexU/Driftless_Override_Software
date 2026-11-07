@@ -1,7 +1,6 @@
 #ifndef __TOGGLE_BUILDER_HPP__
 #define __TOGGLE_BUILDER_HPP__
 
-#include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/toggle/Toggle.hpp"
 
 /// @brief The namespace for driftless library code

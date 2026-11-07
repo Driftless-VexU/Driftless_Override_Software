@@ -1,5 +1,13 @@
 #include "driftless/config/BlueConfig.hpp"
 
+#include "driftless/io/IMotor.hpp"
+#include "driftless/op_control/EControl.hpp"
+#include "driftless/pros_adapters/ProsV5Motor.hpp"
+#include "driftless/robot/subsystems/toggle/toggleBuilder.hpp"
+#include "pros/adi.hpp"
+#include "pros/motors.hpp"
+
+
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
 
@@ -282,6 +290,22 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
               .withPiston(std::move(brake_piston))
               .buildUnique()));
 
+  // ## TOGGLE ##
+
+  // create pros object
+  std::unique_ptr<pros::Motor> pros_toggle_motor{
+      std::make_unique<pros::Motor>(TOGGLE_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IMotor> toggle_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_toggle_motor))};
+
+    robot->addSubsystem(
+        std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
+            robot::subsystems::toggle::ToggleBuilder{}
+            .withMotor(std::move(toggle_motor))
+            .buildUnique()));
   // return complete robot
   return robot;
 }

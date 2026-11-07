@@ -75,6 +75,11 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+// Toggle subsystem includes
+#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
+#include "driftless/robot/subsystems/toggle/Toggle.hpp"
+#include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
+
 namespace driftless {
 namespace config {
 class OrangeConfig : public IConfig {
@@ -159,6 +164,10 @@ class OrangeConfig : public IConfig {
   // ## BRAKES ##
 
   static constexpr int8_t BRAKE_PORT{1};
+
+  // ## TOGGLES ##
+
+  static constexpr int8_t TOGGLE_PORT{-15};
 
   // #### ROBOT CONSTANTS ####
 

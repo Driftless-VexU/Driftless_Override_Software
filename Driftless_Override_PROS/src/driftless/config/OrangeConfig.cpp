@@ -273,7 +273,8 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   // Adapt to pros
   std::unique_ptr<io::IPiston> brake_piston{
-      std::make_unique<pros_adapters::ProsPiston>(std::move(pros_brake_piston))};
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_brake_piston))};
 
   robot->addSubsystem(
       std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
@@ -281,6 +282,22 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
               .withPiston(std::move(brake_piston))
               .buildUnique()));
 
+  // ## TOGGLE ##
+
+  // create pros object
+  std::unique_ptr<pros::Motor> pros_toggle_motor{
+      std::make_unique<pros::Motor>(TOGGLE_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IMotor> toggle_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_toggle_motor))};
+
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
+          robot::subsystems::toggle::ToggleBuilder{}
+              .withMotor(std::move(toggle_motor))
+              .buildUnique()));
   // return complete robot
   return robot;
 }

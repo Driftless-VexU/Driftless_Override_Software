@@ -72,12 +72,10 @@
 
 // Brakes subsystem includes
 #include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
-#include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
 // Toggle subsystem includes
 #include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
-#include "driftless/robot/subsystems/toggle/Toggle.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 
 namespace driftless {

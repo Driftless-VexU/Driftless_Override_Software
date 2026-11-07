@@ -75,6 +75,12 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+// Lift subsystem includes
+#include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
+#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
+#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
+
+
 namespace driftless {
 namespace config {
 class OrangeConfig : public IConfig {
@@ -143,22 +149,27 @@ class OrangeConfig : public IConfig {
 
   // ## ARDUINO PORT ##
 
-  static constexpr int ARDUINO_PORT{16};
+  static constexpr int ARDUINO_PORT{99};
 
   // ## DRIVE MOTORS ##
 
-  static constexpr int DRIVE_FRONT_LEFT_TOP_PORT{11};
-  static constexpr int DRIVE_FRONT_LEFT_BOTTOM_PORT{-12};
-  static constexpr int DRIVE_FRONT_RIGHT_TOP_PORT{15};
+  static constexpr int DRIVE_FRONT_LEFT_TOP_PORT{19};
+  static constexpr int DRIVE_FRONT_LEFT_BOTTOM_PORT{-20};
+  static constexpr int DRIVE_FRONT_RIGHT_TOP_PORT{14};
   static constexpr int DRIVE_FRONT_RIGHT_BOTTOM_PORT{-13};
-  static constexpr int DRIVE_BACK_LEFT_TOP_PORT{20};
-  static constexpr int DRIVE_BACK_LEFT_BOTTOM_PORT{-19};
-  static constexpr int DRIVE_BACK_RIGHT_TOP_PORT{18};
-  static constexpr int DRIVE_BACK_RIGHT_BOTTOM_PORT{-14};
+  static constexpr int DRIVE_BACK_LEFT_TOP_PORT{18};
+  static constexpr int DRIVE_BACK_LEFT_BOTTOM_PORT{-17};
+  static constexpr int DRIVE_BACK_RIGHT_TOP_PORT{12};
+  static constexpr int DRIVE_BACK_RIGHT_BOTTOM_PORT{-11};
 
   // ## BRAKES ##
 
   static constexpr int8_t BRAKE_PORT{1};
+
+  // ## LIFT ##
+
+  static constexpr int8_t LIFT_MOTOR_PORT_LEFT{15};
+  static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{-16};
 
   // #### ROBOT CONSTANTS ####
 
@@ -180,6 +191,12 @@ class OrangeConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{0.0f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
+
+  // ## LIFT ##
+  static constexpr float LIFT_KP{24.0f};
+  static constexpr float LIFT_KI{0.001f};
+  static constexpr float LIFT_KD{0.0f};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{3.0f / 4.6f};
 
  public:
   std::string getName() override;

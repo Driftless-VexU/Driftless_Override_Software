@@ -13,6 +13,7 @@
 #include "driftless/rtos/IDelayer.hpp"
 
 // operator controls
+#include "driftless/op_control/lift/LiftOperator.hpp"
 #include "driftless/op_control/brakes/BrakesOperator.hpp"
 #include "driftless/op_control/holonomic_drive_train/HolonomicDriveTrainOperator.hpp"
 #include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"

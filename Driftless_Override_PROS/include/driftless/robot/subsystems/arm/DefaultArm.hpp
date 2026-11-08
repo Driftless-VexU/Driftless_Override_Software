@@ -60,6 +60,8 @@ class DefaultArm : public IArm {
  private:
   static constexpr uint8_t TASK_DELAY{20};
 
+  static constexpr uint16_t TASK_TIMEOUT{2000};
+
   /// @brief Run arm updates constantly in a background task
   /// @param params __void*__ Pointer to the arm instance
   static void taskLoop(void* params);

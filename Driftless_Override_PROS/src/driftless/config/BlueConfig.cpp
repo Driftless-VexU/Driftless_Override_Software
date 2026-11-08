@@ -1,13 +1,5 @@
 #include "driftless/config/BlueConfig.hpp"
 
-#include "driftless/io/IMotor.hpp"
-#include "driftless/op_control/EControl.hpp"
-#include "driftless/pros_adapters/ProsV5Motor.hpp"
-#include "driftless/robot/subsystems/toggle/toggleBuilder.hpp"
-#include "pros/adi.hpp"
-#include "pros/motors.hpp"
-
-
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
 

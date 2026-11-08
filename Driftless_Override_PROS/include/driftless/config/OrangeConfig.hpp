@@ -150,7 +150,7 @@ class OrangeConfig : public IConfig {
 
   // ## ARDUINO PORT ##
 
-  static constexpr int ARDUINO_PORT{99};
+  static constexpr int ARDUINO_PORT{3};
 
   // ## DRIVE MOTORS ##
 
@@ -169,12 +169,44 @@ class OrangeConfig : public IConfig {
 
   // ## LIFT ##
 
-  static constexpr int8_t LIFT_MOTOR_PORT_LEFT{15};
-  static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{-16};
+  static constexpr int8_t LIFT_MOTOR_PORT_LEFT{-15};
+  static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{16};
   
   // ## TOGGLES ##
 
-  static constexpr int8_t TOGGLE_PORT{-15};
+  static constexpr int8_t TOGGLE_PORT{-5};
+
+  // ## INTAKE ##
+
+  static constexpr int8_t INTAKE_TOP_MOTOR_PORT{-1};
+
+  static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{2};
+
+  static constexpr int8_t INTAKE_HEIGHT_PISTON_PORT{2};
+
+  // ## ARM ##
+
+  static constexpr int8_t ELBOW_MOTOR_PORT{7};
+
+  static constexpr int8_t WRIST_MOTOR_PORT{9};
+
+  // ## CLAW ##
+
+  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{10};
+
+  static constexpr int8_t CLAW_GRABBER_PISTON_PORT{3};
+
+  // ## GOAL ALLIGNER ##
+
+  static constexpr int8_t GOAL_ALLIGNER_PISTON_PORT{4};
+
+  // ## WALL ##
+
+  static constexpr int8_t WALL_EXTENSION_PISTON_PORT{5};
+
+  static constexpr int8_t WALL_DEPLOY_ROLLER_PISTON_PORT{6};
+  
+  static constexpr int8_t WALL_ROLLER_MOTOR_PORT{6};
 
   // #### ROBOT CONSTANTS ####
 
@@ -199,9 +231,9 @@ class OrangeConfig : public IConfig {
 
   // ## LIFT ##
   static constexpr float LIFT_KP{24.0f};
-  static constexpr float LIFT_KI{0.001f};
+  static constexpr float LIFT_KI{0.01f};
   static constexpr float LIFT_KD{0.0f};
-  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{3.0f / 4.6f};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f / (12.68f * 2 * M_PI)};
 
  public:
   std::string getName() override;

@@ -75,7 +75,7 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
 // Toggle subsystem inclues
-#include "driftless/robot/subsystems/toggle/Toggle.hpp"
+#include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 
 

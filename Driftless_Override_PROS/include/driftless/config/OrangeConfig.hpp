@@ -76,7 +76,6 @@
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
 // Lift subsystem includes
-#include "driftless/robot/subsystems/lift/DirectContinuousLift.hpp"
 #include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
 #include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
 

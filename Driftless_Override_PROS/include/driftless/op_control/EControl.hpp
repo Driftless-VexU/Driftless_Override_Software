@@ -22,7 +22,8 @@ enum EControl {
   TANK_DRIVE_ARCADE_TURN,
   BRAKE_TOGGLE,
   LIFT_RAISE,
-  LIFT_LOWER
+  LIFT_LOWER,
+  TOGGLE_SPEED
 };
 }  // namespace op_control
 }  // namespace driftless

@@ -46,6 +46,8 @@ class AsherProfile : public IProfile {
            op_control::EControllerDigital::TRIGGER_LEFT_TOP},
           {op_control::EControl::LIFT_LOWER,
            op_control::EControllerDigital::TRIGGER_LEFT_BOTTOM},
+          {op_control::EControl::TOGGLE_SPEED,
+           op_control::EControllerDigital::DPAD_DOWN},
   };
 
   /// @brief Maps startup configurations to their values

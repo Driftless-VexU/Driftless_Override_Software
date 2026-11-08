@@ -37,7 +37,10 @@ class EthanSkillsProfile : public IProfile {
           {op_control::EControl::LIFT_RAISE,
            op_control::EControllerDigital::TRIGGER_LEFT_TOP},
           {op_control::EControl::LIFT_LOWER,
-           op_control::EControllerDigital::TRIGGER_LEFT_BOTTOM}};
+           op_control::EControllerDigital::TRIGGER_LEFT_BOTTOM},
+          {op_control::EControl::TOGGLE_SPEED,
+           op_control::EControllerDigital::DPAD_DOWN},
+  };
 
   /// @brief Maps startup configurations to their values
   const std::map<op_control::EStartupConfig, bool> STARTUP_CONFIG_MAP{};

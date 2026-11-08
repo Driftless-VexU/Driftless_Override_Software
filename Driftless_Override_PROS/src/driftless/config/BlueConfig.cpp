@@ -323,6 +323,23 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
           .withPID(lift_pid)
           .withCentidegreesToInches(LIFT_CENTIDEGREES_TO_INCHES)
           .buildUnique()));
+  
+    // ## TOGGLE ##
+
+  // create pros object
+  std::unique_ptr<pros::Motor> pros_toggle_motor{
+      std::make_unique<pros::Motor>(TOGGLE_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IMotor> toggle_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_toggle_motor))};
+
+    robot->addSubsystem(
+        std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
+            robot::subsystems::toggle::ToggleBuilder{}
+            .withMotor(std::move(toggle_motor))
+            .buildUnique()));
 
   // return complete robot
   return robot;

@@ -72,8 +72,12 @@
 
 // Brakes subsystem includes
 #include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
-#include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
+
+// Toggle subsystem inclues
+#include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
+#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
+
 
 namespace driftless {
 namespace config {
@@ -162,6 +166,10 @@ class BlueConfig : public IConfig {
 
   static constexpr int8_t BRAKE_PORT{1};
 
+  // ## TOGGLES ##
+
+  static constexpr int8_t TOGGLE_PORT{-5};
+
   // #### ROBOT CONSTANTS ####
 
   // ## COPROCESSOR ##
@@ -182,7 +190,6 @@ class BlueConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{0.0f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
-
 
  public:
   std::string getName() override;

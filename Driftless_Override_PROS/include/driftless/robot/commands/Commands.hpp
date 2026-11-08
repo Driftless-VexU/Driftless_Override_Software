@@ -15,6 +15,7 @@
 #include "driftless/robot/commands/odometry/SetYPositionCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
+#include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
 
 /// @brief The namespace for driftless library code
@@ -38,7 +39,7 @@ using Command = std::variant<
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
     tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
-    toggle::SetToggleSpeedCommand>;
+    lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand>;
 
 }  // namespace commands
 }  // namespace robot

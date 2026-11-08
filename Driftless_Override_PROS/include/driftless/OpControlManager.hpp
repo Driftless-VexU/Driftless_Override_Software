@@ -12,8 +12,6 @@
 #include "driftless/rtos/IClock.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 
-
-
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {

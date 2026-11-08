@@ -1,5 +1,5 @@
-#ifndef __Continuous_Lift_HPP__
-#define __Continuous_Lift_HPP__
+#ifndef __DIRECT_CONTINUOUS_LIFT_HPP__
+#define __DIRECT_CONTINUOUS_LIFT_HPP__
 
 #include <cstdint>
 #include <memory>

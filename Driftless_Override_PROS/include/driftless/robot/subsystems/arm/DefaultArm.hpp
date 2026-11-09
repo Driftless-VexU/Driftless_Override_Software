@@ -81,7 +81,7 @@ class DefaultArm : public IArm {
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-  Robot& m_robot;
+  std::weak_ptr<Robot> m_robot;
 
   // LIFT POSITIONS
 

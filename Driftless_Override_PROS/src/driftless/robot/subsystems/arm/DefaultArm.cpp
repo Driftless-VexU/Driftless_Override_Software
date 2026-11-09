@@ -266,21 +266,28 @@ inline void DefaultArm::handleScoreHighState() {
 }
 
 inline float DefaultArm::getLiftHeight() {
-  return *static_cast<float*>(
-      m_robot.getState(ESubsystem::LIFT, ESubsystemState::LIFT_GET_HEIGHT));
+  float out{0.0f};
+
+  if (auto robot = m_robot.lock()) {
+    out = *static_cast<float*>(
+        robot->getState(ESubsystem::LIFT, ESubsystemState::LIFT_GET_HEIGHT));
+  }
+  return out;
 }
 
 inline void DefaultArm::setLiftHeight(float height) {
-  m_robot.sendCommand(ESubsystem::LIFT,
-                      commands::lift::SetLiftHeightCommand{height});
+  if (auto robot = m_robot.lock()) {
+    robot->sendCommand(ESubsystem::LIFT,
+                       commands::lift::SetLiftHeightCommand{height});
+  }
 }
 
 inline bool DefaultArm::isClawFlipped() {
   // TODO: implement when claw is ready
-  return false;/*
-  *static_cast<bool>(
-      m_robot.getState(ESubsystem::CLAW, ESubsystemState::CLAW_IS_FLIPPED));
-      */
+  return false; /*
+   *static_cast<bool>(
+       m_robot.getState(ESubsystem::CLAW, ESubsystemState::CLAW_IS_FLIPPED));
+       */
 }
 
 inline void DefaultArm::flipClaw(bool orientation) {

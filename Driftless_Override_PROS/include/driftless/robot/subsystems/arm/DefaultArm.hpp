@@ -81,7 +81,7 @@ class DefaultArm : public IArm {
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-  const Robot& m_robot;
+  Robot& m_robot;
 
   // LIFT POSITIONS
 
@@ -145,20 +145,20 @@ class DefaultArm : public IArm {
 
   /// @brief Get the height of the lift, in inches
   /// @return __float__ The height of the lift, in inches
-  float getLiftHeight() const;
+  inline float getLiftHeight();
 
   /// @brief Set the height of the lift, in inches
   /// @param height __float__ The height of the lift, in inches
-  void setLiftHeight(float height);
+  inline void setLiftHeight(float height);
 
   /// @brief Determine if the claw is flipped
   /// @return __bool__ True if the claw is flipped, false if not
-  bool isClawFlipped() const;
+  inline bool isClawFlipped();
 
   /// @brief Flip the claw to the given orientation
   /// @param orientation __bool__ True to flip the claw, false for normal
   /// orientation
-  void flipClaw(bool orientation);
+  inline void flipClaw(bool orientation);
 };
 }  // namespace arm
 }  // namespace subsystems

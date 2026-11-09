@@ -18,30 +18,32 @@ namespace subsystems {
 namespace aligner {
 
 class IAligner {
-    public:
-    /// @brief Destroy the IAligner object
-    virtual ~IAligner() = default;
+ public:
+  /// @brief Destroy the IAligner object
+  virtual ~IAligner() = default;
 
-    /// @brief Initialize the IAligner object
-    virtual void init() = 0;
+  /// @brief Initialize the IAligner object
+  virtual void init() = 0;
 
-    /// @brief Run the IAlinger object
-    virtual void run() = 0;
+  /// @brief Run the IAlinger object
+  virtual void run() = 0;
 
-    /// @brief Set the state of the aligner
-    /// @param deployed __bool__ Whether the aligner is deployed or not, false for retracted
-    virtual void setState(bool deployed) = 0;
+  /// @brief Set the state of the aligner
+  /// @param deployed __bool__ Whether the aligner is deployed or not, false for
+  /// retracted
+  virtual void setState(bool deployed) = 0;
 
-    /// @brief Toggles the state of the aligner
-    virtual void toggleState() = 0;
+  /// @brief Toggles the state of the aligner
+  virtual void toggleState() = 0;
 
-    /// @brief Determine if the aligner is deployed
-    /// @return __bool__ Whether the brakes are deployed or not, true is deployed, false is retracted
-    virtual bool isDeployed() = 0;
+  /// @brief Determine if the aligner is deployed
+  /// @return __bool__ Whether the brakes are deployed or not, true is deployed,
+  /// false is retracted
+  virtual bool isDeployed() = 0;
 };
-}
-}
-}
-}
+}  // namespace aligner
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

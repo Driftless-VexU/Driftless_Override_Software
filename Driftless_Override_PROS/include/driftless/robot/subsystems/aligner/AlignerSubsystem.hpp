@@ -22,45 +22,49 @@ namespace subsystems {
 namespace aligner {
 
 class AlignerSubsystem : public ASubsystem {
-    public:
-    /// @brief Constructs a new Aligner Subsystem object
-    /// @param aligner_driver __std::unique_ptr<IAligner>__ The aligner driver class to use by the subsystem
-    AlignerSubsystem(std::unique_ptr<IAligner> aligner_driver);
-    
-    /// @brief Initializes the aligner subsystem
-    void init() override;
+ public:
+  /// @brief Constructs a new Aligner Subsystem object
+  /// @param aligner_driver __std::unique_ptr<IAligner>__ The aligner driver
+  /// class to use by the subsystem
+  AlignerSubsystem(std::unique_ptr<IAligner> aligner_driver);
 
-    /// @brief Runs the aligner subsystem
-    void run() override;
+  /// @brief Initializes the aligner subsystem
+  void init() override;
 
-    /// @brief Send a command to the aligner subsystem
-    /// @param cmd __const::commands::Command&__ The command to send
-    void command(const commands::Command& cmd) override;
+  /// @brief Runs the aligner subsystem
+  void run() override;
 
-    /// @brief Retrieves the current state of the aligner subsystem
-    /// @param state __ESubsystemState__ The state to retrieve from the aligner subsystem
-    /// @return __void*__ The value of the desired state
-    void* state(ESubsystemState state) override;
+  /// @brief Send a command to the aligner subsystem
+  /// @param cmd __const::commands::Command&__ The command to send
+  void command(const commands::Command& cmd) override;
 
-    private:
-    std::unique_ptr<IAligner> m_aligner_driver;
+  /// @brief Retrieves the current state of the aligner subsystem
+  /// @param state __ESubsystemState__ The state to retrieve from the aligner
+  /// subsystem
+  /// @return __void*__ The value of the desired state
+  void* state(ESubsystemState state) override;
 
-    /// @brief Handles the set aligner state command
-    /// @param cmd __const::commands::aligner::SetAlignerStateCommand__ The command to handle
-    void handleCommand(const commands::aligner::SetAlignerStateCommand cmd);
+ private:
+  std::unique_ptr<IAligner> m_aligner_driver;
 
-    /// @brief Handles the toggle aligner state command
-    /// @param cmd __const::commands::aligner::ToggleAlignerStateCommand__ The command to handle
-    void handleCommand(const commands::aligner::ToggleAlignerStateCommand cmd);
+  /// @brief Handles the set aligner state command
+  /// @param cmd __const::commands::aligner::SetAlignerStateCommand__ The
+  /// command to handle
+  void handleCommand(const commands::aligner::SetAlignerStateCommand cmd);
 
-    /// @brief Handles any commands that are not explicitly handled by the aligner subsystem
-    /// @param cmd _const auto__ The command to handle
-    void handleCommand(const auto cmd);
+  /// @brief Handles the toggle aligner state command
+  /// @param cmd __const::commands::aligner::ToggleAlignerStateCommand__ The
+  /// command to handle
+  void handleCommand(const commands::aligner::ToggleAlignerStateCommand cmd);
 
+  /// @brief Handles any commands that are not explicitly handled by the aligner
+  /// subsystem
+  /// @param cmd _const auto__ The command to handle
+  void handleCommand(const auto cmd);
 };
-}
-}
-}
-}
+}  // namespace aligner
+}  // namespace subsystems
+}  // namespace robot
+}  // namespace driftless
 
 #endif

@@ -31,7 +31,8 @@ enum class ESubsystemCommand {
   ODOMETRY_SET_Y,
   ODOMETRY_SET_THETA,
   ODOMETRY_RESET_X,
-  ODOMETRY_RESET_Y
+  ODOMETRY_RESET_Y,
+  TOGGLE_SPEED
 };
 }  // namespace subsystems
 }  // namespace robot

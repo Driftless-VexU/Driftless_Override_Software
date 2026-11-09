@@ -30,6 +30,18 @@ class AlignerOperator {
     AlignerOperator(const std::shared_ptr<io::IController>& controller,
     const std::shared_ptr<robot::Robot>& robot);
 
+    /// @brief Updates the aligner using the configuration within the given profile
+    /// @param profile __const std::unique_ptr<profiles::IProfile>&__ The profile to use for the controls
+    void update(const std::unique_ptr<profiles::IProfile>& profile);
+
+    private:
+    std::shared_ptr<io::IController> m_controller;
+
+    std::shared_ptr<robot::Robot> m_robot;
+
+    /// @brief Toggles the state of the aligner
+    void toggleAligner();
+
 
 };
 }

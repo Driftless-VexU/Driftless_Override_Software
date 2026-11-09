@@ -1,6 +1,7 @@
 #ifndef __DEFAULT_ARM_HPP__
 #define __DEFAULT_ARM_HPP__
 
+#include "driftless/control/PID.hpp"
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/Robot.hpp"
 #include "driftless/robot/subsystems/arm/IArm.hpp"
@@ -70,6 +71,10 @@ class DefaultArm : public IArm {
 
   hal::MotorGroup m_wrist_motors{};
 
+  control::PID m_elbow_pid{};
+
+  control::PID m_wrist_pid{};
+
   std::unique_ptr<rtos::ITask> m_task{};
 
   std::unique_ptr<rtos::IMutex> m_mutex{};
@@ -78,9 +83,41 @@ class DefaultArm : public IArm {
 
   const Robot& m_robot;
 
-  const float m_elbow_motor_rotations_to_arm_radians{0.0f};
+  // ELEVATOR POSITIONS
 
-  const float m_wrist_motor_rotations_to_wrist_radians{0.0f};
+  const float m_elevator_load_height{0.0f};
+
+  const float m_elevator_load_transition_height{0.0f};
+
+  // ELBOW POSITIONS
+
+  const float m_elbow_load_position{0.0f};
+
+  const float m_elbow_score_low_position{0.0f};
+
+  const float m_elbow_score_high_position{0.0f};
+
+  // WRIST POSITIONS
+
+  const float m_wrist_load_position{0.0f};
+
+  const float m_wrist_scan_position{0.0f};
+
+  const float m_wrist_score_low_position{0.0f};
+
+  const float m_wrist_score_high_position{0.0f};
+
+  // ACTIVELY TARGETED POSITIONS
+
+  float m_elbow_target_position{0.0f};
+
+  float m_wrist_target_position{0.0f};
+
+  // POSITION TOLERANCES
+
+  float m_elbow_position_tolerance{0.0f};
+
+  float m_wrist_position_tolerance{0.0f};
 
   EArmState m_current_position_state{EArmState::START};
 
@@ -88,13 +125,32 @@ class DefaultArm : public IArm {
 
   bool m_is_at_target{};
 
-  /// @brief Update the arm based on the current state
-  void taskUpdate();
+  bool m_is_initialized{};
 
   /// @brief Construct a new Default Arm object
   /// @param builder __DefaultArmBuilder__ The builder to use for constructing
   /// the arm
   DefaultArm(DefaultArmBuilder&& builder);
+
+  /// @brief Update the arm based on the current state
+  void taskUpdate();
+
+  /// @brief Get the height of the lift, in inches
+  /// @return __float__ The height of the lift, in inches
+  float getLiftHeight() const;
+
+  /// @brief Set the height of the lift, in inches
+  /// @param height __float__ The height of the lift, in inches
+  void setLiftHeight(float height);
+
+  /// @brief Determine if the claw is flipped
+  /// @return __bool__ True if the claw is flipped, false if not
+  bool isClawFlipped() const;
+
+  /// @brief Flip the claw to the given orientation
+  /// @param orientation __bool__ True to flip the claw, false for normal
+  /// orientation
+  void flipClaw(bool orientation);
 };
 }  // namespace arm
 }  // namespace subsystems

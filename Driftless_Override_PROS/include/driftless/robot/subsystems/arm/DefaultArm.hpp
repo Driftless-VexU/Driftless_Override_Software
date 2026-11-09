@@ -83,11 +83,11 @@ class DefaultArm : public IArm {
 
   const Robot& m_robot;
 
-  // ELEVATOR POSITIONS
+  // LIFT POSITIONS
 
-  const float m_elevator_load_height{0.0f};
+  const float m_lift_load_height{0.0f};
 
-  const float m_elevator_load_transition_height{0.0f};
+  const float m_lift_load_transition_height{0.0f};
 
   // ELBOW POSITIONS
 

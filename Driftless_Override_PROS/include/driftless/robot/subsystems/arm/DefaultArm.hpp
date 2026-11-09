@@ -135,6 +135,14 @@ class DefaultArm : public IArm {
   /// @brief Update the arm based on the current state
   void taskUpdate();
 
+  inline void handleLoadState();
+
+  inline void handleScanState();
+
+  inline void handleScoreLowState();
+
+  inline void handleScoreHighState();
+
   /// @brief Get the height of the lift, in inches
   /// @return __float__ The height of the lift, in inches
   float getLiftHeight() const;

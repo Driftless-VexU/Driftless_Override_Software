@@ -20,6 +20,8 @@ namespace subsystems {
 namespace arm {
 
 class DefaultArmBuilder {
+  friend class DefaultArm;
+
  public:
   DefaultArmBuilder&& withElbowMotor(
       std::unique_ptr<io::IMotor> elbow_motor) &&;

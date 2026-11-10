@@ -27,8 +27,8 @@ namespace arm {
 
 class DefaultArmBuilder;
 
-struct DefaultArmTargetPositions{
-   // LIFT POSITIONS
+struct DefaultArmTargetPositions {
+  // LIFT POSITIONS
 
   float lift_load_height{0.0f};
 
@@ -65,8 +65,8 @@ class DefaultArm : public IArm {
   /// @brief Run the arm and start background tasks, if any
   void run() override;
 
-  /// @brief Move the wrist to a hard-stop and reset position
-  void resetWrist() override;
+  /// @brief Move the arm motors to a hard-stop and reset position
+  void reset() override;
 
   /// @brief Move the arm to the load position
   void goToLoadPosition() override;

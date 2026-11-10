@@ -17,21 +17,24 @@ void DefaultArm::run() {
   }
 }
 
-void DefaultArm::resetWrist() {
+void DefaultArm::reset() {
   if (m_mutex) {
     m_mutex->take();
   }
 
   m_wrist_motors.setVoltage(-5.0);
+  m_elbow_motors.setVoltage(-5.0);
   uint16_t timeout_counter{0};
   do {
     timeout_counter += TASK_DELAY;
     m_delayer->delay(TASK_DELAY);
   } while (std::abs(m_wrist_motors.getAngularVelocity()) > 0.1 &&
+           std::abs(m_elbow_motors.getAngularVelocity()) > 0.1 &&
            timeout_counter < TASK_TIMEOUT);
 
   if (timeout_counter < TASK_TIMEOUT) {
     m_wrist_motors.setPosition(0.0);
+    m_elbow_motors.setPosition(0.0);
     m_is_initialized = true;
   }
 
@@ -108,6 +111,19 @@ void DefaultArm::taskLoop(void* params) {
     arm->taskUpdate();
   }
 }
+
+DefaultArm::DefaultArm(DefaultArmBuilder&& builder)
+    : m_elbow_motors{std::move(builder.m_elbow_motors)},
+      m_wrist_motors{std::move(builder.m_wrist_motors)},
+      m_elbow_pid{builder.m_elbow_pid},
+      m_wrist_pid{builder.m_wrist_pid},
+      m_arm_targets{builder.m_arm_targets},
+      m_task{std::move(builder.m_task)},
+      m_mutex{std::move(builder.m_mutex)},
+      m_delayer{std::move(builder.m_delayer)},
+      m_robot{builder.m_robot},
+      m_elbow_position_tolerance{builder.m_elbow_position_tolerance},
+      m_wrist_position_tolerance{builder.m_wrist_position_tolerance} {}
 
 void DefaultArm::taskUpdate() {
   if (m_mutex) {

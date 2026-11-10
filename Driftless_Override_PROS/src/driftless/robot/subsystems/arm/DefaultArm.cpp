@@ -128,7 +128,7 @@ void DefaultArm::taskUpdate() {
         timeout_counter += TASK_DELAY;
         m_delayer->delay(TASK_DELAY);
       } while ((std::abs(m_wrist_motors.getAngularVelocity()) > 0.1 ||
-               std::abs(m_elbow_motors.getAngularVelocity()) > 0.1) &&
+                std::abs(m_elbow_motors.getAngularVelocity()) > 0.1) &&
                timeout_counter < TASK_TIMEOUT);
 
       if (timeout_counter < TASK_TIMEOUT) {
@@ -213,8 +213,6 @@ inline void DefaultArm::handleLoadState() {
 
 inline void DefaultArm::handleScanState() {
   if (m_current_position_state == EArmState::LOAD) {
-    setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
-
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
       m_current_position_state = EArmState::LOAD_POST;
     }
@@ -243,7 +241,6 @@ inline void DefaultArm::handleScanState() {
 inline void DefaultArm::handleScoreLowState() {
   if (m_current_position_state == EArmState::LOAD) {
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
-
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
       m_current_position_state = EArmState::LOAD_POST;
     }
@@ -268,8 +265,6 @@ inline void DefaultArm::handleScoreLowState() {
 
 inline void DefaultArm::handleScoreHighState() {
   if (m_current_position_state == EArmState::LOAD) {
-    setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
-
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
       m_current_position_state = EArmState::LOAD_POST;
     }

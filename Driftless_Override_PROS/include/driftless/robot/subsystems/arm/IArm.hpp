@@ -45,8 +45,8 @@ class IArm {
   /// @brief Run the arm and start background tasks, if any
   virtual void run() = 0;
 
-  /// @brief Move the wrist to a hard-stop and reset position
-  virtual void resetWrist() = 0;
+  /// @brief Move the arm motors to a hard-stop and reset position
+  virtual void reset() = 0;
 
   /// @brief Move the arm to the load position
   virtual void goToLoadPosition() = 0;

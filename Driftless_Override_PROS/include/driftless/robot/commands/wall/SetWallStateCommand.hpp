@@ -14,11 +14,11 @@ namespace robot {
 namespace commands {
 
 /// @brief The namespace for commands which can be sent to the wall subsystem
-/// @author Matthew Backman
+/// @author Jacob Fiedorowicz
 namespace wall {
 
 /// @brief Command to set the state of the wall
-/// @author Matthew Backman
+/// @author Jacob Fiedorowicz
 struct SetWallStateCommand {
   bool m_deployed{};
 };

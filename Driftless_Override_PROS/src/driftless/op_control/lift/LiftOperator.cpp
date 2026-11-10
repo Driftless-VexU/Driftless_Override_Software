@@ -35,8 +35,8 @@ void LiftOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
       if (target_height < LIFT_MIN_HEIGHT) {
         target_height = LIFT_MIN_HEIGHT;
       }
-      setLiftHeight(target_height);
     }
+    setLiftHeight(target_height);
   }
 }
 

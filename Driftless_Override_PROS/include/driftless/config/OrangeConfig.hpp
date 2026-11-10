@@ -244,11 +244,11 @@ class OrangeConfig : public IConfig {
       pros::v5::MotorGearset::green};
 
   static constexpr float ARM_ELBOW_KP{12.0f};
-  static constexpr float ARM_ELBOW_KI{0.02f};
+  static constexpr float ARM_ELBOW_KI{0.0f};
   static constexpr float ARM_ELBOW_KD{0.0f};
 
   static constexpr float ARM_WRIST_KP{6.0f};
-  static constexpr float ARM_WRIST_KI{0.01f};
+  static constexpr float ARM_WRIST_KI{0.0f};
   static constexpr float ARM_WRIST_KD{0.0f};
 
   static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};

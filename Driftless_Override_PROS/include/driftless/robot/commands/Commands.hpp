@@ -4,18 +4,23 @@
 #include <variant>
 
 /* ADD COMMAND HEADERS HERE */
+#include "driftless/robot/commands/arm/ArmGoLoadCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoScanCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoScoreHighCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoScoreLowCommand.hpp"
+#include "driftless/robot/commands/arm/ArmResetCommand.hpp"
 #include "driftless/robot/commands/brakes/SetBrakeStateCommand.hpp"
 #include "driftless/robot/commands/brakes/ToggleBrakeStateCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
+#include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
 #include "driftless/robot/commands/odometry/SetHeadingCommand.hpp"
 #include "driftless/robot/commands/odometry/SetPositionCommand.hpp"
 #include "driftless/robot/commands/odometry/SetXPositionCommand.hpp"
 #include "driftless/robot/commands/odometry/SetYPositionCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
-#include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
 
 /// @brief The namespace for driftless library code
@@ -39,7 +44,9 @@ using Command = std::variant<
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
     tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
-    lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand>;
+    lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
+    arm::ArmGoScanCommand, arm::ArmGoLoadCommand, arm::ArmGoScoreHighCommand,
+    arm::ArmGoScoreLowCommand, arm::ArmResetCommand>;
 
 }  // namespace commands
 }  // namespace robot

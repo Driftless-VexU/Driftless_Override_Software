@@ -19,7 +19,7 @@ namespace arm {
 
 /// @brief Command to move the arm into the load position
 /// @author Matthew Backman
-struct ArmGoLoad {};
+struct ArmGoLoadCommand {};
 }  // namespace arm
 }  // namespace commands
 }  // namespace robot

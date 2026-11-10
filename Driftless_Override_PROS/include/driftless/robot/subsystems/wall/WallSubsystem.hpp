@@ -23,7 +23,7 @@ namespace subsystems {
 namespace wall {
 
 /// @brief Class to adapt a wall driver to the subsystem structure
-/// @author Samuel Throckmorton
+/// @author Samuel Throckmorton & Jacob Fiedorowicz
 class WallSubsystem : public ASubsystem {
  public:
   /// @brief Construct a new Wall Subsystem object
@@ -58,6 +58,18 @@ class WallSubsystem : public ASubsystem {
   /// @param cmd __const commands::wall::ToggleWallStateCommand__ The command
   /// to handle
   void handleCommand(const commands::wall::ToggleWallStateCommand cmd);
+
+  /// @brief Handles the set wall wheel state command
+  /// @param cmd __const commands::wall::SetWallWheelStateCommand__ The command to handle
+  void handleCommand(const commands::wall::SetWallWheelStateCommand cmd);
+
+  /// @brief Handles the toggle wall wheel state command
+  /// @param cmd __const commands::wall::ToggleWallWheelStateCommand__ The command to handle
+  void handleCommand(const commands::wall::ToggleWallWheelStateCommand cmd);
+
+  /// @brief Handles the set wall wheel motor voltage command
+  /// @param cmd __const commands::wall::SetWallWheelMotorVoltageCommand__ The command to handle
+  void handleCommand(const commands::wall::SetWallWheelMotorVoltageCommand cmd);
 
   /// @brief Handles any commands that are not explicitly handled by the wall
   /// subsystem

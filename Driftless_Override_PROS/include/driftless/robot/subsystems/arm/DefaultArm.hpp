@@ -30,27 +30,27 @@ class DefaultArmBuilder;
 struct DefaultArmTargetPositions{
    // LIFT POSITIONS
 
-  const float lift_load_height{0.0f};
+  float lift_load_height{0.0f};
 
-  const float lift_load_transition_height{0.0f};
+  float lift_load_transition_height{0.0f};
 
   // ELBOW POSITIONS
 
-  const float elbow_load_position{0.0f};
+  float elbow_load_position{0.0f};
 
-  const float elbow_score_low_position{0.0f};
+  float elbow_score_low_position{0.0f};
 
-  const float elbow_score_high_position{0.0f};
+  float elbow_score_high_position{0.0f};
 
   // WRIST POSITIONS
 
-  const float wrist_load_position{0.0f};
+  float wrist_load_position{0.0f};
 
-  const float wrist_scan_position{0.0f};
+  float wrist_scan_position{0.0f};
 
-  const float wrist_score_low_position{0.0f};
+  float wrist_score_low_position{0.0f};
 
-  const float wrist_score_high_position{0.0f};
+  float wrist_score_high_position{0.0f};
 };
 
 /// @brief Default implementation of the arm subsystem

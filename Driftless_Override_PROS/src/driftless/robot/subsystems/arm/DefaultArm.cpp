@@ -164,9 +164,9 @@ void DefaultArm::taskUpdate() {
     }
 
     m_elbow_motors.setVoltage(m_elbow_pid.getControlValue(
-        m_elbow_motors.getPosition(), m_elbow_target_position));
+        m_elbow_motors.getPosition(), m_elbow_target_position, 12.0));
     m_wrist_motors.setVoltage(m_wrist_pid.getControlValue(
-        m_wrist_motors.getPosition(), m_wrist_target_position));
+        m_wrist_motors.getPosition(), m_wrist_target_position, 12.0));
   }
 
   if (m_mutex) {

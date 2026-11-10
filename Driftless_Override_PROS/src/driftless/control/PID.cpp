@@ -2,8 +2,8 @@
 
 namespace driftless {
 namespace control {
-PID::PID(std::unique_ptr<driftless::rtos::IClock> clock, double kp,
-         double ki, double kd)
+PID::PID(std::unique_ptr<driftless::rtos::IClock> clock, double kp, double ki,
+         double kd)
     : m_clock{std::move(clock)}, m_kp{kp}, m_ki{ki}, m_kd{kd} {}
 
 PID::PID(const PID& other)
@@ -15,7 +15,7 @@ PID::PID(const PID& other)
       last_error{other.last_error},
       last_time{other.last_time} {}
 
-double PID::getControlValue(double current, double target) {
+double PID::getControlValue(double current, double target, double max) {
   // update the time
   double time_change{};
   if (m_clock) {
@@ -26,12 +26,23 @@ double PID::getControlValue(double current, double target) {
 
   // update error
   double error{target - current};
-  accumulated_error += error * time_change;
+
   double error_change{(error - last_error) / time_change};
   last_error = error;
 
   // calc control value
-  return (m_kp * error) + (m_ki * accumulated_error) + (m_kd * error_change);
+  double new_accumulated = accumulated_error + error * time_change;
+  double unclamped =
+      m_kp * error + m_ki * new_accumulated + m_kd * error_change;
+
+  bool pushing_deeper =
+      (unclamped > max && error > 0) || (unclamped < -max && error < 0);
+  if (!pushing_deeper) {
+    accumulated_error = new_accumulated;
+  }
+
+  double output = m_kp * error + m_ki * accumulated_error + m_kd * error_change;
+  return std::clamp(output, -max, max);
 }
 
 void PID::reset() {

@@ -1,7 +1,9 @@
 #ifndef __PID_HPP__
 #define __PID_HPP__
 
+#include <math.h>
 #include <memory>
+#include <limits>
 
 #include "driftless/rtos/IClock.hpp"
 
@@ -39,8 +41,9 @@ class PID {
   /// @brief Gets the control value of the PID controller
   /// @param current __double__ The current value
   /// @param target __double__ The target value
+  /// @param max __double__ The max output value
   /// @return __double__ The control value
-  double getControlValue(double current, double target);
+  double getControlValue(double current, double target, double max = std::numeric_limits<double>::max());
 
   /// @brief Resets the PID controller
   void reset();

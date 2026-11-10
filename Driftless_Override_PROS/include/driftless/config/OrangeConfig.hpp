@@ -243,28 +243,28 @@ class OrangeConfig : public IConfig {
   static constexpr pros::v5::MotorGearset ARM_WRIST_MOTOR_GEARSET{
       pros::v5::MotorGearset::green};
 
-  static constexpr float ARM_ELBOW_KP{1.0f};
+  static constexpr float ARM_ELBOW_KP{12.0f};
   static constexpr float ARM_ELBOW_KI{0.0f};
   static constexpr float ARM_ELBOW_KD{0.0f};
 
-  static constexpr float ARM_WRIST_KP{1.0f};
+  static constexpr float ARM_WRIST_KP{6.0f};
   static constexpr float ARM_WRIST_KI{0.0f};
   static constexpr float ARM_WRIST_KD{0.0f};
 
-  static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f};
-  static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f};
+  static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};
+  static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f * 2 * M_PI};
 
-  static constexpr float ARM_ELBOW_LOAD_POS{0.0f};
-  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.0f};
-  static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.0f};
+  static constexpr float ARM_ELBOW_LOAD_POS{0.073f * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.193f * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.911f * 2 * M_PI};
 
-  static constexpr float ARM_WRIST_LOAD_POS{0.0f};
-  static constexpr float ARM_WRIST_SCAN_POS{0.0f};
-  static constexpr float ARM_WRIST_SCORE_LOW_POS{0.0f};
-  static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.0f};
+  static constexpr float ARM_WRIST_LOAD_POS{0.356f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCAN_POS{0.437f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCORE_LOW_POS{0.098f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.579f * 2 * M_PI};
 
-  static constexpr float ARM_LIFT_LOAD_HEIGHT{0.0f};
-  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{0.0f};
+  static constexpr float ARM_LIFT_LOAD_HEIGHT{3.0f};
+  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{5.0f};
 
  public:
   std::string getName() override;

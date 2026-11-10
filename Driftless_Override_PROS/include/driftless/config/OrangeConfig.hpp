@@ -187,13 +187,13 @@ class OrangeConfig : public IConfig {
 
   // ## ARM ##
 
-  static constexpr int8_t ELBOW_MOTOR_PORT{7};
+  static constexpr int8_t ELBOW_MOTOR_PORT{10};
 
-  static constexpr int8_t WRIST_MOTOR_PORT{9};
+  static constexpr int8_t WRIST_MOTOR_PORT{21};
 
   // ## CLAW ##
 
-  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{10};
+  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{9};
 
   static constexpr int8_t CLAW_GRABBER_PISTON_PORT{3};
 

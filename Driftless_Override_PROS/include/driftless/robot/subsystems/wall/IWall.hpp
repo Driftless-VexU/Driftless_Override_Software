@@ -14,7 +14,7 @@ namespace robot {
 namespace subsystems {
 
 /// @brief The namespace for the wall subsystem
-/// @author Samuel Throckmorton
+/// @author Samuel Throckmorton & Jacob Fiedorowicz
 namespace wall {
 
 class IWall {
@@ -31,16 +31,29 @@ class IWall {
   /// @brief Set the state of the wall
   /// @param deployed __bool__ Whether the wall is deployed or not. True for
   /// deployed, false for retracted.
-  virtual void setState(bool deployed) = 0;
+  virtual void setWallExtensionState(bool deployed) = 0;
 
   /// @brief Toggle the state of the wall. I.e. retract it if deployed,
   /// deploy it if retracted.
-  virtual void toggleState() = 0;
+  virtual void toggleWallExtensionState() = 0;
 
   /// @brief Determine if the wall is deployed
   /// @return __bool__ Whether the wall is deployed or not. True for
   /// deployed, false for retracted.
-  virtual bool isDeployed() = 0;
+  virtual bool isWallExtended() = 0;
+
+  /// @brief Set the state of the motor position
+  /// @param deployed __bool__ Whether the flex-wheel is deployed or not. True
+  /// for deployed, false for retracted
+  virtual void setWallWheelState(bool deployed) = 0;
+
+  /// @brief Toggles the state of the wheel on the wall. I.e. retract if
+  /// deployed, deploy if retracted
+  virtual void toggleWallWheelState() = 0;
+
+  /// @brief Sets the speed for the wheel motor
+  /// @param voltage __float__ The voltage that the motor has to spin the wheel.
+  virtual void setWallWheelMotorVoltage(float voltage) = 0;
 };
 }  // namespace wall
 }  // namespace subsystems

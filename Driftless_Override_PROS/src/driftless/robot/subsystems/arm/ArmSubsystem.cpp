@@ -12,7 +12,16 @@ void ArmSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);
 }
 
-void* ArmSubsystem::state(ESubsystemState state) { return nullptr; }
+void* ArmSubsystem::state(ESubsystemState state) {
+  void* output{nullptr};
+
+  if (state == ESubsystemState::ARM_GET_CURRENT_STATE) {
+    output =
+        new uint8_t{static_cast<uint8_t>(m_arm->getCurrentPositionState())};
+  }
+
+  return output;
+}
 
 void ArmSubsystem::handleCommand(const commands::arm::ArmGoLoadCommand cmd) {
   m_arm->goToLoadPosition();

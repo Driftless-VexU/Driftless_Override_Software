@@ -4,8 +4,6 @@
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
-#include "pros/screen.h"
-#include "pros/screen.hpp"
 
 namespace driftless::robot::subsystems::arm {
 void DefaultArm::init() {
@@ -144,10 +142,6 @@ void DefaultArm::taskUpdate() {
     }
   }
   if (m_is_initialized) {
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 4, "current state: %d",
-                        static_cast<int>(m_current_position_state));
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 5, "target state: %d",
-                        static_cast<int>(m_target_position_state));
     switch (m_target_position_state) {
       case EArmState::START:
       case EArmState::INITIALIZED:
@@ -204,13 +198,11 @@ inline void DefaultArm::handleLoadState() {
         (wrist_error < m_wrist_position_tolerance) && !isClawFlipped()) {
       // arm is in position and can be lowered into the loader
       m_current_position_state = EArmState::LOAD;
-      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7, "LOAD PRE -> LOAD");
       setLiftHeight(m_arm_targets.lift_load_height);
     }
 
   } else if (m_current_position_state != EArmState::LOAD) {
     if (getLiftHeight() <= m_arm_targets.lift_load_transition_height) {
-      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8, "X -> LOAD PRE");
       setLiftHeight(m_arm_targets.lift_load_transition_height);
     } else {
       // lift is high enough to move arm into staging area
@@ -221,8 +213,6 @@ inline void DefaultArm::handleLoadState() {
 
 inline void DefaultArm::handleScanState() {
   if (m_current_position_state == EArmState::LOAD) {
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
-                        "LOAD -> LOAD POST -> SCAN");
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
@@ -252,8 +242,6 @@ inline void DefaultArm::handleScanState() {
 
 inline void DefaultArm::handleScoreLowState() {
   if (m_current_position_state == EArmState::LOAD) {
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
-                        "LOAD -> LOAD POST -> SCORE LOW");
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
@@ -280,8 +268,6 @@ inline void DefaultArm::handleScoreLowState() {
 
 inline void DefaultArm::handleScoreHighState() {
   if (m_current_position_state == EArmState::LOAD) {
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
-                        "LOAD -> LOAD POST -> SCORE HIGH");
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {

@@ -1,5 +1,4 @@
 #include "driftless/robot/subsystems/odometry/SparkFunPositionTracker.hpp"
-#include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
 
 #include "pros/screen.hpp"
 namespace driftless::robot::subsystems::odometry {
@@ -11,17 +10,6 @@ void SparkFunPositionTracker::taskLoop(void* params) {
     instance->taskUpdate();
   }
 }
-
-SparkFunPositionTracker::SparkFunPositionTracker(
-    SparkFunPositionTrackerBuilder&& builder) :
-  m_clock{std::move(builder.m_clock)},
-  m_delayer{std::move(builder.m_delayer)},
-  m_mutex{std::move(builder.m_mutex)},
-  m_task{std::move(builder.m_task)},
-  m_local_x_offset{builder.m_local_x_offset},
-  m_local_y_offset{builder.m_local_y_offset},
-  m_local_theta_offset{builder.m_local_theta_offset}
-  {}
 
 void SparkFunPositionTracker::taskUpdate() {
   uint64_t start_time{m_clock->getTime()};
@@ -84,8 +72,15 @@ void SparkFunPositionTracker::updatePosition() {
 Position SparkFunPositionTracker::fetchRawPosition() {
   Position raw_position{};
 
-  // TODO: re-implement when coprocessor is reworked
-
+  if (m_coprocessor) {
+    raw_position.x = static_cast<double>(
+        m_coprocessor->getValue<float>(serial_protocol::ESerialKey::XPOS));
+    raw_position.y = static_cast<double>(
+        m_coprocessor->getValue<float>(serial_protocol::ESerialKey::YPOS));
+    raw_position.theta = static_cast<double>(m_coprocessor->getValue<float>(
+                             serial_protocol::ESerialKey::THETA)) *
+                         M_PI / 180.0;
+  }
   return raw_position;
 }
 
@@ -94,7 +89,17 @@ void SparkFunPositionTracker::sendLocalOffset() {
     m_mutex->take();
   }
 
-  // TODO: re-implement when coprocessor is reworked
+  if (m_coprocessor) {
+    m_coprocessor->addPacketToPackage<float>(
+        serial_protocol::ESerialKey::XPOS,
+        static_cast<float>(m_local_x_offset));
+    m_coprocessor->addPacketToPackage<float>(
+        serial_protocol::ESerialKey::YPOS,
+        static_cast<float>(m_local_y_offset));
+    m_coprocessor->addPacketToPackage<float>(
+        serial_protocol::ESerialKey::THETA,
+        static_cast<float>(m_local_theta_offset * 180 / M_PI));
+  }
 
   if (m_mutex) {
     m_mutex->give();
@@ -102,13 +107,28 @@ void SparkFunPositionTracker::sendLocalOffset() {
 }
 
 void SparkFunPositionTracker::init() {
+  m_coprocessor->init();
+  m_delayer->delay(500);
+  m_coprocessor->addPacketToPackage<char>(
+      serial_protocol::ESerialKey::CALIBRATE_ODOM, 0);
+  m_delayer->delay(1000);
 
   sendLocalOffset();
 
+  m_coprocessor->addRecurringPacket<serial_protocol::ESerialKey>(
+      serial_protocol::ESerialKey::REQUEST_PACKET,
+      serial_protocol::ESerialKey::XPOS);
+  m_coprocessor->addRecurringPacket<serial_protocol::ESerialKey>(
+      serial_protocol::ESerialKey::REQUEST_PACKET,
+      serial_protocol::ESerialKey::YPOS);
+  m_coprocessor->addRecurringPacket<serial_protocol::ESerialKey>(
+      serial_protocol::ESerialKey::REQUEST_PACKET,
+      serial_protocol::ESerialKey::THETA);
 }
 
 void SparkFunPositionTracker::run() {
   m_task->start(taskLoop, this);
+  m_coprocessor->run();
 }
 
 void SparkFunPositionTracker::setPosition(Position position) {
@@ -163,5 +183,39 @@ void SparkFunPositionTracker::setTheta(double theta) {
 
   global_x_offset = current_position.x - rotated_x;
   global_y_offset = current_position.y - rotated_y;
+}
+
+void SparkFunPositionTracker::setClock(std::unique_ptr<rtos::IClock>& clock) {
+  m_clock = std::move(clock);
+}
+
+void SparkFunPositionTracker::setDelayer(
+    std::unique_ptr<rtos::IDelayer>& delayer) {
+  m_delayer = std::move(delayer);
+}
+
+void SparkFunPositionTracker::setMutex(std::unique_ptr<rtos::IMutex>& mutex) {
+  m_mutex = std::move(mutex);
+}
+
+void SparkFunPositionTracker::setTask(std::unique_ptr<rtos::ITask>& task) {
+  m_task = std::move(task);
+}
+
+void SparkFunPositionTracker::setCoprocessor(
+    std::shared_ptr<hal::Coprocessor>& coprocessor) {
+  m_coprocessor = coprocessor;
+}
+
+void SparkFunPositionTracker::setLocalXOffset(double local_x_offset) {
+  m_local_x_offset = local_x_offset;
+}
+
+void SparkFunPositionTracker::setLocalYOffset(double local_y_offset) {
+  m_local_y_offset = local_y_offset;
+}
+
+void SparkFunPositionTracker::setLocalThetaOffset(double local_theta_offset) {
+  m_local_theta_offset = local_theta_offset;
 }
 }  // namespace driftless::robot::subsystems::odometry

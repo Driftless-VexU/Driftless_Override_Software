@@ -4,6 +4,9 @@
 #include "pros/adi.hpp"
 #include "pros/motors.hpp"
 
+#include "driftless/robot/subsystems/arm/ArmSubsystem.hpp"
+#include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
+
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
 
@@ -289,10 +292,11 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
   // ## Lift ##
 
   // create pros oject
-  std::unique_ptr<pros::Motor> pros_lift_motor{
-      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_LEFT, pros::v5::MotorGearset::blue)};
+  std::unique_ptr<pros::Motor> pros_lift_motor{std::make_unique<pros::Motor>(
+      LIFT_MOTOR_PORT_LEFT, pros::v5::MotorGearset::blue)};
   std::unique_ptr<pros::Motor> pros_lift_motor_other{
-      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_RIGHT, pros::v5::MotorGearset::blue)};
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_RIGHT,
+                                    pros::v5::MotorGearset::blue)};
 
   // PID
   control::PID lift_pid{control::PID(
@@ -323,8 +327,8 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
           .withPID(lift_pid)
           .withCentidegreesToInches(LIFT_CENTIDEGREES_TO_INCHES)
           .buildUnique()));
-  
-    // ## TOGGLE ##
+
+  // ## TOGGLE ##
 
   // create pros object
   std::unique_ptr<pros::Motor> pros_toggle_motor{
@@ -335,11 +339,45 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
       std::make_unique<pros_adapters::ProsV5Motor>(
           std::move(pros_toggle_motor))};
 
-    robot->addSubsystem(
-        std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
-            robot::subsystems::toggle::ToggleBuilder{}
-            .withMotor(std::move(toggle_motor))
-            .buildUnique()));
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
+          robot::subsystems::toggle::ToggleBuilder{}
+              .withMotor(std::move(toggle_motor))
+              .buildUnique()));
+
+  // ## ARM ##
+
+  robot->addSubsystem(std::make_unique<robot::subsystems::arm::ArmSubsystem>(
+      robot::subsystems::arm::DefaultArmBuilder{}
+          .withElbowMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(ELBOW_MOTOR_PORT,
+                                            ARM_ELBOW_MOTOR_GEARSET)))
+          .withWristMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(WRIST_MOTOR_PORT,
+                                            ARM_WRIST_MOTOR_GEARSET)))
+          .withElbowPID(
+              control::PID{std::make_unique<pros_adapters::ProsClock>(),
+                           ARM_ELBOW_KP, ARM_ELBOW_KI, ARM_ELBOW_KD})
+          .withWristPID(
+              control::PID{std::make_unique<pros_adapters::ProsClock>(),
+                           ARM_WRIST_KP, ARM_WRIST_KI, ARM_WRIST_KD})
+          .withTask(std::make_unique<pros_adapters::ProsTask>())
+          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+          .withRobot(robot)
+          .withArmTargets(robot::subsystems::arm::DefaultArmTargetPositions{
+              .lift_load_height = ARM_LIFT_LOAD_HEIGHT,
+              .lift_load_transition_height = ARM_LIFT_LOAD_TRANSITION_HEIGHT,
+              .elbow_load_position = ARM_ELBOW_LOAD_POS,
+              .elbow_score_low_position = ARM_ELBOW_SCORE_LOW_POS,
+              .elbow_score_high_position = ARM_ELBOW_SCORE_HIGH_POS,
+              .wrist_load_position = ARM_WRIST_LOAD_POS,
+              .wrist_scan_position = ARM_WRIST_SCAN_POS,
+              .wrist_score_low_position = ARM_WRIST_SCORE_LOW_POS,
+              .wrist_score_high_position = ARM_WRIST_SCORE_HIGH_POS})
+          .withElbowPositionTolerance(ARM_ELBOW_POSITION_TOLERANCE)
+          .withWristPositionTolerance(ARM_WRIST_POSITION_TOLERANCE)
+          .buildUnique()));
 
   // return complete robot
   return robot;

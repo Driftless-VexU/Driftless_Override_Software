@@ -79,8 +79,9 @@
 #include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
 
 // Toggle subsystem includes
-#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
+#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
+
 
 namespace driftless {
 namespace config {
@@ -171,7 +172,7 @@ class OrangeConfig : public IConfig {
 
   static constexpr int8_t LIFT_MOTOR_PORT_LEFT{-15};
   static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{16};
-  
+
   // ## TOGGLES ##
 
   static constexpr int8_t TOGGLE_PORT{-5};
@@ -205,7 +206,7 @@ class OrangeConfig : public IConfig {
   static constexpr int8_t WALL_EXTENSION_PISTON_PORT{5};
 
   static constexpr int8_t WALL_DEPLOY_ROLLER_PISTON_PORT{6};
-  
+
   static constexpr int8_t WALL_ROLLER_MOTOR_PORT{6};
 
   // #### ROBOT CONSTANTS ####
@@ -233,11 +234,14 @@ class OrangeConfig : public IConfig {
   static constexpr float LIFT_KP{24.0f};
   static constexpr float LIFT_KI{0.01f};
   static constexpr float LIFT_KD{0.0f};
-  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f / (12.68f * 2 * M_PI)};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f /
+                                                     (12.68f * 2 * M_PI)};
 
   // ## ARM ##
-  static constexpr pros::v5::MotorGearset ARM_ELBOW_MOTOR_GEARSET{pros::v5::MotorGearset::green};
-  static constexpr pros::v5::MotorGearset ARM_WRIST_MOTOR_GEARSET{pros::v5::MotorGearset::green};
+  static constexpr pros::v5::MotorGearset ARM_ELBOW_MOTOR_GEARSET{
+      pros::v5::MotorGearset::green};
+  static constexpr pros::v5::MotorGearset ARM_WRIST_MOTOR_GEARSET{
+      pros::v5::MotorGearset::green};
 
   static constexpr float ARM_ELBOW_KP{1.0f};
   static constexpr float ARM_ELBOW_KI{0.0f};

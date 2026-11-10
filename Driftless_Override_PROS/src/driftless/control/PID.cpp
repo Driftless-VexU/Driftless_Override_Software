@@ -32,6 +32,11 @@ double PID::getControlValue(double current, double target, double max) {
 
   // calc control value
   double new_accumulated = accumulated_error + error * time_change;
+
+  if (m_ki > 0) {
+    new_accumulated = std::clamp(new_accumulated, -max / m_ki, max / m_ki);
+  }
+
   double unclamped =
       m_kp * error + m_ki * new_accumulated + m_kd * error_change;
 

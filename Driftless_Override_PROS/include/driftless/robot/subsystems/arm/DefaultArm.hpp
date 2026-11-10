@@ -84,14 +84,10 @@ class DefaultArm : public IArm {
   /// @return __EArmState__ The current position state of the arm
   EArmState getCurrentPositionState() override;
 
- private:
+ protected:
   static constexpr uint8_t TASK_DELAY{20};
 
   static constexpr uint16_t TASK_TIMEOUT{2000};
-
-  /// @brief Run arm updates constantly in a background task
-  /// @param params __void*__ Pointer to the arm instance
-  static void taskLoop(void* params);
 
   hal::MotorGroup m_elbow_motors{};
 
@@ -131,13 +127,12 @@ class DefaultArm : public IArm {
 
   bool m_is_initialized{};
 
+  bool m_do_initialize{};
+
   /// @brief Construct a new Default Arm object
   /// @param builder __DefaultArmBuilder__ The builder to use for constructing
   /// the arm
   DefaultArm(DefaultArmBuilder&& builder);
-
-  /// @brief Update the arm based on the current state
-  void taskUpdate();
 
   inline void handleLoadState();
 
@@ -163,6 +158,14 @@ class DefaultArm : public IArm {
   /// @param orientation __bool__ True to flip the claw, false for normal
   /// orientation
   inline void flipClaw(bool orientation);
+
+ private:
+  /// @brief Run arm updates constantly in a background task
+  /// @param params __void*__ Pointer to the arm instance
+  static void taskLoop(void* params);
+
+  /// @brief Update the arm based on the current state
+  void taskUpdate();
 };
 }  // namespace arm
 }  // namespace subsystems

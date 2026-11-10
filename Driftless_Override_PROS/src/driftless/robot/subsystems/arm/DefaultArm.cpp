@@ -4,11 +4,16 @@
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
+#include "pros/screen.h"
+#include "pros/screen.hpp"
 
 namespace driftless::robot::subsystems::arm {
 void DefaultArm::init() {
   m_elbow_motors.init();
   m_wrist_motors.init();
+
+  m_elbow_pid.reset();
+  m_wrist_pid.reset();
 }
 
 void DefaultArm::run() {
@@ -22,21 +27,7 @@ void DefaultArm::reset() {
     m_mutex->take();
   }
 
-  m_wrist_motors.setVoltage(-5.0);
-  m_elbow_motors.setVoltage(-5.0);
-  uint16_t timeout_counter{0};
-  do {
-    timeout_counter += TASK_DELAY;
-    m_delayer->delay(TASK_DELAY);
-  } while (std::abs(m_wrist_motors.getAngularVelocity()) > 0.1 &&
-           std::abs(m_elbow_motors.getAngularVelocity()) > 0.1 &&
-           timeout_counter < TASK_TIMEOUT);
-
-  if (timeout_counter < TASK_TIMEOUT) {
-    m_wrist_motors.setPosition(0.0);
-    m_elbow_motors.setPosition(0.0);
-    m_is_initialized = true;
-  }
+  m_do_initialize = true;
 
   if (m_mutex) {
     m_mutex->give();
@@ -128,29 +119,56 @@ DefaultArm::DefaultArm(DefaultArmBuilder&& builder)
 void DefaultArm::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
-  }
-  switch (m_target_position_state) {
-    case EArmState::START:
-    case EArmState::INITIALIZED:
-    case EArmState::LOAD_PRE:
-    case EArmState::LOAD_POST:
-      // these cases should never be targets - Do nothing
-      break;
-    case EArmState::LOAD:
-      handleLoadState();
-      break;
-    case EArmState::SCAN:
-      handleScanState();
-      break;
-    case EArmState::SCORE_LOW:
-      handleScoreLowState();
-      break;
-    case EArmState::SCORE_HIGH:
-      handleScoreHighState();
-      break;
-  }
 
+    if (m_do_initialize) {
+      m_wrist_motors.setVoltage(-8.0);
+      m_elbow_motors.setVoltage(-8.0);
+      uint16_t timeout_counter{0};
+      m_delayer->delay(100);
+      timeout_counter += 100;
+      do {
+        timeout_counter += TASK_DELAY;
+        m_delayer->delay(TASK_DELAY);
+      } while ((std::abs(m_wrist_motors.getAngularVelocity()) > 0.1 ||
+               std::abs(m_elbow_motors.getAngularVelocity()) > 0.1) &&
+               timeout_counter < TASK_TIMEOUT);
+
+      if (timeout_counter < TASK_TIMEOUT) {
+        m_wrist_motors.setPosition(0.0);
+        m_elbow_motors.setPosition(0.0);
+        m_is_initialized = true;
+        m_current_position_state = EArmState::INITIALIZED;
+      }
+
+      m_do_initialize = false;
+    }
+  }
   if (m_is_initialized) {
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 4, "current state: %d",
+                        static_cast<int>(m_current_position_state));
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 5, "target state: %d",
+                        static_cast<int>(m_target_position_state));
+    switch (m_target_position_state) {
+      case EArmState::START:
+      case EArmState::INITIALIZED:
+      case EArmState::LOAD_PRE:
+      case EArmState::LOAD_POST:
+        // these cases should never be targets - Do nothing
+        break;
+      case EArmState::LOAD:
+        handleLoadState();
+        break;
+      case EArmState::SCAN:
+        handleScanState();
+        break;
+      case EArmState::SCORE_LOW:
+        handleScoreLowState();
+        break;
+      case EArmState::SCORE_HIGH:
+        handleScoreHighState();
+        break;
+    }
+
     m_elbow_motors.setVoltage(m_elbow_pid.getControlValue(
         m_elbow_motors.getPosition(), m_elbow_target_position));
     m_wrist_motors.setVoltage(m_wrist_pid.getControlValue(
@@ -186,11 +204,13 @@ inline void DefaultArm::handleLoadState() {
         (wrist_error < m_wrist_position_tolerance) && !isClawFlipped()) {
       // arm is in position and can be lowered into the loader
       m_current_position_state = EArmState::LOAD;
+      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7, "LOAD PRE -> LOAD");
       setLiftHeight(m_arm_targets.lift_load_height);
     }
 
   } else if (m_current_position_state != EArmState::LOAD) {
     if (getLiftHeight() <= m_arm_targets.lift_load_transition_height) {
+      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8, "X -> LOAD PRE");
       setLiftHeight(m_arm_targets.lift_load_transition_height);
     } else {
       // lift is high enough to move arm into staging area
@@ -201,6 +221,8 @@ inline void DefaultArm::handleLoadState() {
 
 inline void DefaultArm::handleScanState() {
   if (m_current_position_state == EArmState::LOAD) {
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
+                        "LOAD -> LOAD POST -> SCAN");
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
@@ -230,6 +252,8 @@ inline void DefaultArm::handleScanState() {
 
 inline void DefaultArm::handleScoreLowState() {
   if (m_current_position_state == EArmState::LOAD) {
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
+                        "LOAD -> LOAD POST -> SCORE LOW");
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
@@ -256,6 +280,8 @@ inline void DefaultArm::handleScoreLowState() {
 
 inline void DefaultArm::handleScoreHighState() {
   if (m_current_position_state == EArmState::LOAD) {
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
+                        "LOAD -> LOAD POST -> SCORE HIGH");
     setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
     if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {

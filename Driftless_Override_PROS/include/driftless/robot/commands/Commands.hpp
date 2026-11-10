@@ -15,6 +15,11 @@
 #include "driftless/robot/commands/odometry/SetYPositionCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
+#include "driftless/robot/commands/wall/SetWallStateCommand.hpp"
+#include "driftless/robot/commands/wall/SetWallWheelMotorVoltageCommand.hpp"
+#include "driftless/robot/commands/wall/SetWallWheelStateCommand.hpp"
+#include "driftless/robot/commands/wall/ToggleWallStateCommand.hpp"
+#include "driftless/robot/commands/wall/ToggleWallWheelStateCommand.hpp"
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -36,7 +41,10 @@ using Command = std::variant<
     odometry::SetPositionCommand, odometry::SetXPositionCommand,
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
     tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
-    brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand>;
+    brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
+    wall::ToggleWallStateCommand, wall::SetWallStateCommand,
+    wall::ToggleWallWheelStateCommand, wall::SetWallWheelStateCommand,
+    wall::SetWallWheelMotorVoltageCommand>;
 
 }  // namespace commands
 }  // namespace robot

@@ -3,8 +3,7 @@
 #include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
-
-// #include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
+#include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
 
 namespace driftless::robot::subsystems::arm {
 void DefaultArm::init() {
@@ -153,8 +152,8 @@ void DefaultArm::taskUpdate() {
 
 inline void DefaultArm::handleLoadState() {
   if (m_current_position_state == EArmState::LOAD_PRE) {
-    m_elbow_target_position = m_elbow_load_position;
-    m_wrist_target_position = m_wrist_load_position;
+    m_elbow_target_position = m_arm_targets.elbow_load_position;
+    m_wrist_target_position = m_arm_targets.wrist_load_position;
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -
@@ -171,12 +170,12 @@ inline void DefaultArm::handleLoadState() {
         (wrist_error < m_wrist_position_tolerance) && !isClawFlipped()) {
       // arm is in position and can be lowered into the loader
       m_current_position_state = EArmState::LOAD;
-      setLiftHeight(m_lift_load_height);
+      setLiftHeight(m_arm_targets.lift_load_height);
     }
 
   } else if (m_current_position_state != EArmState::LOAD) {
-    if (getLiftHeight() <= m_lift_load_transition_height) {
-      setLiftHeight(m_lift_load_transition_height);
+    if (getLiftHeight() <= m_arm_targets.lift_load_transition_height) {
+      setLiftHeight(m_arm_targets.lift_load_transition_height);
     } else {
       // lift is high enough to move arm into staging area
       m_current_position_state = EArmState::LOAD_PRE;
@@ -186,18 +185,18 @@ inline void DefaultArm::handleLoadState() {
 
 inline void DefaultArm::handleScanState() {
   if (m_current_position_state == EArmState::LOAD) {
-    setLiftHeight(m_lift_load_transition_height + 1);
+    setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
-    if (getLiftHeight() >= m_lift_load_transition_height) {
+    if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
       m_current_position_state = EArmState::LOAD_POST;
     }
 
   } else if (m_current_position_state != EArmState::SCAN) {
     if (m_current_position_state == EArmState::LOAD_POST) {
-      m_elbow_target_position = m_elbow_score_low_position;
+      m_elbow_target_position = m_arm_targets.elbow_score_low_position;
     }
 
-    m_wrist_target_position = m_wrist_scan_position;
+    m_wrist_target_position = m_arm_targets.wrist_scan_position;
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -
@@ -215,15 +214,15 @@ inline void DefaultArm::handleScanState() {
 
 inline void DefaultArm::handleScoreLowState() {
   if (m_current_position_state == EArmState::LOAD) {
-    setLiftHeight(m_lift_load_transition_height + 1);
+    setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
-    if (getLiftHeight() >= m_lift_load_transition_height) {
+    if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
       m_current_position_state = EArmState::LOAD_POST;
     }
 
   } else if (m_current_position_state != EArmState::SCORE_LOW) {
-    m_elbow_target_position = m_elbow_score_low_position;
-    m_wrist_target_position = m_wrist_score_low_position;
+    m_elbow_target_position = m_arm_targets.elbow_score_low_position;
+    m_wrist_target_position = m_arm_targets.wrist_score_low_position;
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -
@@ -241,15 +240,15 @@ inline void DefaultArm::handleScoreLowState() {
 
 inline void DefaultArm::handleScoreHighState() {
   if (m_current_position_state == EArmState::LOAD) {
-    setLiftHeight(m_lift_load_transition_height + 1);
+    setLiftHeight(m_arm_targets.lift_load_transition_height + 1);
 
-    if (getLiftHeight() >= m_lift_load_transition_height) {
+    if (getLiftHeight() >= m_arm_targets.lift_load_transition_height) {
       m_current_position_state = EArmState::LOAD_POST;
     }
 
   } else if (m_current_position_state != EArmState::SCORE_HIGH) {
-    m_elbow_target_position = m_elbow_score_high_position;
-    m_wrist_target_position = m_wrist_score_high_position;
+    m_elbow_target_position = m_arm_targets.elbow_score_high_position;
+    m_wrist_target_position = m_arm_targets.wrist_score_high_position;
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -

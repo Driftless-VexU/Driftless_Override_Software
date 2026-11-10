@@ -27,6 +27,32 @@ namespace arm {
 
 class DefaultArmBuilder;
 
+struct DefaultArmTargetPositions{
+   // LIFT POSITIONS
+
+  const float lift_load_height{0.0f};
+
+  const float lift_load_transition_height{0.0f};
+
+  // ELBOW POSITIONS
+
+  const float elbow_load_position{0.0f};
+
+  const float elbow_score_low_position{0.0f};
+
+  const float elbow_score_high_position{0.0f};
+
+  // WRIST POSITIONS
+
+  const float wrist_load_position{0.0f};
+
+  const float wrist_scan_position{0.0f};
+
+  const float wrist_score_low_position{0.0f};
+
+  const float wrist_score_high_position{0.0f};
+};
+
 /// @brief Default implementation of the arm subsystem
 /// @author Matthew Backman
 class DefaultArm : public IArm {
@@ -81,31 +107,9 @@ class DefaultArm : public IArm {
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-  std::weak_ptr<Robot> m_robot;
+  std::weak_ptr<Robot> m_robot{};
 
-  // LIFT POSITIONS
-
-  const float m_lift_load_height{0.0f};
-
-  const float m_lift_load_transition_height{0.0f};
-
-  // ELBOW POSITIONS
-
-  const float m_elbow_load_position{0.0f};
-
-  const float m_elbow_score_low_position{0.0f};
-
-  const float m_elbow_score_high_position{0.0f};
-
-  // WRIST POSITIONS
-
-  const float m_wrist_load_position{0.0f};
-
-  const float m_wrist_scan_position{0.0f};
-
-  const float m_wrist_score_low_position{0.0f};
-
-  const float m_wrist_score_high_position{0.0f};
+  DefaultArmTargetPositions m_arm_targets{};
 
   // ACTIVELY TARGETED POSITIONS
 

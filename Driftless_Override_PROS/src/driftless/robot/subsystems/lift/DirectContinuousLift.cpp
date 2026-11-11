@@ -2,8 +2,6 @@
 
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
-#include "pros/screen.h"
-#include "pros/screen.hpp"
 
 namespace driftless::robot::subsystems::lift {
 void DirectContinuousLift::init() {
@@ -46,12 +44,7 @@ void DirectContinuousLift::taskUpdate() {
     float voltage = m_pid.getControlValue(
         m_motors.getPosition() * m_centidegrees_to_inches, m_height);
     m_motors.setVoltage(voltage);
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 4, "Target Velocity: %7.2f",
-                        voltage);
-  pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7,
-                      "Motor Pos: %7.2f, inches: %7.7f", m_motors.getPosition(),
-                      m_motors.getPosition() * m_centidegrees_to_inches);
-  pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8, "Height: %7.2f", m_height);
+    
   if (m_mutex) {
     m_mutex->give();
   }

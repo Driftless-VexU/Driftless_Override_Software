@@ -3,14 +3,13 @@
 #include "driftless/robot/commands/aligner/SetAlignerStateCommand.hpp"
 #include "driftless/robot/commands/aligner/ToggleAlignerStateCommand.hpp"
 
-
 namespace driftless::robot::subsystems::aligner {
 AlignerSubsystem::AlignerSubsystem(std::unique_ptr<IAligner> aligner)
     : ASubsystem{ESubsystem::ALIGNER}, m_aligner_driver{std::move(aligner)} {}
 
-void AlignerSubsystem::init() {}
+void AlignerSubsystem::init() { m_aligner_driver->init(); }
 
-void AlignerSubsystem::run() {}
+void AlignerSubsystem::run() { m_aligner_driver->run(); }
 
 void AlignerSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);

@@ -22,6 +22,8 @@ enum class ESubsystemState {
   ODOMETRY_GET_POSITION,
   ODOMETRY_GET_RESETTER_RAW_VALUE,
   BRAKES_IS_DEPLOYED,
+  WALL_IS_DEPLOYED,
+  WALL_WHEEL_IS_DEPLOYED
 };
 }  // namespace subsystems
 }  // namespace robot

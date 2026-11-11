@@ -1,8 +1,8 @@
 #include "driftless/config/BlueConfig.hpp"
 
-#include "driftless/pros_adapters/ProsClock.hpp"
-#include "pros/adi.hpp"
-#include "pros/motors.hpp"
+#include "driftless/hal/CoprocessorBuilder.hpp"
+#include "driftless/robot/subsystems/odometry/OdometrySubsystem.hpp"
+#include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
 
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
@@ -158,6 +158,31 @@ std::shared_ptr<io::IController> BlueConfig::buildController() {
 std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
   std::shared_ptr<robot::Robot> robot{std::make_shared<robot::Robot>()};
 
+  // ## ODOM ##
+  std::shared_ptr<hal::Coprocessor> coprocessor{
+      hal::CoprocessorBuilder{}
+          .withClock(std::make_unique<pros_adapters::ProsClock>())
+          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+          .withTask(std::make_unique<pros_adapters::ProsTask>())
+          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+          .withSerialDevice(std::make_unique<pros_adapters::ProsSerialDevice>(
+              std::make_unique<pros::Serial>(ARDUINO_PORT,
+                                             COPROCESSOR_BAUD_RATE)))
+          .build()};
+
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::odometry::OdometrySubsystem>(
+          robot::subsystems::odometry::SparkFunPositionTrackerBuilder{}
+              .withClock(std::make_unique<pros_adapters::ProsClock>())
+              .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+              .withTask(std::make_unique<pros_adapters::ProsTask>())
+              .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+              .withCoprocessor(coprocessor)
+              .withLocalThetaOffset(ODOMETRY_LOCAL_THETA_OFFSET)
+              .withLocalXOffset(ODOMETRY_LOCAL_X_OFFSET)
+              .withLocalYOffset(ODOMETRY_LOCAL_Y_OFFSET)
+              .buildUnique()));
+
   // ## DRIVE TRAIN ##
 
   // create pros objects
@@ -289,10 +314,11 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
   // ## Lift ##
 
   // create pros oject
-  std::unique_ptr<pros::Motor> pros_lift_motor{
-      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_LEFT, pros::v5::MotorGearset::blue)};
+  std::unique_ptr<pros::Motor> pros_lift_motor{std::make_unique<pros::Motor>(
+      LIFT_MOTOR_PORT_LEFT, pros::v5::MotorGearset::blue)};
   std::unique_ptr<pros::Motor> pros_lift_motor_other{
-      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_RIGHT, pros::v5::MotorGearset::blue)};
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_RIGHT,
+                                    pros::v5::MotorGearset::blue)};
 
   // PID
   control::PID lift_pid{control::PID(
@@ -323,8 +349,8 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
           .withPID(lift_pid)
           .withCentidegreesToInches(LIFT_CENTIDEGREES_TO_INCHES)
           .buildUnique()));
-  
-    // ## TOGGLE ##
+
+  // ## TOGGLE ##
 
   // create pros object
   std::unique_ptr<pros::Motor> pros_toggle_motor{
@@ -335,11 +361,11 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
       std::make_unique<pros_adapters::ProsV5Motor>(
           std::move(pros_toggle_motor))};
 
-    robot->addSubsystem(
-        std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
-            robot::subsystems::toggle::ToggleBuilder{}
-            .withMotor(std::move(toggle_motor))
-            .buildUnique()));
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
+          robot::subsystems::toggle::ToggleBuilder{}
+              .withMotor(std::move(toggle_motor))
+              .buildUnique()));
 
   // return complete robot
   return robot;

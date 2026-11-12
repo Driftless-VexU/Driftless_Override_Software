@@ -154,7 +154,7 @@ class OrangeConfig : public IConfig {
 
   // ## ARDUINO PORT ##
 
-  static constexpr int ARDUINO_PORT{3};
+  static constexpr int ARDUINO_PORT{4};
 
   // ## DRIVE MOTORS ##
 

@@ -10,12 +10,12 @@ void Claw::run() {
   m_task->start(taskLoop, this);
 }
 
-void Claw::setOpenClosed(bool isOpen) {
+void Claw::setOpenClosed(bool is_open) {
   if (m_mutex) {
     m_mutex->take();
   }
 
-  if (isOpen) {
+  if (is_open) {
     m_piston->extend();
   } else {
     m_piston->retract();

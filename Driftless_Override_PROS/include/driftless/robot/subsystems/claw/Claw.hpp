@@ -50,7 +50,7 @@ class Claw : public IClaw {
   /// @brief Set the open/close state of the claw
   /// @param isOpen __bool__ Whether the claw should be open or closed. Open for
   /// true, closed for false
-  void setOpenClosed(bool isOpen) override;
+  void setOpenClosed(bool is_open) override;
 
   /// @brief toggle the open/close state of the claw
   void toggleOpenClosed() override;

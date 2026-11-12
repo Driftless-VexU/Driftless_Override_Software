@@ -56,14 +56,18 @@ class Wall : public IWall {
     /// @brief Toggles the state of the wall wheel
     void toggleWallWheelState() override;
 
+    /// @brief Determines if the wall wheel is deployed
+    /// @return __bool__ Whether the wall wheel is deployed or not. True if deployed, false if retracted
+    bool isWallWheelExtended() override;
+
     /// @brief Sets the speed for the wheel motor
     /// @param voltage __float__ The voltage that the motor has to spin the wheel with
     void setWallWheelMotorVoltage(float voltage) override;
 
     private:
-    std::unique_ptr<io::IPiston> pistonWall;
-    std::unique_ptr<io::IPiston> pistonWheel;
-    hal::MotorGroup wheelMotor;
+    std::unique_ptr<io::IPiston> m_piston_wall;
+    std::unique_ptr<io::IPiston> m_piston_wheel;
+    hal::MotorGroup m_wheel_motor;
 
     /// @brief Construct a new wall object
     /// @param builder __WallBuilder__ The builder creating this wall object. Consumed on use.

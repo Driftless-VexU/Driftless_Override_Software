@@ -12,6 +12,17 @@ void WallSubsystem::command(const commands::Command& cmd) {
   std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);
 }
 
+void* WallSubsystem::state(ESubsystemState state_name) {
+    void* result{nullptr};
+    if (state_name == ESubsystemState::WALL_IS_DEPLOYED) {
+        result = new bool{m_wall_driver->isWallExtended()};
+    }
+    else if(state_name == ESubsystemState::WALL_WHEEL_IS_DEPLOYED) {
+        result = new bool{m_wall_driver->isWallWheelExtended()};
+    }
+    return result;
+}
+
 void WallSubsystem::handleCommand(const commands::wall::SetWallStateCommand cmd) {
     m_wall_driver->setWallExtensionState(cmd.m_deployed);
 }

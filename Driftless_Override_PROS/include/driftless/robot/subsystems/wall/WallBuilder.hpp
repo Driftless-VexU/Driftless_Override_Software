@@ -52,9 +52,9 @@ class WallBuilder {
   std::unique_ptr<Wall> buildUnique() &&;
 
   private:
-  std::unique_ptr<io::IPiston> pistonWall;
-  std::unique_ptr<io::IPiston> pistonWheel;
-  hal::MotorGroup wheelMotor;
+  std::unique_ptr<io::IPiston> m_piston_wall;
+  std::unique_ptr<io::IPiston> m_piston_wheel;
+  hal::MotorGroup m_wheel_motor;
 };
 }  // namespace wall
 }  // namespace subsystems

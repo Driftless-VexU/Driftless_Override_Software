@@ -6,7 +6,6 @@
 #include "driftless/op_control/lift/LiftOperator.hpp"
 #include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"
 #include "driftless/op_control/toggle/ToggleOperator.hpp"
-#include "driftless/op_control/lift/LiftOperator.hpp"
 #include "driftless/op_control/aligner/AlignerOperator.hpp"
 
 namespace driftless {

@@ -18,7 +18,7 @@ void Intake::togglePistonState() { m_piston->toggleState(); }
 
 bool Intake::isPistonDeployed() { return m_piston->isExtended(); }
 
-void Intake::setMotorSpeed(float speed) { m_motor.setVelocity(speed); }
+void Intake::setMotorSpeed(float speed) { m_motor.setVoltage(speed); }
 Intake::Intake(IntakeBuilder&& builder)
     : m_piston(std::move(builder.m_piston)),
       m_motor(std::move(builder.m_motor)) {}

@@ -14,11 +14,11 @@ namespace robot {
 namespace commands {
 
 /// @brief The namespace for commands which can be sent to the brakes subsystem
-/// @author Aligner
+/// @author Jacob Fiedorowicz
 namespace aligner {
 
 /// @brief Command to toggle the state of the aligner
-/// @author Matthew Backman
+/// @author Jacob Fiedorowicz
 struct ToggleAlignerStateCommand {};
 }  // namespace aligner
 }  // namespace commands

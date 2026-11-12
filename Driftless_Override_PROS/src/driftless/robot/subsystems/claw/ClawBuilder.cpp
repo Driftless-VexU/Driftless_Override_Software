@@ -11,6 +11,21 @@ ClawBuilder&& ClawBuilder::withMotor(std::unique_ptr<io::IMotor> motor) && {
   return std::move(*this);
 }
 
+ClawBuilder&& ClawBuilder::withTask(std::unique_ptr<rtos::ITask> task) && {
+  m_task = std::move(task);
+  return std::move(*this);
+}
+
+ClawBuilder&& ClawBuilder::withMutex(std::unique_ptr<rtos::IMutex> mutex) && {
+  m_mutex = std::move(mutex);
+  return std::move(*this);
+}
+
+ClawBuilder&& ClawBuilder::withDelayer(std::unique_ptr<rtos::IDelayer> delayer) && {
+  m_delayer = std::move(delayer);
+  return std::move(*this);
+}
+
 ClawBuilder&& ClawBuilder::withMotorRotationsToPivotRadians(
     float motorRotationsToPivotRadians) && {
   m_motor_rotations_to_pivot_radians = motorRotationsToPivotRadians;

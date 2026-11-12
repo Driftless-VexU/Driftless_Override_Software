@@ -86,6 +86,10 @@
 #include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 
+// Aligner subsystem includes
+#include "driftless/robot/subsystems/aligner/AlignerSubsystem.hpp"
+#include "driftless/robot/subsystems/aligner/AlignerBuilder.hpp"
+
 namespace driftless {
 namespace config {
 class OrangeConfig : public IConfig {
@@ -154,7 +158,7 @@ class OrangeConfig : public IConfig {
 
   // ## ARDUINO PORT ##
 
-  static constexpr int ARDUINO_PORT{3};
+  static constexpr int ARDUINO_PORT{4};
 
   // ## DRIVE MOTORS ##
 
@@ -178,7 +182,7 @@ class OrangeConfig : public IConfig {
   
   // ## TOGGLES ##
 
-  static constexpr int8_t TOGGLE_PORT{-5};
+  static constexpr int8_t TOGGLE_PORT{5};
 
   // ## INTAKE ##
 
@@ -202,7 +206,7 @@ class OrangeConfig : public IConfig {
 
   // ## GOAL ALLIGNER ##
 
-  static constexpr int8_t GOAL_ALLIGNER_PISTON_PORT{4};
+  static constexpr int8_t GOAL_ALIGNER_PISTON_PORT{4};
 
   // ## WALL ##
 

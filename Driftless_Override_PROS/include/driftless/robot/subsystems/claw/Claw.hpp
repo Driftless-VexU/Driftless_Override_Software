@@ -47,6 +47,9 @@ class Claw : public IClaw {
   /// true, down for false
   void setUpDown(bool is_up) override;
 
+  /// @brief Toggle the orientation of the claw pivot between up and down
+  void toggleUpDown() override;
+
   /// @brief Set the open/close state of the claw
   /// @param isOpen __bool__ Whether the claw should be open or closed. Open for
   /// true, closed for false

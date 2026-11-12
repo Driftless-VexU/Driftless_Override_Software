@@ -6,9 +6,7 @@
 namespace driftless::robot::subsystems::claw {
 void Claw::init() {}
 
-void Claw::run() {
-  m_task->start(taskLoop, this);
-}
+void Claw::run() { m_task->start(taskLoop, this); }
 
 void Claw::setOpenClosed(bool is_open) {
   if (m_mutex) {
@@ -38,12 +36,24 @@ void Claw::setUpDown(bool is_up) {
   }
 }
 
-void Claw::toggleOpenClosed() { 
+void Claw::toggleUpDown() {
   if (m_mutex) {
     m_mutex->take();
   }
 
-  m_piston->toggleState(); 
+  m_target_pivot_position = (!m_is_up) * m_pivot_flipped_position;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void Claw::toggleOpenClosed() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_piston->toggleState();
 
   if (m_mutex) {
     m_mutex->give();

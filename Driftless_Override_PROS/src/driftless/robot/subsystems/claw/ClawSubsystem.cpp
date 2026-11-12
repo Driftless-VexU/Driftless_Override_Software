@@ -33,4 +33,15 @@ void ClawSubsystem::handleCommand(const commands::claw::SetClawOpenCloseCommand 
 void ClawSubsystem::handleCommand(const commands::claw::ToggleClawOpenCloseCommand cmd) {
   m_claw_driver->toggleOpenClosed();
 }
+
+void ClawSubsystem::handleCommand(const commands::claw::ToggleClawUpDownCommand cmd) {
+  m_claw_driver->toggleUpDown();
+}
+
+void ClawSubsystem::handleCommand(const auto cmd) {
+  throw std::invalid_argument(
+      "No behavior defined to handle the command of type: " +
+      std::string(typeid(cmd).name()) +
+      " for the claw subsystem");
+}
 }  // namespace driftless::robot::subsystems::claw

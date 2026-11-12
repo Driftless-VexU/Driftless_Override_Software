@@ -51,6 +51,10 @@ class IWall {
   /// deployed, deploy if retracted
   virtual void toggleWallWheelState() = 0;
 
+  /// @brief Determine if the wall wheel is deployed
+  /// @return __bool__ Whether the wall wheel is deployed or not. True for deployed, false for retracted
+  virtual bool isWallWheelExtended() = 0;
+
   /// @brief Sets the speed for the wheel motor
   /// @param voltage __float__ The voltage that the motor has to spin the wheel.
   virtual void setWallWheelMotorVoltage(float voltage) = 0;

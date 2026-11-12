@@ -20,7 +20,9 @@ enum EControl {
   HOLONOMIC_CANCEL_FIELD_CENTRIC,
   TANK_DRIVE_ARCADE_LINEAR,
   TANK_DRIVE_ARCADE_TURN,
-  BRAKE_TOGGLE
+  BRAKE_TOGGLE,
+  WALL_TOGGLE,
+  WALL_WHEEL_TOGGLE
 };
 }  // namespace op_control
 }  // namespace driftless

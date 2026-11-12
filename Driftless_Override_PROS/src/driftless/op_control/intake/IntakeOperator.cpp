@@ -12,12 +12,12 @@ void IntakeOperator::update(
       profile->getDigitalControlMapping(op_control::EControl::INTAKE_TOGGLE));
 
   if (m_controller->getDigital(intake_piston_toggle)) {
-    toggleIntakePistonState();
+    setIntakePistonState(true);
     setIntakeMotorSpeed(12.0f);
   }
   else
   {
-    toggleIntakePistonState();
+    setIntakePistonState(false);
     setIntakeMotorSpeed(0.0f);
   }
 }
@@ -30,5 +30,10 @@ void IntakeOperator::toggleIntakePistonState() {
 void IntakeOperator::setIntakeMotorSpeed(float speed) {
     m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
     robot::commands::intake::SetIntakeMotorSpeedCommand{speed});
+}
+
+void IntakeOperator::setIntakePistonState(bool state) {
+  m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
+  robot::commands::intake::SetIntakePistonStateCommand{state});
 }
 }  // namespace driftless::op_control::intake

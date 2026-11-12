@@ -22,7 +22,7 @@ namespace subsystems {
 /// @author Jacob Fiedorowicz
 namespace aligner {
 
-// builder declaration, see PneumaticPadBrakesBuilder.hpp for definition
+// builder declaration, see AlignerBuilder.hpp for definition
 class AlignerBuilder;
 
 /// @brief Aligner implementation using pneumatics to control state

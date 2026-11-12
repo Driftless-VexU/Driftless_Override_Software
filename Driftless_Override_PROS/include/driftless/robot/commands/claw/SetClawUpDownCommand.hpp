@@ -21,7 +21,7 @@ namespace claw {
 /// down
 /// @author Jack LaFreniere
 struct SetClawUpDownCommand {
-  bool m_isUp{};
+  bool m_is_up{};
 };
 }  // namespace claw
 }  // namespace commands

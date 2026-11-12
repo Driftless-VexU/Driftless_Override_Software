@@ -21,7 +21,7 @@ namespace claw {
 /// for closed.
 /// @author Jack LaFreniere
 struct SetClawOpenCloseCommand {
-  bool m_isOpen{};
+  bool m_is_open{};
 };
 }  // namespace claw
 }  // namespace commands

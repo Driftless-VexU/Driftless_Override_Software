@@ -160,6 +160,12 @@ class OrangeConfig : public IConfig {
 
   static constexpr int8_t BRAKE_PORT{1};
 
+  // ## WALL ##
+
+  static constexpr int8_t WALL_EXTEND_PISTON_PORT{5};
+  static constexpr int8_t WALL_WHEEL_PISTON_PORT{6};
+  static constexpr int8_t WALL_WHEEL_MOTOR_PORT{6};
+
   // #### ROBOT CONSTANTS ####
 
   // ## COPROCESSOR ##

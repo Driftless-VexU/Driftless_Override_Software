@@ -3,13 +3,13 @@
 
 #include <memory>
 
+#include "driftless/control/PID.hpp"
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/io/IPiston.hpp"
 #include "driftless/robot/subsystems/claw/IClaw.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/rtos/IMutex.hpp"
 #include "driftless/rtos/ITask.hpp"
-
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -43,9 +43,9 @@ class Claw : public IClaw {
   void run() override;
 
   /// @brief Set the up/down state of the claw
-  /// @param isUp __bool__ Whether the claw should be facing up or down. Up for
+  /// @param is_up __bool__ Whether the claw should be facing up or down. Up for
   /// true, down for false
-  void setUpDown(bool isUp) override;
+  void setUpDown(bool is_up) override;
 
   /// @brief Set the open/close state of the claw
   /// @param isOpen __bool__ Whether the claw should be open or closed. Open for
@@ -61,9 +61,14 @@ class Claw : public IClaw {
  private:
   static constexpr uint8_t TASK_DELAY{20};
 
+  /// @brief Run the task update function of the provided claw in an endless
+  /// loop
+  /// @param params __void*__ Pointer to the claw to update
   static void taskLoop(void* params);
 
   hal::MotorGroup m_pivot_motor{};
+
+  control::PID m_pivot_pid{};
 
   std::unique_ptr<io::IPiston> m_piston{};
 
@@ -73,11 +78,13 @@ class Claw : public IClaw {
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-  float m_motor_rotations_to_pivot_radians{};
+  float m_pivot_flipped_position{};
 
   float m_target_pivot_position{};
 
-  bool m_isUp{};
+  float m_pivot_position_tolerance{};
+
+  bool m_is_up{};
 
   /// @brief Construct a new Claw object
   /// @param builder __ClawBuilder&&__ The builder creating this

@@ -11,6 +11,11 @@ ClawBuilder&& ClawBuilder::withMotor(std::unique_ptr<io::IMotor> motor) && {
   return std::move(*this);
 }
 
+ClawBuilder&& ClawBuilder::withPivotPID(control::PID pivot_pid) && {
+  m_pivot_pid = pivot_pid;
+  return std::move(*this);
+}
+
 ClawBuilder&& ClawBuilder::withTask(std::unique_ptr<rtos::ITask> task) && {
   m_task = std::move(task);
   return std::move(*this);
@@ -21,14 +26,21 @@ ClawBuilder&& ClawBuilder::withMutex(std::unique_ptr<rtos::IMutex> mutex) && {
   return std::move(*this);
 }
 
-ClawBuilder&& ClawBuilder::withDelayer(std::unique_ptr<rtos::IDelayer> delayer) && {
+ClawBuilder&& ClawBuilder::withDelayer(
+    std::unique_ptr<rtos::IDelayer> delayer) && {
   m_delayer = std::move(delayer);
   return std::move(*this);
 }
 
-ClawBuilder&& ClawBuilder::withMotorRotationsToPivotRadians(
-    float motorRotationsToPivotRadians) && {
-  m_motor_rotations_to_pivot_radians = motorRotationsToPivotRadians;
+ClawBuilder&& ClawBuilder::withPivotFlippedPosition(
+    float pivot_flipped_position) && {
+  m_pivot_flipped_position = pivot_flipped_position;
+  return std::move(*this);
+}
+
+ClawBuilder&& ClawBuilder::withPivotPositionTolerance(
+    float pivot_position_tolerance) && {
+  m_pivot_position_tolerance = pivot_position_tolerance;
   return std::move(*this);
 }
 

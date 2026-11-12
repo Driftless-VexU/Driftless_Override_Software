@@ -37,6 +37,11 @@ class ClawBuilder {
   /// @return __ClawBuilder&&__ Consumable reference to the current builder
   ClawBuilder&& withMotor(std::unique_ptr<io::IMotor> motor) &&;
 
+  /// @brief Add a PID controller for the pivot motor to the builder
+  /// @param pivot_pid __control::PID__ The PID controller to use for the pivot
+  /// @return __ClawBuilder&&__ Consumable reference to the current builder
+  ClawBuilder&& withPivotPID(control::PID pivot_pid) &&;
+
   /// @brief Add a task to the builder
   /// @param task __std::unique_ptr<rtos::ITask>__ The task to add
   /// @return __ClawBuilder&&__ Consumable reference to the current builder
@@ -52,12 +57,18 @@ class ClawBuilder {
   /// @return __ClawBuilder&&__ Consumable reference to the current builder
   ClawBuilder&& withDelayer(std::unique_ptr<rtos::IDelayer> delayer) &&;
 
-  /// @brief Adds a motor rotations to pivot radians to the builder
-  /// @param motorRotationsToPivotRadians __float__ The motor rotations to pivot
-  /// radians being added
+  /// @brief Adds the number of motor rotations required to flip the pivot 180
+  /// degrees to the builder
+  /// @param pivot_flipped_rotations __float__ The motor rotations required to
+  /// flip the pivot 180 degrees
   /// @return __ClawBuilder&&__ Consumable reference to the current builder
-  ClawBuilder&& withMotorRotationsToPivotRadians(
-      float motorRotationsToPivotRadians) &&;
+  ClawBuilder&& withPivotFlippedPosition(float pivot_flipped_position) &&;
+
+  /// @brief Adds the tolerance of the position of the pivot
+  /// @param pivot_position_tolerance __float__ The tolerance for the motor
+  /// position of the pivot
+  /// @return __ClawBuilder&&__ Consumable reference to the current builder
+  ClawBuilder&& withPivotPositionTolerance(float pivot_position_tolerance) &&;
 
   /// @brief Builds a new Claw object
   /// @return __Claw__ The newly constructed Claw
@@ -74,6 +85,8 @@ class ClawBuilder {
  private:
   hal::MotorGroup m_pivot_motor{};
 
+  control::PID m_pivot_pid{};
+
   std::unique_ptr<io::IPiston> m_piston{};
 
   std::unique_ptr<rtos::ITask> m_task{};
@@ -82,7 +95,9 @@ class ClawBuilder {
 
   std::unique_ptr<rtos::IDelayer> m_delayer{};
 
-  float m_motor_rotations_to_pivot_radians{};
+  float m_pivot_flipped_position{};
+
+  float m_pivot_position_tolerance{};
 };
 }  // namespace claw
 }  // namespace subsystems

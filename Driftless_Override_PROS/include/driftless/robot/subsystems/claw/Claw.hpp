@@ -3,10 +3,13 @@
 
 #include <memory>
 
-#include "driftless/robot/subsystems/claw/IClaw.hpp"
-#include "driftless/robot/subsystems/claw/ClawSubsystem.hpp"
 #include "driftless/hal/MotorGroup.hpp"
 #include "driftless/io/IPiston.hpp"
+#include "driftless/robot/subsystems/claw/IClaw.hpp"
+#include "driftless/rtos/IDelayer.hpp"
+#include "driftless/rtos/IMutex.hpp"
+#include "driftless/rtos/ITask.hpp"
+
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -55,11 +58,23 @@ class Claw : public IClaw {
   /// @brief Determines if the state of the claw is up
   bool isClawUp() override;
 
-  private:
+ private:
+  static constexpr uint8_t TASK_DELAY{20};
+
+  static void taskLoop(void* params);
+
   hal::MotorGroup m_pivot_motor{};
+
   std::unique_ptr<io::IPiston> m_piston{};
 
+  std::unique_ptr<rtos::ITask> m_task{};
+
+  std::unique_ptr<rtos::IMutex> m_mutex{};
+
+  std::unique_ptr<rtos::IDelayer> m_delayer{};
+
   float m_motor_rotations_to_pivot_radians{};
+
   float m_target_pivot_position{};
 
   bool m_isUp{};
@@ -68,6 +83,8 @@ class Claw : public IClaw {
   /// @param builder __ClawBuilder&&__ The builder creating this
   /// Claw object. Consumed on use.
   Claw(ClawBuilder&& builder);
+
+  void taskUpdate();
 };
 }  // namespace claw
 }  // namespace subsystems

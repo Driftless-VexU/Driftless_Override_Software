@@ -17,7 +17,8 @@ namespace commands {
 /// @author Jack LaFreniere
 namespace claw {
 
-/// @brief Command to set the up/down state of the claw
+/// @brief Command to set the up/down state of the claw. True for up, false for
+/// down
 /// @author Jack LaFreniere
 struct SetClawUpDownCommand {
   bool m_isUp{};

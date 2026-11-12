@@ -17,7 +17,8 @@ namespace commands {
 /// @author Jack LaFreniere
 namespace claw {
 
-/// @brief Command to set the open/close state of the claw
+/// @brief Command to set the open/close state of the claw. True for open, false
+/// for closed.
 /// @author Jack LaFreniere
 struct SetClawOpenCloseCommand {
   bool m_isOpen{};

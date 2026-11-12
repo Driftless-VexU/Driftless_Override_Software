@@ -1,8 +1,12 @@
 #include "driftless/config/OrangeConfig.hpp"
 
 #include "driftless/hal/CoprocessorBuilder.hpp"
+#include "driftless/robot/subsystems/claw/ClawBuilder.hpp"
+#include "driftless/robot/subsystems/claw/ClawSubsystem.hpp"
 #include "driftless/robot/subsystems/odometry/OdometrySubsystem.hpp"
 #include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
+
+
 namespace driftless::config {
 std::string OrangeConfig::getName() { return CONFIG_NAME; }
 
@@ -365,6 +369,25 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
           robot::subsystems::toggle::ToggleBuilder{}
               .withMotor(std::move(toggle_motor))
               .buildUnique()));
+
+  // ## CLAW ##
+
+  robot->addSubsystem(std::make_unique<robot::subsystems::claw::ClawSubsystem>(
+      robot::subsystems::claw::ClawBuilder{}
+          .withMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(CLAW_PIVOT_MOTOR_PORT)))
+          .withPiston(std::make_unique<pros_adapters::ProsPiston>(
+              std::make_unique<pros::adi::DigitalOut>(
+                  CLAW_GRABBER_PISTON_PORT)))
+          .withPivotPID(
+              control::PID(std::make_unique<pros_adapters::ProsClock>(),
+                           CLAW_PIVOT_KD, CLAW_PIVOT_KI, CLAW_PIVOT_KD))
+          .withTask(std::make_unique<pros_adapters::ProsTask>())
+          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+          .withPivotFlippedPosition(CLAW_PIVOT_FLIPPED_POSITION)
+          .withPivotPositionTolerance(CLAW_PIVOT_POSITION_TOLERANCE)
+          .buildUnique()));
 
   // return complete robot
   return robot;

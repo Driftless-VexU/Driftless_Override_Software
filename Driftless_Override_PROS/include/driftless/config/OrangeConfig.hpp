@@ -235,6 +235,13 @@ class OrangeConfig : public IConfig {
   static constexpr float LIFT_KD{0.0f};
   static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f / (12.68f * 2 * M_PI)};
 
+  // ## CLAW ##
+  static constexpr float CLAW_PIVOT_KP{12.0f};
+  static constexpr float CLAW_PIVOT_KI{0.0f};
+  static constexpr float CLAW_PIVOT_KD{60.0f};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.0f};
+  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.05f};
+
  public:
   std::string getName() override;
   std::shared_ptr<control::ControlSystem> buildControlSystem() override;

@@ -82,7 +82,6 @@
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 
-
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system
@@ -151,7 +150,7 @@ class BlueConfig : public IConfig {
 
   // #### PORT NUMBERS ####
 
- // ## ARDUINO PORT ##
+  // ## ARDUINO PORT ##
 
   static constexpr int ARDUINO_PORT{4};
 
@@ -174,7 +173,7 @@ class BlueConfig : public IConfig {
 
   static constexpr int8_t LIFT_MOTOR_PORT_LEFT{-15};
   static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{16};
-  
+
   // ## TOGGLES ##
 
   static constexpr int8_t TOGGLE_PORT{-5};
@@ -185,7 +184,7 @@ class BlueConfig : public IConfig {
 
   static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{2};
 
-    // ## ARM ##
+  // ## ARM ##
 
   static constexpr int8_t ELBOW_MOTOR_PORT{7};
 
@@ -226,7 +225,15 @@ class BlueConfig : public IConfig {
   static constexpr float LIFT_KP{24.0f};
   static constexpr float LIFT_KI{0.01f};
   static constexpr float LIFT_KD{0.0f};
-  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f / (12.68f * 2 * M_PI)};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f /
+                                                     (12.68f * 2 * M_PI)};
+
+  // ## CLAW ##
+  static constexpr float CLAW_PIVOT_KP{12.0f};
+  static constexpr float CLAW_PIVOT_KI{0.0f};
+  static constexpr float CLAW_PIVOT_KD{60.0f};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.0f};
+  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.05f};
 
  public:
   std::string getName() override;

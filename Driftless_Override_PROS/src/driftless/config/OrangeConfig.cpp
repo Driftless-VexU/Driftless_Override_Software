@@ -304,6 +304,12 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
       std::make_unique<pros_adapters::ProsPiston>(
           std::move(pros_brake_piston))};
 
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
+          robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
+              .withPiston(std::move(brake_piston))
+              .buildUnique()));
+
   // ## INTAKE ##
 
   // create pros object
@@ -317,7 +323,7 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   // Adapt to pros
   std::unique_ptr<io::IPiston> intake_piston{
       std::make_unique<pros_adapters::ProsPiston>(
-          std::move(pros_intake_piston))};
+          std::move(pros_intake_piston), false)};
 
   std::unique_ptr<io::IMotor> intake_motor_down{
       std::make_unique<pros_adapters::ProsV5Motor>(
@@ -325,11 +331,12 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   std::unique_ptr<io::IMotor> intake_motor_up{
       std::make_unique<pros_adapters::ProsV5Motor>(
           std::move(pros_intake_motor_up))};
-  robot->addSubsystem(
-      std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
-          robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
-              .withPiston(std::move(brake_piston))
-              .buildUnique()));
+  robot->addSubsystem(std::make_unique<robot::subsystems::intake::IntakeSubsystem>(
+      robot::subsystems::intake::IntakeBuilder{}
+          .withPiston(std::move(intake_piston))
+          .withMotor(std::move(intake_motor_down))
+          .withMotor(std::move(intake_motor_up))
+          .buildUnique()));
 
   // ## Lift ##
 

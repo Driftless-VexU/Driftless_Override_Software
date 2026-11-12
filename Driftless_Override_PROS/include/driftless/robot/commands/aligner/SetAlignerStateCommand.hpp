@@ -18,7 +18,7 @@ namespace commands {
 namespace aligner {
 
 /// @brief Command to set the state of the brakes
-/// @author Matthew Backman
+/// @author Jacob Fiedorowicz
 struct SetAlignerStateCommand {
   bool m_deployed{};
 };

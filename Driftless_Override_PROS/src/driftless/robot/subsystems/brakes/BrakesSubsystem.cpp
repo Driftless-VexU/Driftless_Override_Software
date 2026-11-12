@@ -19,10 +19,12 @@ void* BrakesSubsystem::state(ESubsystemState state_name) {
   }
   return result;
 }
-void BrakesSubsystem::handleCommand(const commands::brakes::SetBrakeStateCommand cmd) {
+void BrakesSubsystem::handleCommand(
+    const commands::brakes::SetBrakeStateCommand cmd) {
   m_brake_driver->setState(cmd.m_deployed);
 }
-void BrakesSubsystem::handleCommand(const commands::brakes::ToggleBrakeStateCommand cmd) {
+void BrakesSubsystem::handleCommand(
+    const commands::brakes::ToggleBrakeStateCommand cmd) {
   m_brake_driver->toggleState();
 }
 void BrakesSubsystem::handleCommand(const auto cmd) {
@@ -30,4 +32,4 @@ void BrakesSubsystem::handleCommand(const auto cmd) {
       "No behavior defined to handle the command of type: " +
       std::string(typeid(cmd).name()) + " for the brakes subsystem");
 }
-}   // namespace driftless::robot::subsystems::brakes
+}  // namespace driftless::robot::subsystems::brakes

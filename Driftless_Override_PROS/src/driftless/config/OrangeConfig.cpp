@@ -280,11 +280,11 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   // create pros object
   std::unique_ptr<pros::adi::DigitalOut> pros_intake_piston{
-      std::make_unique<pros::adi::DigitalOut>(INTAKE_PISTON_PORT)};
+      std::make_unique<pros::adi::DigitalOut>(INTAKE_HEIGHT_PISTON_PORT)};
   std::unique_ptr<pros::Motor> pros_intake_motor_down{
-      std::make_unique<pros::Motor>(INTAKE_MOTOR_PORT_DOWN)};
+      std::make_unique<pros::Motor>(INTAKE_TOP_MOTOR_PORT)};
   std::unique_ptr<pros::Motor> pros_intake_motor_up{
-      std::make_unique<pros::Motor>(INTAKE_MOTOR_PORT_UP)};
+      std::make_unique<pros::Motor>(INTAKE_COUNTER_ROLLER_MOTOR_PORT)};
 
   // Adapt to pros
   std::unique_ptr<io::IPiston> intake_piston{
@@ -302,6 +302,61 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
           robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
               .withPiston(std::move(brake_piston))
               .buildUnique()));
+
+  // ## Lift ##
+
+  // create pros oject
+  std::unique_ptr<pros::Motor> pros_lift_motor{
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_LEFT, pros::v5::MotorGearset::blue)};
+  std::unique_ptr<pros::Motor> pros_lift_motor_other{
+      std::make_unique<pros::Motor>(LIFT_MOTOR_PORT_RIGHT, pros::v5::MotorGearset::blue)};
+
+  // PID
+  control::PID lift_pid{control::PID(
+      std::make_unique<pros_adapters::ProsClock>(), LIFT_KP, LIFT_KI, LIFT_KD)};
+
+  // rtos
+  std::unique_ptr<rtos::IDelayer> lift_delayer{
+      std::make_unique<pros_adapters::ProsDelayer>()};
+  std::unique_ptr<rtos::ITask> lift_task{
+      std::make_unique<pros_adapters::ProsTask>()};
+  std::unique_ptr<rtos::IMutex> lift_mutex{
+      std::make_unique<pros_adapters::ProsMutex>()};
+
+  // Adapt to pros
+  std::unique_ptr<io::IMotor> lift_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(std::move(pros_lift_motor))};
+  std::unique_ptr<io::IMotor> lift_motor_other{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_lift_motor_other))};
+
+  robot->addSubsystem(std::make_unique<robot::subsystems::lift::LiftSubsystem>(
+      robot::subsystems::lift::DirectContinuousLiftBuilder{}
+          .withMotor(std::move(lift_motor))
+          .withMotor(std::move(lift_motor_other))
+          .withDelayer(std::move(lift_delayer))
+          .withTask(std::move(lift_task))
+          .withMutex(std::move(lift_mutex))
+          .withPID(lift_pid)
+          .withCentidegreesToInches(LIFT_CENTIDEGREES_TO_INCHES)
+          .buildUnique()));
+  
+    // ## TOGGLE ##
+
+  // create pros object
+  std::unique_ptr<pros::Motor> pros_toggle_motor{
+      std::make_unique<pros::Motor>(TOGGLE_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IMotor> toggle_motor{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_toggle_motor))};
+
+    robot->addSubsystem(
+        std::make_unique<robot::subsystems::toggle::ToggleSubsystem>(
+            robot::subsystems::toggle::ToggleBuilder{}
+            .withMotor(std::move(toggle_motor))
+            .buildUnique()));
 
   // return complete robot
   return robot;

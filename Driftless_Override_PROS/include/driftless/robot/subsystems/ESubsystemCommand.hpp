@@ -33,6 +33,7 @@ enum class ESubsystemCommand {
   ODOMETRY_RESET_X,
   ODOMETRY_RESET_Y,
   INTAKE_SET_VELOCITY,
+  TOGGLE_SPEED
 };
 }  // namespace subsystems
 }  // namespace robot

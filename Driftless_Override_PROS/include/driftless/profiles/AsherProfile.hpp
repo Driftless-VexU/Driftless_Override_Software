@@ -40,7 +40,11 @@ class AsherProfile : public IProfile {
   /// @brief Maps subsystem controls to digital inputs
   const std::map<op_control::EControl, op_control::EControllerDigital>
       DIGITAL_CONTROL_MAP{{op_control::EControl::BRAKE_TOGGLE,
-                          op_control::EControllerDigital::BUTTON_A}};
+                           op_control::EControllerDigital::BUTTON_A},
+                          {op_control::EControl::WALL_TOGGLE,
+                           op_control::EControllerDigital::BUTTON_X},
+                          {op_control::EControl::WALL_WHEEL_TOGGLE,
+                           op_control::EControllerDigital::BUTTON_Y}};
 
   /// @brief Maps startup configurations to their values
   const std::map<op_control::EStartupConfig, bool> STARTUP_CONFIG_MAP{};

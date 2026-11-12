@@ -1,5 +1,10 @@
 #include "driftless/config/OrangeConfig.hpp"
 
+// wall includes
+#include "driftless/robot/subsystems/wall/WallSubsystem.hpp"
+#include "driftless/robot/subsystems/wall/Wall.hpp"
+#include "driftless/robot/subsystems/wall/WallBuilder.hpp"
+
 namespace driftless::config {
 std::string OrangeConfig::getName() { return CONFIG_NAME; }
 
@@ -273,13 +278,25 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
 
   // Adapt to pros
   std::unique_ptr<io::IPiston> brake_piston{
-      std::make_unique<pros_adapters::ProsPiston>(std::move(pros_brake_piston))};
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_brake_piston))};
 
   robot->addSubsystem(
       std::make_unique<robot::subsystems::brakes::BrakesSubsystem>(
           robot::subsystems::brakes::PneumaticPadBrakesBuilder{}
               .withPiston(std::move(brake_piston))
               .buildUnique()));
+
+  // ## WALL ##
+  robot->addSubsystem(std::make_unique<robot::subsystems::wall::WallSubsystem>(
+      robot::subsystems::wall::WallBuilder{}
+          .withWallPiston(std::make_unique<pros_adapters::ProsPiston>(
+              std::make_unique<pros::adi::DigitalOut>(WALL_EXTEND_PISTON_PORT)))
+          .withWheelPiston(std::make_unique<pros_adapters::ProsPiston>(
+              std::make_unique<pros::adi::DigitalOut>(WALL_WHEEL_PISTON_PORT)))
+          .withWheelMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(WALL_WHEEL_MOTOR_PORT)))
+          .buildUnique()));
 
   // return complete robot
   return robot;

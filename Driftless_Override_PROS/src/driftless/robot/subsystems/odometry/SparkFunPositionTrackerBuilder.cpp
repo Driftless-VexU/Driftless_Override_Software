@@ -26,6 +26,13 @@ SparkFunPositionTrackerBuilder&& SparkFunPositionTrackerBuilder::withTask(
 }
 
 SparkFunPositionTrackerBuilder&&
+SparkFunPositionTrackerBuilder::withCoprocessor(
+    std::shared_ptr<hal::Coprocessor> coprocessor) && {
+  m_coprocessor = coprocessor;
+  return std::move(*this);
+}
+
+SparkFunPositionTrackerBuilder&&
 SparkFunPositionTrackerBuilder::withLocalXOffset(double local_x_offset) && {
   m_local_x_offset = local_x_offset;
   return std::move(*this);
@@ -45,24 +52,33 @@ SparkFunPositionTrackerBuilder::withLocalThetaOffset(
 }
 
 SparkFunPositionTracker SparkFunPositionTrackerBuilder::build() && {
-  if (!m_delayer || !m_mutex || !m_task) {
-    throw std::runtime_error(
-        "One or more RTOS components not set for "
-        "SparkFunPositionTrackerBuilder");
-  }
+  SparkFunPositionTracker position_tracker{};
 
-  return SparkFunPositionTracker{std::move(*this)};
+  position_tracker.setClock(m_clock);
+  position_tracker.setDelayer(m_delayer);
+  position_tracker.setMutex(m_mutex);
+  position_tracker.setTask(m_task);
+  position_tracker.setCoprocessor(m_coprocessor);
+  position_tracker.setLocalXOffset(m_local_x_offset);
+  position_tracker.setLocalYOffset(m_local_y_offset);
+  position_tracker.setLocalThetaOffset(m_local_theta_offset);
+
+  return position_tracker;
 }
 
 std::unique_ptr<SparkFunPositionTracker>
 SparkFunPositionTrackerBuilder::buildUnique() && {
-  if (!m_delayer || !m_mutex || !m_task) {
-    throw std::runtime_error(
-        "One or more RTOS components not set for "
-        "SparkFunPositionTrackerBuilder");
-  }
+  std::unique_ptr<SparkFunPositionTracker> position_tracker{
+      std::make_unique<SparkFunPositionTracker>()};
+  position_tracker->setClock(m_clock);
+  position_tracker->setDelayer(m_delayer);
+  position_tracker->setMutex(m_mutex);
+  position_tracker->setTask(m_task);
+  position_tracker->setCoprocessor(m_coprocessor);
+  position_tracker->setLocalXOffset(m_local_x_offset);
+  position_tracker->setLocalYOffset(m_local_y_offset);
+  position_tracker->setLocalThetaOffset(m_local_theta_offset);
 
-  return std::unique_ptr<SparkFunPositionTracker>{
-      new SparkFunPositionTracker{std::move(*this)}};
+  return position_tracker;
 }
 }  // namespace driftless::robot::subsystems::odometry

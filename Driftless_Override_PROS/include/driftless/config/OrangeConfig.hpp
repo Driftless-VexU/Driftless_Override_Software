@@ -72,8 +72,15 @@
 
 // Brakes subsystem includes
 #include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
-#include "driftless/robot/subsystems/brakes/PneumaticPadBrakes.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
+
+// Lift subsystem includes
+#include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
+#include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
+
+// Toggle subsystem includes
+#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
+#include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 
 namespace driftless {
 namespace config {
@@ -143,22 +150,63 @@ class OrangeConfig : public IConfig {
 
   // ## ARDUINO PORT ##
 
-  static constexpr int ARDUINO_PORT{16};
+  static constexpr int ARDUINO_PORT{4};
 
   // ## DRIVE MOTORS ##
 
-  static constexpr int DRIVE_FRONT_LEFT_TOP_PORT{11};
-  static constexpr int DRIVE_FRONT_LEFT_BOTTOM_PORT{-12};
-  static constexpr int DRIVE_FRONT_RIGHT_TOP_PORT{15};
+  static constexpr int DRIVE_FRONT_LEFT_TOP_PORT{19};
+  static constexpr int DRIVE_FRONT_LEFT_BOTTOM_PORT{-20};
+  static constexpr int DRIVE_FRONT_RIGHT_TOP_PORT{14};
   static constexpr int DRIVE_FRONT_RIGHT_BOTTOM_PORT{-13};
-  static constexpr int DRIVE_BACK_LEFT_TOP_PORT{20};
-  static constexpr int DRIVE_BACK_LEFT_BOTTOM_PORT{-19};
-  static constexpr int DRIVE_BACK_RIGHT_TOP_PORT{18};
-  static constexpr int DRIVE_BACK_RIGHT_BOTTOM_PORT{-14};
+  static constexpr int DRIVE_BACK_LEFT_TOP_PORT{18};
+  static constexpr int DRIVE_BACK_LEFT_BOTTOM_PORT{-17};
+  static constexpr int DRIVE_BACK_RIGHT_TOP_PORT{12};
+  static constexpr int DRIVE_BACK_RIGHT_BOTTOM_PORT{-11};
 
   // ## BRAKES ##
 
   static constexpr int8_t BRAKE_PORT{1};
+
+  // ## LIFT ##
+
+  static constexpr int8_t LIFT_MOTOR_PORT_LEFT{-15};
+  static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{16};
+  
+  // ## TOGGLES ##
+
+  static constexpr int8_t TOGGLE_PORT{-5};
+
+  // ## INTAKE ##
+
+  static constexpr int8_t INTAKE_TOP_MOTOR_PORT{-1};
+
+  static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{2};
+
+  static constexpr int8_t INTAKE_HEIGHT_PISTON_PORT{2};
+
+  // ## ARM ##
+
+  static constexpr int8_t ELBOW_MOTOR_PORT{7};
+
+  static constexpr int8_t WRIST_MOTOR_PORT{9};
+
+  // ## CLAW ##
+
+  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{10};
+
+  static constexpr int8_t CLAW_GRABBER_PISTON_PORT{3};
+
+  // ## GOAL ALLIGNER ##
+
+  static constexpr int8_t GOAL_ALLIGNER_PISTON_PORT{4};
+
+  // ## WALL ##
+
+  static constexpr int8_t WALL_EXTENSION_PISTON_PORT{5};
+
+  static constexpr int8_t WALL_DEPLOY_ROLLER_PISTON_PORT{6};
+  
+  static constexpr int8_t WALL_ROLLER_MOTOR_PORT{6};
 
   // #### ROBOT CONSTANTS ####
 
@@ -180,6 +228,12 @@ class OrangeConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{0.0f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
+
+  // ## LIFT ##
+  static constexpr float LIFT_KP{24.0f};
+  static constexpr float LIFT_KI{0.01f};
+  static constexpr float LIFT_KD{0.0f};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f / (12.68f * 2 * M_PI)};
 
  public:
   std::string getName() override;

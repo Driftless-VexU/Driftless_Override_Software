@@ -23,7 +23,8 @@ enum EControl {
   BRAKE_TOGGLE,
   LIFT_RAISE,
   LIFT_LOWER,
-  TOGGLE_SPEED
+  TOGGLE_SPEED,
+  ALIGNER_TOGGLE,
 };
 }  // namespace op_control
 }  // namespace driftless

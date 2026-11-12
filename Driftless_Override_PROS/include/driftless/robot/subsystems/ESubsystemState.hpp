@@ -22,7 +22,8 @@ enum class ESubsystemState {
   ODOMETRY_GET_POSITION,
   ODOMETRY_GET_RESETTER_RAW_VALUE,
   BRAKES_IS_DEPLOYED,
-  LIFT_GET_HEIGHT
+  LIFT_GET_HEIGHT,
+  CLAW_IS_UPRIGHT,
 };
 }  // namespace subsystems
 }  // namespace robot

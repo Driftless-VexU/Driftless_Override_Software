@@ -1,5 +1,5 @@
-#ifndef __TOGGLE_INTAKE_PISTON_STATE_COMMAND_HPP__
-#define __TOGGLE_INTAKE_PISTON_STATE_COMMAND_HPP__
+#ifndef __TOGGLE_INTAKE_PISTON_HEIGHT_COMMAND_HPP__
+#define __TOGGLE_INTAKE_PISTON_HEIGHT_COMMAND_HPP__
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -19,7 +19,7 @@ namespace intake {
 
 /// @brief Command to toggle the piston controlling the height of the intake
 /// @author Jacob Fiedorowicz
-struct ToggleIntakePistonStateCommand {};
+struct ToggleIntakePistonHeightCommand {};
 }  // namespace intake
 }  // namespace commands
 }  // namespace robot

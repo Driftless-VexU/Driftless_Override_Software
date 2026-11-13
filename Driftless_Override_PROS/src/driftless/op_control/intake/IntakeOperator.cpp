@@ -24,7 +24,7 @@ void IntakeOperator::update(
 
 void IntakeOperator::toggleIntakePistonUpDown() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
-    robot::commands::intake::ToggleIntakePistonStateCommand{});
+    robot::commands::intake::ToggleIntakePistonHeightCommand{});
 }
 
 void IntakeOperator::setIntakeMotorVoltage(float voltage) {
@@ -34,6 +34,6 @@ void IntakeOperator::setIntakeMotorVoltage(float voltage) {
 
 void IntakeOperator::setIntakePistonUpDown(bool state) {
   m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
-  robot::commands::intake::SetIntakePistonStateCommand{state});
+  robot::commands::intake::SetIntakePistonHeightCommand{state});
 }
 }  // namespace driftless::op_control::intake

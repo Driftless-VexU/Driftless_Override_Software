@@ -50,16 +50,16 @@ class IntakeSubsystem : public ASubsystem {
  private:
   std::unique_ptr<IIntake> m_intake_driver{};
 
-  /// @brief handles the set intake piston state command
-  /// @param cmd __const commands::intake::SetIntakePistonStateCommand__ the
+  /// @brief handles the set intake piston heigght command
+  /// @param cmd __const commands::intake::SetIntakePistonHeightCommand__ the
   /// command to handle
-  void handleCommand(const commands::intake::SetIntakePistonStateCommand cmd);
+  void handleCommand(const commands::intake::SetIntakePistonHeightCommand cmd);
 
-  /// @brief handles the toggle intake piston state command
-  /// @param cmd __const commands::intake::ToggleIntakePistonStateCommand__ the
+  /// @brief handles the toggle intake piston height command
+  /// @param cmd __const commands::intake::ToggleIntakePistonHeightCommand__ the
   /// command to handle
   void handleCommand(
-      const commands::intake::ToggleIntakePistonStateCommand cmd);
+      const commands::intake::ToggleIntakePistonHeightCommand cmd);
 
   /// @brief handles the set intake motor voltagecommand
   /// @param cmd __const commands::intake::SetIntakeMotorVoltageCommand__ the

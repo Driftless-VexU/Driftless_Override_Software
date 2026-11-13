@@ -1,5 +1,5 @@
-#ifndef __SET_INTAKE_PISTON_STATE_COMMAND_HPP__
-#define __SET_INTAKE_PISTON_STATE_COMMAND_HPP__
+#ifndef __SET_INTAKE_PISTON_HEIGHT_COMMAND_HPP__
+#define __SET_INTAKE_PISTON_HEIGHT_COMMAND_HPP__
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -19,7 +19,7 @@ namespace intake {
 
 /// @brief Command to either deploy or retract the piston controlling the intake height
 /// @author Jacob Fiedorowicz
-struct SetIntakePistonStateCommand {
+struct SetIntakePistonHeightCommand {
     /// @brief Wether the piston is deployed or not
     bool m_deployed{};
 };

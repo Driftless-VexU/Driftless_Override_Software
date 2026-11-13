@@ -12,8 +12,8 @@
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
 #include "driftless/robot/commands/intake/SetIntakeMotorVoltageCommand.hpp"
-#include "driftless/robot/commands/intake/SetIntakePistonStateCommand.hpp"
-#include "driftless/robot/commands/intake/ToggleIntakePistonStateCommand.hpp"
+#include "driftless/robot/commands/intake/SetIntakePistonHeightCommand.hpp"
+#include "driftless/robot/commands/intake/ToggleIntakePistonHeightCommand.hpp"
 #include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
 #include "driftless/robot/commands/odometry/SetHeadingCommand.hpp"
 #include "driftless/robot/commands/odometry/SetPositionCommand.hpp"
@@ -45,7 +45,7 @@ using Command = std::variant<
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
     tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
-    intake::SetIntakePistonStateCommand, intake::ToggleIntakePistonStateCommand,
+    intake::SetIntakePistonHeightCommand, intake::ToggleIntakePistonHeightCommand,
     intake::SetIntakeMotorVoltageCommand,
     lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
     aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;

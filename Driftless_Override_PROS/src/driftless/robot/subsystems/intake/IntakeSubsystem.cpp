@@ -19,11 +19,11 @@ void* IntakeSubsystem::state(ESubsystemState state_name) {
   return result;
 }
 void IntakeSubsystem::handleCommand(
-    const commands::intake::SetIntakePistonStateCommand cmd) {
+    const commands::intake::SetIntakePistonHeightCommand cmd) {
   m_intake_driver->setIntakePistonUpDown(cmd.m_deployed);
 }
 void IntakeSubsystem::handleCommand(
-    const commands::intake::ToggleIntakePistonStateCommand cmd) {
+    const commands::intake::ToggleIntakePistonHeightCommand cmd) {
   m_intake_driver->toggleIntakePistonUpDown();
 }
 void IntakeSubsystem::handleCommand(

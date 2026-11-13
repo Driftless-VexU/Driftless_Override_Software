@@ -49,7 +49,7 @@ class AsherProfile : public IProfile {
                            op_control::EControllerDigital::DPAD_DOWN},
                           {op_control::EControl::ALIGNER_TOGGLE,
                            op_control::EControllerDigital::DPAD_RIGHT},
-                          {op_control::EControl::INTAKE_TOGGLE,
+                          {op_control::EControl::INTAKE_RUN_IN,
                            op_control::EControllerDigital::BUTTON_B}};
 
   /// @brief Maps startup configurations to their values

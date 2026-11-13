@@ -31,22 +31,23 @@ class IClaw {
   virtual void run() = 0;
 
   /// @brief Set the up/down state of the claw
-  /// @param isUp __bool__ Whether the claw should be facing up or down. Up for
-  /// true, down for false
+  /// @param is_up __bool__ Whether the claw should be facing up or down. True
+  /// for up, false for down
   virtual void setUpDown(bool isUp) = 0;
 
   /// @brief Toggle the claw pivot between up and down
   virtual void toggleUpDown() = 0;
 
   /// @brief Set the open/close state of the claw
-  /// @param isOpen __bool__ Whether the claw should be open or closed. Open for
-  /// true, closed for false
+  /// @param isOpen __bool__ Whether the claw should be open or closed. True for
+  /// open, false for close
   virtual void setOpenClosed(bool isOpen) = 0;
 
-  /// @brief toggle the open/close state of the claw
+  /// @brief Toggle the claw between open and closed
   virtual void toggleOpenClosed() = 0;
 
-  /// @brief Determines if the state of the claw is up
+  /// @brief Determine if the claw is right-side-up or upside-down
+  /// @return __bool__ True for right-side-up, false for upside-down
   virtual bool isClawUp() = 0;
 };
 }  // namespace claw

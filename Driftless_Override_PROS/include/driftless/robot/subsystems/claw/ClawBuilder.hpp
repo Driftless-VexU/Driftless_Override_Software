@@ -71,14 +71,13 @@ class ClawBuilder {
   ClawBuilder&& withPivotPositionTolerance(float pivot_position_tolerance) &&;
 
   /// @brief Builds a new Claw object
-  /// @return __Claw__ The newly constructed Claw
-  /// object
+  /// @return __Claw__ The newly constructed Claw object
   [[nodiscard]]
   Claw build() &&;
 
   /// @brief Builds a new Claw object wrapped in a unique pointer
-  /// @return __std::unique_ptr<Claw>__ Unique pointer to the
-  /// newly constructed Claw object
+  /// @return __std::unique_ptr<Claw>__ Unique pointer to the newly constructed
+  /// Claw object
   [[nodiscard]]
   std::unique_ptr<Claw> buildUnique() &&;
 

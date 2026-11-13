@@ -43,22 +43,23 @@ class Claw : public IClaw {
   void run() override;
 
   /// @brief Set the up/down state of the claw
-  /// @param is_up __bool__ Whether the claw should be facing up or down. Up for
-  /// true, down for false
+  /// @param is_up __bool__ Whether the claw should be facing up or down. True
+  /// for up, false for down
   void setUpDown(bool is_up) override;
 
   /// @brief Toggle the orientation of the claw pivot between up and down
   void toggleUpDown() override;
 
   /// @brief Set the open/close state of the claw
-  /// @param isOpen __bool__ Whether the claw should be open or closed. Open for
-  /// true, closed for false
+  /// @param isOpen __bool__ Whether the claw should be open or closed. True for
+  /// open, false for close
   void setOpenClosed(bool is_open) override;
 
-  /// @brief toggle the open/close state of the claw
+  /// @brief Toggle the open/close state of the claw
   void toggleOpenClosed() override;
 
-  /// @brief Determines if the state of the claw is up
+  /// @brief Determine if the claw is right-side-up or upside-down
+  /// @return __bool__ True for right-side-up, false for upside-down
   bool isClawUp() override;
 
  private:
@@ -94,6 +95,7 @@ class Claw : public IClaw {
   /// Claw object. Consumed on use.
   Claw(ClawBuilder&& builder);
 
+  /// @brief Update the state of the claw. Called periodically through taskLoop
   void taskUpdate();
 };
 }  // namespace claw

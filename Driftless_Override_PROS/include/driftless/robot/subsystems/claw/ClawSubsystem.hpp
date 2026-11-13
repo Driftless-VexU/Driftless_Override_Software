@@ -24,6 +24,7 @@ namespace claw {
 
 /// @brief Class to adapt a claw driver to the subsystem structure
 /// @author Jack LaFreniere
+/// @author Matthew Backman
 class ClawSubsystem : public ASubsystem {
  public:
   /// @brief Construct a new Claw Subsystem object
@@ -31,17 +32,17 @@ class ClawSubsystem : public ASubsystem {
   /// use by the subsystem
   ClawSubsystem(std::unique_ptr<IClaw> claw_driver);
 
-  /// @brief Initializes the claw subsystem
+  /// @brief Initialize the claw subsystem
   void init() override;
 
-  /// @brief Runs the claw subsystem
+  /// @brief Run the claw subsystem
   void run() override;
 
   /// @brief Send a command to the claw subsystem
   /// @param cmd __const commands::Command&__ The command to send
   void command(const commands::Command& cmd) override;
 
-  /// @brief Retrieves a state from the claw subsystem
+  /// @brief Retrieve a state from the claw subsystem
   /// @param state __ESubsystemState__ The state to retrieve from the claw
   /// subsystem
   /// @return __void*__ The value of the desired state

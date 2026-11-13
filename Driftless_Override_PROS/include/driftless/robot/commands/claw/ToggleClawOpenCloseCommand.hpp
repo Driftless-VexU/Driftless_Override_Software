@@ -17,7 +17,7 @@ namespace commands {
 /// @author Jack LaFreniere
 namespace claw {
 
-/// @brief Command to toggle the open/close state of the claw
+/// @brief Command to toggle the claw between open and closed
 /// @author Jack LaFreniere
 struct ToggleClawOpenCloseCommand {};
 }  // namespace claw

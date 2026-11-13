@@ -2,7 +2,7 @@
 
 namespace driftless::robot::subsystems::claw {
 ClawSubsystem::ClawSubsystem(std::unique_ptr<IClaw> claw_driver)
-    : m_claw_driver{std::move(claw_driver)} {}
+    : m_claw_driver{std::move(claw_driver)}, ASubsystem{ESubsystem::CLAW} {}
 
 void ClawSubsystem::init() { m_claw_driver->init(); }
 
@@ -22,26 +22,29 @@ void* ClawSubsystem::state(ESubsystemState state) {
   return out;
 }
 
-void ClawSubsystem::handleCommand(const commands::claw::SetClawUpDownCommand cmd) {
+void ClawSubsystem::handleCommand(
+    const commands::claw::SetClawUpDownCommand cmd) {
   m_claw_driver->setUpDown(cmd.m_is_up);
 }
 
-void ClawSubsystem::handleCommand(const commands::claw::SetClawOpenCloseCommand cmd) {
+void ClawSubsystem::handleCommand(
+    const commands::claw::SetClawOpenCloseCommand cmd) {
   m_claw_driver->setOpenClosed(cmd.m_is_open);
 }
 
-void ClawSubsystem::handleCommand(const commands::claw::ToggleClawOpenCloseCommand cmd) {
+void ClawSubsystem::handleCommand(
+    const commands::claw::ToggleClawOpenCloseCommand cmd) {
   m_claw_driver->toggleOpenClosed();
 }
 
-void ClawSubsystem::handleCommand(const commands::claw::ToggleClawUpDownCommand cmd) {
+void ClawSubsystem::handleCommand(
+    const commands::claw::ToggleClawUpDownCommand cmd) {
   m_claw_driver->toggleUpDown();
 }
 
 void ClawSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(
       "No behavior defined to handle the command of type: " +
-      std::string(typeid(cmd).name()) +
-      " for the claw subsystem");
+      std::string(typeid(cmd).name()) + " for the claw subsystem");
 }
 }  // namespace driftless::robot::subsystems::claw

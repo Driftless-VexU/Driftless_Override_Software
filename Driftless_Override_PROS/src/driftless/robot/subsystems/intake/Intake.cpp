@@ -3,23 +3,23 @@
 #include "driftless/robot/subsystems/intake/IntakeBuilder.hpp"
 
 namespace driftless::robot::subsystems::intake {
-void Intake::init() { m_motor.init(); }
+void Intake::init() { m_intake_motors.init(); }
 
 void Intake::run() {}
 
-void Intake::setPistonState(bool deployed) {
+void Intake::setIntakePistonUpDown(bool deployed) {
   if (deployed) {
-    m_piston->extend();
+    m_intake_piston->extend();
   } else {
-    m_piston->retract();
+    m_intake_piston->retract();
   }
 }
-void Intake::togglePistonState() { m_piston->toggleState(); }
+void Intake::toggleIntakePistonUpDown() { m_intake_piston->toggleState(); }
 
-bool Intake::isPistonDeployed() { return m_piston->isExtended(); }
+bool Intake::isIntakePistonDeployed() { return m_intake_piston->isExtended(); }
 
-void Intake::setMotorSpeed(float speed) { m_motor.setVoltage(speed); }
+void Intake::setIntakeMotorVoltage(float voltage) { m_intake_motors.setVoltage(voltage); }
 Intake::Intake(IntakeBuilder&& builder)
-    : m_piston(std::move(builder.m_piston)),
-      m_motor(std::move(builder.m_motor)) {}
+    : m_intake_piston(std::move(builder.m_intake_piston)),
+      m_intake_motors(std::move(builder.m_intake_motors)) {}
 }  // namespace driftless::robot::subsystems::intake

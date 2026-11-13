@@ -1,5 +1,5 @@
-#ifndef __Intake_HPP__
-#define __Intake_HPP__
+#ifndef __INTAKE_HPP__
+#define __INTAKE_HPP__
 
 #include <memory>
 
@@ -40,22 +40,22 @@ class Intake : public IIntake {
 
   /// @brief Sets the state of the intake piston
   /// @param deployed __bool__ Whether the intake piston is deployed or not
-  virtual void setPistonState(bool deployed) override;
+  virtual void setIntakePistonUpDown(bool deployed) override;
 
   /// @brief Toggles the state of the intake piston
-  virtual void togglePistonState() override;
+  virtual void toggleIntakePistonUpDown() override;
 
   /// @brief Determine if the intake piston is deployed
   /// @return __bool__ Whether the intake piston is deployed or not
-  virtual bool isPistonDeployed() override;
+  virtual bool isIntakePistonDeployed() override;
 
-  /// @brief Sets the speed of the motor
-  /// @param speed __float__ The speed of the motor
-  virtual void setMotorSpeed(float speed) override;
+  /// @brief Sets the voltage going to the motor
+  /// @param voltage __float__ The volts sent to the motor
+  virtual void setIntakeMotorVoltage(float voltage) override;
 
  private:
-  std::unique_ptr<io::IPiston> m_piston{};
-  hal::MotorGroup m_motor{};
+  std::unique_ptr<io::IPiston> m_intake_piston{};
+  hal::MotorGroup m_intake_motors{};
 
   /// @brief Construct a new Intake object
   /// @param builder __IntakeBuilder&&__ The builder creating this Intake

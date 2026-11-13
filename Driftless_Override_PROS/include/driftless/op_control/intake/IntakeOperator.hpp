@@ -39,15 +39,15 @@ class IntakeOperator {
     std::shared_ptr<robot::Robot> m_robot{};
 
     /// @brief Toggles the state of the intake piston
-    void toggleIntakePistonState();
+    void toggleIntakePistonUpDown();
 
-    /// @brief Sets the speed of the intake motor
-    /// @param speed __float__ The speed to set the motor
-    void setIntakeMotorSpeed(float speed);
+    /// @brief Sets the voltage going to the intake motor
+    /// @param voltage __float__ The volts to send to the motor
+    void setIntakeMotorVoltage(float voltage);
 
     /// @brief Sets the state of the intake piston
     /// @param state __bool__ The state to set the piston. True for down, false for up
-    void setIntakePistonState(bool state);
+    void setIntakePistonUpDown(bool state);
 };
 }  // namespace intake
 }  // namespace op_control

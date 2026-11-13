@@ -33,18 +33,18 @@ class IIntake {
   /// @brief Sets the state of the intake piston
   /// @param deployed __bool__ Whether the intake piston is deployed or not.
   /// True for deployed, false for retracted.
-  virtual void setPistonState(bool deployed) = 0;
+  virtual void setIntakePistonUpDown(bool deployed) = 0;
 
   /// @brief Toggle the state of the intake piston
-  virtual void togglePistonState() = 0;
+  virtual void toggleIntakePistonUpDown() = 0;
 
   /// @brief Determine if the intake piston is deployed
   /// @return __bool__ Whether the intake piston is deployed or not
-  virtual bool isPistonDeployed() = 0;
+  virtual bool isIntakePistonDeployed() = 0;
 
-  /// @brief Sets the speed of the motor
-  /// @param speed __float__ The speed of the motor
-  virtual void setMotorSpeed(float speed) = 0;
+  /// @brief Sets the voltage going to the motor
+  /// @param voltage __float__ The volts sent to the motor
+  virtual void setIntakeMotorVoltage(float voltage) = 0;
 };
 }  // namespace intake
 }  // namespace subsystems

@@ -1,5 +1,5 @@
-#ifndef __SET_INTAKE_MOTOR_SPEED_COMMAND_HPP__
-#define __SET_INTAKE_MOTOR_SPEED_COMMAND_HPP__
+#ifndef __SET_INTAKE_MOTOR_VOLTAGE_COMMAND_HPP__
+#define __SET_INTAKE_MOTOR_VOLTAGE_COMMAND_HPP__
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -17,9 +17,9 @@ namespace commands {
 /// @author Jacob Fiedorowicz
 namespace intake {
 
-struct SetIntakeMotorSpeedCommand {
-  /// @brief Speed of the motor
-  float m_speed;
+struct SetIntakeMotorVoltageCommand {
+  /// @brief Voltage of the motor
+  float m_voltage;
 };
 }  // namespace intake
 }  // namespace commands

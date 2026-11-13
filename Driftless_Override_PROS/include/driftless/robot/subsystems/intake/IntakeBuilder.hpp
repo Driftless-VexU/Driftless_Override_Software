@@ -47,9 +47,9 @@ class IntakeBuilder {
   std::unique_ptr<Intake> buildUnique() &&;
 
  private:
-  std::unique_ptr<io::IPiston> m_piston{};
+  std::unique_ptr<io::IPiston> m_intake_piston{};
 
-  hal::MotorGroup m_motor{};
+  hal::MotorGroup m_intake_motors{};
 };
 }  // namespace intake
 }  // namespace subsystems

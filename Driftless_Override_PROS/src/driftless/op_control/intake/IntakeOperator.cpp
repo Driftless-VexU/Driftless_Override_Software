@@ -12,27 +12,27 @@ void IntakeOperator::update(
       profile->getDigitalControlMapping(op_control::EControl::INTAKE_TOGGLE));
 
   if (m_controller->getDigital(intake_piston_toggle)) {
-    setIntakePistonState(true);
-    setIntakeMotorSpeed(12.0f);
+    setIntakePistonUpDown(true);
+    setIntakeMotorVoltage(12.0f);
   }
   else
   {
-    setIntakePistonState(false);
-    setIntakeMotorSpeed(0.0f);
+    setIntakePistonUpDown(false);
+    setIntakeMotorVoltage(0.0f);
   }
 }
 
-void IntakeOperator::toggleIntakePistonState() {
+void IntakeOperator::toggleIntakePistonUpDown() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
     robot::commands::intake::ToggleIntakePistonStateCommand{});
 }
 
-void IntakeOperator::setIntakeMotorSpeed(float speed) {
+void IntakeOperator::setIntakeMotorVoltage(float voltage) {
     m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
-    robot::commands::intake::SetIntakeMotorSpeedCommand{speed});
+    robot::commands::intake::SetIntakeMotorVoltageCommand{voltage});
 }
 
-void IntakeOperator::setIntakePistonState(bool state) {
+void IntakeOperator::setIntakePistonUpDown(bool state) {
   m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
   robot::commands::intake::SetIntakePistonStateCommand{state});
 }

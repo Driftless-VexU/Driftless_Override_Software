@@ -11,7 +11,7 @@
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
-#include "driftless/robot/commands/intake/SetIntakeMotorSpeedCommand.hpp"
+#include "driftless/robot/commands/intake/SetIntakeMotorVoltageCommand.hpp"
 #include "driftless/robot/commands/intake/SetIntakePistonStateCommand.hpp"
 #include "driftless/robot/commands/intake/ToggleIntakePistonStateCommand.hpp"
 #include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
@@ -46,7 +46,7 @@ using Command = std::variant<
     tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
     intake::SetIntakePistonStateCommand, intake::ToggleIntakePistonStateCommand,
-    intake::SetIntakeMotorSpeedCommand,
+    intake::SetIntakeMotorVoltageCommand,
     lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
     aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;
 

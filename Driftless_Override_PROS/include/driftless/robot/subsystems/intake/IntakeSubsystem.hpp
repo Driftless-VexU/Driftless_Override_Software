@@ -61,10 +61,10 @@ class IntakeSubsystem : public ASubsystem {
   void handleCommand(
       const commands::intake::ToggleIntakePistonStateCommand cmd);
 
-  /// @brief handles the set intake motor speed command
-  /// @param cmd __const commands::intake::SetIntakeMotorSpeedCommand__ the
+  /// @brief handles the set intake motor voltagecommand
+  /// @param cmd __const commands::intake::SetIntakeMotorVoltageCommand__ the
   /// command to handle
-  void handleCommand(const commands::intake::SetIntakeMotorSpeedCommand cmd);
+  void handleCommand(const commands::intake::SetIntakeMotorVoltageCommand cmd);
 
   /// @brief Handles any commands that are not explicitly handled by the intake
   /// subsystem

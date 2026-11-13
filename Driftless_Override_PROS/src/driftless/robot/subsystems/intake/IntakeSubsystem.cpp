@@ -14,21 +14,21 @@ void IntakeSubsystem::command(const commands::Command& cmd) {
 void* IntakeSubsystem::state(ESubsystemState state_name) {
   void* result{nullptr};
   if (state_name == ESubsystemState::INTAKE_IS_DEPLOYED) {
-    result = new bool{m_intake_driver->isPistonDeployed()};
+    result = new bool{m_intake_driver->isIntakePistonDeployed()};
   }
   return result;
 }
 void IntakeSubsystem::handleCommand(
     const commands::intake::SetIntakePistonStateCommand cmd) {
-  m_intake_driver->setPistonState(cmd.m_deployed);
+  m_intake_driver->setIntakePistonUpDown(cmd.m_deployed);
 }
 void IntakeSubsystem::handleCommand(
     const commands::intake::ToggleIntakePistonStateCommand cmd) {
-  m_intake_driver->togglePistonState();
+  m_intake_driver->toggleIntakePistonUpDown();
 }
 void IntakeSubsystem::handleCommand(
-    const commands::intake::SetIntakeMotorSpeedCommand cmd) {
-  m_intake_driver->setMotorSpeed(cmd.m_speed);
+    const commands::intake::SetIntakeMotorVoltageCommand cmd) {
+  m_intake_driver->setIntakeMotorVoltage(cmd.m_voltage);
 }
 void IntakeSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(

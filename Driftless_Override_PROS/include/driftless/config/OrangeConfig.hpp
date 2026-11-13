@@ -79,8 +79,8 @@
 #include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
 
 // Toggle subsystem includes
-#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
+#include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 
 // Aligner subsystem includes
 #include "driftless/robot/subsystems/aligner/AlignerSubsystem.hpp"
@@ -175,7 +175,7 @@ class OrangeConfig : public IConfig {
 
   static constexpr int8_t LIFT_MOTOR_PORT_LEFT{-15};
   static constexpr int8_t LIFT_MOTOR_PORT_RIGHT{16};
-  
+
   // ## TOGGLES ##
 
   static constexpr int8_t TOGGLE_PORT{5};
@@ -190,13 +190,13 @@ class OrangeConfig : public IConfig {
 
   // ## ARM ##
 
-  static constexpr int8_t ELBOW_MOTOR_PORT{7};
+  static constexpr int8_t ELBOW_MOTOR_PORT{10};
 
-  static constexpr int8_t WRIST_MOTOR_PORT{9};
+  static constexpr int8_t WRIST_MOTOR_PORT{21};
 
   // ## CLAW ##
 
-  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{10};
+  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{9};
 
   static constexpr int8_t CLAW_GRABBER_PISTON_PORT{3};
 
@@ -209,7 +209,7 @@ class OrangeConfig : public IConfig {
   static constexpr int8_t WALL_EXTENSION_PISTON_PORT{5};
 
   static constexpr int8_t WALL_DEPLOY_ROLLER_PISTON_PORT{6};
-  
+
   static constexpr int8_t WALL_ROLLER_MOTOR_PORT{6};
 
   // #### ROBOT CONSTANTS ####
@@ -237,7 +237,17 @@ class OrangeConfig : public IConfig {
   static constexpr float LIFT_KP{24.0f};
   static constexpr float LIFT_KI{0.01f};
   static constexpr float LIFT_KD{0.0f};
-  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f / (12.68f * 2 * M_PI)};
+  static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f /
+                                                     (12.68f * 2 * M_PI)};
+
+  // ## CLAW ##
+  static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{
+      pros::MotorGearset::green};
+  static constexpr float CLAW_PIVOT_KP{12.0f};
+  static constexpr float CLAW_PIVOT_KI{0.0f};
+  static constexpr float CLAW_PIVOT_KD{0.0f};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.42f * M_PI * 2};
+  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.1f};
 
  public:
   std::string getName() override;

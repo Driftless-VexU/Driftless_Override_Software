@@ -24,6 +24,8 @@ enum EControl {
   LIFT_RAISE,
   LIFT_LOWER,
   TOGGLE_SPEED,
+  CLAW_FLIP,
+  CLAW_TOGGLE_CLOSED,
   ALIGNER_TOGGLE,
 };
 }  // namespace op_control

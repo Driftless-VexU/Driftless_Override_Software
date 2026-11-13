@@ -3,8 +3,14 @@
 #include <cmath>
 
 #include "driftless/robot/subsystems/claw/ClawBuilder.hpp"
+
 namespace driftless::robot::subsystems::claw {
-void Claw::init() {}
+void Claw::init() {
+  m_pivot_motor.init();
+  m_pivot_motor.setVoltage(-5.0);
+  m_delayer->delay(200);
+  m_pivot_motor.setPosition(0.0);
+}
 
 void Claw::run() { m_task->start(taskLoop, this); }
 
@@ -89,11 +95,12 @@ void Claw::taskUpdate() {
       m_pivot_position_tolerance) {
     m_pivot_motor.setVoltage(0.0);
 
-    if (m_target_pivot_position == 0.0f) {
+    if (m_target_pivot_position <= m_pivot_position_tolerance) {
       m_is_up = false;
     } else {
       m_is_up = true;
     }
+
   } else {
     float pivot_voltage = m_pivot_pid.getControlValue(
         m_pivot_motor.getPosition(), m_target_pivot_position);

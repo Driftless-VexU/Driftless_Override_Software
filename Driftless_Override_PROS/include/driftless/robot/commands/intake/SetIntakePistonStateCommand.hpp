@@ -16,6 +16,9 @@ namespace commands {
 /// @brief The namespace for commands which can be sent to the brakes subsystem
 /// @author Jacob Fiedorowicz
 namespace intake {
+
+/// @brief Command to either deploy or retract the piston controlling the intake height
+/// @author Jacob Fiedorowicz
 struct SetIntakePistonStateCommand {
     /// @brief Wether the piston is deployed or not
     bool m_deployed{};

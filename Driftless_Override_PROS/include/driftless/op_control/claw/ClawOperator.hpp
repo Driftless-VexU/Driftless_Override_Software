@@ -4,8 +4,9 @@
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
 #include "driftless/io/IController.hpp"
-#include "driftless/robot/Robot.hpp"
 #include "driftless/profiles/IProfile.hpp"
+#include "driftless/robot/Robot.hpp"
+
 
 namespace driftless {
 
@@ -21,9 +22,11 @@ namespace claw {
 /// @author Matthew Backman
 class ClawOperator {
  public:
- ClawOperator(std::shared_ptr<robot::Robot> robot, std::shared_ptr<io::IController> controller);
+  ClawOperator(std::shared_ptr<io::IController> controller,
+               std::shared_ptr<robot::Robot> robot);
 
- void update(const std::unique_ptr<profiles::IProfile>& profile);
+  void update(const std::unique_ptr<profiles::IProfile>& profile);
+
  private:
   std::shared_ptr<robot::Robot> m_robot;
 

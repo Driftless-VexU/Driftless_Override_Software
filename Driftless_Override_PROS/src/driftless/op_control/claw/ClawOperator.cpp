@@ -1,8 +1,8 @@
 #include "driftless/op_control/claw/ClawOperator.hpp"
 
 namespace driftless::op_control::claw {
-ClawOperator::ClawOperator(std::shared_ptr<robot::Robot> robot,
-                           std::shared_ptr<io::IController> controller)
+ClawOperator::ClawOperator(std::shared_ptr<io::IController> controller,
+                           std::shared_ptr<robot::Robot> robot)
     : m_robot{robot}, m_controller{controller} {}
 
 void ClawOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {

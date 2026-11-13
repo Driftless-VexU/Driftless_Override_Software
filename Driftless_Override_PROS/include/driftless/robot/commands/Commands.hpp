@@ -8,6 +8,10 @@
 #include "driftless/robot/commands/aligner/ToggleAlignerStateCommand.hpp"
 #include "driftless/robot/commands/brakes/SetBrakeStateCommand.hpp"
 #include "driftless/robot/commands/brakes/ToggleBrakeStateCommand.hpp"
+#include "driftless/robot/commands/claw/SetClawOpenCloseCommand.hpp"
+#include "driftless/robot/commands/claw/SetClawUpDownCommand.hpp"
+#include "driftless/robot/commands/claw/ToggleClawOpenCloseCommand.hpp"
+#include "driftless/robot/commands/claw/ToggleClawUpDownCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
@@ -22,7 +26,6 @@
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
-
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -47,6 +50,8 @@ using Command = std::variant<
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
     intake::SetIntakePistonHeightCommand, intake::ToggleIntakePistonHeightCommand,
     intake::SetIntakeMotorVoltageCommand,
+    claw::SetClawOpenCloseCommand, claw::SetClawUpDownCommand,
+    claw::ToggleClawOpenCloseCommand, claw::ToggleClawUpDownCommand,
     lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
     aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;
 

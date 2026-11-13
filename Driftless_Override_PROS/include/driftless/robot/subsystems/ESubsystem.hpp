@@ -15,7 +15,17 @@ namespace subsystems {
 
 /// @brief The enum class for subsystems
 /// @author Matthew Backman
-enum class ESubsystem { HOLONOMIC_DRIVE_TRAIN, TANK_DRIVE_TRAIN, ODOMETRY, BRAKES, INTAKE, LIFT, TOGGLE, ALIGNER };
+enum class ESubsystem {
+  HOLONOMIC_DRIVE_TRAIN,
+  TANK_DRIVE_TRAIN,
+  ODOMETRY,
+  BRAKES,
+  LIFT,
+  TOGGLE,
+  CLAW,
+  ALIGNER,
+  INTAKE,
+};
 }  // namespace subsystems
 }  // namespace robot
 }  // namespace driftless

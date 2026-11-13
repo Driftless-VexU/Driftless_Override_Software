@@ -17,6 +17,8 @@ namespace commands {
 /// @author Jacob Fiedorowicz
 namespace intake {
 
+/// @brief Command to set the voltage of the intake motors
+/// @author Jacob Fiedorowicz
 struct SetIntakeMotorSpeedCommand {
   /// @brief Speed of the motor
   float m_speed;

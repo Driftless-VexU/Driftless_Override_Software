@@ -16,6 +16,9 @@ namespace commands {
 /// @brief The namespace for commands which can be sent to the brakes subsystem
 /// @author Jacob Fiedorowicz
 namespace intake {
+
+/// @brief Command to toggle the piston controlling the height of the intake
+/// @author Jacob Fiedorowicz
 struct ToggleIntakePistonStateCommand {};
 }  // namespace intake
 }  // namespace commands

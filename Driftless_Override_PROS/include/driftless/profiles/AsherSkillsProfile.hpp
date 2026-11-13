@@ -41,7 +41,7 @@ class AsherSkillsProfile : public IProfile {
   const std::map<op_control::EControl, op_control::EControllerDigital>
       DIGITAL_CONTROL_MAP{{op_control::EControl::BRAKE_TOGGLE,
                            op_control::EControllerDigital::BUTTON_A},
-                          {op_control::EControl::INTAKE_TOGGLE,
+                          {op_control::EControl::INTAKE_RUN_IN,
                            op_control::EControllerDigital::BUTTON_B},
                           {op_control::EControl::LIFT_RAISE,
                            op_control::EControllerDigital::TRIGGER_LEFT_TOP},

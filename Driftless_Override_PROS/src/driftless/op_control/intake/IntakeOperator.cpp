@@ -8,10 +8,10 @@ IntakeOperator::IntakeOperator(
 
 void IntakeOperator::update(
     const std::unique_ptr<profiles::IProfile>& profile) {
-  EControllerDigital intake_piston_toggle(
-      profile->getDigitalControlMapping(op_control::EControl::INTAKE_TOGGLE));
+  EControllerDigital intake_run_in_btn(
+      profile->getDigitalControlMapping(op_control::EControl::INTAKE_RUN_IN));
 
-  if (m_controller->getDigital(intake_piston_toggle)) {
+  if (m_controller->getDigital(intake_run_in_btn)) {
     setIntakePistonUpDown(true);
     setIntakeMotorVoltage(12.0f);
   }

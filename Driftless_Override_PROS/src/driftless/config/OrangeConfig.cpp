@@ -388,6 +388,23 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
           .withPivotFlippedPosition(CLAW_PIVOT_FLIPPED_POSITION)
           .withPivotPositionTolerance(CLAW_PIVOT_POSITION_TOLERANCE)
           .buildUnique()));
+          
+  // ## ALIGNER ##
+
+  // create pros object
+  std::unique_ptr<pros::adi::DigitalOut> pros_aligner_piston{
+      std::make_unique<pros::adi::DigitalOut>(GOAL_ALIGNER_PISTON_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IPiston> aligner_piston{
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_aligner_piston))};
+
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::aligner::AlignerSubsystem>(
+          robot::subsystems::aligner::AlignerBuilder{}
+              .withPiston(std::move(aligner_piston))
+              .buildUnique()));
 
   // return complete robot
   return robot;

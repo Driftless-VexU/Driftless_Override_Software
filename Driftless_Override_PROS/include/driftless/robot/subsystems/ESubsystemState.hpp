@@ -24,6 +24,7 @@ enum class ESubsystemState {
   BRAKES_IS_DEPLOYED,
   LIFT_GET_HEIGHT,
   CLAW_IS_UPRIGHT,
+  ALIGNER_IS_DEPLOYED,
 };
 }  // namespace subsystems
 }  // namespace robot

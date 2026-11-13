@@ -4,6 +4,8 @@
 #include <variant>
 
 /* ADD COMMAND HEADERS HERE */
+#include "driftless/robot/commands/aligner/SetAlignerStateCommand.hpp"
+#include "driftless/robot/commands/aligner/ToggleAlignerStateCommand.hpp"
 #include "driftless/robot/commands/brakes/SetBrakeStateCommand.hpp"
 #include "driftless/robot/commands/brakes/ToggleBrakeStateCommand.hpp"
 #include "driftless/robot/commands/claw/SetClawOpenCloseCommand.hpp"
@@ -45,7 +47,8 @@ using Command = std::variant<
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
     claw::SetClawOpenCloseCommand, claw::SetClawUpDownCommand,
     claw::ToggleClawOpenCloseCommand, claw::ToggleClawUpDownCommand,
-    lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand>;
+    lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
+    aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;
 
 }  // namespace commands
 }  // namespace robot

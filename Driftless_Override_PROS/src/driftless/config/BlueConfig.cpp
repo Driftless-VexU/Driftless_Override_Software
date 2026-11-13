@@ -369,23 +369,6 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
               .withMotor(std::move(toggle_motor))
               .buildUnique()));
 
-  robot->addSubsystem(std::make_unique<robot::subsystems::claw::ClawSubsystem>(
-      robot::subsystems::claw::ClawBuilder{}
-          .withMotor(std::make_unique<pros_adapters::ProsV5Motor>(
-              std::make_unique<pros::Motor>(CLAW_PIVOT_MOTOR_PORT)))
-          .withPiston(std::make_unique<pros_adapters::ProsPiston>(
-              std::make_unique<pros::adi::DigitalOut>(
-                  CLAW_GRABBER_PISTON_PORT)))
-          .withPivotPID(
-              control::PID(std::make_unique<pros_adapters::ProsClock>(),
-                           CLAW_PIVOT_KD, CLAW_PIVOT_KI, CLAW_PIVOT_KD))
-          .withTask(std::make_unique<pros_adapters::ProsTask>())
-          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
-          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
-          .withPivotFlippedPosition(CLAW_PIVOT_FLIPPED_POSITION)
-          .withPivotPositionTolerance(CLAW_PIVOT_POSITION_TOLERANCE)
-          .buildUnique()));
-
   // ## CLAW ##
 
   robot->addSubsystem(std::make_unique<robot::subsystems::claw::ClawSubsystem>(
@@ -405,6 +388,24 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
           .withPivotFlippedPosition(CLAW_PIVOT_FLIPPED_POSITION)
           .withPivotPositionTolerance(CLAW_PIVOT_POSITION_TOLERANCE)
           .buildUnique()));
+          
+  // ## ALIGNER ##
+
+  // create pros object
+  std::unique_ptr<pros::adi::DigitalOut> pros_aligner_piston{
+      std::make_unique<pros::adi::DigitalOut>(GOAL_ALIGNER_PISTON_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IPiston> aligner_piston{
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_aligner_piston))};
+
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::aligner::AlignerSubsystem>(
+          robot::subsystems::aligner::AlignerBuilder{}
+              .withPiston(std::move(aligner_piston))
+              .buildUnique()));
+
   // return complete robot
   return robot;
 };

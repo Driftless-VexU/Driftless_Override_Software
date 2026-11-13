@@ -82,6 +82,11 @@
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 
+// Aligner subsystem includes
+#include "driftless/robot/subsystems/aligner/AlignerBuilder.hpp"
+#include "driftless/robot/subsystems/aligner/AlignerSubsystem.hpp"
+
+
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system
@@ -198,7 +203,7 @@ class BlueConfig : public IConfig {
 
   // ## GOAL ALLIGNER ##
 
-  static constexpr int8_t GOAL_ALLIGNER_PISTON_PORT{4};
+  static constexpr int8_t GOAL_ALIGNER_PISTON_PORT{4};
 
   // #### ROBOT CONSTANTS ####
 

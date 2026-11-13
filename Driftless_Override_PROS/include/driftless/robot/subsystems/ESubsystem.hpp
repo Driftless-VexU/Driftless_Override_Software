@@ -23,6 +23,7 @@ enum class ESubsystem {
   LIFT,
   TOGGLE,
   CLAW,
+  ALIGNER,
 };
 }  // namespace subsystems
 }  // namespace robot

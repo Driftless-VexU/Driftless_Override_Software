@@ -26,6 +26,7 @@ enum EControl {
   TOGGLE_SPEED,
   CLAW_FLIP,
   CLAW_TOGGLE_CLOSED,
+  ALIGNER_TOGGLE,
 };
 }  // namespace op_control
 }  // namespace driftless

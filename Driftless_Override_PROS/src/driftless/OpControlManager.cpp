@@ -7,6 +7,7 @@
 #include "driftless/op_control/lift/LiftOperator.hpp"
 #include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"
 #include "driftless/op_control/toggle/ToggleOperator.hpp"
+#include "driftless/op_control/aligner/AlignerOperator.hpp"
 
 namespace driftless {
 // constructor
@@ -43,6 +44,7 @@ void OpControlManager::run(
   op_control::lift::LiftOperator lift_operator{controller, robot};
   op_control::toggle::ToggleOperator toggle_operator{controller, robot};
   op_control::claw::ClawOperator claw_operator{controller, robot};
+  op_control::aligner::AlignerOperator aligner_operator{controller, robot};
 
   // variable to hold time for delayer
   uint32_t current_time{};
@@ -58,6 +60,7 @@ void OpControlManager::run(
     lift_operator.update(m_profile);
     toggle_operator.update(m_profile);
     claw_operator.update(m_profile);
+    aligner_operator.update(m_profile);
 
     // delay until 10 seconds after loop start
     // keeps time per loop consistent rather than delaying 10 seconds AFTER

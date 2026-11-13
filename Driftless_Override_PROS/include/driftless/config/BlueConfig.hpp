@@ -229,11 +229,14 @@ class BlueConfig : public IConfig {
                                                      (12.68f * 2 * M_PI)};
 
   // ## CLAW ##
+
+  static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{
+      pros::MotorGearset::green};
   static constexpr float CLAW_PIVOT_KP{12.0f};
   static constexpr float CLAW_PIVOT_KI{0.0f};
   static constexpr float CLAW_PIVOT_KD{60.0f};
-  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.0f};
-  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.05f};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.239f * M_PI * 2};
+  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.02f};
 
  public:
   std::string getName() override;

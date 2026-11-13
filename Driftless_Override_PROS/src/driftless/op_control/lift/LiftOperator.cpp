@@ -1,7 +1,5 @@
 #include "driftless/op_control/lift/LiftOperator.hpp"
 
-#include "pros/screen.h"
-#include "pros/screen.hpp"
 namespace driftless::op_control::lift {
 LiftOperator::LiftOperator(const std::shared_ptr<io::IController>& controller,
                            const std::shared_ptr<robot::Robot>& robot)
@@ -48,8 +46,6 @@ float LiftOperator::getLiftHeight() {
     throw std::runtime_error(
         "LiftOperator: Lift subsystem state LIFT_GET_HEIGHT is null");
   }
-  pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 6, "%7.2f",
-                      *static_cast<float*>(state));
   return *static_cast<float*>(state);
 }
 

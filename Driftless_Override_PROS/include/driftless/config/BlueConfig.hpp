@@ -82,6 +82,11 @@
 #include "driftless/robot/subsystems/toggle/ToggleBuilder.hpp"
 #include "driftless/robot/subsystems/toggle/ToggleSubsystem.hpp"
 
+// Aligner subsystem includes
+#include "driftless/robot/subsystems/aligner/AlignerBuilder.hpp"
+#include "driftless/robot/subsystems/aligner/AlignerSubsystem.hpp"
+
+
 namespace driftless {
 namespace config {
 /// @brief The configurations for the blue robot and its control system
@@ -152,7 +157,7 @@ class BlueConfig : public IConfig {
 
   // ## ARDUINO PORT ##
 
-  static constexpr int ARDUINO_PORT{3};
+  static constexpr int ARDUINO_PORT{4};
 
   // ## DRIVE MOTORS ##
 
@@ -198,7 +203,7 @@ class BlueConfig : public IConfig {
 
   // ## GOAL ALLIGNER ##
 
-  static constexpr int8_t GOAL_ALLIGNER_PISTON_PORT{4};
+  static constexpr int8_t GOAL_ALIGNER_PISTON_PORT{4};
 
   // #### ROBOT CONSTANTS ####
 
@@ -256,6 +261,16 @@ class BlueConfig : public IConfig {
 
   static constexpr float ARM_LIFT_LOAD_HEIGHT{0.0f};
   static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{0.0f};
+  
+  // ## CLAW ##
+
+  static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{
+      pros::MotorGearset::green};
+  static constexpr float CLAW_PIVOT_KP{12.0f};
+  static constexpr float CLAW_PIVOT_KI{0.0f};
+  static constexpr float CLAW_PIVOT_KD{60.0f};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.239f * M_PI * 2};
+  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.02f};
 
  public:
   std::string getName() override;

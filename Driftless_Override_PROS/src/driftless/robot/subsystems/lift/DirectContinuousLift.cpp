@@ -41,9 +41,11 @@ void DirectContinuousLift::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
   }
+
   float voltage = m_pid.getControlValue(
       m_motors.getPosition() * m_centidegrees_to_inches, m_height, 12.0);
   m_motors.setVoltage(voltage);
+
   if (m_mutex) {
     m_mutex->give();
   }

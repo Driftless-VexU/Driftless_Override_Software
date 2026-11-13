@@ -1,7 +1,13 @@
 #include "driftless/config/OrangeConfig.hpp"
 
+#include "driftless/hal/CoprocessorBuilder.hpp"
 #include "driftless/robot/subsystems/arm/ArmSubsystem.hpp"
 #include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
+#include "driftless/robot/subsystems/claw/ClawBuilder.hpp"
+#include "driftless/robot/subsystems/claw/ClawSubsystem.hpp"
+#include "driftless/robot/subsystems/odometry/OdometrySubsystem.hpp"
+#include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
+
 
 namespace driftless::config {
 std::string OrangeConfig::getName() { return CONFIG_NAME; }
@@ -156,6 +162,31 @@ std::shared_ptr<io::IController> OrangeConfig::buildController() {
 
 std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
   std::shared_ptr<robot::Robot> robot{std::make_shared<robot::Robot>()};
+
+  // ## ODOM ##
+  std::shared_ptr<hal::Coprocessor> coprocessor{
+      hal::CoprocessorBuilder{}
+          .withClock(std::make_unique<pros_adapters::ProsClock>())
+          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+          .withTask(std::make_unique<pros_adapters::ProsTask>())
+          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+          .withSerialDevice(std::make_unique<pros_adapters::ProsSerialDevice>(
+              std::make_unique<pros::Serial>(ARDUINO_PORT,
+                                             COPROCESSOR_BAUD_RATE)))
+          .build()};
+
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::odometry::OdometrySubsystem>(
+          robot::subsystems::odometry::SparkFunPositionTrackerBuilder{}
+              .withClock(std::make_unique<pros_adapters::ProsClock>())
+              .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+              .withTask(std::make_unique<pros_adapters::ProsTask>())
+              .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+              .withCoprocessor(coprocessor)
+              .withLocalThetaOffset(ODOMETRY_LOCAL_THETA_OFFSET)
+              .withLocalXOffset(ODOMETRY_LOCAL_X_OFFSET)
+              .withLocalYOffset(ODOMETRY_LOCAL_Y_OFFSET)
+              .buildUnique()));
 
   // ## DRIVE TRAIN ##
 
@@ -342,7 +373,7 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
               .buildUnique()));
 
   // ## ARM ##
-  
+
   robot->addSubsystem(std::make_unique<robot::subsystems::arm::ArmSubsystem>(
       robot::subsystems::arm::DefaultArmBuilder{}
           .withElbowMotor(std::make_unique<pros_adapters::ProsV5Motor>(
@@ -374,6 +405,43 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
           .withElbowPositionTolerance(ARM_ELBOW_POSITION_TOLERANCE)
           .withWristPositionTolerance(ARM_WRIST_POSITION_TOLERANCE)
           .buildUnique()));
+
+  // ## CLAW ##
+
+  robot->addSubsystem(std::make_unique<robot::subsystems::claw::ClawSubsystem>(
+      robot::subsystems::claw::ClawBuilder{}
+          .withMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(CLAW_PIVOT_MOTOR_PORT,
+                                            CLAW_PIVOT_GEARSET)))
+          .withPiston(std::make_unique<pros_adapters::ProsPiston>(
+              std::make_unique<pros::adi::DigitalOut>(
+                  CLAW_GRABBER_PISTON_PORT)))
+          .withPivotPID(
+              control::PID(std::make_unique<pros_adapters::ProsClock>(),
+                           CLAW_PIVOT_KP, CLAW_PIVOT_KI, CLAW_PIVOT_KD))
+          .withTask(std::make_unique<pros_adapters::ProsTask>())
+          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+          .withPivotFlippedPosition(CLAW_PIVOT_FLIPPED_POSITION)
+          .withPivotPositionTolerance(CLAW_PIVOT_POSITION_TOLERANCE)
+          .buildUnique()));
+
+  // ## ALIGNER ##
+
+  // create pros object
+  std::unique_ptr<pros::adi::DigitalOut> pros_aligner_piston{
+      std::make_unique<pros::adi::DigitalOut>(GOAL_ALIGNER_PISTON_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IPiston> aligner_piston{
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_aligner_piston))};
+
+  robot->addSubsystem(
+      std::make_unique<robot::subsystems::aligner::AlignerSubsystem>(
+          robot::subsystems::aligner::AlignerBuilder{}
+              .withPiston(std::move(aligner_piston))
+              .buildUnique()));
 
   // return complete robot
   return robot;

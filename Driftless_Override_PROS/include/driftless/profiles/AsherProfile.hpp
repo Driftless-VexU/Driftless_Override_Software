@@ -52,6 +52,12 @@ class AsherProfile : public IProfile {
            op_control::EControllerDigital::DPAD_RIGHT},
           {op_control::EControl::ARM_RESET,
            op_control::EControllerDigital::DPAD_UP},
+          {op_control::EControl::CLAW_TOGGLE_CLOSED,
+           op_control::EControllerDigital::TRIGGER_RIGHT_BOTTOM},
+          {op_control::EControl::CLAW_FLIP,
+           op_control::EControllerDigital::BUTTON_Y},
+          {op_control::EControl::ALIGNER_TOGGLE,
+           op_control::EControllerDigital::DPAD_LEFT},
       };
 
   /// @brief Maps startup configurations to their values

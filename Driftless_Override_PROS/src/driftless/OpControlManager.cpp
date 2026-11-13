@@ -1,12 +1,15 @@
 #include "driftless/OpControlManager.hpp"
 
 // operator controls
+#include "driftless/op_control/aligner/AlignerOperator.hpp"
+#include "driftless/op_control/arm/ArmOperator.hpp"
 #include "driftless/op_control/brakes/BrakesOperator.hpp"
+#include "driftless/op_control/claw/ClawOperator.hpp"
 #include "driftless/op_control/holonomic_drive_train/HolonomicDriveTrainOperator.hpp"
+#include "driftless/op_control/lift/LiftOperator.hpp"
 #include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"
 #include "driftless/op_control/toggle/ToggleOperator.hpp"
-#include "driftless/op_control/lift/LiftOperator.hpp"
-#include "driftless/op_control/arm/ArmOperator.hpp"
+
 
 namespace driftless {
 // constructor
@@ -16,8 +19,7 @@ OpControlManager::OpControlManager(
     : m_clock{clock}, m_delayer{delayer->clone()} {}
 
 // sets the controller's profile
-void OpControlManager::setProfile(
-    std::unique_ptr<profiles::IProfile> profile) {
+void OpControlManager::setProfile(std::unique_ptr<profiles::IProfile> profile) {
   m_profile = std::move(profile);
 }
 
@@ -38,12 +40,14 @@ void OpControlManager::run(
   control_system->pause();
 
   // set subsystems to driver control
-  /*op_control::holonomic_drive_train::HolonomicDriveTrainOperator
-      holonomic_drive_train_operator{controller, robot, control_system};*/
+  op_control::holonomic_drive_train::HolonomicDriveTrainOperator
+      holonomic_drive_train_operator{controller, robot, control_system};
   op_control::brakes::BrakesOperator brakes_operator{controller, robot};
   op_control::lift::LiftOperator lift_operator{controller, robot};
   op_control::toggle::ToggleOperator toggle_operator{controller, robot};
   op_control::arm::ArmOperator arm_operator{controller, robot};
+  op_control::claw::ClawOperator claw_operator{controller, robot};
+  op_control::aligner::AlignerOperator aligner_operator{controller, robot};
 
   // variable to hold time for delayer
   uint32_t current_time{};
@@ -54,11 +58,13 @@ void OpControlManager::run(
     current_time = m_clock->getTime();
 
     // updates all subsystems
-    //holonomic_drive_train_operator.update(m_profile);
+    holonomic_drive_train_operator.update(m_profile);
     brakes_operator.update(m_profile);
     lift_operator.update(m_profile);
     toggle_operator.update(m_profile);
     arm_operator.update(m_profile);
+    claw_operator.update(m_profile);
+    aligner_operator.update(m_profile);
 
     // delay until 10 seconds after loop start
     // keeps time per loop consistent rather than delaying 10 seconds AFTER

@@ -4,6 +4,8 @@
 #include <variant>
 
 /* ADD COMMAND HEADERS HERE */
+#include "driftless/robot/commands/aligner/SetAlignerStateCommand.hpp"
+#include "driftless/robot/commands/aligner/ToggleAlignerStateCommand.hpp"
 #include "driftless/robot/commands/arm/ArmGoLoadCommand.hpp"
 #include "driftless/robot/commands/arm/ArmGoScanCommand.hpp"
 #include "driftless/robot/commands/arm/ArmGoScoreHighCommand.hpp"
@@ -11,6 +13,10 @@
 #include "driftless/robot/commands/arm/ArmResetCommand.hpp"
 #include "driftless/robot/commands/brakes/SetBrakeStateCommand.hpp"
 #include "driftless/robot/commands/brakes/ToggleBrakeStateCommand.hpp"
+#include "driftless/robot/commands/claw/SetClawOpenCloseCommand.hpp"
+#include "driftless/robot/commands/claw/SetClawUpDownCommand.hpp"
+#include "driftless/robot/commands/claw/ToggleClawOpenCloseCommand.hpp"
+#include "driftless/robot/commands/claw/ToggleClawUpDownCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
@@ -22,6 +28,7 @@
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
+
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -46,7 +53,10 @@ using Command = std::variant<
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
     lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
     arm::ArmGoScanCommand, arm::ArmGoLoadCommand, arm::ArmGoScoreHighCommand,
-    arm::ArmGoScoreLowCommand, arm::ArmResetCommand>;
+    arm::ArmGoScoreLowCommand, arm::ArmResetCommand,
+    claw::SetClawOpenCloseCommand, claw::SetClawUpDownCommand,
+    claw::ToggleClawOpenCloseCommand, claw::ToggleClawUpDownCommand,
+    aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;
 
 }  // namespace commands
 }  // namespace robot

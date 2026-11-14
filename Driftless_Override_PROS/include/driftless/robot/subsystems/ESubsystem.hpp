@@ -24,6 +24,7 @@ enum class ESubsystem {
   TOGGLE,
   CLAW,
   ALIGNER,
+  INTAKE,
 };
 }  // namespace subsystems
 }  // namespace robot

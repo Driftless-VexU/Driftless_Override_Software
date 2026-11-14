@@ -1,0 +1,38 @@
+#include "driftless/robot/subsystems/intake/IntakeSubsystem.hpp"
+
+namespace driftless::robot::subsystems::intake {
+IntakeSubsystem::IntakeSubsystem(std::unique_ptr<IIntake> intake)
+    : ASubsystem{ESubsystem::INTAKE}, m_intake_driver{std::move(intake)} {}
+
+void IntakeSubsystem::init() { m_intake_driver->init();}
+
+void IntakeSubsystem::run() { m_intake_driver->run();}
+
+void IntakeSubsystem::command(const commands::Command& cmd) {
+  std::visit([this](auto&& cmd) { this->handleCommand(cmd); }, cmd);
+}
+void* IntakeSubsystem::state(ESubsystemState state_name) {
+  void* result{nullptr};
+  if (state_name == ESubsystemState::INTAKE_IS_DEPLOYED) {
+    result = new bool{m_intake_driver->isIntakePistonDeployed()};
+  }
+  return result;
+}
+void IntakeSubsystem::handleCommand(
+    const commands::intake::SetIntakePistonHeightCommand cmd) {
+  m_intake_driver->setIntakePistonUpDown(cmd.m_deployed);
+}
+void IntakeSubsystem::handleCommand(
+    const commands::intake::ToggleIntakePistonHeightCommand cmd) {
+  m_intake_driver->toggleIntakePistonUpDown();
+}
+void IntakeSubsystem::handleCommand(
+    const commands::intake::SetIntakeMotorVoltageCommand cmd) {
+  m_intake_driver->setIntakeMotorVoltage(cmd.m_voltage);
+}
+void IntakeSubsystem::handleCommand(const auto cmd) {
+  throw std::invalid_argument(
+      "No behavior defined to handle the command of type: " +
+      std::string(typeid(cmd).name()) + " for the intake subsystem");
+}
+}  // namespace driftless::robot::subsystems::intake

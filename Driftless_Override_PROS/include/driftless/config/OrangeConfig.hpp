@@ -74,6 +74,10 @@
 #include "driftless/robot/subsystems/brakes/BrakesSubsystem.hpp"
 #include "driftless/robot/subsystems/brakes/PneumaticPadBrakesBuilder.hpp"
 
+// Intake subsystem includes
+#include "driftless/robot/subsystems/intake/IntakeSubsystem.hpp"
+#include "driftless/robot/subsystems/intake/IIntake.hpp"
+#include "driftless/robot/subsystems/intake/IntakeBuilder.hpp"
 // Lift subsystem includes
 #include "driftless/robot/subsystems/lift/DirectContinuousLiftBuilder.hpp"
 #include "driftless/robot/subsystems/lift/LiftSubsystem.hpp"
@@ -233,6 +237,9 @@ class OrangeConfig : public IConfig {
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
   static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
 
+  // ## INTAKE ##
+  static constexpr float INTAKE_MOTOR_SPEED{12.0f};
+  
   // ## LIFT ##
   static constexpr float LIFT_KP{24.0f};
   static constexpr float LIFT_KI{0.01f};

@@ -313,6 +313,34 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
               .withPiston(std::move(brake_piston))
               .buildUnique()));
 
+  // ## INTAKE ##
+
+  // create pros object
+  std::unique_ptr<pros::adi::DigitalOut> pros_intake_piston{
+      std::make_unique<pros::adi::DigitalOut>(INTAKE_HEIGHT_PISTON_PORT)};
+  std::unique_ptr<pros::Motor> pros_intake_motor_down{
+      std::make_unique<pros::Motor>(INTAKE_TOP_MOTOR_PORT)};
+  std::unique_ptr<pros::Motor> pros_intake_motor_up{
+      std::make_unique<pros::Motor>(INTAKE_COUNTER_ROLLER_MOTOR_PORT)};
+
+  // Adapt to pros
+  std::unique_ptr<io::IPiston> intake_piston{
+      std::make_unique<pros_adapters::ProsPiston>(
+          std::move(pros_intake_piston), false)};
+
+  std::unique_ptr<io::IMotor> intake_motor_down{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_intake_motor_down))};
+  std::unique_ptr<io::IMotor> intake_motor_up{
+      std::make_unique<pros_adapters::ProsV5Motor>(
+          std::move(pros_intake_motor_up))};
+  robot->addSubsystem(std::make_unique<robot::subsystems::intake::IntakeSubsystem>(
+      robot::subsystems::intake::IntakeBuilder{}
+          .withPiston(std::move(intake_piston))
+          .withMotor(std::move(intake_motor_down))
+          .withMotor(std::move(intake_motor_up))
+          .buildUnique()));
+
   // ## Lift ##
 
   // create pros oject

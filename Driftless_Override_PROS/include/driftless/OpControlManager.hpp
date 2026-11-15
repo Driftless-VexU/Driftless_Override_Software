@@ -12,6 +12,12 @@
 #include "driftless/rtos/IClock.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 
+// operator controls
+#include "driftless/op_control/brakes/BrakesOperator.hpp"
+#include "driftless/op_control/intake/IntakeOperator.hpp"
+#include "driftless/op_control/holonomic_drive_train/HolonomicDriveTrainOperator.hpp"
+#include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"
+
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {

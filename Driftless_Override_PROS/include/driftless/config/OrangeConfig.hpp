@@ -258,7 +258,7 @@ class OrangeConfig : public IConfig {
   static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f * 2 * M_PI};
 
   static constexpr float ARM_ELBOW_LOAD_POS{0.073f * 2 * M_PI};
-  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.193f * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.3f * 2 * M_PI};
   static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.911f * 2 * M_PI};
 
   static constexpr float ARM_WRIST_LOAD_POS{0.356f * 2 * M_PI};
@@ -268,7 +268,7 @@ class OrangeConfig : public IConfig {
 
   static constexpr float ARM_LIFT_LOAD_HEIGHT{3.0f};
   static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{5.0f};
-  
+
   // ## CLAW ##
   static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{
       pros::MotorGearset::green};

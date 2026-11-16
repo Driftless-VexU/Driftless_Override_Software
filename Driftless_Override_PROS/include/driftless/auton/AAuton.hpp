@@ -19,14 +19,13 @@
 #include "driftless/control/trajectory/trajectory_generator/modifiers/HolonomicSpinModifier.hpp"
 #include "driftless/robot/Robot.hpp"
 #include "driftless/robot/subsystems/ESubsystem.hpp"
-#include "driftless/robot/subsystems/ESubsystemCommand.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/HolonomicMotionVector.hpp"
 #include "driftless/robot/subsystems/odometry/Position.hpp"
 #include "driftless/rtos/IClock.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/utils/UtilityFunctions.hpp"
-#include "pros/screen.hpp"
+#include "driftless/robot/commands/Commands.hpp"
 
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
@@ -109,6 +108,42 @@ class AAuton {
   void waitForTurnToAngle(double heading, double tolerance, uint32_t timeout);
 
   void stopMotion();
+
+  void deployBrakes();
+
+  void retractBrakes();
+
+  void raiseIntake();
+
+  void lowerIntake();
+
+  void runIntakeIn();
+  
+  void runIntakeOut();
+
+  void openClaw();
+
+  void closeClaw();
+
+  void spinClawUp();
+
+  void spinClawDown();
+
+  void setLiftHeight(float height);
+
+  void toggleSpin();
+
+  void toggleStop();
+
+  void deployAligner();
+
+  void retractAligner();
+
+  void armGoLoad();
+
+  void armGoScoreLow();
+
+  void armGoScoreHigh();
 
  public:
   /// @brief Constructs a new AAuton object

@@ -306,14 +306,20 @@ inline void DefaultArm::setLiftHeight(float height) {
 
 inline bool DefaultArm::isClawFlipped() {
   // TODO: implement when claw is ready
-  return false; /*
-   *static_cast<bool>(
-       m_robot.getState(ESubsystem::CLAW, ESubsystemState::CLAW_IS_FLIPPED));
-       */
+  bool out{true};
+  if (auto robot = m_robot.lock()) {
+    out = !(*static_cast<bool*>(
+        robot->getState(ESubsystem::CLAW, ESubsystemState::CLAW_IS_UPRIGHT)));
+  }
+
+  return out;
 }
 
 inline void DefaultArm::flipClaw(bool orientation) {
-  /* m_robot.sendCommand(ESubsystem::CLAW, commands::claw::CLAW_FLIP{}); */
+  if (auto robot = m_robot.lock()) {
+    robot->sendCommand(ESubsystem::CLAW,
+                         commands::claw::SetClawUpDownCommand{!orientation});
+  }
 }
 
 }  // namespace driftless::robot::subsystems::arm

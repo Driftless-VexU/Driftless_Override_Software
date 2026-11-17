@@ -251,7 +251,7 @@ class OrangeConfig : public IConfig {
   static constexpr float ARM_ELBOW_KD{0.0f};
 
   static constexpr float ARM_WRIST_KP{6.0f};
-  static constexpr float ARM_WRIST_KI{0.001f};
+  static constexpr float ARM_WRIST_KI{0.0f};
   static constexpr float ARM_WRIST_KD{0.0f};
 
   static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};

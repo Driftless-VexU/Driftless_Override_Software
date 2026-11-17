@@ -8,7 +8,6 @@
 #include "driftless/robot/subsystems/odometry/OdometrySubsystem.hpp"
 #include "driftless/robot/subsystems/odometry/SparkFunPositionTrackerBuilder.hpp"
 
-
 namespace driftless::config {
 std::string BlueConfig::getName() { return CONFIG_NAME; }
 

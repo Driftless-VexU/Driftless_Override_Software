@@ -235,32 +235,32 @@ class BlueConfig : public IConfig {
 
   // ## ARM ##
   static constexpr pros::v5::MotorGearset ARM_ELBOW_MOTOR_GEARSET{
-      pros::v5::MotorGearset::green};
+      pros::v5::MotorGearset::red};
   static constexpr pros::v5::MotorGearset ARM_WRIST_MOTOR_GEARSET{
       pros::v5::MotorGearset::green};
 
-  static constexpr float ARM_ELBOW_KP{1.0f};
-  static constexpr float ARM_ELBOW_KI{0.0f};
+  static constexpr float ARM_ELBOW_KP{12.0f};
+  static constexpr float ARM_ELBOW_KI{0.001f};
   static constexpr float ARM_ELBOW_KD{0.0f};
 
-  static constexpr float ARM_WRIST_KP{1.0f};
+  static constexpr float ARM_WRIST_KP{6.0f};
   static constexpr float ARM_WRIST_KI{0.0f};
   static constexpr float ARM_WRIST_KD{0.0f};
 
-  static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f};
-  static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f};
+  static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};
+  static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f * 2 * M_PI};
 
-  static constexpr float ARM_ELBOW_LOAD_POS{0.0f};
-  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.0f};
-  static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.0f};
+  static constexpr float ARM_ELBOW_LOAD_POS{-0.9 * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.05f * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.6f * 2 * M_PI};
 
-  static constexpr float ARM_WRIST_LOAD_POS{0.0f};
-  static constexpr float ARM_WRIST_SCAN_POS{0.0f};
-  static constexpr float ARM_WRIST_SCORE_LOW_POS{0.0f};
-  static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.0f};
+  static constexpr float ARM_WRIST_LOAD_POS{0.5f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCAN_POS{0.437f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCORE_LOW_POS{0.135f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.579f * 2 * M_PI};
 
-  static constexpr float ARM_LIFT_LOAD_HEIGHT{0.0f};
-  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{0.0f};
+  static constexpr float ARM_LIFT_LOAD_HEIGHT{2.15f};
+  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{7.0f};
   
   // ## CLAW ##
 

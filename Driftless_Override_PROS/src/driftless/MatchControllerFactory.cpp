@@ -29,12 +29,12 @@ driftless::MatchController MatchControllerFactory::createMatchController() {
   lvgl_menu->addConfig(std::move(orange_config));
 
   // add profiles
-  std::unique_ptr<profiles::IProfile> ethan_profile{
-      std::make_unique<driftless::profiles::EthanProfile>()};
-  lvgl_menu->addProfile(std::move(ethan_profile));
-  std::unique_ptr<profiles::IProfile> ethan_skills_profile{
-      std::make_unique<profiles::EthanSkillsProfile>()};
-  lvgl_menu->addProfile(std::move(ethan_skills_profile));
+  std::unique_ptr<profiles::IProfile> kaden_profile{
+      std::make_unique<driftless::profiles::KadenProfile>()};
+  lvgl_menu->addProfile(std::move(kaden_profile));
+  std::unique_ptr<profiles::IProfile> kaden_skills_profile{
+      std::make_unique<profiles::KadenSkillsProfile>()};
+  lvgl_menu->addProfile(std::move(kaden_skills_profile));
 
   std::unique_ptr<profiles::IProfile> asher_profile{
       std::make_unique<profiles::AsherProfile>()};

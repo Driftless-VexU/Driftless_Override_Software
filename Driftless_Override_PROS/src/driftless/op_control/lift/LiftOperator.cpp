@@ -17,24 +17,26 @@ void LiftOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
   static constexpr float LIFT_MIN_HEIGHT = 0.0f;
 
   float current_height = getLiftHeight();
-  if (m_controller->getDigital(lift_raise)) {
-    if (current_height > target_height - LIFT_TOLERANCE &&
-        target_height != LIFT_MAX_HEIGHT) {
-      target_height += LIFT_INCREMENT;
-      if (target_height > LIFT_MAX_HEIGHT) {
-        target_height = LIFT_MAX_HEIGHT;
+  if (getArmState() == 7 || getArmState() == 6) {
+    if (m_controller->getDigital(lift_raise)) {
+      if (current_height > target_height - LIFT_TOLERANCE &&
+          target_height != LIFT_MAX_HEIGHT) {
+        target_height += LIFT_INCREMENT;
+        if (target_height > LIFT_MAX_HEIGHT) {
+          target_height = LIFT_MAX_HEIGHT;
+        }
+        setLiftHeight(target_height);
+      }
+    } else if (m_controller->getDigital(lift_lower)) {
+      if (current_height < target_height + LIFT_TOLERANCE &&
+          target_height != LIFT_MIN_HEIGHT) {
+        target_height -= LIFT_INCREMENT;
+        if (target_height < LIFT_MIN_HEIGHT) {
+          target_height = LIFT_MIN_HEIGHT;
+        }
       }
       setLiftHeight(target_height);
     }
-  } else if (m_controller->getDigital(lift_lower) && getArmState() != 7) {
-    if (current_height < target_height + LIFT_TOLERANCE &&
-        target_height != LIFT_MIN_HEIGHT) {
-      target_height -= LIFT_INCREMENT;
-      if (target_height < LIFT_MIN_HEIGHT) {
-        target_height = LIFT_MIN_HEIGHT;
-      }
-    }
-    setLiftHeight(target_height);
   }
 }
 

@@ -7,7 +7,6 @@
 #include "driftless/profiles/IProfile.hpp"
 #include "driftless/robot/Robot.hpp"
 
-
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
 namespace driftless {
@@ -43,6 +42,12 @@ class ArmOperator {
   inline void resetArm();
 
   inline float getLiftHeight();
+
+  inline uint8_t getArmState() {
+    return *static_cast<uint8_t*>(m_robot->getState(
+        robot::subsystems::ESubsystem::ARM,
+        robot::subsystems::ESubsystemState::ARM_GET_CURRENT_STATE));
+  }
 };
 }  // namespace arm
 }  // namespace op_control

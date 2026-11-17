@@ -16,13 +16,15 @@ void ArmOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
       profile->getDigitalControlMapping(EControl::ARM_RESET))};
 
   if (go_score_up) {
-    if (getLiftHeight() > 29.0f) {
+    if (getLiftHeight() > 28.0f) {
       goScoreHigh();
-    } else {
+    } else if (!(getArmState() == 7 && getArmState() == 6)) {
       goScoreLow();
     }
   } else if (go_score_down) {
-    goScoreLow();
+    if (getLiftHeight() < 2.0f || getArmState() != 6) {
+      goScoreLow();
+    }
   } else if (go_load) {
     goLoad();
   } else if (reset) {

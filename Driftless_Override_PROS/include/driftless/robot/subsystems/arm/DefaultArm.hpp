@@ -107,6 +107,10 @@ class DefaultArm : public IArm {
 
   DefaultArmTargetPositions m_arm_targets{};
 
+  float m_elbow_motor_rad_to_actual_rad{0.5f};
+
+  float m_wrist_motor_rad_to_actual_rad{0.7f};
+
   // ACTIVELY TARGETED POSITIONS
 
   float m_elbow_target_position{0.0f};

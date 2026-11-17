@@ -4,6 +4,8 @@
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
+#include "pros/screen.h"
+#include "pros/screen.hpp"
 
 namespace driftless::robot::subsystems::arm {
 void DefaultArm::init() {
@@ -37,6 +39,10 @@ void DefaultArm::goToLoadPosition() {
     m_mutex->take();
   }
 
+  if (m_target_position_state != EArmState::LOAD) {
+    m_elbow_pid.reset();
+    m_wrist_pid.reset();
+  }
   m_target_position_state = EArmState::LOAD;
 
   if (m_mutex) {
@@ -49,6 +55,10 @@ void DefaultArm::goToScanPosition() {
     m_mutex->take();
   }
 
+  if (m_target_position_state != EArmState::SCAN) {
+    m_elbow_pid.reset();
+    m_wrist_pid.reset();
+  }
   m_target_position_state = EArmState::SCAN;
 
   if (m_mutex) {
@@ -61,6 +71,10 @@ void DefaultArm::goToScoreLowPosition() {
     m_mutex->take();
   }
 
+  if (m_target_position_state != EArmState::SCORE_LOW) {
+    m_elbow_pid.reset();
+    m_wrist_pid.reset();
+  }
   m_target_position_state = EArmState::SCORE_LOW;
 
   if (m_mutex) {
@@ -73,6 +87,10 @@ void DefaultArm::goToScoreHighPosition() {
     m_mutex->take();
   }
 
+  if (m_target_position_state != EArmState::SCORE_HIGH) {
+    m_elbow_pid.reset();
+    m_wrist_pid.reset();
+  }
   m_target_position_state = EArmState::SCORE_HIGH;
 
   if (m_mutex) {
@@ -119,8 +137,8 @@ void DefaultArm::taskUpdate() {
     m_mutex->take();
 
     if (m_do_initialize) {
-      m_wrist_motors.setVoltage(-8.0);
-      m_elbow_motors.setVoltage(-8.0);
+      m_wrist_motors.setVoltage(-6.0);
+      m_elbow_motors.setVoltage(-6.0);
       uint16_t timeout_counter{0};
       m_delayer->delay(100);
       timeout_counter += 100;
@@ -133,7 +151,7 @@ void DefaultArm::taskUpdate() {
 
       if (timeout_counter < TASK_TIMEOUT) {
         m_wrist_motors.setPosition(0.0);
-        m_elbow_motors.setPosition(0.0);
+        m_elbow_motors.setPosition(-0.25 * 2 * M_PI);
         m_is_initialized = true;
         m_current_position_state = EArmState::INITIALIZED;
       }
@@ -179,7 +197,9 @@ void DefaultArm::taskUpdate() {
 }
 
 inline void DefaultArm::handleLoadState() {
-  if (m_current_position_state == EArmState::LOAD_PRE) {
+  if (isClawFlipped()) {
+    flipClaw(false);
+  } else if (m_current_position_state == EArmState::LOAD_PRE) {
     m_elbow_target_position = m_arm_targets.elbow_load_position;
     m_wrist_target_position = m_arm_targets.wrist_load_position;
 
@@ -189,10 +209,6 @@ inline void DefaultArm::handleLoadState() {
     float wrist_error{
         std::abs(static_cast<float>(m_wrist_motors.getPosition()) -
                  m_wrist_target_position)};
-
-    if (isClawFlipped()) {
-      flipClaw(false);
-    }
 
     if ((elbow_error < m_elbow_position_tolerance) &&
         (wrist_error < m_wrist_position_tolerance) && !isClawFlipped()) {
@@ -245,9 +261,22 @@ inline void DefaultArm::handleScoreLowState() {
       m_current_position_state = EArmState::LOAD_POST;
     }
 
-  } else if (m_current_position_state != EArmState::SCORE_LOW) {
+  } else {
     m_elbow_target_position = m_arm_targets.elbow_score_low_position;
-    m_wrist_target_position = m_arm_targets.wrist_score_low_position;
+
+    float elbow_rad =
+        m_elbow_motors.getPosition() * m_elbow_motor_rad_to_actual_rad;
+
+    m_wrist_target_position =
+        (elbow_rad + (M_PI / 6.0)) / m_wrist_motor_rad_to_actual_rad;
+
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7, "Elbow angle: %7.2f",
+                        elbow_rad * 180 / M_PI);
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
+                        "target wrist pos: %7.2f", m_wrist_target_position);
+    pros::screen::print(
+        pros::E_TEXT_MEDIUM_CENTER, 9, "target elbow angle: %7.2f",
+        m_elbow_target_position * m_elbow_motor_rad_to_actual_rad * 180 / M_PI);
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -
@@ -269,9 +298,22 @@ inline void DefaultArm::handleScoreHighState() {
       m_current_position_state = EArmState::LOAD_POST;
     }
 
-  } else if (m_current_position_state != EArmState::SCORE_HIGH) {
+  } else {
     m_elbow_target_position = m_arm_targets.elbow_score_high_position;
-    m_wrist_target_position = m_arm_targets.wrist_score_high_position;
+
+    float elbow_rad =
+        m_elbow_motors.getPosition() * m_elbow_motor_rad_to_actual_rad;
+
+    m_wrist_target_position =
+        (elbow_rad + (M_PI / 6.0)) / m_wrist_motor_rad_to_actual_rad;
+
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7, "Elbow angle: %7.2f",
+                        elbow_rad * 180 / M_PI);
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
+                        "target wrist pos: %7.2f", m_wrist_target_position);
+    pros::screen::print(
+        pros::E_TEXT_MEDIUM_CENTER, 9, "target elbow angle: %7.2f",
+        m_elbow_target_position * m_elbow_motor_rad_to_actual_rad * 180 / M_PI);
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -
@@ -318,7 +360,7 @@ inline bool DefaultArm::isClawFlipped() {
 inline void DefaultArm::flipClaw(bool orientation) {
   if (auto robot = m_robot.lock()) {
     robot->sendCommand(ESubsystem::CLAW,
-                         commands::claw::SetClawUpDownCommand{!orientation});
+                       commands::claw::SetClawUpDownCommand{!orientation});
   }
 }
 

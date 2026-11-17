@@ -18,6 +18,7 @@
 #include "driftless/control/trajectory/trajectory_generator/kinematics/MaxVelocityConstraint.hpp"
 #include "driftless/control/trajectory/trajectory_generator/modifiers/HolonomicSpinModifier.hpp"
 #include "driftless/robot/Robot.hpp"
+#include "driftless/robot/commands/Commands.hpp"
 #include "driftless/robot/subsystems/ESubsystem.hpp"
 #include "driftless/robot/subsystems/ESubsystemState.hpp"
 #include "driftless/robot/subsystems/holonomic_drive_train/HolonomicMotionVector.hpp"
@@ -25,7 +26,6 @@
 #include "driftless/rtos/IClock.hpp"
 #include "driftless/rtos/IDelayer.hpp"
 #include "driftless/utils/UtilityFunctions.hpp"
-#include "driftless/robot/commands/Commands.hpp"
 
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
@@ -109,41 +109,97 @@ class AAuton {
 
   void stopMotion();
 
-  void deployBrakes();
+  inline void deployBrakes() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::BRAKES,
+                         robot::commands::brakes::SetBrakeStateCommand{true});
+  }
 
-  void retractBrakes();
+  inline void retractBrakes() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::BRAKES,
+                         robot::commands::brakes::SetBrakeStateCommand{false});
+  }
 
-  void raiseIntake();
+  inline void raiseIntake() {
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::INTAKE,
+        robot::commands::intake::SetIntakePistonHeightCommand{true});
+  }
 
-  void lowerIntake();
+  inline void lowerIntake() {
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::INTAKE,
+        robot::commands::intake::SetIntakePistonHeightCommand{false});
+  }
 
-  void runIntakeIn();
-  
-  void runIntakeOut();
+  inline void runIntakeIn() {
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::INTAKE,
+        robot::commands::intake::SetIntakeMotorVoltageCommand{12.0f});
+  }
 
-  void openClaw();
+  inline void runIntakeOut() {
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::INTAKE,
+        robot::commands::intake::SetIntakeMotorVoltageCommand{-12.0f});
+  }
 
-  void closeClaw();
+  inline void stopIntake() {
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::INTAKE,
+        robot::commands::intake::SetIntakeMotorVoltageCommand{0.0f});
+  }
 
-  void spinClawUp();
+  inline void openClaw() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::CLAW,
+                         robot::commands::claw::SetClawOpenCloseCommand{true});
+  }
 
-  void spinClawDown();
+  inline void closeClaw() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::CLAW,
+                         robot::commands::claw::SetClawOpenCloseCommand{false});
+  }
 
-  void setLiftHeight(float height);
+  inline void spinClawUp() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::CLAW,
+                         robot::commands::claw::SetClawUpDownCommand{true});
+  }
 
-  void toggleSpin();
+  inline void spinClawDown() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::CLAW,
+                         robot::commands::claw::SetClawUpDownCommand{false});
+  }
 
-  void toggleStop();
+  inline void setLiftHeight(float height) {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::LIFT,
+                         robot::commands::lift::SetLiftHeightCommand{height});
+  }
 
-  void deployAligner();
+  inline void toggleSpin() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::TOGGLE,
+                         robot::commands::toggle::SetToggleSpeedCommand{12.0f});
+  }
 
-  void retractAligner();
+  inline void toggleStop() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::TOGGLE,
+                         robot::commands::toggle::SetToggleSpeedCommand{0.0f});
+  }
 
-  void armGoLoad();
+  inline void deployAligner() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ALIGNER, robot::commands::aligner::SetAlignerStateCommand{true});
+  }
 
-  void armGoScoreLow();
+  inline void retractAligner() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ALIGNER, robot::commands::aligner::SetAlignerStateCommand{false});
+  }
 
-  void armGoScoreHigh();
+  // TODO
+  inline void armGoLoad();
+
+  // TODO
+  inline void armGoScoreLow();
+
+  // TODO
+  inline void armGoScoreHigh();
 
  public:
   /// @brief Constructs a new AAuton object

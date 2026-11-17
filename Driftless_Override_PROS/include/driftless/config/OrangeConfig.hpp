@@ -242,32 +242,32 @@ class OrangeConfig : public IConfig {
 
   // ## ARM ##
   static constexpr pros::v5::MotorGearset ARM_ELBOW_MOTOR_GEARSET{
-      pros::v5::MotorGearset::green};
+      pros::v5::MotorGearset::red};
   static constexpr pros::v5::MotorGearset ARM_WRIST_MOTOR_GEARSET{
       pros::v5::MotorGearset::green};
 
   static constexpr float ARM_ELBOW_KP{12.0f};
-  static constexpr float ARM_ELBOW_KI{0.0f};
+  static constexpr float ARM_ELBOW_KI{0.001f};
   static constexpr float ARM_ELBOW_KD{0.0f};
 
   static constexpr float ARM_WRIST_KP{6.0f};
-  static constexpr float ARM_WRIST_KI{0.0f};
+  static constexpr float ARM_WRIST_KI{0.001f};
   static constexpr float ARM_WRIST_KD{0.0f};
 
   static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};
   static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f * 2 * M_PI};
 
-  static constexpr float ARM_ELBOW_LOAD_POS{0.073f * 2 * M_PI};
-  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.3f * 2 * M_PI};
-  static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.911f * 2 * M_PI};
+  static constexpr float ARM_ELBOW_LOAD_POS{-0.9 * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.05f * 2 * M_PI};
+  static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.6f * 2 * M_PI};
 
-  static constexpr float ARM_WRIST_LOAD_POS{0.356f * 2 * M_PI};
+  static constexpr float ARM_WRIST_LOAD_POS{0.5f * 2 * M_PI};
   static constexpr float ARM_WRIST_SCAN_POS{0.437f * 2 * M_PI};
-  static constexpr float ARM_WRIST_SCORE_LOW_POS{0.098f * 2 * M_PI};
+  static constexpr float ARM_WRIST_SCORE_LOW_POS{0.135f * 2 * M_PI};
   static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.579f * 2 * M_PI};
 
-  static constexpr float ARM_LIFT_LOAD_HEIGHT{3.0f};
-  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{5.0f};
+  static constexpr float ARM_LIFT_LOAD_HEIGHT{2.15f};
+  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{7.0f};
 
   // ## CLAW ##
   static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{
@@ -275,7 +275,7 @@ class OrangeConfig : public IConfig {
   static constexpr float CLAW_PIVOT_KP{12.0f};
   static constexpr float CLAW_PIVOT_KI{0.0f};
   static constexpr float CLAW_PIVOT_KD{0.0f};
-  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.42f * M_PI * 2};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.395f * M_PI * 2};
   static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.1f};
 
  public:

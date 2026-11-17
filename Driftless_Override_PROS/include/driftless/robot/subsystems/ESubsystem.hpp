@@ -25,6 +25,7 @@ enum class ESubsystem {
   ARM,
   CLAW,
   ALIGNER,
+  INTAKE,
 };
 }  // namespace subsystems
 }  // namespace robot

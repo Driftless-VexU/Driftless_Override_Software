@@ -20,6 +20,9 @@
 #include "driftless/robot/commands/holonomic_drive_train/SetAngularVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetLinearVelocityCommand.hpp"
 #include "driftless/robot/commands/holonomic_drive_train/SetMotionVectorCommand.hpp"
+#include "driftless/robot/commands/intake/SetIntakeMotorVoltageCommand.hpp"
+#include "driftless/robot/commands/intake/SetIntakePistonHeightCommand.hpp"
+#include "driftless/robot/commands/intake/ToggleIntakePistonHeightCommand.hpp"
 #include "driftless/robot/commands/lift/SetLiftHeightCommand.hpp"
 #include "driftless/robot/commands/odometry/SetHeadingCommand.hpp"
 #include "driftless/robot/commands/odometry/SetPositionCommand.hpp"
@@ -28,7 +31,6 @@
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
-
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -54,9 +56,12 @@ using Command = std::variant<
     lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
     arm::ArmGoScanCommand, arm::ArmGoLoadCommand, arm::ArmGoScoreHighCommand,
     arm::ArmGoScoreLowCommand, arm::ArmResetCommand,
-    claw::SetClawOpenCloseCommand, claw::SetClawUpDownCommand,
-    claw::ToggleClawOpenCloseCommand, claw::ToggleClawUpDownCommand,
-    aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;
+    intake::SetIntakePistonHeightCommand,
+    intake::ToggleIntakePistonHeightCommand,
+    intake::SetIntakeMotorVoltageCommand, claw::SetClawOpenCloseCommand,
+    claw::SetClawUpDownCommand, claw::ToggleClawOpenCloseCommand,
+    claw::ToggleClawUpDownCommand, aligner::ToggleAlignerStateCommand,
+    aligner::SetAlignerStateCommand>;
 
 }  // namespace commands
 }  // namespace robot

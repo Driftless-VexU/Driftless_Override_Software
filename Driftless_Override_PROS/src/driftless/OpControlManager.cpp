@@ -43,6 +43,7 @@ void OpControlManager::run(
   op_control::holonomic_drive_train::HolonomicDriveTrainOperator
       holonomic_drive_train_operator{controller, robot, control_system};
   op_control::brakes::BrakesOperator brakes_operator{controller, robot};
+  op_control::intake::IntakeOperator intake_operator{controller, robot};
   op_control::lift::LiftOperator lift_operator{controller, robot};
   op_control::toggle::ToggleOperator toggle_operator{controller, robot};
   op_control::arm::ArmOperator arm_operator{controller, robot};
@@ -60,6 +61,7 @@ void OpControlManager::run(
     // updates all subsystems
     holonomic_drive_train_operator.update(m_profile);
     brakes_operator.update(m_profile);
+    intake_operator.update(m_profile);
     lift_operator.update(m_profile);
     toggle_operator.update(m_profile);
     arm_operator.update(m_profile);

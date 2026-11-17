@@ -1,10 +1,10 @@
-#include "driftless/profiles/EthanProfile.hpp"
+#include "driftless/profiles/KadenProfile.hpp"
 
 namespace driftless {
 namespace profiles {
-std::string EthanProfile::getName() { return PROFILE_NAME; }
+std::string KadenProfile::getName() { return PROFILE_NAME; }
 
-int EthanProfile::getControlMode(op_control::EControlType control_type) const {
+int KadenProfile::getControlMode(op_control::EControlType control_type) const {
   int mode{};
   if (CONTROL_MODE_MAP.contains(control_type)) {
     mode = CONTROL_MODE_MAP.at(control_type);
@@ -12,12 +12,12 @@ int EthanProfile::getControlMode(op_control::EControlType control_type) const {
   return mode;
 }
 
-void EthanProfile::setControlMode(op_control::EControlType control_type,
+void KadenProfile::setControlMode(op_control::EControlType control_type,
                                  int control_mode) {
   CONTROL_MODE_MAP[control_type] = control_mode;
 }
 
-op_control::EControllerAnalog EthanProfile::getAnalogControlMapping(
+op_control::EControllerAnalog KadenProfile::getAnalogControlMapping(
     op_control::EControl control) const {
   op_control::EControllerAnalog analogMapping{
       op_control::EControllerAnalog::NONE};
@@ -27,7 +27,7 @@ op_control::EControllerAnalog EthanProfile::getAnalogControlMapping(
   return analogMapping;
 }
 
-op_control::EControllerDigital EthanProfile::getDigitalControlMapping(
+op_control::EControllerDigital KadenProfile::getDigitalControlMapping(
     op_control::EControl control) const {
   op_control::EControllerDigital digitalMapping{
       op_control::EControllerDigital::NONE};
@@ -37,7 +37,7 @@ op_control::EControllerDigital EthanProfile::getDigitalControlMapping(
   return digitalMapping;
 }
 
-bool EthanProfile::getStartupConfig(
+bool KadenProfile::getStartupConfig(
     op_control::EStartupConfig startup_config) const {
   bool config{};
   if (STARTUP_CONFIG_MAP.contains(startup_config)) {

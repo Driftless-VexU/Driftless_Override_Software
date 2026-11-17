@@ -21,8 +21,8 @@
 // profile includes
 #include "driftless/profiles/AsherProfile.hpp"
 #include "driftless/profiles/AsherSkillsProfile.hpp"
-#include "driftless/profiles/EthanProfile.hpp"
-#include "driftless/profiles/EthanSkillsProfile.hpp"
+#include "driftless/profiles/KadenProfile.hpp"
+#include "driftless/profiles/KadenSkillsProfile.hpp"
 
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman

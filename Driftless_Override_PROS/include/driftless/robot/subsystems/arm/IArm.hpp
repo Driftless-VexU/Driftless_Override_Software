@@ -21,7 +21,7 @@ namespace arm {
 
   /// @brief List of states the arm can be in
   /// @author Matthew Backman
-enum class EArmState : uint8_t {
+enum class EArmState : int {
   START,
   INITIALIZED,
   LOAD_PRE,

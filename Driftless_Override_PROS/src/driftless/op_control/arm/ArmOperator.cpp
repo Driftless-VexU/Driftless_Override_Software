@@ -18,11 +18,11 @@ void ArmOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
   if (go_score_up) {
     if (getLiftHeight() > 28.0f) {
       goScoreHigh();
-    } else if (!(getArmState() == 7 && getArmState() == 6)) {
+    } else if (!(getArmState() == 7 || getArmState() == 6)) {
       goScoreLow();
     }
   } else if (go_score_down) {
-    if (getLiftHeight() < 2.0f || getArmState() != 6) {
+    if (getLiftHeight() < 2.0f || getArmState() != 7) {
       goScoreLow();
     }
   } else if (go_load) {

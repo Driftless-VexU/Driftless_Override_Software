@@ -156,6 +156,8 @@ void DefaultArm::taskUpdate() {
         m_current_position_state = EArmState::INITIALIZED;
       }
 
+      m_wrist_motors.setVoltage(0);
+      m_elbow_motors.setVoltage(0);
       m_do_initialize = false;
     }
   }

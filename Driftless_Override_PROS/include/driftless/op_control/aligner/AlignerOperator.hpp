@@ -34,7 +34,6 @@ class AlignerOperator {
     /// @param profile __const std::unique_ptr<profiles::IProfile>&__ The profile to use for the controls
     void update(const std::unique_ptr<profiles::IProfile>& profile);
 
-    float getLiftHeight();
     private:
     std::shared_ptr<io::IController> m_controller;
 

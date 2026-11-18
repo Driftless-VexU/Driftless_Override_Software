@@ -36,12 +36,17 @@ class LiftOperator {
   /// to use for controls
   void update(const std::unique_ptr<profiles::IProfile>& profile);
 
-  /// @brief Gets the height the lift needs to be set to after the button is let go
-  /// @param height __float__ The height to set the lift to
+  /// @brief Gets the height the lift needs to be set to after the button is let
+  /// go
+  /// @return __float__ The height of the lift, in inches
   float getLiftHeight();
 
   /// @brief Raises the lift while button is held
   void setLiftHeight(float height);
+
+  /// @brief Get the current state of the arm
+  /// @return __uint8_t__ The position state of the arm
+  uint8_t getArmState();
 
  private:
   std::shared_ptr<io::IController> m_controller{};

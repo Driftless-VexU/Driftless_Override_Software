@@ -1,13 +1,15 @@
 #include "driftless/OpControlManager.hpp"
 
 // operator controls
+#include "driftless/op_control/aligner/AlignerOperator.hpp"
+#include "driftless/op_control/arm/ArmOperator.hpp"
 #include "driftless/op_control/brakes/BrakesOperator.hpp"
 #include "driftless/op_control/claw/ClawOperator.hpp"
 #include "driftless/op_control/holonomic_drive_train/HolonomicDriveTrainOperator.hpp"
 #include "driftless/op_control/lift/LiftOperator.hpp"
 #include "driftless/op_control/tank_drive_train/TankDriveTrainOperator.hpp"
 #include "driftless/op_control/toggle/ToggleOperator.hpp"
-#include "driftless/op_control/aligner/AlignerOperator.hpp"
+
 
 namespace driftless {
 // constructor
@@ -44,6 +46,7 @@ void OpControlManager::run(
   op_control::intake::IntakeOperator intake_operator{controller, robot};
   op_control::lift::LiftOperator lift_operator{controller, robot};
   op_control::toggle::ToggleOperator toggle_operator{controller, robot};
+  op_control::arm::ArmOperator arm_operator{controller, robot};
   op_control::claw::ClawOperator claw_operator{controller, robot};
   op_control::aligner::AlignerOperator aligner_operator{controller, robot};
 
@@ -61,6 +64,7 @@ void OpControlManager::run(
     intake_operator.update(m_profile);
     lift_operator.update(m_profile);
     toggle_operator.update(m_profile);
+    arm_operator.update(m_profile);
     claw_operator.update(m_profile);
     aligner_operator.update(m_profile);
 

@@ -22,6 +22,7 @@ enum class ESubsystem {
   BRAKES,
   LIFT,
   TOGGLE,
+  ARM,
   CLAW,
   ALIGNER,
   INTAKE,

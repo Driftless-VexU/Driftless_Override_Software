@@ -1,5 +1,5 @@
-#ifndef __ETHAN_PROFILE_HPP__
-#define __ETHAN_PROFILE_HPP__
+#ifndef __KADEN_SKILLS_PROFILE_HPP__
+#define __KADEN_SKILLS_PROFILE_HPP__
 
 #include <map>
 #include <string>
@@ -12,10 +12,10 @@
 
 namespace driftless {
 namespace profiles {
-class EthanProfile : public IProfile {
+class KadenSkillsProfile : public IProfile {
  private:
   /// @brief Name of the profile
-  static constexpr char PROFILE_NAME[]{"ETHAN"};
+  static constexpr char PROFILE_NAME[]{"KADEN_SKILLS"};
 
   /// @brief Map of control modes for each subsystem
   std::map<op_control::EControlType, int> CONTROL_MODE_MAP{};

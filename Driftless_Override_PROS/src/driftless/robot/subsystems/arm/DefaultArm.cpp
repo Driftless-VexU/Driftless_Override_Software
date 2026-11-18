@@ -104,6 +104,35 @@ EArmState DefaultArm::getCurrentPositionState() {
   return m_current_position_state;
 }
 
+void DefaultArm::disable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_target_position_state = EArmState::LOAD;
+  m_do_disable_sequence = true;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void DefaultArm::enable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  if (m_disabled) {
+    m_elbow_motors.setCurrentLimit(1.85);
+    m_wrist_motors.setCurrentLimit(1.25);
+    m_disabled = false;
+  }
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
 void DefaultArm::taskLoop(void* params) {
   DefaultArm* arm{static_cast<DefaultArm*>(params)};
   while (true) {
@@ -127,7 +156,9 @@ DefaultArm::DefaultArm(DefaultArmBuilder&& builder)
 void DefaultArm::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
+  }
 
+  if (!m_disabled) {
     if (m_do_initialize) {
       m_wrist_motors.setVoltage(-6.0);
       m_elbow_motors.setVoltage(-6.0);
@@ -153,38 +184,48 @@ void DefaultArm::taskUpdate() {
       m_elbow_motors.setVoltage(0);
       m_do_initialize = false;
     }
-  }
-  if (m_is_initialized) {
-    switch (m_target_position_state) {
-      case EArmState::START:
-      case EArmState::INITIALIZED:
-      case EArmState::LOAD_PRE:
-      case EArmState::LOAD_POST:
-        // these cases should never be targets - Do nothing
-        break;
-      case EArmState::LOAD:
-        handleLoadState();
-        break;
-      case EArmState::SCAN:
-        handleScanState();
-        break;
-      case EArmState::SCORE_LOW:
-        handleScoreLowState();
-        break;
-      case EArmState::SCORE_HIGH:
-        handleScoreHighState();
-        break;
+    if (m_is_initialized) {
+      switch (m_target_position_state) {
+        case EArmState::START:
+        case EArmState::INITIALIZED:
+        case EArmState::LOAD_PRE:
+        case EArmState::LOAD_POST:
+          // these cases should never be targets - Do nothing
+          break;
+        case EArmState::LOAD:
+          handleLoadState();
+          break;
+        case EArmState::SCAN:
+          handleScanState();
+          break;
+        case EArmState::SCORE_LOW:
+          handleScoreLowState();
+          break;
+        case EArmState::SCORE_HIGH:
+          handleScoreHighState();
+          break;
+      }
+
+      m_elbow_motors.setVoltage(m_elbow_pid.getControlValue(
+          m_elbow_motors.getPosition(), m_elbow_target_position, 12.0));
+      m_wrist_motors.setVoltage(m_wrist_pid.getControlValue(
+          m_wrist_motors.getPosition(), m_wrist_target_position, 12.0));
+
+      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 5, "elbow POS: %7.2f",
+                          m_elbow_motors.getPosition());
+      pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 6, "wrist pos: %7.2f",
+                          m_wrist_motors.getPosition());
     }
-
-    m_elbow_motors.setVoltage(m_elbow_pid.getControlValue(
-        m_elbow_motors.getPosition(), m_elbow_target_position, 12.0));
-    m_wrist_motors.setVoltage(m_wrist_pid.getControlValue(
-        m_wrist_motors.getPosition(), m_wrist_target_position, 12.0));
-
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 5, "elbow POS: %7.2f",
-                        m_elbow_motors.getPosition());
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 6, "wrist pos: %7.2f",
-                        m_wrist_motors.getPosition());
+  }
+  if (m_do_disable_sequence && EArmState::LOAD == m_current_position_state) {
+    m_elbow_motors.setVoltage(0.0);
+    m_elbow_motors.setCurrentLimit(0.0);
+    m_wrist_motors.setVoltage(0.0);
+    m_wrist_motors.setCurrentLimit(0.0);
+    disableLift();
+    disableClaw();
+    m_disabled = true;
+    m_do_disable_sequence = false;
   }
 
   if (m_mutex) {

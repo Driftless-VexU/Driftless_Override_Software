@@ -84,6 +84,12 @@ class DefaultArm : public IArm {
   /// @return __EArmState__ The current position state of the arm
   EArmState getCurrentPositionState() override;
 
+  /// @brief Disables the arm subsystem
+  void disable() override;
+
+  /// @brief Enables the arm subsystem
+  void enable() override;
+
  protected:
   static constexpr uint8_t TASK_DELAY{20};
 
@@ -133,6 +139,10 @@ class DefaultArm : public IArm {
 
   bool m_do_initialize{};
 
+  bool m_disabled{};
+
+  bool m_do_disable_sequence{};
+
   /// @brief Construct a new Default Arm object
   /// @param builder __DefaultArmBuilder__ The builder to use for constructing
   /// the arm
@@ -153,6 +163,20 @@ class DefaultArm : public IArm {
   /// @brief Set the height of the lift, in inches
   /// @param height __float__ The height of the lift, in inches
   inline void setLiftHeight(float height);
+
+  inline void disableLift() {
+    if (auto robot = m_robot.lock()) {
+      robot->sendCommand(ESubsystem::LIFT,
+                         commands::misc::DisableCommand{});
+    }
+  }
+
+  inline void disableClaw() {
+    if (auto robot = m_robot.lock()) {
+      robot->sendCommand(ESubsystem::CLAW,
+                         commands::misc::DisableCommand{});
+    }
+  }
 
   /// @brief Determine if the claw is flipped
   /// @return __bool__ True if the claw is flipped, false if not

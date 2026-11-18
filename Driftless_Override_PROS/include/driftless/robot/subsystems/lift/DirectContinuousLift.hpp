@@ -48,6 +48,12 @@ class DirectContinuousLift : public ILift {
   /// @return __float__ The current height of the lift
   float getHeight() override;
 
+  /// @brief Disables the lift
+  void disable() override;
+
+  /// @brief Enables the lift
+  void enable() override;
+
  private:
   static constexpr uint8_t TASK_DELAY{10};
 
@@ -73,6 +79,9 @@ class DirectContinuousLift : public ILift {
 
   /// @brief stores height
   float m_height{};
+
+  /// @brief Whether the lift is disabled
+  bool m_disabled{};
 
   /// @brief Updates the task
   void taskUpdate();

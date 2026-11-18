@@ -6,6 +6,11 @@
 /* ADD COMMAND HEADERS HERE */
 #include "driftless/robot/commands/aligner/SetAlignerStateCommand.hpp"
 #include "driftless/robot/commands/aligner/ToggleAlignerStateCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoLoadCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoScanCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoScoreHighCommand.hpp"
+#include "driftless/robot/commands/arm/ArmGoScoreLowCommand.hpp"
+#include "driftless/robot/commands/arm/ArmResetCommand.hpp"
 #include "driftless/robot/commands/brakes/SetBrakeStateCommand.hpp"
 #include "driftless/robot/commands/brakes/ToggleBrakeStateCommand.hpp"
 #include "driftless/robot/commands/claw/SetClawOpenCloseCommand.hpp"
@@ -48,12 +53,15 @@ using Command = std::variant<
     odometry::SetYPositionCommand, odometry::SetHeadingCommand,
     tank_drive_train::SetVelocityCommand, tank_drive_train::SetVoltageCommand,
     brakes::SetBrakeStateCommand, brakes::ToggleBrakeStateCommand,
-    intake::SetIntakePistonHeightCommand, intake::ToggleIntakePistonHeightCommand,
-    intake::SetIntakeMotorVoltageCommand,
-    claw::SetClawOpenCloseCommand, claw::SetClawUpDownCommand,
-    claw::ToggleClawOpenCloseCommand, claw::ToggleClawUpDownCommand,
     lift::SetLiftHeightCommand, toggle::SetToggleSpeedCommand,
-    aligner::ToggleAlignerStateCommand, aligner::SetAlignerStateCommand>;
+    arm::ArmGoScanCommand, arm::ArmGoLoadCommand, arm::ArmGoScoreHighCommand,
+    arm::ArmGoScoreLowCommand, arm::ArmResetCommand,
+    intake::SetIntakePistonHeightCommand,
+    intake::ToggleIntakePistonHeightCommand,
+    intake::SetIntakeMotorVoltageCommand, claw::SetClawOpenCloseCommand,
+    claw::SetClawUpDownCommand, claw::ToggleClawOpenCloseCommand,
+    claw::ToggleClawUpDownCommand, aligner::ToggleAlignerStateCommand,
+    aligner::SetAlignerStateCommand>;
 
 }  // namespace commands
 }  // namespace robot

@@ -1,6 +1,8 @@
 #include "driftless/config/BlueConfig.hpp"
 
 #include "driftless/hal/CoprocessorBuilder.hpp"
+#include "driftless/robot/subsystems/arm/ArmSubsystem.hpp"
+#include "driftless/robot/subsystems/arm/DefaultArmBuilder.hpp"
 #include "driftless/robot/subsystems/claw/ClawBuilder.hpp"
 #include "driftless/robot/subsystems/claw/ClawSubsystem.hpp"
 #include "driftless/robot/subsystems/odometry/OdometrySubsystem.hpp"
@@ -398,6 +400,40 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
               .withMotor(std::move(toggle_motor))
               .buildUnique()));
 
+  // ## ARM ##
+
+  robot->addSubsystem(std::make_unique<robot::subsystems::arm::ArmSubsystem>(
+      robot::subsystems::arm::DefaultArmBuilder{}
+          .withElbowMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(ELBOW_MOTOR_PORT,
+                                            ARM_ELBOW_MOTOR_GEARSET)))
+          .withWristMotor(std::make_unique<pros_adapters::ProsV5Motor>(
+              std::make_unique<pros::Motor>(WRIST_MOTOR_PORT,
+                                            ARM_WRIST_MOTOR_GEARSET)))
+          .withElbowPID(
+              control::PID{std::make_unique<pros_adapters::ProsClock>(),
+                           ARM_ELBOW_KP, ARM_ELBOW_KI, ARM_ELBOW_KD})
+          .withWristPID(
+              control::PID{std::make_unique<pros_adapters::ProsClock>(),
+                           ARM_WRIST_KP, ARM_WRIST_KI, ARM_WRIST_KD})
+          .withTask(std::make_unique<pros_adapters::ProsTask>())
+          .withMutex(std::make_unique<pros_adapters::ProsMutex>())
+          .withDelayer(std::make_unique<pros_adapters::ProsDelayer>())
+          .withRobot(robot)
+          .withArmTargets(robot::subsystems::arm::DefaultArmTargetPositions{
+              .lift_load_height = ARM_LIFT_LOAD_HEIGHT,
+              .lift_load_transition_height = ARM_LIFT_LOAD_TRANSITION_HEIGHT,
+              .elbow_load_position = ARM_ELBOW_LOAD_POS,
+              .elbow_score_low_position = ARM_ELBOW_SCORE_LOW_POS,
+              .elbow_score_high_position = ARM_ELBOW_SCORE_HIGH_POS,
+              .wrist_load_position = ARM_WRIST_LOAD_POS,
+              .wrist_scan_position = ARM_WRIST_SCAN_POS,
+              .wrist_score_low_position = ARM_WRIST_SCORE_LOW_POS,
+              .wrist_score_high_position = ARM_WRIST_SCORE_HIGH_POS})
+          .withElbowPositionTolerance(ARM_ELBOW_POSITION_TOLERANCE)
+          .withWristPositionTolerance(ARM_WRIST_POSITION_TOLERANCE)
+          .buildUnique()));
+
   // ## CLAW ##
 
   robot->addSubsystem(std::make_unique<robot::subsystems::claw::ClawSubsystem>(
@@ -417,7 +453,7 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
           .withPivotFlippedPosition(CLAW_PIVOT_FLIPPED_POSITION)
           .withPivotPositionTolerance(CLAW_PIVOT_POSITION_TOLERANCE)
           .buildUnique()));
-          
+
   // ## ALIGNER ##
 
   // create pros object

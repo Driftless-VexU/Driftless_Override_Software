@@ -34,10 +34,15 @@ class AlignerOperator {
     /// @param profile __const std::unique_ptr<profiles::IProfile>&__ The profile to use for the controls
     void update(const std::unique_ptr<profiles::IProfile>& profile);
 
+    float getLiftHeight();
     private:
     std::shared_ptr<io::IController> m_controller;
 
     std::shared_ptr<robot::Robot> m_robot;
+
+    /// @brief Sets the state of the aligner
+    /// @param deployed __bool__ The state to set the aligner to
+    void setAlignerState(bool deployed);
 
     /// @brief Toggles the state of the aligner
     void toggleAligner();

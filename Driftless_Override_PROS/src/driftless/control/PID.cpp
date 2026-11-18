@@ -1,5 +1,7 @@
 #include "driftless/control/PID.hpp"
 
+#include <algorithm>
+
 namespace driftless {
 namespace control {
 PID::PID(std::unique_ptr<driftless::rtos::IClock> clock, double kp, double ki,

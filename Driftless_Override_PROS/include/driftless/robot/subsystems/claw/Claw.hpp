@@ -62,6 +62,12 @@ class Claw : public IClaw {
   /// @return __bool__ True for right-side-up, false for upside-down
   bool isClawUp() override;
 
+  /// @bref Disables the claw
+  void disable() override;
+
+  /// @brief Reenables the claw
+  void enable() override;
+
  private:
   static constexpr uint8_t TASK_DELAY{20};
 
@@ -93,6 +99,8 @@ class Claw : public IClaw {
   uint16_t time_flipping{};
 
   bool m_is_up{true};
+
+  bool m_disabled{};
 
   /// @brief Construct a new Claw object
   /// @param builder __ClawBuilder&&__ The builder creating this

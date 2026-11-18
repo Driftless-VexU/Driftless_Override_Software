@@ -63,6 +63,12 @@ class IArm {
   /// @brief Get the current position state of the arm
   /// @return __EArmState__ The current position state of the arm
   virtual EArmState getCurrentPositionState() = 0;
+
+  /// @brief Disables the arm subsystem
+  virtual void disable() = 0;
+
+  /// @brief Enables the arm subsystem
+  virtual void enable() = 0;
 };
 }  // namespace arm
 }  // namespace subsystems

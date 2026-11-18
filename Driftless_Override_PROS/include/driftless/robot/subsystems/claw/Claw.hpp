@@ -88,7 +88,11 @@ class Claw : public IClaw {
 
   float m_pivot_position_tolerance{};
 
-  bool m_is_up{};
+  float m_pivot_voltage{};
+
+  uint16_t time_flipping{};
+
+  bool m_is_up{true};
 
   /// @brief Construct a new Claw object
   /// @param builder __ClawBuilder&&__ The builder creating this

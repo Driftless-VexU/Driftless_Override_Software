@@ -7,9 +7,11 @@
 namespace driftless::robot::subsystems::claw {
 void Claw::init() {
   m_pivot_motor.init();
-  m_pivot_motor.setVoltage(-5.0);
-  m_delayer->delay(200);
-  m_pivot_motor.setPosition(0.0);
+  m_pivot_motor.setVoltage(3.5);
+  m_delayer->delay(600);
+  m_pivot_motor.setPosition(0);
+  m_target_pivot_position = 0;
+  m_pivot_voltage = 3.0;
 }
 
 void Claw::run() { m_task->start(taskLoop, this); }
@@ -35,7 +37,12 @@ void Claw::setUpDown(bool is_up) {
     m_mutex->take();
   }
 
-  m_target_pivot_position = is_up * m_pivot_flipped_position;
+  if (is_up) {
+    m_pivot_voltage = -12.0;
+  } else {
+    m_pivot_voltage = 12.0;
+  }
+  time_flipping = 0;
 
   if (m_mutex) {
     m_mutex->give();
@@ -47,7 +54,9 @@ void Claw::toggleUpDown() {
     m_mutex->take();
   }
 
-  m_target_pivot_position = (!m_is_up) * m_pivot_flipped_position;
+  m_pivot_voltage = 12.0 * -(m_pivot_voltage / std::abs(m_pivot_voltage));
+  m_is_up = !m_is_up;
+  time_flipping = 0;
 
   if (m_mutex) {
     m_mutex->give();
@@ -91,21 +100,15 @@ void Claw::taskUpdate() {
     m_mutex->take();
   }
 
-  if (std::abs(m_pivot_motor.getPosition() - m_target_pivot_position) <=
-      m_pivot_position_tolerance) {
-    m_pivot_motor.setVoltage(0.0);
-
-    if (m_target_pivot_position <= m_pivot_position_tolerance) {
-      m_is_up = false;
-    } else {
-      m_is_up = true;
+  if (time_flipping > 1000) {
+    if (std::abs(m_pivot_motor.getAngularVelocity()) < 0.1 &&
+        std::abs(m_pivot_voltage) > 4.0) {
+      m_pivot_voltage /= 4.0;
     }
-
   } else {
-    float pivot_voltage = m_pivot_pid.getControlValue(
-        m_pivot_motor.getPosition(), m_target_pivot_position);
-    m_pivot_motor.setVoltage(pivot_voltage);
+    time_flipping += TASK_DELAY;
   }
+  m_pivot_motor.setVoltage(m_pivot_voltage);
 
   if (m_mutex) {
     m_mutex->give();

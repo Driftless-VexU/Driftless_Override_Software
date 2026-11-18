@@ -228,9 +228,9 @@ class BlueConfig : public IConfig {
   static constexpr double DRIVE_MAX_ANGULAR_VELOCITY{M_PI * 3};
 
   // ## ODOMETRY ##
-  static constexpr float ODOMETRY_LOCAL_X_OFFSET{0.0f};
-  static constexpr float ODOMETRY_LOCAL_Y_OFFSET{-0.365f};
-  static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2};
+  static constexpr float ODOMETRY_LOCAL_X_OFFSET{-0.25f};
+  static constexpr float ODOMETRY_LOCAL_Y_OFFSET{0.0f};
+  static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{M_PI / 2.0};
 
   // ## INTAKE ##
   static constexpr float INTAKE_MOTOR_SPEED{12.0f};

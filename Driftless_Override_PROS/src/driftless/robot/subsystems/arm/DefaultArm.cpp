@@ -180,6 +180,11 @@ void DefaultArm::taskUpdate() {
         m_elbow_motors.getPosition(), m_elbow_target_position, 12.0));
     m_wrist_motors.setVoltage(m_wrist_pid.getControlValue(
         m_wrist_motors.getPosition(), m_wrist_target_position, 12.0));
+
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 5, "elbow POS: %7.2f",
+                        m_elbow_motors.getPosition());
+    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 6, "wrist pos: %7.2f",
+                        m_wrist_motors.getPosition());
   }
 
   if (m_mutex) {
@@ -265,14 +270,6 @@ inline void DefaultArm::handleScoreLowState() {
     m_wrist_target_position =
         (elbow_rad + (M_PI / 6.0)) / m_wrist_motor_rad_to_actual_rad;
 
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7, "Elbow angle: %7.2f",
-                        elbow_rad * 180 / M_PI);
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
-                        "target wrist pos: %7.2f", m_wrist_target_position);
-    pros::screen::print(
-        pros::E_TEXT_MEDIUM_CENTER, 9, "target elbow angle: %7.2f",
-        m_elbow_target_position * m_elbow_motor_rad_to_actual_rad * 180 / M_PI);
-
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -
                  m_elbow_target_position)};
@@ -301,14 +298,6 @@ inline void DefaultArm::handleScoreHighState() {
 
     m_wrist_target_position =
         (elbow_rad + (M_PI / 6.0)) / m_wrist_motor_rad_to_actual_rad;
-
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 7, "Elbow angle: %7.2f",
-                        elbow_rad * 180 / M_PI);
-    pros::screen::print(pros::E_TEXT_MEDIUM_CENTER, 8,
-                        "target wrist pos: %7.2f", m_wrist_target_position);
-    pros::screen::print(
-        pros::E_TEXT_MEDIUM_CENTER, 9, "target elbow angle: %7.2f",
-        m_elbow_target_position * m_elbow_motor_rad_to_actual_rad * 180 / M_PI);
 
     float elbow_error{
         std::abs(static_cast<float>(m_elbow_motors.getPosition()) -

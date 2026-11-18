@@ -443,7 +443,7 @@ std::shared_ptr<robot::Robot> OrangeConfig::buildRobot() {
                                             CLAW_PIVOT_GEARSET)))
           .withPiston(std::make_unique<pros_adapters::ProsPiston>(
               std::make_unique<pros::adi::DigitalOut>(
-                  CLAW_GRABBER_PISTON_PORT)))
+                  CLAW_GRABBER_PISTON_PORT), true))
           .withPivotPID(
               control::PID(std::make_unique<pros_adapters::ProsClock>(),
                            CLAW_PIVOT_KP, CLAW_PIVOT_KI, CLAW_PIVOT_KD))

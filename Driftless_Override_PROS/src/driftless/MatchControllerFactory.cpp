@@ -1,5 +1,28 @@
 #include "driftless/MatchControllerFactory.hpp"
 
+// General includes
+#include "driftless/menu/MenuAdapter.hpp"
+#include "driftless/pros_adapters/ProsClock.hpp"
+#include "driftless/pros_adapters/ProsDelayer.hpp"
+
+// alliance includes
+#include "driftless/alliance/BlueAlliance.hpp"
+#include "driftless/alliance/RedAlliance.hpp"
+#include "driftless/alliance/SkillsAlliance.hpp"
+
+// auton includes
+#include "driftless/auton/OrangeMatchAuton.hpp"
+
+// config includes
+#include "driftless/config/BlueConfig.hpp"
+#include "driftless/config/OrangeConfig.hpp"
+
+// profile includes
+#include "driftless/profiles/AsherProfile.hpp"
+#include "driftless/profiles/AsherSkillsProfile.hpp"
+#include "driftless/profiles/KadenProfile.hpp"
+#include "driftless/profiles/KadenSkillsProfile.hpp"
+
 namespace driftless {
 driftless::MatchController MatchControllerFactory::createMatchController() {
   // the display menu
@@ -18,7 +41,9 @@ driftless::MatchController MatchControllerFactory::createMatchController() {
   lvgl_menu->addAlliance(skills_alliance);
 
   // add auton routes
-
+  std::unique_ptr<auton::AAuton> orange_match_auton{
+      std::make_unique<auton::OrangeMatchAuton>()};
+  lvgl_menu->addAuton(std::move(orange_match_auton));
 
   // add configs
   std::unique_ptr<config::IConfig> blue_config{

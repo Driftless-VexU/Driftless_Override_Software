@@ -3,26 +3,6 @@
 
 // general includes
 #include "driftless/MatchController.hpp"
-#include "driftless/menu/MenuAdapter.hpp"
-#include "driftless/pros_adapters/ProsClock.hpp"
-#include "driftless/pros_adapters/ProsDelayer.hpp"
-
-// alliance includes
-#include "driftless/alliance/BlueAlliance.hpp"
-#include "driftless/alliance/RedAlliance.hpp"
-#include "driftless/alliance/SkillsAlliance.hpp"
-
-// auton includes
-
-// config includes
-#include "driftless/config/BlueConfig.hpp"
-#include "driftless/config/OrangeConfig.hpp"
-
-// profile includes
-#include "driftless/profiles/AsherProfile.hpp"
-#include "driftless/profiles/AsherSkillsProfile.hpp"
-#include "driftless/profiles/KadenProfile.hpp"
-#include "driftless/profiles/KadenSkillsProfile.hpp"
 
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman

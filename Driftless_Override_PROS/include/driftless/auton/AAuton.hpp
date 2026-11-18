@@ -185,21 +185,34 @@ class AAuton {
   }
 
   inline void deployAligner() {
-    m_robot->sendCommand(robot::subsystems::ESubsystem::ALIGNER, robot::commands::aligner::SetAlignerStateCommand{true});
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::ALIGNER,
+        robot::commands::aligner::SetAlignerStateCommand{true});
   }
 
   inline void retractAligner() {
-    m_robot->sendCommand(robot::subsystems::ESubsystem::ALIGNER, robot::commands::aligner::SetAlignerStateCommand{false});
+    m_robot->sendCommand(
+        robot::subsystems::ESubsystem::ALIGNER,
+        robot::commands::aligner::SetAlignerStateCommand{false});
   }
 
   // TODO
-  inline void armGoLoad();
+  inline void armGoLoad() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
+                         robot::commands::arm::ArmGoLoadCommand{});
+  }
 
   // TODO
-  inline void armGoScoreLow();
+  inline void armGoScoreLow() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
+                         robot::commands::arm::ArmGoScoreLowCommand{});
+  }
 
   // TODO
-  inline void armGoScoreHigh();
+  inline void armGoScoreHigh() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
+                         robot::commands::arm::ArmGoScoreHighCommand{});
+  }
 
  public:
   /// @brief Constructs a new AAuton object

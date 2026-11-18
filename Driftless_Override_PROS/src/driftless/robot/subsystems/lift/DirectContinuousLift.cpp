@@ -6,6 +6,7 @@
 namespace driftless::robot::subsystems::lift {
 void DirectContinuousLift::init() {
   m_motors.init();
+  m_motors.setCurrentLimit(2.5);
   m_pid.reset();
 }
 

@@ -12,6 +12,8 @@ void DefaultArm::init() {
   m_elbow_motors.init();
   m_wrist_motors.init();
 
+  m_elbow_motors.setCurrentLimit(1.85);
+
   m_elbow_pid.reset();
   m_wrist_pid.reset();
 }
@@ -99,17 +101,7 @@ void DefaultArm::goToScoreHighPosition() {
 }
 
 EArmState DefaultArm::getCurrentPositionState() {
-  if (m_mutex) {
-    m_mutex->take();
-  }
-
-  EArmState current_state{m_current_position_state};
-
-  if (m_mutex) {
-    m_mutex->give();
-  }
-
-  return current_state;
+  return m_current_position_state;
 }
 
 void DefaultArm::taskLoop(void* params) {
@@ -154,6 +146,7 @@ void DefaultArm::taskUpdate() {
         m_elbow_motors.setPosition(-0.25 * 2 * M_PI);
         m_is_initialized = true;
         m_current_position_state = EArmState::INITIALIZED;
+        m_target_position_state = EArmState::SCORE_LOW;
       }
 
       m_wrist_motors.setVoltage(0);

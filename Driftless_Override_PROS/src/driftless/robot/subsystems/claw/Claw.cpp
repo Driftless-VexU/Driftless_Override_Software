@@ -77,6 +77,35 @@ void Claw::toggleOpenClosed() {
 
 bool Claw::isClawUp() { return m_is_up; }
 
+void Claw::disable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_pivot_motor.setVoltage(0.0);
+  m_pivot_motor.setCurrentLimit(0.0);
+  m_disabled = true;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void Claw::enable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  if (m_disabled) {
+    m_pivot_motor.setCurrentLimit(1.25);
+    m_disabled = false;
+  }
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
 Claw::Claw(ClawBuilder&& builder)
     : m_pivot_motor{std::move(builder.m_pivot_motor)},
       m_pivot_pid{builder.m_pivot_pid},
@@ -99,17 +128,17 @@ void Claw::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
   }
-
-  if (time_flipping > 1000) {
-    if (std::abs(m_pivot_motor.getAngularVelocity()) < 0.1 &&
-        std::abs(m_pivot_voltage) > 4.0) {
-      m_pivot_voltage /= 4.0;
+  if (!m_disabled) {
+    if (time_flipping > 1000) {
+      if (std::abs(m_pivot_motor.getAngularVelocity()) < 0.1 &&
+          std::abs(m_pivot_voltage) > 4.0) {
+        m_pivot_voltage /= 4.0;
+      }
+    } else {
+      time_flipping += TASK_DELAY;
     }
-  } else {
-    time_flipping += TASK_DELAY;
+    m_pivot_motor.setVoltage(m_pivot_voltage);
   }
-  m_pivot_motor.setVoltage(m_pivot_voltage);
-
   if (m_mutex) {
     m_mutex->give();
   }

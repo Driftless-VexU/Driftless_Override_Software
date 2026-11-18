@@ -35,6 +35,12 @@ class ILift {
   /// @brief Get the current height of the lift
   /// @return __float__ Returns the current height of the lift
   virtual float getHeight() = 0;
+
+  /// @brief Disables the lift
+  virtual void disable() = 0;
+
+  /// @brief Enables the lift
+  virtual void enable() = 0;
 };
 }  // namespace lift
 }  // namespace subsystems

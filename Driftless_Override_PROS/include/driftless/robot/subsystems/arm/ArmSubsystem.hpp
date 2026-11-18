@@ -53,6 +53,7 @@ class ArmSubsystem : public ASubsystem {
   void handleCommand(const commands::arm::ArmGoScoreLowCommand cmd);
   void handleCommand(const commands::arm::ArmGoScoreHighCommand cmd);
   void handleCommand(const commands::arm::ArmResetCommand cmd);
+  void handleCommand(const commands::misc::DisableCommand cmd);
   void handleCommand(const auto cmd);
 };
 }  // namespace arm

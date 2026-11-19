@@ -31,6 +31,7 @@
 #include "driftless/robot/commands/tank_drive_train/SetVelocityCommand.hpp"
 #include "driftless/robot/commands/tank_drive_train/SetVoltageCommand.hpp"
 #include "driftless/robot/commands/toggle/SetToggleSpeedCommand.hpp"
+#include "driftless/robot/commands/misc/DisableCommand.hpp"
 
 /// @brief The namespace for driftless library code
 /// @author Matthew Backman
@@ -61,7 +62,7 @@ using Command = std::variant<
     intake::SetIntakeMotorVoltageCommand, claw::SetClawOpenCloseCommand,
     claw::SetClawUpDownCommand, claw::ToggleClawOpenCloseCommand,
     claw::ToggleClawUpDownCommand, aligner::ToggleAlignerStateCommand,
-    aligner::SetAlignerStateCommand>;
+    aligner::SetAlignerStateCommand, misc::DisableCommand>;
 
 }  // namespace commands
 }  // namespace robot

@@ -25,21 +25,25 @@ void* ClawSubsystem::state(ESubsystemState state) {
 void ClawSubsystem::handleCommand(
     const commands::claw::SetClawUpDownCommand cmd) {
   m_claw_driver->setUpDown(cmd.m_is_up);
+  m_claw_driver->enable();
 }
 
 void ClawSubsystem::handleCommand(
     const commands::claw::SetClawOpenCloseCommand cmd) {
   m_claw_driver->setOpenClosed(cmd.m_is_open);
+  m_claw_driver->enable();
 }
 
 void ClawSubsystem::handleCommand(
     const commands::claw::ToggleClawOpenCloseCommand cmd) {
   m_claw_driver->toggleOpenClosed();
+  m_claw_driver->enable();
 }
 
 void ClawSubsystem::handleCommand(
     const commands::claw::ToggleClawUpDownCommand cmd) {
   m_claw_driver->toggleUpDown();
+  m_claw_driver->enable();
 }
 
 void ClawSubsystem::handleCommand(const auto cmd) {

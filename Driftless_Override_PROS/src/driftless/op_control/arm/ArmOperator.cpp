@@ -14,6 +14,8 @@ void ArmOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
       profile->getDigitalControlMapping(EControl::ARM_GO_LOAD))};
   bool reset{m_controller->getNewDigital(
       profile->getDigitalControlMapping(EControl::ARM_RESET))};
+  bool disable{m_controller->getNewDigital(
+      profile->getDigitalControlMapping(EControl::DISABLE_SUBSYSTEM))};
 
   if (go_score_up) {
     if (getLiftHeight() > 28.0f) {
@@ -29,6 +31,11 @@ void ArmOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
     goLoad();
   } else if (reset) {
     resetArm();
+  }
+
+  if (disable) {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
+                         robot::commands::misc::DisableCommand{});
   }
 }
 

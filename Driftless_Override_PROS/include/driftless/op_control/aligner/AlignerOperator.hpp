@@ -39,6 +39,10 @@ class AlignerOperator {
 
     std::shared_ptr<robot::Robot> m_robot;
 
+    /// @brief Sets the state of the aligner
+    /// @param deployed __bool__ The state to set the aligner to
+    void setAlignerState(bool deployed);
+
     /// @brief Toggles the state of the aligner
     void toggleAligner();
 

@@ -25,24 +25,29 @@ void* ArmSubsystem::state(ESubsystemState state) {
 
 void ArmSubsystem::handleCommand(const commands::arm::ArmGoLoadCommand cmd) {
   m_arm->goToLoadPosition();
+  m_arm->enable();
 }
 
 void ArmSubsystem::handleCommand(const commands::arm::ArmGoScanCommand cmd) {
   m_arm->goToScanPosition();
+  m_arm->enable();
 }
 
 void ArmSubsystem::handleCommand(
     const commands::arm::ArmGoScoreHighCommand cmd) {
   m_arm->goToScoreHighPosition();
+  m_arm->enable();
 }
 
 void ArmSubsystem::handleCommand(
     const commands::arm::ArmGoScoreLowCommand cmd) {
   m_arm->goToScoreLowPosition();
+  m_arm->enable();
 }
 
 void ArmSubsystem::handleCommand(const commands::arm::ArmResetCommand cmd) {
   m_arm->reset();
+  m_arm->enable();
 }
 
 void ArmSubsystem::handleCommand(const auto cmd) {
@@ -50,4 +55,9 @@ void ArmSubsystem::handleCommand(const auto cmd) {
       "No behavior defined to handle the command of type: " +
       std::string(typeid(cmd).name()) + " for the arm subsystem");
 }
+
+void ArmSubsystem::handleCommand(const commands::misc::DisableCommand cmd) {
+  m_arm->disable();
+}
+
 }  // namespace driftless::robot::subsystems::arm

@@ -51,17 +51,31 @@ class OrangeMatchAuton : public AAuton {
 
   control::Point m_right_neutral_goal{124.0, 86.0, M_PI * 3.0 / 4.0};
 
-  control::Point m_first_pin_grab{132.5, 88.5, M_PI / 5.0};
+  control::Point m_first_pin_grab{130.75, 88.75, M_PI / 5.0};
 
-  control::Point m_first_pin_score_lineup{130.0, 77.0, M_PI / 2.0};
+  control::Point m_first_pin_score_lineup{124.0, 70.0, M_PI / 2.0};
 
-  control::Point m_line_pin_lineup{94.0, 74.0, -M_PI / 2.0};
+  control::Point m_line_pin_lineup{92.0, 70.0, -M_PI / 2.0};
 
-  control::Point m_line_pin{96.0, 83.0, -M_PI / 2.0};
+  control::Point m_line_pin{95.0, 82.5, -M_PI / 2.0};
 
-  control::Point m_right_alliance_goal{118.5, 57.0, -M_PI / 2.0};
+  control::Point m_right_alliance_goal{118.0, 55.0, -M_PI / 2.0};
 
-  control::Point m_mid_pin{102.0, 59.0, -3.0 * M_PI / 4.0};
+  control::Point m_mid_pin_lineup{118.0, 64.0, -M_PI / 2.0};
+
+  control::Point m_mid_pin{100.5, 53.75, -3.0 * M_PI / 4.0};
+
+  control::Point m_mid_pin_score_lineup{118.5, 70.0, -M_PI / 2.0};
+
+  control::Point m_front_wall_pin_lineup{90.0, 46.0, -2 * M_PI / 3.0};
+
+  control::Point m_front_wall_pin{50.5, 10.0, -2.0 * M_PI / 3.0};
+
+  control::Point m_left_neutral_goal{54.0, 18.0, 3.0 * M_PI / 4.0};
+
+  control::Point m_middle_goal_lineup{70.0, 30.0, M_PI / 2.0};
+
+  control::Point m_middle_goal{71.0, 56.0, M_PI / 2.0};
 };
 }  // namespace auton
 }  // namespace driftless

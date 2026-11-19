@@ -9,6 +9,7 @@ void Claw::init() {
   m_pivot_motor.init();
   m_pivot_motor.setVoltage(3.5);
   m_delayer->delay(600);
+  m_pivot_motor.setCurrentLimit(2.5);
   m_pivot_motor.setPosition(0);
   m_target_pivot_position = 0;
   m_pivot_voltage = 3.0;

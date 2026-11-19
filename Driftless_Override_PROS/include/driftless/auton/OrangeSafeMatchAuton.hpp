@@ -55,6 +55,10 @@ class OrangeSafeMatchAuton : public AAuton {
 
   control::Point m_first_pin_score_lineup{124.0, 70.0, M_PI / 2.0};
 
+  control::Point m_neutral_pin_grab{103.0, 70.5, M_PI};
+
+  control::Point m_middle_goal{79.0, 70.0, M_PI};
+
   control::Point m_line_pin_lineup{92.0, 70.0, -M_PI / 2.0};
 
   control::Point m_line_pin{95.0, 82.5, -M_PI / 2.0};
@@ -63,19 +67,17 @@ class OrangeSafeMatchAuton : public AAuton {
 
   control::Point m_mid_pin_lineup{118.0, 64.0, -M_PI / 2.0};
 
-  control::Point m_mid_pin{100.5, 53.75, -3.0 * M_PI / 4.0};
-
   control::Point m_mid_pin_score_lineup{118.5, 70.0, -M_PI / 2.0};
 
-  control::Point m_front_wall_pin_lineup{90.0, 46.0, -2 * M_PI / 3.0};
+  control::Point m_front_wall_pin_lineup{100.0, 64.0, -2 * M_PI / 3.0};
 
   control::Point m_front_wall_pin{50.5, 10.0, -2.0 * M_PI / 3.0};
 
   control::Point m_left_neutral_goal{54.0, 18.0, 3.0 * M_PI / 4.0};
 
-  control::Point m_middle_goal_lineup{70.0, 30.0, M_PI / 2.0};
+  control::Point m_end_lineup{70.0, 30.0, M_PI / 2.0};
 
-  control::Point m_middle_goal{71.0, 56.0, M_PI / 2.0};
+  control::Point m_end_point{71.0, 56.0, M_PI / 2.0};
 };
 }  // namespace auton
 }  // namespace driftless

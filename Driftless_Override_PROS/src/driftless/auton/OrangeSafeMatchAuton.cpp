@@ -46,10 +46,10 @@ void OrangeSafeMatchAuton::run(
   armGoScoreLow();
   delay(250);
   setLiftHeight(1.0);
-  delay(350);
+  delay(500);
   openClaw();
   retractAligner();
-  delay(300);
+  delay(250);
 
   // go to first (of many) pins
   setLiftHeight(6.0);
@@ -83,9 +83,35 @@ void OrangeSafeMatchAuton::run(
   retractAligner();
   delay(250);
 
-  // grab pin from the line for second goal
+  // grab neutral pin for middle goal
   setLiftHeight(16.0);
   delay(250);
+  goToPoint(m_first_pin_score_lineup, MAX_LINEAR_VELOCITY / 2.0);
+  delay(500);
+  setLiftHeight(0.0);
+  goToPose(m_neutral_pin_grab, MAX_LINEAR_VELOCITY / 2.0, MAX_ANGULAR_VELOCITY);
+  waitForGoToPose(m_neutral_pin_grab, 16.0, 1500);
+  setMotionLinearVelocity(MAX_LINEAR_VELOCITY / 6.0);
+  waitForGoToPose(m_neutral_pin_grab, 0.5, 2500);
+  stopMotion();
+  closeClaw();
+  delay(150);
+
+  // score neutral pin
+  setLiftHeight(20.0);
+  delay(500);
+  goToPose(m_middle_goal, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY);
+  deployAligner();
+  waitForGoToPose(m_middle_goal, 2.5, 2000);
+  setLiftHeight(12.0);
+  delay(500);
+  openClaw();
+  retractAligner();
+  delay(150);
+  setLiftHeight(20.0);
+  delay(250);
+
+  // grab pin from the line for second goal
   goToPose(m_line_pin_lineup, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY / 2.0,
            40.0);
   delay(200);
@@ -123,38 +149,6 @@ void OrangeSafeMatchAuton::run(
   setLiftHeight(4.0);
   retractAligner();
   delay(200);
-
-  // grab next cup and pin
-  goToPose(m_mid_pin_lineup, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  delay(500);
-  stopMotion();
-  delay(150);
-  goToPose(m_mid_pin, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  waitForGoToPose(m_mid_pin, 14.0, 2000);
-  setLiftHeight(0.0);
-  setMotionLinearVelocity(MAX_LINEAR_VELOCITY / 4.0);
-  waitForGoToPose(m_mid_pin, 1.5, 2500);
-  stopMotion();
-  closeClaw();
-  delay(500);
-  setLiftHeight(14.0);
-
-  // score mid pin on alliance goal
-  goToPose(m_mid_pin_score_lineup, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  waitForGoToPose(m_mid_pin_score_lineup, 8.0, 2000);
-  deployAligner();
-  goToPose(m_right_alliance_goal, MAX_LINEAR_VELOCITY / 4.0,
-           MAX_ANGULAR_VELOCITY);
-  waitForGoToPose(m_right_alliance_goal, 2.0, 2000);
-  stopMotion();
-  delay(200);
-  setLiftHeight(6.0);
-  delay(500);
-  openClaw();
-  delay(250);
-  setLiftHeight(14.0);
-  retractAligner();
-  delay(350);
   goToPose(m_mid_pin_score_lineup, MAX_LINEAR_VELOCITY / 2.0,
            MAX_ANGULAR_VELOCITY);
   delay(250);
@@ -166,7 +160,7 @@ void OrangeSafeMatchAuton::run(
   goToPose(m_front_wall_pin_lineup, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
   waitForGoToPose(m_front_wall_pin_lineup, 12.0, 2000);
   goToPose(m_front_wall_pin, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  waitForGoToPose(m_front_wall_pin, 28.0, 1000);
+  waitForGoToPose(m_front_wall_pin, 28.0, 2000);
   setMotionLinearVelocity(MAX_LINEAR_VELOCITY / 4.0);
   waitForGoToPose(m_front_wall_pin, 2.0, 2000);
   stopMotion();
@@ -193,13 +187,13 @@ void OrangeSafeMatchAuton::run(
   delay(350);
 
   // go to neutral pin near middle goal
-  goToPose(m_middle_goal_lineup, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  waitForGoToPose(m_middle_goal_lineup, 8.0, 2000);
+  goToPose(m_end_lineup, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
+  waitForGoToPose(m_end_lineup, 8.0, 2000);
   armGoLoad();
 
   // attempt to score on middle goal
-  goToPose(m_middle_goal, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
-  waitForGoToPose(m_middle_goal, 2.0, 2000);
+  goToPose(m_end_point, MAX_LINEAR_VELOCITY, MAX_ANGULAR_VELOCITY);
+  waitForGoToPose(m_end_point, 2.0, 2000);
   stopMotion();
 
   // leave at end

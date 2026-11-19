@@ -188,7 +188,7 @@ class OrangeConfig : public IConfig {
 
   static constexpr int8_t INTAKE_TOP_MOTOR_PORT{-1};
 
-  static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{2};
+  static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{-2};
 
   static constexpr int8_t INTAKE_HEIGHT_PISTON_PORT{2};
 
@@ -264,16 +264,16 @@ class OrangeConfig : public IConfig {
   static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};
   static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f * 2 * M_PI};
 
-  static constexpr float ARM_ELBOW_LOAD_POS{-0.1f};
+  static constexpr float ARM_ELBOW_LOAD_POS{-0.4f};
   static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.05f * 2 * M_PI};
   static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.6f * 2 * M_PI};
 
-  static constexpr float ARM_WRIST_LOAD_POS{4.0f};
+  static constexpr float ARM_WRIST_LOAD_POS{3.15f};
   static constexpr float ARM_WRIST_SCAN_POS{0.437f * 2 * M_PI};
   static constexpr float ARM_WRIST_SCORE_LOW_POS{0.135f * 2 * M_PI};
   static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.579f * 2 * M_PI};
 
-  static constexpr float ARM_LIFT_LOAD_HEIGHT{0.25f};
+  static constexpr float ARM_LIFT_LOAD_HEIGHT{1.25f};
   static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{7.0f};
 
   // ## CLAW ##

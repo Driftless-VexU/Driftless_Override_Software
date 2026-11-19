@@ -12,6 +12,7 @@
 
 // auton includes
 #include "driftless/auton/OrangeMatchAuton.hpp"
+#include "driftless/auton/OrangeSafeMatchAuton.hpp"
 
 // config includes
 #include "driftless/config/BlueConfig.hpp"
@@ -44,6 +45,9 @@ driftless::MatchController MatchControllerFactory::createMatchController() {
   std::unique_ptr<auton::AAuton> orange_match_auton{
       std::make_unique<auton::OrangeMatchAuton>()};
   lvgl_menu->addAuton(std::move(orange_match_auton));
+  std::unique_ptr<auton::AAuton> orange_safe_match_auton{
+      std::make_unique<auton::OrangeSafeMatchAuton>()};
+  lvgl_menu->addAuton(std::move(orange_safe_match_auton));
 
   // add configs
   std::unique_ptr<config::IConfig> blue_config{

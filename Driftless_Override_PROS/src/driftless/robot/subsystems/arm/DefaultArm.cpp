@@ -252,7 +252,6 @@ if (m_current_position_state == EArmState::LOAD_PRE) {
         (wrist_error < m_wrist_position_tolerance) && !isClawFlipped()) {
       // arm is in position and can be lowered into the loader
       m_current_position_state = EArmState::LOAD;
-      setLiftHeight(m_arm_targets.lift_load_height);
     }
 
   } else if (m_current_position_state != EArmState::LOAD) {

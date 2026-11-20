@@ -274,7 +274,7 @@ class OrangeConfig : public IConfig {
   static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.579f * 2 * M_PI};
 
   static constexpr float ARM_LIFT_LOAD_HEIGHT{1.25f};
-  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{7.0f};
+  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{6.0f};
 
   // ## CLAW ##
   static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{

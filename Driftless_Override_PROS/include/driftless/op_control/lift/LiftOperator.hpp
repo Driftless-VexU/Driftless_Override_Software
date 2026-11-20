@@ -57,6 +57,8 @@ class LiftOperator {
   std::shared_ptr<robot::Robot> m_robot{};
 
   float target_height{};
+
+  bool is_load_pressed{};
 };
 }  // namespace lift
 }  // namespace op_control

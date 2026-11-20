@@ -10,6 +10,8 @@ void LiftOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
       profile->getDigitalControlMapping(op_control::EControl::LIFT_RAISE));
   EControllerDigital lift_lower(
       profile->getDigitalControlMapping(op_control::EControl::LIFT_LOWER));
+  EControllerDigital lift_load{
+      profile->getDigitalControlMapping(op_control::EControl::ARM_GO_LOAD)};
 
   static constexpr float LIFT_INCREMENT = 3.0f;
   static constexpr float LIFT_MAX_HEIGHT = 29.5f;
@@ -36,6 +38,18 @@ void LiftOperator::update(const std::unique_ptr<profiles::IProfile>& profile) {
         }
       }
       setLiftHeight(target_height);
+    }
+  }
+
+  if (m_controller->getDigital(lift_load)) {
+    is_load_pressed = true;
+    target_height = 6.0;
+    setLiftHeight(target_height);
+  } else {
+    if (is_load_pressed && getArmState() == 3) {
+      target_height = 1.25f;
+      setLiftHeight(target_height);
+      is_load_pressed = false;
     }
   }
 }

@@ -97,7 +97,7 @@ namespace config {
 /// @author Matthew Backman
 class BlueConfig : public IConfig {
  private:
-  static constexpr char CONFIG_NAME[] = "BLUE_CONFIG";
+  static constexpr char CONFIG_NAME[] = "ORANGE_CONFIG";
 
   // #### CONTROL SYSTEM CONSTANTS ####
 
@@ -185,31 +185,39 @@ class BlueConfig : public IConfig {
 
   // ## TOGGLES ##
 
-  static constexpr int8_t TOGGLE_PORT{-5};
+  static constexpr int8_t TOGGLE_PORT{5};
 
   // ## INTAKE ##
 
-  static constexpr int8_t INTAKE_HEIGHT_PISTON_PORT{2};
-
   static constexpr int8_t INTAKE_TOP_MOTOR_PORT{-1};
 
-  static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{2};
+  static constexpr int8_t INTAKE_COUNTER_ROLLER_MOTOR_PORT{-2};
+
+  static constexpr int8_t INTAKE_HEIGHT_PISTON_PORT{2};
 
   // ## ARM ##
 
-  static constexpr int8_t ELBOW_MOTOR_PORT{7};
+  static constexpr int8_t ELBOW_MOTOR_PORT{10};
 
-  static constexpr int8_t WRIST_MOTOR_PORT{9};
+  static constexpr int8_t WRIST_MOTOR_PORT{21};
 
   // ## CLAW ##
 
-  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{10};
+  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{-9};
 
   static constexpr int8_t CLAW_GRABBER_PISTON_PORT{3};
 
   // ## GOAL ALLIGNER ##
 
   static constexpr int8_t GOAL_ALIGNER_PISTON_PORT{4};
+
+  // ## WALL ##
+
+  static constexpr int8_t WALL_EXTENSION_PISTON_PORT{5};
+
+  static constexpr int8_t WALL_DEPLOY_ROLLER_PISTON_PORT{6};
+
+  static constexpr int8_t WALL_ROLLER_MOTOR_PORT{6};
 
   // #### ROBOT CONSTANTS ####
 
@@ -230,13 +238,14 @@ class BlueConfig : public IConfig {
   // ## ODOMETRY ##
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{-0.25f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{0.0f};
-  static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{M_PI / 2.0};
+  static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2.0};
 
   // ## INTAKE ##
   static constexpr float INTAKE_MOTOR_SPEED{12.0f};
+  
   // ## LIFT ##
   static constexpr float LIFT_KP{24.0f};
-  static constexpr float LIFT_KI{0.01f};
+  static constexpr float LIFT_KI{0.05f};
   static constexpr float LIFT_KD{0.0f};
   static constexpr float LIFT_CENTIDEGREES_TO_INCHES{30.0f /
                                                      (12.68f * 2 * M_PI)};
@@ -258,27 +267,26 @@ class BlueConfig : public IConfig {
   static constexpr float ARM_ELBOW_POSITION_TOLERANCE{0.1f * 2 * M_PI};
   static constexpr float ARM_WRIST_POSITION_TOLERANCE{0.1f * 2 * M_PI};
 
-  static constexpr float ARM_ELBOW_LOAD_POS{-0.9 * 2 * M_PI};
+  static constexpr float ARM_ELBOW_LOAD_POS{-0.4f};
   static constexpr float ARM_ELBOW_SCORE_LOW_POS{0.05f * 2 * M_PI};
   static constexpr float ARM_ELBOW_SCORE_HIGH_POS{0.6f * 2 * M_PI};
 
-  static constexpr float ARM_WRIST_LOAD_POS{0.5f * 2 * M_PI};
+  static constexpr float ARM_WRIST_LOAD_POS{3.15f};
   static constexpr float ARM_WRIST_SCAN_POS{0.437f * 2 * M_PI};
   static constexpr float ARM_WRIST_SCORE_LOW_POS{0.135f * 2 * M_PI};
   static constexpr float ARM_WRIST_SCORE_HIGH_POS{0.579f * 2 * M_PI};
 
-  static constexpr float ARM_LIFT_LOAD_HEIGHT{2.15f};
-  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{7.0f};
-  
-  // ## CLAW ##
+  static constexpr float ARM_LIFT_LOAD_HEIGHT{1.25f};
+  static constexpr float ARM_LIFT_LOAD_TRANSITION_HEIGHT{6.0f};
 
+  // ## CLAW ##
   static constexpr pros::MotorGearset CLAW_PIVOT_GEARSET{
       pros::MotorGearset::green};
   static constexpr float CLAW_PIVOT_KP{12.0f};
   static constexpr float CLAW_PIVOT_KI{0.0f};
-  static constexpr float CLAW_PIVOT_KD{60.0f};
-  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.239f * M_PI * 2};
-  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.02f};
+  static constexpr float CLAW_PIVOT_KD{0.0f};
+  static constexpr float CLAW_PIVOT_FLIPPED_POSITION{0.395f * M_PI * 2};
+  static constexpr float CLAW_PIVOT_POSITION_TOLERANCE{0.1f};
 
  public:
   std::string getName() override;

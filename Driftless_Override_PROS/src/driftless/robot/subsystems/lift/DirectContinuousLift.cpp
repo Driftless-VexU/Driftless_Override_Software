@@ -30,6 +30,35 @@ float DirectContinuousLift::getHeight() {
   return height;
 }
 
+void DirectContinuousLift::disable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_motors.setVoltage(0.0);
+  m_motors.setCurrentLimit(0.0);
+  m_disabled = true;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void DirectContinuousLift::enable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  if (m_disabled) {
+    m_motors.setCurrentLimit(2.5);
+    m_disabled = false;
+  }
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
 void DirectContinuousLift::taskLoop(void* args) {
   DirectContinuousLift* lift{static_cast<DirectContinuousLift*>(args)};
 
@@ -42,11 +71,11 @@ void DirectContinuousLift::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
   }
-
-  float voltage = m_pid.getControlValue(
-      m_motors.getPosition() * m_centidegrees_to_inches, m_height, 12.0);
-  m_motors.setVoltage(voltage);
-
+  if (!m_disabled) {
+    float voltage = m_pid.getControlValue(
+        m_motors.getPosition() * m_centidegrees_to_inches, m_height, 12.0);
+    m_motors.setVoltage(voltage);
+  }
   if (m_mutex) {
     m_mutex->give();
   }

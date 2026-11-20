@@ -22,6 +22,7 @@ void* LiftSubsystem::state(ESubsystemState state_name) {
 void LiftSubsystem::handleCommand(
     const commands::lift::SetLiftHeightCommand cmd) {
   m_lift_driver->setHeight(cmd.m_height);
+  m_lift_driver->enable();
 }
 void LiftSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(

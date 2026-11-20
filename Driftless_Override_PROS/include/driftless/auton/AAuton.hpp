@@ -122,13 +122,13 @@ class AAuton {
   inline void raiseIntake() {
     m_robot->sendCommand(
         robot::subsystems::ESubsystem::INTAKE,
-        robot::commands::intake::SetIntakePistonHeightCommand{true});
+        robot::commands::intake::SetIntakePistonHeightCommand{false});
   }
 
   inline void lowerIntake() {
     m_robot->sendCommand(
         robot::subsystems::ESubsystem::INTAKE,
-        robot::commands::intake::SetIntakePistonHeightCommand{false});
+        robot::commands::intake::SetIntakePistonHeightCommand{true});
   }
 
   inline void runIntakeIn() {
@@ -151,12 +151,12 @@ class AAuton {
 
   inline void openClaw() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::CLAW,
-                         robot::commands::claw::SetClawOpenCloseCommand{true});
+                         robot::commands::claw::SetClawOpenCloseCommand{false});
   }
 
   inline void closeClaw() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::CLAW,
-                         robot::commands::claw::SetClawOpenCloseCommand{false});
+                         robot::commands::claw::SetClawOpenCloseCommand{true});
   }
 
   inline void spinClawUp() {
@@ -196,22 +196,24 @@ class AAuton {
         robot::commands::aligner::SetAlignerStateCommand{false});
   }
 
-  // TODO
   inline void armGoLoad() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
                          robot::commands::arm::ArmGoLoadCommand{});
   }
 
-  // TODO
   inline void armGoScoreLow() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
                          robot::commands::arm::ArmGoScoreLowCommand{});
   }
 
-  // TODO
   inline void armGoScoreHigh() {
     m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
                          robot::commands::arm::ArmGoScoreHighCommand{});
+  }
+
+  inline void armReset() {
+    m_robot->sendCommand(robot::subsystems::ESubsystem::ARM,
+                         robot::commands::arm::ArmResetCommand{});
   }
 
  public:

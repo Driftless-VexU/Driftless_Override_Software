@@ -124,8 +124,8 @@ void AAuton::goToPose(control::Point target_point, double target_velocity,
   m_control_system->sendCommand(
       control::EControl::MOTION,
       control::commands::motion::GoToPoseCommand{
-          m_robot, target_velocity, target_angular_velocity,
-          linear_acceleration, target_point.getX(), target_point.getY(),
+          m_robot, target_velocity,
+          linear_acceleration, target_angular_velocity, target_point.getX(), target_point.getY(),
           target_point.getTheta()});
 }
 

@@ -49,6 +49,12 @@ class IClaw {
   /// @brief Determine if the claw is right-side-up or upside-down
   /// @return __bool__ True for right-side-up, false for upside-down
   virtual bool isClawUp() = 0;
+
+  /// @brief Disables the claw
+  virtual void disable() = 0;
+
+  /// @brief Reenables the claw
+  virtual void enable() = 0;
 };
 }  // namespace claw
 }  // namespace subsystems

@@ -7,9 +7,12 @@
 namespace driftless::robot::subsystems::claw {
 void Claw::init() {
   m_pivot_motor.init();
-  m_pivot_motor.setVoltage(-5.0);
-  m_delayer->delay(200);
-  m_pivot_motor.setPosition(0.0);
+  m_pivot_motor.setVoltage(3.5);
+  m_delayer->delay(600);
+  m_pivot_motor.setCurrentLimit(2.5);
+  m_pivot_motor.setPosition(0);
+  m_target_pivot_position = 0;
+  m_pivot_voltage = 3.0;
 }
 
 void Claw::run() { m_task->start(taskLoop, this); }
@@ -35,7 +38,12 @@ void Claw::setUpDown(bool is_up) {
     m_mutex->take();
   }
 
-  m_target_pivot_position = is_up * m_pivot_flipped_position;
+  if (is_up) {
+    m_pivot_voltage = -12.0;
+  } else {
+    m_pivot_voltage = 12.0;
+  }
+  time_flipping = 0;
 
   if (m_mutex) {
     m_mutex->give();
@@ -47,7 +55,9 @@ void Claw::toggleUpDown() {
     m_mutex->take();
   }
 
-  m_target_pivot_position = (!m_is_up) * m_pivot_flipped_position;
+  m_pivot_voltage = 12.0 * -(m_pivot_voltage / std::abs(m_pivot_voltage));
+  m_is_up = !m_is_up;
+  time_flipping = 0;
 
   if (m_mutex) {
     m_mutex->give();
@@ -67,6 +77,35 @@ void Claw::toggleOpenClosed() {
 }
 
 bool Claw::isClawUp() { return m_is_up; }
+
+void Claw::disable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  m_pivot_motor.setVoltage(0.0);
+  m_pivot_motor.setCurrentLimit(0.0);
+  m_disabled = true;
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
+
+void Claw::enable() {
+  if (m_mutex) {
+    m_mutex->take();
+  }
+
+  if (m_disabled) {
+    m_pivot_motor.setCurrentLimit(1.25);
+    m_disabled = false;
+  }
+
+  if (m_mutex) {
+    m_mutex->give();
+  }
+}
 
 Claw::Claw(ClawBuilder&& builder)
     : m_pivot_motor{std::move(builder.m_pivot_motor)},
@@ -90,23 +129,17 @@ void Claw::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
   }
-
-  if (std::abs(m_pivot_motor.getPosition() - m_target_pivot_position) <=
-      m_pivot_position_tolerance) {
-    m_pivot_motor.setVoltage(0.0);
-
-    if (m_target_pivot_position <= m_pivot_position_tolerance) {
-      m_is_up = false;
+  if (!m_disabled) {
+    if (time_flipping > 1000) {
+      if (std::abs(m_pivot_motor.getAngularVelocity()) < 0.1 &&
+          std::abs(m_pivot_voltage) > 4.0) {
+        m_pivot_voltage /= 4.0;
+      }
     } else {
-      m_is_up = true;
+      time_flipping += TASK_DELAY;
     }
-
-  } else {
-    float pivot_voltage = m_pivot_pid.getControlValue(
-        m_pivot_motor.getPosition(), m_target_pivot_position);
-    m_pivot_motor.setVoltage(pivot_voltage);
+    m_pivot_motor.setVoltage(m_pivot_voltage);
   }
-
   if (m_mutex) {
     m_mutex->give();
   }

@@ -17,7 +17,7 @@ void* ArmSubsystem::state(ESubsystemState state) {
 
   if (state == ESubsystemState::ARM_GET_CURRENT_STATE) {
     output =
-        new uint8_t{static_cast<uint8_t>(m_arm->getCurrentPositionState())};
+        new int{static_cast<int>(m_arm->getCurrentPositionState())};
   }
 
   return output;
@@ -50,14 +50,14 @@ void ArmSubsystem::handleCommand(const commands::arm::ArmResetCommand cmd) {
   m_arm->enable();
 }
 
+void ArmSubsystem::handleCommand(const commands::misc::DisableCommand cmd) {
+  m_arm->disable();
+}
+
 void ArmSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(
       "No behavior defined to handle the command of type: " +
       std::string(typeid(cmd).name()) + " for the arm subsystem");
-}
-
-void ArmSubsystem::handleCommand(const commands::misc::DisableCommand cmd) {
-  m_arm->disable();
 }
 
 }  // namespace driftless::robot::subsystems::arm

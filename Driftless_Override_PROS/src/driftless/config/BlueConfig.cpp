@@ -438,9 +438,6 @@ std::shared_ptr<robot::Robot> BlueConfig::buildRobot() {
 
   robot->addSubsystem(std::make_unique<robot::subsystems::claw::ClawSubsystem>(
       robot::subsystems::claw::ClawBuilder{}
-          .withMotor(std::make_unique<pros_adapters::ProsV5Motor>(
-              std::make_unique<pros::Motor>(CLAW_PIVOT_MOTOR_PORT,
-                                            CLAW_PIVOT_GEARSET)))
           .withPiston(std::make_unique<pros_adapters::ProsPiston>(
               std::make_unique<pros::adi::DigitalOut>(
                   CLAW_GRABBER_PISTON_PORT)))

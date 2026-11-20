@@ -48,6 +48,9 @@ class LiftOperator {
   /// @return __uint8_t__ The position state of the arm
   uint8_t getArmState();
 
+  /// @brief Disables the lift subsystem
+  void disableLift();
+
  private:
   std::shared_ptr<io::IController> m_controller{};
 

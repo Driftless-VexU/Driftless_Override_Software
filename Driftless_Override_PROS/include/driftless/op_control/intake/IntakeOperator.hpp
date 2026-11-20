@@ -50,6 +50,12 @@ class IntakeOperator {
   /// @param state __bool__ The state to set the piston. True for down, false
   /// for up
   void setIntakePistonUpDown(bool state);
+
+  inline int getArmPosition() {
+    return *static_cast<int*>(m_robot->getState(
+        robot::subsystems::ESubsystem::ARM,
+        robot::subsystems::ESubsystemState::ARM_GET_CURRENT_STATE));
+  }
 };
 }  // namespace intake
 }  // namespace op_control

@@ -45,6 +45,9 @@ class ClawOperator {
   /// @brief Wrapper function to send the toggle claw open closed command to the
   /// robot
   inline void toggleClawOpenClose();
+
+  /// @brief Wrapper functino to send the set claw open closed command to the robot
+  inline void setClawOpenClose(bool openClose);
 };
 }  // namespace claw
 }  // namespace op_control

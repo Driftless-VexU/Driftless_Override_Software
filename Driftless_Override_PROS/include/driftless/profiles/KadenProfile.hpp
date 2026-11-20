@@ -32,20 +32,27 @@ class KadenProfile : public IProfile {
   /// @brief Maps subsystem controls to digital inputs
   const std::map<op_control::EControl, op_control::EControllerDigital>
       DIGITAL_CONTROL_MAP{
-          {op_control::EControl::INTAKE_RUN_IN,
-           op_control::EControllerDigital::BUTTON_B},
-          {op_control::EControl::LIFT_RAISE,
-           op_control::EControllerDigital::TRIGGER_LEFT_TOP},
           {op_control::EControl::LIFT_LOWER,
            op_control::EControllerDigital::TRIGGER_LEFT_BOTTOM},
-          {op_control::EControl::TOGGLE_SPEED,
+          {op_control::EControl::LIFT_RAISE,
+           op_control::EControllerDigital::TRIGGER_LEFT_TOP},
+          {op_control::EControl::ARM_RESET,
+           op_control::EControllerDigital::DPAD_UP},
+          {op_control::EControl::INTAKE_RUN_IN,
            op_control::EControllerDigital::DPAD_DOWN},
-          {op_control::EControl::ALIGNER_TOGGLE,
-           op_control::EControllerDigital::DPAD_RIGHT},
+          {op_control::EControl::ARM_GO_LOAD,
+           op_control::EControllerDigital::DPAD_DOWN},
           {op_control::EControl::CLAW_FLIP,
+           op_control::EControllerDigital::DPAD_RIGHT},
+          {op_control::EControl::ALIGNER_TOGGLE,
            op_control::EControllerDigital::BUTTON_Y},
           {op_control::EControl::DISABLE_SUBSYSTEM,
-           op_control::EControllerDigital::BUTTON_X},
+           op_control::EControllerDigital::BUTTON_B},
+          {op_control::EControl::CLAW_TOGGLE_CLOSED,
+           op_control::EControllerDigital::TRIGGER_RIGHT_BOTTOM},
+          {op_control::EControl::TOGGLE_SPEED,
+           op_control::EControllerDigital::TRIGGER_RIGHT_TOP}
+
   };
 
   /// @brief Maps startup configurations to their values

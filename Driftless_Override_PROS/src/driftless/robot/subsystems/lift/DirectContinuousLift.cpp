@@ -35,9 +35,8 @@ void DirectContinuousLift::disable() {
     m_mutex->take();
   }
 
-  m_motors.setVoltage(0.0);
-  m_motors.setCurrentLimit(0.0);
-  m_disabled = true;
+  m_height = 0.0f;
+  m_do_disabled_sequence = true;
 
   if (m_mutex) {
     m_mutex->give();
@@ -70,6 +69,14 @@ void DirectContinuousLift::taskLoop(void* args) {
 void DirectContinuousLift::taskUpdate() {
   if (m_mutex) {
     m_mutex->take();
+  }
+  if (m_do_disabled_sequence) {
+    if (m_motors.getPosition() * m_centidegrees_to_inches < 0.2f) {
+      m_disabled = true;
+      m_do_disabled_sequence = false;
+      m_motors.setCurrentLimit(0.0);
+      m_motors.setVoltage(0.0);
+    }
   }
   if (!m_disabled) {
     float voltage = m_pid.getControlValue(

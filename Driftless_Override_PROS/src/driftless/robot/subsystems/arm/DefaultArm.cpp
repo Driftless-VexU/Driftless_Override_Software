@@ -223,7 +223,6 @@ void DefaultArm::taskUpdate() {
     m_wrist_motors.setVoltage(0.0);
     m_wrist_motors.setCurrentLimit(0.0);
     disableLift();
-    disableClaw();
     m_disabled = true;
     m_do_disable_sequence = false;
   }
@@ -238,9 +237,7 @@ void DefaultArm::taskUpdate() {
 }
 
 inline void DefaultArm::handleLoadState() {
-  if (isClawFlipped()) {
-    flipClaw(false);
-  } else if (m_current_position_state == EArmState::LOAD_PRE) {
+if (m_current_position_state == EArmState::LOAD_PRE) {
     m_elbow_target_position = m_arm_targets.elbow_load_position;
     m_wrist_target_position = m_arm_targets.wrist_load_position;
 

@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "driftless/robot/commands/misc/DisableCommand.hpp"
 #include "driftless/robot/subsystems/ASubsystem.hpp"
 #include "driftless/robot/subsystems/claw/IClaw.hpp"
 
@@ -70,6 +71,10 @@ class ClawSubsystem : public ASubsystem {
   /// @param cmd __const commands::claw::ToggleClawUpDownCommand__ The command
   /// to handle
   void handleCommand(const commands::claw::ToggleClawUpDownCommand cmd);
+
+  /// @brief Disables the claw
+  /// @param cmd __const commands::misc::DisableCommand__ The command to handle
+  void handleCommand(const commands::misc::DisableCommand cmd);
 
   /// @brief Handles any commands that are not explicitly handled by the claw
   /// subsystem

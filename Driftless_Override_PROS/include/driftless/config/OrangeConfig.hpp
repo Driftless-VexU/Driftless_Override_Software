@@ -200,7 +200,7 @@ class OrangeConfig : public IConfig {
 
   // ## CLAW ##
 
-  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{9};
+  static constexpr int8_t CLAW_PIVOT_MOTOR_PORT{-9};
 
   static constexpr int8_t CLAW_GRABBER_PISTON_PORT{3};
 

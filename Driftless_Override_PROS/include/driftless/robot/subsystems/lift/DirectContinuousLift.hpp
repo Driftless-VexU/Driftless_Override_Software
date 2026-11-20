@@ -83,6 +83,9 @@ class DirectContinuousLift : public ILift {
   /// @brief Whether the lift is disabled
   bool m_disabled{};
 
+  /// @brief does disabled sequence
+  bool m_do_disabled_sequence {};
+
   /// @brief Updates the task
   void taskUpdate();
 

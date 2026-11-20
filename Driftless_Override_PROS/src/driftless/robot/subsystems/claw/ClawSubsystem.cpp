@@ -1,4 +1,5 @@
 #include "driftless/robot/subsystems/claw/ClawSubsystem.hpp"
+#include "driftless/robot/commands/misc/DisableCommand.hpp"
 
 namespace driftless::robot::subsystems::claw {
 ClawSubsystem::ClawSubsystem(std::unique_ptr<IClaw> claw_driver)
@@ -45,6 +46,11 @@ void ClawSubsystem::handleCommand(
   m_claw_driver->toggleUpDown();
   m_claw_driver->enable();
 }
+
+void ClawSubsystem::handleCommand(
+  const commands::misc::DisableCommand cmd) {
+    m_claw_driver->disable();
+  }
 
 void ClawSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(

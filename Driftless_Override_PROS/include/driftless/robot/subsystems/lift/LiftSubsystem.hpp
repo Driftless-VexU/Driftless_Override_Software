@@ -55,6 +55,8 @@ class LiftSubsystem : public ASubsystem {
   /// handle
   void handleCommand(const commands::lift::SetLiftHeightCommand cmd);
 
+  void handleCommand(const commands::misc::DisableCommand cmd);
+
   void handleCommand(const auto cmd);
 };
 }  // namespace lift

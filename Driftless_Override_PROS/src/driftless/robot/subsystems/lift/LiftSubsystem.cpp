@@ -24,6 +24,9 @@ void LiftSubsystem::handleCommand(
   m_lift_driver->setHeight(cmd.m_height);
   m_lift_driver->enable();
 }
+void LiftSubsystem::handleCommand(const commands::misc::DisableCommand cmd) {
+  m_lift_driver->disable();
+}
 void LiftSubsystem::handleCommand(const auto cmd) {
   throw std::invalid_argument(
       "No behavior defined to handle the command of type: " +

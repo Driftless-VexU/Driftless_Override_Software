@@ -48,6 +48,12 @@ class ArmOperator {
         robot::subsystems::ESubsystem::ARM,
         robot::subsystems::ESubsystemState::ARM_GET_CURRENT_STATE));
   }
+
+  inline bool isIntakeDown() {
+    return *static_cast<bool*>(m_robot->getState(
+        robot::subsystems::ESubsystem::INTAKE,
+        robot::subsystems::ESubsystemState::INTAKE_IS_DEPLOYED));
+  }
 };
 }  // namespace arm
 }  // namespace op_control

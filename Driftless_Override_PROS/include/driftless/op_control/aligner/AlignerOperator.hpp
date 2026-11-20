@@ -7,6 +7,7 @@
 #include "driftless/op_control/EControllerDigital.hpp"
 #include "driftless/profiles/IProfile.hpp"
 #include "driftless/robot/Robot.hpp"
+#include "driftless/robot/subsystems/ESubsystem.hpp"
 
 /// @brief Namespace for driftless library code
 /// @author Matthew Backman
@@ -39,6 +40,8 @@ class AlignerOperator {
 
     std::shared_ptr<robot::Robot> m_robot;
 
+    bool m_overriden{false};
+
     /// @brief Sets the state of the aligner
     /// @param deployed __bool__ The state to set the aligner to
     void setAlignerState(bool deployed);
@@ -46,7 +49,12 @@ class AlignerOperator {
     /// @brief Toggles the state of the aligner
     void toggleAligner();
 
-
+    inline float getLiftHeight() {
+        return *static_cast<float*>(m_robot->getState(
+            robot::subsystems::ESubsystem::LIFT,
+            robot::subsystems::ESubsystemState::LIFT_GET_HEIGHT
+        ));
+    }
 };
 }
 }

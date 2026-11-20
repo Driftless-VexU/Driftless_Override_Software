@@ -11,29 +11,30 @@ void IntakeOperator::update(
   EControllerDigital intake_run_in_btn(
       profile->getDigitalControlMapping(op_control::EControl::INTAKE_RUN_IN));
 
-  if (m_controller->getDigital(intake_run_in_btn)) {
+  if (m_controller->getDigital(intake_run_in_btn) && getArmPosition() == 3) {
     setIntakePistonUpDown(true);
     setIntakeMotorVoltage(12.0f);
-  }
-  else
-  {
+  } else {
     setIntakePistonUpDown(false);
     setIntakeMotorVoltage(0.0f);
   }
 }
 
 void IntakeOperator::toggleIntakePistonUpDown() {
-    m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
-    robot::commands::intake::ToggleIntakePistonHeightCommand{});
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::INTAKE,
+      robot::commands::intake::ToggleIntakePistonHeightCommand{});
 }
 
 void IntakeOperator::setIntakeMotorVoltage(float voltage) {
-    m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
-    robot::commands::intake::SetIntakeMotorVoltageCommand{voltage});
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::INTAKE,
+      robot::commands::intake::SetIntakeMotorVoltageCommand{voltage});
 }
 
 void IntakeOperator::setIntakePistonUpDown(bool state) {
-  m_robot->sendCommand(robot::subsystems::ESubsystem::INTAKE,
-  robot::commands::intake::SetIntakePistonHeightCommand{state});
+  m_robot->sendCommand(
+      robot::subsystems::ESubsystem::INTAKE,
+      robot::commands::intake::SetIntakePistonHeightCommand{state});
 }
 }  // namespace driftless::op_control::intake

@@ -21,7 +21,7 @@ void AlignerOperator::update(
     }
   }
 
-  if ((getLiftHeight() > 2.0f) && !m_overriden) {
+  if ((getLiftHeight() > 2.0f) && (ArmScoringPos() == 6 || ArmScoringPos() == 7)  && !m_overriden) {
     setAlignerState(true);
   } else {
     setAlignerState(false);

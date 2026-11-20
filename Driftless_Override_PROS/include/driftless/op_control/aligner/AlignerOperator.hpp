@@ -24,40 +24,48 @@ namespace aligner {
 /// @brief Operator class for the aligner subsystem
 /// @author Jacob Fiedorowicz
 class AlignerOperator {
-    public:
-    /// @brief Construct a new Aligner Operator object
-    /// @param controller __const std::shared_ptr<io::IController>&__ The controller to recieve input from
-    /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot to control
-    AlignerOperator(const std::shared_ptr<io::IController>& controller,
-    const std::shared_ptr<robot::Robot>& robot);
+ public:
+  /// @brief Construct a new Aligner Operator object
+  /// @param controller __const std::shared_ptr<io::IController>&__ The
+  /// controller to recieve input from
+  /// @param robot __const std::shared_ptr<robot::Robot>&__ The robot to control
+  AlignerOperator(const std::shared_ptr<io::IController>& controller,
+                  const std::shared_ptr<robot::Robot>& robot);
 
-    /// @brief Updates the aligner using the configuration within the given profile
-    /// @param profile __const std::unique_ptr<profiles::IProfile>&__ The profile to use for the controls
-    void update(const std::unique_ptr<profiles::IProfile>& profile);
+  /// @brief Updates the aligner using the configuration within the given
+  /// profile
+  /// @param profile __const std::unique_ptr<profiles::IProfile>&__ The profile
+  /// to use for the controls
+  void update(const std::unique_ptr<profiles::IProfile>& profile);
 
-    private:
-    std::shared_ptr<io::IController> m_controller;
+ private:
+  std::shared_ptr<io::IController> m_controller;
 
-    std::shared_ptr<robot::Robot> m_robot;
+  std::shared_ptr<robot::Robot> m_robot;
 
-    bool m_overriden{false};
+  bool m_overriden{false};
 
-    /// @brief Sets the state of the aligner
-    /// @param deployed __bool__ The state to set the aligner to
-    void setAlignerState(bool deployed);
+  /// @brief Sets the state of the aligner
+  /// @param deployed __bool__ The state to set the aligner to
+  void setAlignerState(bool deployed);
 
-    /// @brief Toggles the state of the aligner
-    void toggleAligner();
+  /// @brief Toggles the state of the aligner
+  void toggleAligner();
 
-    inline float getLiftHeight() {
-        return *static_cast<float*>(m_robot->getState(
-            robot::subsystems::ESubsystem::LIFT,
-            robot::subsystems::ESubsystemState::LIFT_GET_HEIGHT
-        ));
-    }
+  inline float getLiftHeight() {
+    return *static_cast<float*>(
+        m_robot->getState(robot::subsystems::ESubsystem::LIFT,
+                          robot::subsystems::ESubsystemState::LIFT_GET_HEIGHT));
+  }
+
+  inline int ArmScoringPos() {
+    return *static_cast<int*>(m_robot->getState(
+        robot::subsystems::ESubsystem::ARM,
+        robot::subsystems::ESubsystemState::ARM_GET_CURRENT_STATE));
+  }
 };
-}
-}
-}
+}  // namespace aligner
+}  // namespace op_control
+}  // namespace driftless
 
 #endif

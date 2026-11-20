@@ -11,6 +11,7 @@
 #include "driftless/alliance/SkillsAlliance.hpp"
 
 // auton includes
+#include "driftless/auton/BlueMatchAuton.hpp"
 #include "driftless/auton/OrangeMatchAuton.hpp"
 #include "driftless/auton/OrangeSafeMatchAuton.hpp"
 
@@ -42,6 +43,9 @@ driftless::MatchController MatchControllerFactory::createMatchController() {
   lvgl_menu->addAlliance(skills_alliance);
 
   // add auton routes
+  std::unique_ptr<auton::AAuton> blue_match_auton{
+      std::make_unique<auton::BlueMatchAuton>()};
+  lvgl_menu->addAuton((std::move(blue_match_auton)));
   std::unique_ptr<auton::AAuton> orange_match_auton{
       std::make_unique<auton::OrangeMatchAuton>()};
   lvgl_menu->addAuton(std::move(orange_match_auton));

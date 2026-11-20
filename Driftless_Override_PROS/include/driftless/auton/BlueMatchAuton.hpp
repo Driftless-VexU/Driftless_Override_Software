@@ -47,9 +47,23 @@ class BlueMatchAuton : public AAuton {
 
   static constexpr double MAX_ANGULAR_VELOCITY{M_PI * 4.0};
 
-  control::Point m_starting_pos{78.0, 133.0, -M_PI/2};
+  control::Point m_starting_pos{64.0, 11.0, M_PI/2};
 
-  control::Point m_first_goal{};
+  control::Point m_first_goal{54.0, 20.0, 3*(M_PI)/4};
+
+  control::Point m_second_goal_prepare_pos{68,50,0};
+  
+  control::Point m_middle_intake_pin{60.0,50,0};
+
+  control::Point m_short_first_goal{87,32,15*(M_PI)/4};
+
+  control::Point m_get_readey_to_approach_match_load{87,50,-M_PI/2};
+
+  control::Point m_move_thing_approach_spot{105,32,-M_PI/2};
+
+  control::Point m_stand_match_loader{127,20,-M_PI/2};
+
+  control::Point m_match_loader{126,17,-M_PI/2};
 };
 }  // namespace auton
 }  // namespace driftless

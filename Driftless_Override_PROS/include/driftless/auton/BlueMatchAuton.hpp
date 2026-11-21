@@ -55,15 +55,25 @@ class BlueMatchAuton : public AAuton {
   
   control::Point m_middle_intake_pin{60.0,50,0};
 
-  control::Point m_short_first_goal{87,32,15*(M_PI)/4};
+  control::Point m_short_first_goal{88,31,15*(M_PI)/4};
 
   control::Point m_get_readey_to_approach_match_load{87,50,-M_PI/2};
 
   control::Point m_move_thing_approach_spot{105,32,-M_PI/2};
 
-  control::Point m_stand_match_loader{127,20,-M_PI/2};
+  control::Point m_stand_match_loader{125.5,20,-M_PI/2};
+  
+  control::Point m_match_loader{125.5,15,-M_PI/2};
 
-  control::Point m_match_loader{126,17,-M_PI/2};
+  control::Point m_backup_from_match_loader{125.5,21,-M_PI/2};
+
+  control::Point m_backup_from_match_loader_spin{125.5,26.5, -M_PI};
+
+  control::Point m_spam_load_spot{102, 26.5, -M_PI};
+
+  control::Point m_spam_load_spot_backup{117.5,26.5, -M_PI};
+
+  control::Point m_stand_infromt_match_loader_after_first{125.5,26.5, -M_PI/2};
 };
 }  // namespace auton
 }  // namespace driftless

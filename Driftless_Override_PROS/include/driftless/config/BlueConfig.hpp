@@ -97,7 +97,7 @@ namespace config {
 /// @author Matthew Backman
 class BlueConfig : public IConfig {
  private:
-  static constexpr char CONFIG_NAME[] = "ORANGE_CONFIG";
+  static constexpr char CONFIG_NAME[] = "BLUE_CONFIG";
 
   // #### CONTROL SYSTEM CONSTANTS ####
 
@@ -238,7 +238,7 @@ class BlueConfig : public IConfig {
   // ## ODOMETRY ##
   static constexpr float ODOMETRY_LOCAL_X_OFFSET{-0.25f};
   static constexpr float ODOMETRY_LOCAL_Y_OFFSET{0.0f};
-  static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{-M_PI / 2.0};
+  static constexpr float ODOMETRY_LOCAL_THETA_OFFSET{M_PI / 2.0};
 
   // ## INTAKE ##
   static constexpr float INTAKE_MOTOR_SPEED{12.0f};
@@ -257,7 +257,7 @@ class BlueConfig : public IConfig {
       pros::v5::MotorGearset::green};
 
   static constexpr float ARM_ELBOW_KP{12.0f};
-  static constexpr float ARM_ELBOW_KI{0.001f};
+  static constexpr float ARM_ELBOW_KI{0.0f};
   static constexpr float ARM_ELBOW_KD{0.0f};
 
   static constexpr float ARM_WRIST_KP{6.0f};

@@ -46,12 +46,13 @@ void BlueMatchAuton::run(
   // Lower arm
   armGoScoreLow();
   delay(250);
-  setLiftHeight(1.0);
+  setLiftHeight(0.0);
   delay(250);
   openClaw();
-  delay(250);
+  delay(1000);
   setLiftHeight(10.0);
   delay(250);
+  armGoLoad();
 
   // Reset
   goToPose(m_starting_pos, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
@@ -59,38 +60,41 @@ void BlueMatchAuton::run(
   waitForGoToPose(m_first_goal, 2.0, 1500);
   stopMotion();
   retractAligner();
+  lowerIntake();
 
   goToPose(m_second_goal_prepare_pos, MAX_LINEAR_VELOCITY / 3.0,
            MAX_ANGULAR_VELOCITY, 20.0);
   waitForGoToPose(m_second_goal_prepare_pos, 2.0, 2500);
 
   armGoLoad();
-  lowerIntake();
+
   runIntakeIn();
   goToPose(m_middle_intake_pin, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
            20.0);
   waitForGoToPose(m_middle_intake_pin, 2.0, 1500);
   delay(500);
   raiseIntake();
+  delay(100);
+  stopIntake();
+  deployAligner();
 
   goToPose(m_short_first_goal, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
            20.0);
-  waitForGoToPose(m_short_first_goal, 2.0, 6000);
-  deployAligner();
-  delay(100);
-  stopIntake();
-  delay(100);
-  setLiftHeight(1.75);
-  delay(250);
+  waitForGoToPose(m_short_first_goal, 2.0, 1500);
+
+  delay(200);
+  setLiftHeight(1.25);
+  delay(500);
   closeClaw();
-  delay(250);
+  delay(500);
   setLiftHeight(2.5);
-  delay(250);
+  delay(500);
   armGoScoreLow();
+  delay(500);
   setLiftHeight(0.0);
   delay(500);
   openClaw();
-  delay(250);
+  delay(500);
   setLiftHeight(4.0);
   retractAligner();
   delay(250);
@@ -111,12 +115,132 @@ void BlueMatchAuton::run(
   waitForGoToPose(m_stand_match_loader, 2.0, 2500);
   setLiftHeight(0);
   delay(150);
-
   goToPose(m_match_loader, MAX_LINEAR_VELOCITY / 5.0, MAX_ANGULAR_VELOCITY,
            20.0);
   waitForGoToPose(m_match_loader, 2.0, 1500);
-
   delay(300);
   closeClaw();
+  delay(250);
+  setLiftHeight(0.5);
+  goToPose(m_backup_from_match_loader, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader, 2.0, 1500);
+  stopMotion();
+  setLiftHeight(10.0);
+  deployAligner();
+  goToPose(m_backup_from_match_loader_spin, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader_spin, 2.0, 1500);
+  goToPose(m_spam_load_spot, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           20.0);
+  waitForGoToPose(m_spam_load_spot, 2.0, 1500);
+  setLiftHeight(8.0);
+  delay(250);
+  openClaw();
+  delay(100);
+
+
+  goToPose(m_spam_load_spot_backup, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_spam_load_spot_backup, 2.0, 1500);
+  setLiftHeight(0.0);
+  delay(100);
+  goToPose(m_stand_infromt_match_loader_after_first, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_stand_infromt_match_loader_after_first, 2.0, 1500);
+  
+  delay(100);
+  goToPose(m_match_loader, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           20.0);
+  waitForGoToPose(m_match_loader, 2.0, 1500);
+  delay(300);
+  closeClaw();
+  delay(250);
+  setLiftHeight(0.5);
+  goToPose(m_backup_from_match_loader, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader, 2.0, 1500);
+  stopMotion();
+  setLiftHeight(16.0);
+  deployAligner();
+  goToPose(m_backup_from_match_loader_spin, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader_spin, 2.0, 1500);
+  goToPose(m_spam_load_spot, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           20.0);
+  waitForGoToPose(m_spam_load_spot, 2.0, 1500);
+  setLiftHeight(12.0);
+  delay(250);
+  openClaw();
+  delay(100);
+
+
+  goToPose(m_spam_load_spot_backup, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_spam_load_spot_backup, 2.0, 1500);
+  setLiftHeight(0.0);
+  delay(100);
+  goToPose(m_stand_infromt_match_loader_after_first, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_stand_infromt_match_loader_after_first, 2.0, 1500);
+  
+  delay(100);
+  goToPose(m_match_loader, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           25.0);
+  waitForGoToPose(m_match_loader, 2.0, 1500);
+  delay(300);
+  closeClaw();
+  delay(250);
+  setLiftHeight(0.5);
+  goToPose(m_backup_from_match_loader, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader, 2.0, 1500);
+  stopMotion();
+  setLiftHeight(25.0);
+  deployAligner();
+  goToPose(m_backup_from_match_loader_spin, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader_spin, 2.0, 1500);
+  goToPose(m_spam_load_spot, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           20.0);
+  waitForGoToPose(m_spam_load_spot, 2.0, 1500);
+  setLiftHeight(20.0);
+  delay(500);
+  openClaw();
+  delay(100);
+
+
+  goToPose(m_spam_load_spot_backup, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_spam_load_spot_backup, 2.0, 1500);
+  setLiftHeight(0.0);
+  delay(100);
+  goToPose(m_stand_infromt_match_loader_after_first, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_stand_infromt_match_loader_after_first, 2.0, 1500);
+  
+  delay(100);
+  goToPose(m_match_loader, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           25.0);
+  waitForGoToPose(m_match_loader, 2.0, 1500);
+  delay(300);
+  closeClaw();
+  delay(250);
+  setLiftHeight(0.5);
+  goToPose(m_backup_from_match_loader, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader, 2.0, 1500);
+  stopMotion();
+  setLiftHeight(29.5);
+  deployAligner();
+  goToPose(m_backup_from_match_loader_spin, MAX_LINEAR_VELOCITY / 3.0,
+           MAX_ANGULAR_VELOCITY, 20.0);
+  waitForGoToPose(m_backup_from_match_loader_spin, 2.0, 1500);
+  goToPose(m_spam_load_spot, MAX_LINEAR_VELOCITY / 3.0, MAX_ANGULAR_VELOCITY,
+           20.0);
+  waitForGoToPose(m_spam_load_spot, 2.0, 1500);
+  setLiftHeight(20.0);
+  delay(500);
+  openClaw();
 }
 }  // namespace driftless::auton

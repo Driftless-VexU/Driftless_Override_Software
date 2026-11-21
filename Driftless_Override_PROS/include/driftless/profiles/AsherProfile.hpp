@@ -57,7 +57,10 @@ class AsherProfile : public IProfile {
           {op_control::EControl::CLAW_FLIP,
            op_control::EControllerDigital::BUTTON_X},
           {op_control::EControl::INTAKE_RUN_IN,
-           op_control::EControllerDigital::BUTTON_Y}};
+           op_control::EControllerDigital::BUTTON_Y},
+          {op_control::EControl::ARM_GO_LOAD,
+           op_control::EControllerDigital::BUTTON_Y},
+      };
 
   /// @brief Maps startup configurations to their values
   const std::map<op_control::EStartupConfig, bool> STARTUP_CONFIG_MAP{};
